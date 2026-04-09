@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Módulo 1.3 — LLM Wiki vs RAG vs Banco de Dados | 2Cérebro</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config={darkMode:'class',theme:{extend:{colors:{primary:'#FACC15',dark:{900:'#111827',800:'#1f2937',700:'#374151',600:'#4b5563'}}}}}</script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body{font-family:'Inter',sans-serif;} .dark body{background-color:#111827;}
+    html:not(.dark) body{background-color:#f8fafc;}
+    html:not(.dark) .bg-dark-900{background-color:#ffffff;}
+    html:not(.dark) .bg-dark-800{background-color:#f9fafb;}
+    html:not(.dark) .bg-dark-700{background-color:#f3f4f6;}
+    html:not(.dark) .bg-dark-600{background-color:#e5e7eb;}
+    html:not(.dark) .text-neutral-100{color:#111827;}
+    html:not(.dark) .text-neutral-300{color:#4b5563;}
+    html:not(.dark) .text-neutral-400{color:#6b7280;}
+    html:not(.dark) .text-neutral-500{color:#9ca3af;}
+    html:not(.dark) .border-dark-600{border-color:#d1d5db;}
+    html:not(.dark) .text-emerald-400{color:#059669;}
+    html:not(.dark) .bg-emerald-500\/20{background-color:rgba(5,150,105,0.12);}
+    html:not(.dark) .border-emerald-500\/30{border-color:rgba(5,150,105,0.25);}
+    html:not(.dark) [class*="bg-gradient-to"]{background-image:none!important;}
+    html:not(.dark) .text-primary{color:#a16207;}
+    html:not(.dark) .bg-primary\/10{background-color:rgba(161,98,7,0.08);}
+    html:not(.dark) .border-primary\/40{border-color:rgba(161,98,7,0.25);}
+    html:not(.dark) .text-sky-400{color:#0369a1;}
+    html:not(.dark) .text-yellow-400{color:#a16207;}
+    html:not(.dark) .hover\:text-sky-300:hover{color:#0284c7;}
+    html:not(.dark) .hover\:text-yellow-300:hover{color:#854d0e;}
+    html:not(.dark) .bg-dark-900\/95{background-color:rgba(255,255,255,0.95);}
+  </style>
+</head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen">
+  <nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-14">
+        <div class="flex items-center space-x-4">
+          <a href="../../index.html" class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300"><span class="text-2xl">🧠</span><span class="font-bold text-lg hidden sm:inline">2Cérebro</span></a>
+          <span class="text-neutral-600">|</span>
+          <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300 text-sm font-medium">INEMA.CLUB</a>
+        </div>
+        <div class="flex items-center space-x-1 sm:space-x-2">
+          <a href="index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-emerald-400 bg-emerald-500/10"><span class="sm:hidden">T1</span><span class="hidden sm:inline">Fundamentos</span></a>
+          <a href="../trilha2/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors"><span class="sm:hidden">T2</span><span class="hidden sm:inline">Implementação</span></a>
+          <a href="../trilha3/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors"><span class="sm:hidden">T3</span><span class="hidden sm:inline">Avançado</span></a>
+          <button id="theme-toggle" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2">
+            <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+            <svg id="theme-toggle-light-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+    <div class="flex items-center space-x-2 text-sm text-neutral-400">
+      <a href="../../index.html" class="hover:text-emerald-400">Início</a><span>/</span>
+      <a href="index.html" class="hover:text-emerald-400">Trilha 1</a><span>/</span>
+      <span class="text-emerald-400">Módulo 1.3</span>
+    </div>
+  </nav>
+
+  <header class="bg-gradient-to-br from-emerald-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <span class="inline-block px-3 py-1 bg-emerald-500/20 text-emerald-400 text-xs font-semibold rounded-full mb-4">MÓDULO 1.3</span>
+      <h1 class="text-3xl sm:text-4xl font-bold mb-4">🆚 LLM Wiki vs RAG vs Banco de Dados</h1>
+      <p class="text-lg text-neutral-400 max-w-3xl">A grande comparação: entenda as diferenças fundamentais de arquitetura, custo de tokens, semântica e casos de uso ideais para cada abordagem.</p>
+      <div class="grid grid-cols-4 gap-4 mt-8 max-w-lg">
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-emerald-400">6</div><div class="text-xs text-neutral-400">Tópicos</div></div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-emerald-400">30</div><div class="text-xs text-neutral-400">Minutos</div></div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-emerald-400">Base</div><div class="text-xs text-neutral-400">Nível</div></div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-emerald-400">Teoria</div><div class="text-xs text-neutral-400">Tipo</div></div>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+    <!-- TÓPICO 1: Três abordagens -->
+    <section id="topico-1" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">1</span>
+        <h2 class="text-2xl font-bold">🗄️ As Três Abordagens de Conhecimento</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">Existem três paradigmas para armazenar e recuperar conhecimento com LLMs. Cada um tem trade-offs distintos em custo, semântica e manutenção. <strong class="text-emerald-400">Entender as diferenças é fundamental para escolher a ferramenta certa</strong>.</p>
+
+      <!-- SVG: Three approaches comparison -->
+      <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+        <h3 class="text-base font-semibold text-emerald-400 mb-4">🏛️ Arquitetura de Cada Abordagem</h3>
+        <svg viewBox="0 0 500 280" class="w-full" xmlns="http://www.w3.org/2000/svg">
+          <!-- DB Traditional -->
+          <g transform="translate(10, 10)">
+            <rect x="0" y="0" width="145" height="260" rx="10" fill="#1f2937" stroke="#6b7280" stroke-width="1.5"/>
+            <text x="72" y="22" text-anchor="middle" fill="#9ca3af" font-size="10" font-weight="bold">🗄️ Banco de Dados</text>
+            <!-- Query flow -->
+            <rect x="10" y="35" width="125" height="25" rx="5" fill="#374151"/>
+            <text x="72" y="52" text-anchor="middle" fill="#d1d5db" font-size="8">Pergunta do usuário</text>
+            <text x="72" y="78" text-anchor="middle" fill="#6b7280" font-size="9">↓ SQL / keyword</text>
+            <rect x="10" y="88" width="125" height="40" rx="5" fill="#374151" stroke="#6b7280" stroke-width="1"/>
+            <text x="72" y="105" text-anchor="middle" fill="#9ca3af" font-size="8">Tabelas & Schemas</text>
+            <text x="72" y="118" text-anchor="middle" fill="#9ca3af" font-size="7">sem semântica</text>
+            <text x="72" y="145" text-anchor="middle" fill="#6b7280" font-size="9">↓ resultado bruto</text>
+            <rect x="10" y="155" width="125" height="25" rx="5" fill="#374151"/>
+            <text x="72" y="172" text-anchor="middle" fill="#d1d5db" font-size="8">LLM interpreta</text>
+            <text x="72" y="200" text-anchor="middle" fill="#f87171" font-size="8">⚠ Sem contexto</text>
+            <text x="72" y="215" text-anchor="middle" fill="#f87171" font-size="8">⚠ Sem relações</text>
+            <text x="72" y="230" text-anchor="middle" fill="#f87171" font-size="8">⚠ Sem semântica</text>
+            <text x="72" y="252" text-anchor="middle" fill="#6b7280" font-size="8">Custo tokens: médio</text>
+          </g>
+
+          <!-- RAG -->
+          <g transform="translate(178, 10)">
+            <rect x="0" y="0" width="145" height="260" rx="10" fill="#1f2937" stroke="#fbbf24" stroke-width="1.5"/>
+            <text x="72" y="22" text-anchor="middle" fill="#fbbf24" font-size="10" font-weight="bold">🔍 RAG</text>
+            <rect x="10" y="35" width="125" height="25" rx="5" fill="#374151"/>
+            <text x="72" y="52" text-anchor="middle" fill="#d1d5db" font-size="8">Pergunta do usuário</text>
+            <text x="72" y="78" text-anchor="middle" fill="#6b7280" font-size="9">↓ vetoriza query</text>
+            <rect x="10" y="88" width="125" height="40" rx="5" fill="#374151" stroke="#fbbf24" stroke-width="1"/>
+            <text x="72" y="105" text-anchor="middle" fill="#fbbf24" font-size="8">Vector DB</text>
+            <text x="72" y="118" text-anchor="middle" fill="#9ca3af" font-size="7">cosine similarity</text>
+            <text x="72" y="145" text-anchor="middle" fill="#6b7280" font-size="9">↓ k chunks mais próximos</text>
+            <rect x="10" y="155" width="125" height="25" rx="5" fill="#374151"/>
+            <text x="72" y="172" text-anchor="middle" fill="#d1d5db" font-size="8">LLM + chunks no contexto</text>
+            <text x="72" y="200" text-anchor="middle" fill="#fbbf24" font-size="8">✓ Busca semântica</text>
+            <text x="72" y="215" text-anchor="middle" fill="#f87171" font-size="8">⚠ Alto custo tokens</text>
+            <text x="72" y="230" text-anchor="middle" fill="#f87171" font-size="8">⚠ Sem links entre ideias</text>
+            <text x="72" y="252" text-anchor="middle" fill="#f87171" font-size="8">Custo tokens: ALTO</text>
+          </g>
+
+          <!-- LLM Wiki -->
+          <g transform="translate(346, 10)">
+            <rect x="0" y="0" width="145" height="260" rx="10" fill="#1f2937" stroke="#10b981" stroke-width="2"/>
+            <text x="72" y="22" text-anchor="middle" fill="#10b981" font-size="10" font-weight="bold">📚 LLM Wiki ✓</text>
+            <rect x="10" y="35" width="125" height="25" rx="5" fill="#374151"/>
+            <text x="72" y="52" text-anchor="middle" fill="#d1d5db" font-size="8">Pergunta do usuário</text>
+            <text x="72" y="78" text-anchor="middle" fill="#6b7280" font-size="9">↓ lê index.md</text>
+            <rect x="10" y="88" width="125" height="40" rx="5" fill="#374151" stroke="#10b981" stroke-width="1.5"/>
+            <text x="72" y="105" text-anchor="middle" fill="#10b981" font-size="8">Wiki compilado</text>
+            <text x="72" y="118" text-anchor="middle" fill="#9ca3af" font-size="7">pages 2-3 relevantes</text>
+            <text x="72" y="145" text-anchor="middle" fill="#6b7280" font-size="9">↓ lê páginas selecionadas</text>
+            <rect x="10" y="155" width="125" height="25" rx="5" fill="#374151"/>
+            <text x="72" y="172" text-anchor="middle" fill="#d1d5db" font-size="8">LLM sintetiza resposta</text>
+            <text x="72" y="200" text-anchor="middle" fill="#10b981" font-size="8">✓ Contexto completo</text>
+            <text x="72" y="215" text-anchor="middle" fill="#10b981" font-size="8">✓ Links entre ideias</text>
+            <text x="72" y="230" text-anchor="middle" fill="#10b981" font-size="8">✓ Custo mínimo</text>
+            <text x="72" y="252" text-anchor="middle" fill="#10b981" font-size="8">Custo tokens: ~5%</text>
+          </g>
+        </svg>
+      </div>
+    </section>
+
+    <!-- TÓPICO 2: Banco de Dados -->
+    <section id="topico-2" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">2</span>
+        <h2 class="text-2xl font-bold">🗄️ Banco de Dados Tradicional</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">Bancos relacionais (PostgreSQL, MySQL) e não-relacionais (MongoDB) são excelentes para dados transacionais estruturados. <strong class="text-emerald-400">O problema: não entendem semântica</strong>. Uma query "qual nota se parece com essa ideia?" é impossível sem camadas adicionais.</p>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+          <h4 class="font-bold text-emerald-400 mb-4">✓ Onde DB Tradicional Vence</h4>
+          <ul class="space-y-3 text-neutral-300">
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Transações ACID e consistência forte</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Consultas estruturadas complexas (JOINs)</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Dados numéricos e financeiros</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Escalabilidade para bilhões de registros</span></li>
+          </ul>
+        </div>
+        <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+          <h4 class="font-bold text-red-400 mb-4">✗ Onde DB Tradicional Falha</h4>
+          <ul class="space-y-3 text-neutral-300">
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Busca semântica por significado</span></li>
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Relações contextuais entre conceitos</span></li>
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Texto não estruturado e ideias</span></li>
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Conhecimento que evolui organicamente</span></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- TÓPICO 3: RAG -->
+    <section id="topico-3" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">3</span>
+        <h2 class="text-2xl font-bold">🔍 RAG — Retrieval Augmented Generation</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">RAG vetoriza documentos, armazena embeddings em um vector store, e na hora da query recupera os chunks mais similares. É semântico — mas <strong class="text-emerald-400">paga um preço alto em tokens a cada consulta</strong>.</p>
+
+      <!-- SVG: RAG Flow -->
+      <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+        <h3 class="text-base font-semibold text-emerald-400 mb-4">🔄 Fluxo do RAG em uma Consulta</h3>
+        <svg viewBox="0 0 500 120" class="w-full" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <marker id="rArr" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto"><path d="M 0 0 L 6 3 L 0 6 z" fill="#fbbf24"/></marker>
+          </defs>
+          <!-- Steps -->
+          <rect x="5" y="30" width="80" height="40" rx="6" fill="#374151" stroke="#fbbf24" stroke-width="1"/>
+          <text x="45" y="48" text-anchor="middle" fill="#fbbf24" font-size="8">❓ Query</text>
+          <text x="45" y="62" text-anchor="middle" fill="#9ca3af" font-size="7">"O que é ML?"</text>
+
+          <path d="M 87 50 L 107 50" stroke="#fbbf24" stroke-width="1.5" marker-end="url(#rArr)"/>
+          <text x="97" y="44" text-anchor="middle" fill="#9ca3af" font-size="7">embed</text>
+
+          <rect x="110" y="30" width="80" height="40" rx="6" fill="#374151" stroke="#fbbf24" stroke-width="1"/>
+          <text x="150" y="48" text-anchor="middle" fill="#fbbf24" font-size="8">📐 Vector</text>
+          <text x="150" y="62" text-anchor="middle" fill="#9ca3af" font-size="7">[0.2, 0.8, ...]</text>
+
+          <path d="M 192 50 L 212 50" stroke="#fbbf24" stroke-width="1.5" marker-end="url(#rArr)"/>
+          <text x="202" y="44" text-anchor="middle" fill="#9ca3af" font-size="7">busca</text>
+
+          <rect x="215" y="30" width="80" height="40" rx="6" fill="#374151" stroke="#fbbf24" stroke-width="1"/>
+          <text x="255" y="48" text-anchor="middle" fill="#fbbf24" font-size="8">🗃️ k chunks</text>
+          <text x="255" y="62" text-anchor="middle" fill="#9ca3af" font-size="7">top-5 matches</text>
+
+          <path d="M 297 50 L 317 50" stroke="#fbbf24" stroke-width="1.5" marker-end="url(#rArr)"/>
+          <text x="307" y="44" text-anchor="middle" fill="#9ca3af" font-size="7">inject</text>
+
+          <rect x="320" y="20" width="80" height="60" rx="6" fill="#1f2937" stroke="#f87171" stroke-width="1.5"/>
+          <text x="360" y="42" text-anchor="middle" fill="#f87171" font-size="8">🤖 LLM</text>
+          <text x="360" y="56" text-anchor="middle" fill="#9ca3af" font-size="7">query +</text>
+          <text x="360" y="68" text-anchor="middle" fill="#9ca3af" font-size="7">5 chunks</text>
+
+          <path d="M 402 50 L 422 50" stroke="#fbbf24" stroke-width="1.5" marker-end="url(#rArr)"/>
+
+          <rect x="425" y="30" width="70" height="40" rx="6" fill="#374151" stroke="#10b981" stroke-width="1"/>
+          <text x="460" y="48" text-anchor="middle" fill="#10b981" font-size="8">✓ Resposta</text>
+          <text x="460" y="62" text-anchor="middle" fill="#9ca3af" font-size="7">com contexto</text>
+
+          <!-- Token cost annotation -->
+          <rect x="310" y="88" width="100" height="20" rx="4" fill="#f87171" fill-opacity="0.2" stroke="#f87171" stroke-width="1"/>
+          <text x="360" y="102" text-anchor="middle" fill="#f87171" font-size="8">⚠ 5x+ tokens extras</text>
+        </svg>
+      </div>
+
+      <div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-blue-400 mb-4">📊 O Problema de Tokens do RAG</h3>
+        <p class="text-neutral-300 mb-3">Em uma query RAG típica, você injeta 3-10 chunks no contexto. Cada chunk tem 200-500 tokens. Isso significa <strong>1.000-5.000 tokens extras por query</strong> — só para buscar o contexto. Com 100 queries/dia, o custo fica significativo.</p>
+        <div class="bg-dark-800/50 rounded-lg p-3 font-mono text-sm">
+          <div class="text-neutral-400">Query simples (LLM Wiki): <span class="text-emerald-400">~500 tokens</span></div>
+          <div class="text-neutral-400">Query com RAG: <span class="text-f87171 text-red-400">~3.500 tokens</span> (+7x custo)</div>
+          <div class="text-neutral-400">100 queries/dia, 30 dias/mês: <span class="text-red-400">diferença de $30-150/mês</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TÓPICO 4: LLM Wiki -->
+    <section id="topico-4" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">4</span>
+        <h2 class="text-2xl font-bold">📚 LLM Wiki — Conhecimento Pré-Compilado</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">A diferença fundamental do LLM Wiki: o conhecimento é <strong class="text-emerald-400">compilado antes da consulta</strong>, não durante. Na query, o LLM lê apenas o index e 2-3 páginas relevantes — não documentos brutos.</p>
+
+      <!-- SVG: Wiki query flow -->
+      <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+        <h3 class="text-base font-semibold text-emerald-400 mb-4">⚡ Fluxo do LLM Wiki — 95% Menos Tokens</h3>
+        <svg viewBox="0 0 500 130" class="w-full" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <marker id="wArr" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto"><path d="M 0 0 L 6 3 L 0 6 z" fill="#10b981"/></marker>
+          </defs>
+          <!-- Ingestion phase (top, smaller) -->
+          <text x="10" y="18" fill="#9ca3af" font-size="8">INGESTÃO (feita antes):</text>
+          <rect x="10" y="22" width="60" height="20" rx="4" fill="#374151" stroke="#6b7280" stroke-width="0.8"/>
+          <text x="40" y="36" text-anchor="middle" fill="#9ca3af" font-size="7">raw/doc.md</text>
+          <path d="M 72 32 L 85 32" stroke="#6b7280" stroke-width="1" marker-end="url(#wArr)"/>
+          <rect x="88" y="22" width="50" height="20" rx="4" fill="#1f2937" stroke="#FACC15" stroke-width="1"/>
+          <text x="113" y="36" text-anchor="middle" fill="#FACC15" font-size="7">🤖 LLM</text>
+          <path d="M 140 32 L 153 32" stroke="#6b7280" stroke-width="1" marker-end="url(#wArr)"/>
+          <rect x="156" y="22" width="60" height="20" rx="4" fill="#374151" stroke="#10b981" stroke-width="0.8"/>
+          <text x="186" y="36" text-anchor="middle" fill="#10b981" font-size="7">wiki/ml.md</text>
+          <text x="280" y="34" fill="#6b7280" font-size="7">← feito uma vez, reutilizado N vezes</text>
+
+          <!-- Query phase (bottom, main) -->
+          <text x="10" y="72" fill="#d1d5db" font-size="8" font-weight="bold">CONSULTA (eficiente):</text>
+          <rect x="5" y="80" width="70" height="35" rx="6" fill="#374151" stroke="#10b981" stroke-width="1"/>
+          <text x="40" y="96" text-anchor="middle" fill="#10b981" font-size="8">❓ Query</text>
+          <text x="40" y="108" text-anchor="middle" fill="#9ca3af" font-size="7">"O que é ML?"</text>
+
+          <path d="M 77 97 L 97 97" stroke="#10b981" stroke-width="1.5" marker-end="url(#wArr)"/>
+          <text x="87" y="91" text-anchor="middle" fill="#9ca3af" font-size="7">lê</text>
+
+          <rect x="100" y="80" width="70" height="35" rx="6" fill="#374151" stroke="#10b981" stroke-width="1"/>
+          <text x="135" y="96" text-anchor="middle" fill="#10b981" font-size="8">📑 index.md</text>
+          <text x="135" y="108" text-anchor="middle" fill="#9ca3af" font-size="7">~100 tokens</text>
+
+          <path d="M 172 97 L 192 97" stroke="#10b981" stroke-width="1.5" marker-end="url(#wArr)"/>
+
+          <rect x="195" y="80" width="70" height="35" rx="6" fill="#374151" stroke="#10b981" stroke-width="1"/>
+          <text x="230" y="96" text-anchor="middle" fill="#10b981" font-size="8">📄 ml.md</text>
+          <text x="230" y="108" text-anchor="middle" fill="#9ca3af" font-size="7">~300 tokens</text>
+
+          <path d="M 267 97 L 287 97" stroke="#10b981" stroke-width="1.5" marker-end="url(#wArr)"/>
+
+          <rect x="290" y="75" width="70" height="45" rx="6" fill="#1f2937" stroke="#FACC15" stroke-width="1.5"/>
+          <text x="325" y="96" text-anchor="middle" fill="#FACC15" font-size="8">🤖 LLM</text>
+          <text x="325" y="110" text-anchor="middle" fill="#9ca3af" font-size="7">síntese</text>
+
+          <path d="M 362 97 L 382 97" stroke="#10b981" stroke-width="1.5" marker-end="url(#wArr)"/>
+
+          <rect x="385" y="80" width="105" height="35" rx="6" fill="#374151" stroke="#10b981" stroke-width="1.5"/>
+          <text x="437" y="96" text-anchor="middle" fill="#10b981" font-size="8">✓ Resposta rica</text>
+          <text x="437" y="108" text-anchor="middle" fill="#9ca3af" font-size="7">total: ~500 tokens</text>
+        </svg>
+      </div>
+
+      <div class="bg-gradient-to-br from-emerald-900/30 to-dark-800 rounded-xl border border-emerald-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-emerald-400 mb-4">🏆 Por que o Wiki Vence</h3>
+        <p class="text-neutral-300 mb-4">O wiki pré-compila o "work" — em vez de processar fontes brutas a cada query, o trabalho é feito uma vez na ingestão e amortizado por todas as consultas futuras. É a diferença entre uma compilação vs. interpretação a cada execução.</p>
+        <div class="grid grid-cols-3 gap-4">
+          <div class="text-center p-3 bg-dark-800/50 rounded-lg">
+            <div class="text-2xl font-bold text-emerald-400">~5%</div>
+            <div class="text-xs text-neutral-400">dos tokens do RAG</div>
+          </div>
+          <div class="text-center p-3 bg-dark-800/50 rounded-lg">
+            <div class="text-2xl font-bold text-emerald-400">∞</div>
+            <div class="text-xs text-neutral-400">reutilizações do wiki</div>
+          </div>
+          <div class="text-center p-3 bg-dark-800/50 rounded-lg">
+            <div class="text-2xl font-bold text-emerald-400">$0</div>
+            <div class="text-xs text-neutral-400">infraestrutura extra</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TÓPICO 5: Comparação completa -->
+    <section id="topico-5" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">5</span>
+        <h2 class="text-2xl font-bold">📊 Comparação Completa</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">Cada critério de avaliação revela um aspecto diferente das três abordagens. <strong class="text-emerald-400">A escolha depende do seu caso de uso</strong> — não existe bala de prata.</p>
+
+      <div class="bg-dark-800 rounded-xl border border-dark-600 overflow-hidden mb-6">
+        <div class="grid grid-cols-4 gap-0">
+          <div class="p-3 bg-dark-700 border-b border-dark-600 text-xs font-semibold text-neutral-400">CRITÉRIO</div>
+          <div class="p-3 bg-dark-700 border-b border-dark-600 border-l border-dark-600 text-xs font-semibold text-neutral-400 text-center">🗄️ Banco de Dados</div>
+          <div class="p-3 bg-dark-700 border-b border-dark-600 border-l border-dark-600 text-xs font-semibold text-fbbf24 text-center" style="color:#fbbf24">🔍 RAG</div>
+          <div class="p-3 bg-dark-700 border-b border-dark-600 border-l border-dark-600 text-xs font-semibold text-emerald-400 text-center">📚 LLM Wiki ✓</div>
+          <div class="p-3 border-b border-dark-600 text-sm text-neutral-300">💰 Custo por query</div>
+          <div class="p-3 border-b border-dark-600 border-l border-dark-600 text-sm text-center text-yellow-400">Médio</div>
+          <div class="p-3 border-b border-dark-600 border-l border-dark-600 text-sm text-center text-red-400">Alto (7x+)</div>
+          <div class="p-3 border-b border-dark-600 border-l border-dark-600 text-sm text-center text-emerald-400 font-semibold">Mínimo (~5%)</div>
+          <div class="p-3 border-b border-dark-600 text-sm text-neutral-300">🧩 Semântica</div>
+          <div class="p-3 border-b border-dark-600 border-l border-dark-600 text-sm text-center text-red-400">Nenhuma</div>
+          <div class="p-3 border-b border-dark-600 border-l border-dark-600 text-sm text-center text-yellow-400">Por embedding</div>
+          <div class="p-3 border-b border-dark-600 border-l border-dark-600 text-sm text-center text-emerald-400 font-semibold">Completa</div>
+          <div class="p-3 border-b border-dark-600 text-sm text-neutral-300">🔗 Relações entre ideias</div>
+          <div class="p-3 border-b border-dark-600 border-l border-dark-600 text-sm text-center text-red-400">Manual (FKs)</div>
+          <div class="p-3 border-b border-dark-600 border-l border-dark-600 text-sm text-center text-red-400">Nenhuma</div>
+          <div class="p-3 border-b border-dark-600 border-l border-dark-600 text-sm text-center text-emerald-400 font-semibold">Automática</div>
+          <div class="p-3 border-b border-dark-600 text-sm text-neutral-300">📖 Legibilidade humana</div>
+          <div class="p-3 border-b border-dark-600 border-l border-dark-600 text-sm text-center text-yellow-400">SQL/Schemas</div>
+          <div class="p-3 border-b border-dark-600 border-l border-dark-600 text-sm text-center text-red-400">Vetores opacos</div>
+          <div class="p-3 border-b border-dark-600 border-l border-dark-600 text-sm text-center text-emerald-400 font-semibold">Markdown puro</div>
+          <div class="p-3 border-b border-dark-600 text-sm text-neutral-300">⚙️ Infraestrutura</div>
+          <div class="p-3 border-b border-dark-600 border-l border-dark-600 text-sm text-center text-red-400">DB server</div>
+          <div class="p-3 border-b border-dark-600 border-l border-dark-600 text-sm text-center text-red-400">Vector DB + embed API</div>
+          <div class="p-3 border-b border-dark-600 border-l border-dark-600 text-sm text-center text-emerald-400 font-semibold">Pasta de arquivos</div>
+          <div class="p-3 border-b border-dark-600 text-sm text-neutral-300">🔄 Atualização incremental</div>
+          <div class="p-3 border-b border-dark-600 border-l border-dark-600 text-sm text-center text-yellow-400">SQL INSERT/UPDATE</div>
+          <div class="p-3 border-b border-dark-600 border-l border-dark-600 text-sm text-center text-yellow-400">Re-indexa chunks</div>
+          <div class="p-3 border-b border-dark-600 border-l border-dark-600 text-sm text-center text-emerald-400 font-semibold">Nativa e incremental</div>
+          <div class="p-3 text-sm text-neutral-300">🌱 Melhora com o tempo</div>
+          <div class="p-3 border-l border-dark-600 text-sm text-center text-red-400">Não</div>
+          <div class="p-3 border-l border-dark-600 text-sm text-center text-red-400">Não</div>
+          <div class="p-3 border-l border-dark-600 text-sm text-center text-emerald-400 font-semibold">Sim — composto</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TÓPICO 6: Quando usar cada -->
+    <section id="topico-6" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">6</span>
+        <h2 class="text-2xl font-bold">🎯 Quando Usar Cada Abordagem</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">A escolha certa depende do tipo de dado, da frequência de consulta e do orçamento de tokens. <strong class="text-emerald-400">Sistemas maduros geralmente combinam as três abordagens</strong>.</p>
+
+      <div class="space-y-4 mb-6">
+        <div class="bg-dark-800 rounded-xl p-5 border border-dark-600">
+          <div class="flex items-start space-x-4">
+            <div class="w-10 h-10 rounded-full bg-neutral-700 flex items-center justify-center flex-shrink-0"><span class="text-neutral-300">🗄️</span></div>
+            <div>
+              <h4 class="font-semibold text-neutral-300 mb-1">Use Banco de Dados quando...</h4>
+              <p class="text-sm text-neutral-400">Dados transacionais (compras, usuários, logs), precisão e consistência crítica, queries estruturadas em grandes volumes, dados financeiros.</p>
+            </div>
+          </div>
+        </div>
+        <div class="bg-dark-800 rounded-xl p-5 border border-dark-600">
+          <div class="flex items-start space-x-4">
+            <div class="w-10 h-10 rounded-full bg-yellow-900/30 flex items-center justify-center flex-shrink-0"><span>🔍</span></div>
+            <div>
+              <h4 class="font-semibold text-yellow-400 mb-1">Use RAG quando...</h4>
+              <p class="text-sm text-neutral-400">Corpus imprevisível e grande (10.000+ documentos), queries raras e diversas, documentos que mudam frequentemente, busca ad-hoc em literatura acadêmica.</p>
+            </div>
+          </div>
+        </div>
+        <div class="bg-emerald-900/20 rounded-xl p-5 border border-emerald-500/30">
+          <div class="flex items-start space-x-4">
+            <div class="w-10 h-10 rounded-full bg-emerald-900/50 flex items-center justify-center flex-shrink-0"><span>📚</span></div>
+            <div>
+              <h4 class="font-semibold text-emerald-400 mb-1">Use LLM Wiki quando...</h4>
+              <p class="text-sm text-neutral-400">Conhecimento pessoal/institucional estável, consultas frequentes (mesmo tópico consultado múltiplas vezes), necessidade de conexões entre domínios, orçamento de API limitado, legibilidade humana importante.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/40 p-6">
+        <h3 class="text-lg font-semibold text-primary mb-3">💡 O Sistema Ideal: Combinação dos Três</h3>
+        <p class="text-neutral-300">Empresas maduras usam os três: <strong>DB</strong> para dados operacionais, <strong>RAG</strong> para pesquisa em documentos de clientes, e <strong>Wiki</strong> para o conhecimento institucional compilado pela equipe. Cada um no seu domínio certo.</p>
+      </div>
+    </section>
+
+    <!-- RESUMO -->
+    <section class="mb-12">
+      <div class="bg-gradient-to-br from-emerald-900/40 via-dark-800 to-dark-800 rounded-xl border border-emerald-500/30 p-8">
+        <h2 class="text-2xl font-bold mb-6 flex items-center"><span class="mr-3">✅</span> O que Aprendemos</h2>
+        <div class="space-y-4 mb-8">
+          <div class="flex items-start space-x-3"><span class="text-emerald-400 mt-1">✓</span><div><strong class="text-white">Banco de Dados</strong><span class="text-neutral-400"> — excelente para dados estruturados, mas sem semântica ou relações contextuais.</span></div></div>
+          <div class="flex items-start space-x-3"><span class="text-emerald-400 mt-1">✓</span><div><strong class="text-white">RAG</strong><span class="text-neutral-400"> — busca semântica poderosa, mas paga 7x+ mais tokens por query e não cria relações entre ideias.</span></div></div>
+          <div class="flex items-start space-x-3"><span class="text-emerald-400 mt-1">✓</span><div><strong class="text-white">LLM Wiki</strong><span class="text-neutral-400"> — pré-compila o conhecimento, usa ~5% dos tokens do RAG, cria relações automáticas e melhora com o tempo.</span></div></div>
+          <div class="flex items-start space-x-3"><span class="text-emerald-400 mt-1">✓</span><div><strong class="text-white">Não existe bala de prata</strong><span class="text-neutral-400"> — sistemas maduros combinam as três abordagens cada uma no seu domínio ideal.</span></div></div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-4 mb-8">
+          <h3 class="font-semibold text-emerald-400 mb-2">Próximo Módulo:</h3>
+          <p class="text-neutral-300">1.4 — A Arquitetura de 3 Camadas: raw/, wiki/, CLAUDE.md, index.md e log.md em detalhes.</p>
+        </div>
+        <div class="flex flex-col sm:flex-row gap-4">
+          <a href="modulo-1-2.html" class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors">← Módulo 1.2</a>
+          <a href="modulo-1-4.html" class="flex-1 text-center px-6 py-3 bg-emerald-600 text-white rounded-lg font-semibold hover:bg-emerald-500 transition-colors">Módulo 1.4: Arquitetura →</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="border-t border-dark-600 py-8 mt-8"><div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm"><p>2Cérebro — Módulo 1.3 — 2026</p></div></footer>
+  <script>
+    const tt=document.getElementById('theme-toggle');const di=document.getElementById('theme-toggle-dark-icon');const li=document.getElementById('theme-toggle-light-icon');const html=document.documentElement;
+    if(localStorage.getItem('theme')==='light'){di.classList.remove('hidden');html.classList.remove('dark');}else{li.classList.remove('hidden');}
+    tt.addEventListener('click',()=>{di.classList.toggle('hidden');li.classList.toggle('hidden');html.classList.toggle('dark');localStorage.setItem('theme',html.classList.contains('dark')?'dark':'light');});
+  </script>
+</body>
+</html>

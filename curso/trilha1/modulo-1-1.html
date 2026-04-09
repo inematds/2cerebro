@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Módulo 1.1 — O que é o Segundo Cérebro? | 2Cérebro</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config={darkMode:'class',theme:{extend:{colors:{primary:'#FACC15',dark:{900:'#111827',800:'#1f2937',700:'#374151',600:'#4b5563'}}}}}</script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body{font-family:'Inter',sans-serif;} .dark body{background-color:#111827;}
+    html:not(.dark) body{background-color:#f8fafc;}
+    html:not(.dark) .bg-dark-900{background-color:#ffffff;}
+    html:not(.dark) .bg-dark-800{background-color:#f9fafb;}
+    html:not(.dark) .bg-dark-700{background-color:#f3f4f6;}
+    html:not(.dark) .bg-dark-600{background-color:#e5e7eb;}
+    html:not(.dark) .text-neutral-100{color:#111827;}
+    html:not(.dark) .text-neutral-300{color:#4b5563;}
+    html:not(.dark) .text-neutral-400{color:#6b7280;}
+    html:not(.dark) .text-neutral-500{color:#9ca3af;}
+    html:not(.dark) .border-dark-600{border-color:#d1d5db;}
+    html:not(.dark) .border-dark-700{border-color:#e5e7eb;}
+    html:not(.dark) .text-emerald-400{color:#059669;}
+    html:not(.dark) .bg-emerald-500\/20{background-color:rgba(5,150,105,0.12);}
+    html:not(.dark) .border-emerald-500\/30{border-color:rgba(5,150,105,0.25);}
+    html:not(.dark) [class*="bg-gradient-to"]{background-image:none!important;}
+    html:not(.dark) .text-primary{color:#a16207;}
+    html:not(.dark) .bg-primary\/10{background-color:rgba(161,98,7,0.08);}
+    html:not(.dark) .border-primary\/40{border-color:rgba(161,98,7,0.25);}
+    html:not(.dark) .text-sky-400{color:#0369a1;}
+    html:not(.dark) .text-yellow-400{color:#a16207;}
+    html:not(.dark) .hover\:text-sky-300:hover{color:#0284c7;}
+    html:not(.dark) .hover\:text-yellow-300:hover{color:#854d0e;}
+    html:not(.dark) .bg-dark-900\/95{background-color:rgba(255,255,255,0.95);}
+  </style>
+</head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen">
+
+  <nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-14">
+        <div class="flex items-center space-x-4">
+          <a href="../../index.html" class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300"><span class="text-2xl">🧠</span><span class="font-bold text-lg hidden sm:inline">2Cérebro</span></a>
+          <span class="text-neutral-600">|</span>
+          <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300 text-sm font-medium">INEMA.CLUB</a>
+        </div>
+        <div class="flex items-center space-x-1 sm:space-x-2">
+          <a href="index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-emerald-400 bg-emerald-500/10"><span class="sm:hidden">T1</span><span class="hidden sm:inline">Fundamentos</span></a>
+          <a href="../trilha2/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors"><span class="sm:hidden">T2</span><span class="hidden sm:inline">Implementação</span></a>
+          <a href="../trilha3/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors"><span class="sm:hidden">T3</span><span class="hidden sm:inline">Avançado</span></a>
+          <button id="theme-toggle" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2">
+            <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+            <svg id="theme-toggle-light-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- BREADCRUMB -->
+  <nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+    <div class="flex items-center space-x-2 text-sm text-neutral-400">
+      <a href="../../index.html" class="hover:text-emerald-400">Início</a>
+      <span>/</span>
+      <a href="index.html" class="hover:text-emerald-400">Trilha 1 — Fundamentos</a>
+      <span>/</span>
+      <span class="text-emerald-400">Módulo 1.1</span>
+    </div>
+  </nav>
+
+  <!-- HEADER -->
+  <header class="bg-gradient-to-br from-emerald-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <span class="inline-block px-3 py-1 bg-emerald-500/20 text-emerald-400 text-xs font-semibold rounded-full mb-4">MÓDULO 1.1</span>
+      <h1 class="text-3xl sm:text-4xl font-bold mb-4">🧠 O que é o Segundo Cérebro?</h1>
+      <p class="text-lg text-neutral-400 max-w-3xl">A filosofia da memória aumentada: por que nossa memória falha, como o LLM atua como compilador e por que um sistema externo multiplica sua inteligência.</p>
+      <div class="grid grid-cols-4 gap-4 mt-8 max-w-lg">
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-emerald-400">6</div><div class="text-xs text-neutral-400">Tópicos</div></div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-emerald-400">30</div><div class="text-xs text-neutral-400">Minutos</div></div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-emerald-400">Base</div><div class="text-xs text-neutral-400">Nível</div></div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-emerald-400">Teoria</div><div class="text-xs text-neutral-400">Tipo</div></div>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+    <!-- TÓPICO 1 -->
+    <section id="topico-1" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">1</span>
+        <h2 class="text-2xl font-bold">🐘 Por que nossa memória falha</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">O cérebro humano é extraordinário para raciocinar e criar, mas péssimo para armazenar informação de longo prazo. <strong class="text-emerald-400">A curva de Ebbinghaus</strong> mostra que esquecemos ~70% do que aprendemos em 24 horas — e isso não é um bug, é uma feature evolutiva.</p>
+
+      <!-- SVG: Ebbinghaus forgetting curve -->
+      <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+        <h3 class="text-base font-semibold text-emerald-400 mb-4">📉 Curva do Esquecimento (Ebbinghaus)</h3>
+        <svg viewBox="0 0 500 220" class="w-full" xmlns="http://www.w3.org/2000/svg">
+          <!-- Grid -->
+          <line x1="60" y1="20" x2="60" y2="180" stroke="#374151" stroke-width="1"/>
+          <line x1="60" y1="180" x2="480" y2="180" stroke="#374151" stroke-width="1"/>
+          <!-- Y axis labels -->
+          <text x="50" y="25" text-anchor="end" fill="#6b7280" font-size="9">100%</text>
+          <text x="50" y="75" text-anchor="end" fill="#6b7280" font-size="9">60%</text>
+          <text x="50" y="125" text-anchor="end" fill="#6b7280" font-size="9">30%</text>
+          <text x="50" y="175" text-anchor="end" fill="#6b7280" font-size="9">0%</text>
+          <!-- Grid lines -->
+          <line x1="60" y1="25" x2="480" y2="25" stroke="#374151" stroke-width="0.5" stroke-dasharray="3,3"/>
+          <line x1="60" y1="75" x2="480" y2="75" stroke="#374151" stroke-width="0.5" stroke-dasharray="3,3"/>
+          <line x1="60" y1="125" x2="480" y2="125" stroke="#374151" stroke-width="0.5" stroke-dasharray="3,3"/>
+          <!-- X axis labels -->
+          <text x="60" y="195" text-anchor="middle" fill="#6b7280" font-size="9">Agora</text>
+          <text x="150" y="195" text-anchor="middle" fill="#6b7280" font-size="9">1 hora</text>
+          <text x="240" y="195" text-anchor="middle" fill="#6b7280" font-size="9">1 dia</text>
+          <text x="330" y="195" text-anchor="middle" fill="#6b7280" font-size="9">1 semana</text>
+          <text x="420" y="195" text-anchor="middle" fill="#6b7280" font-size="9">1 mês</text>
+          <!-- Forgetting curve - memory WITHOUT system -->
+          <path d="M 60 25 Q 100 40 150 80 Q 200 115 240 135 Q 300 150 330 158 Q 380 165 420 168 Q 450 170 480 171" stroke="#f87171" stroke-width="2.5" fill="none"/>
+          <!-- Memory WITH second brain -->
+          <path d="M 60 25 L 60 25 Q 100 28 150 35 Q 200 40 240 45 Q 300 50 330 52 Q 380 54 420 55 Q 450 56 480 56" stroke="#10b981" stroke-width="2.5" fill="none" stroke-dasharray="5,3"/>
+          <!-- Labels -->
+          <text x="380" y="160" fill="#f87171" font-size="9">Sem sistema</text>
+          <text x="380" y="48" fill="#10b981" font-size="9">Com 2Cérebro</text>
+          <!-- Annotations -->
+          <circle cx="240" cy="135" r="4" fill="#f87171"/>
+          <text x="250" y="132" fill="#f87171" font-size="8">~30% restante</text>
+          <circle cx="240" cy="45" r="4" fill="#10b981"/>
+          <text x="250" y="42" fill="#10b981" font-size="8">~90% preservado</text>
+        </svg>
+      </div>
+
+      <div class="bg-gradient-to-br from-emerald-900/30 to-dark-800 rounded-xl border border-emerald-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-emerald-400 mb-4 flex items-center"><span class="mr-2">🧬</span> Por que o Esquecimento é Evolutivo</h3>
+        <p class="text-neutral-300 mb-4">O esquecimento não é falha — é filtro. O cérebro elimina informação pouco usada para economizar energia e manter a velocidade cognitiva. O problema é que no mundo moderno, <strong class="text-emerald-400">a quantidade de informação relevante supera a capacidade de retenção</strong>.</p>
+        <ul class="space-y-2 text-neutral-300">
+          <li class="flex items-start space-x-2"><span class="text-emerald-400 mt-1">•</span><span>Trabalhadores do conhecimento consomem ~74GB de informação por dia</span></li>
+          <li class="flex items-start space-x-2"><span class="text-emerald-400 mt-1">•</span><span>A memória de trabalho comporta apenas 4±1 chunks simultâneos</span></li>
+          <li class="flex items-start space-x-2"><span class="text-emerald-400 mt-1">•</span><span>Sem revisão, 90% de uma aula é esquecida em 1 semana</span></li>
+        </ul>
+      </div>
+
+      <div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center"><span class="mr-2">📊</span> Dados que Chocam</h3>
+        <ul class="space-y-2 text-neutral-300">
+          <li><strong>70%</strong> — do que você aprende hoje será esquecido amanhã sem revisão</li>
+          <li><strong>4</strong> — itens máximos na memória de trabalho (Miller's Law)</li>
+          <li><strong>400x</strong> — velocidade de criação de informação vs. 1970</li>
+          <li><strong>95%</strong> — redução de tokens ao usar wiki compilado vs. RAG</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- TÓPICO 2 -->
+    <section id="topico-2" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">2</span>
+        <h2 class="text-2xl font-bold">📚 A Metáfora do Segundo Cérebro</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">Externalizar o conhecimento não é fraqueza — é a estratégia dos gênios. Leonardo da Vinci tinha cadernos. Leibniz criou o cálculo em um sistema de notas. <strong class="text-emerald-400">O segundo cérebro libera o primeiro para criar</strong>.</p>
+
+      <!-- SVG: Two brains concept -->
+      <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+        <h3 class="text-base font-semibold text-emerald-400 mb-4">🧠 Cérebro Biológico vs. Segundo Cérebro</h3>
+        <svg viewBox="0 0 500 200" class="w-full" xmlns="http://www.w3.org/2000/svg">
+          <!-- Brain 1: Biological -->
+          <ellipse cx="120" cy="90" rx="80" ry="65" fill="#1f2937" stroke="#f87171" stroke-width="1.5"/>
+          <text x="120" y="75" text-anchor="middle" font-size="28">🧠</text>
+          <text x="120" y="100" text-anchor="middle" fill="#f87171" font-size="11" font-weight="bold">Cérebro Biológico</text>
+          <text x="120" y="116" text-anchor="middle" fill="#9ca3af" font-size="9">Esquece 70%/dia</text>
+          <text x="120" y="130" text-anchor="middle" fill="#9ca3af" font-size="9">4 itens na memória</text>
+          <text x="120" y="144" text-anchor="middle" fill="#9ca3af" font-size="9">Perde contexto</text>
+
+          <!-- Arrow -->
+          <path d="M 205 90 L 295 90" stroke="#FACC15" stroke-width="2" marker-end="url(#yArr)"/>
+          <text x="250" y="82" text-anchor="middle" fill="#FACC15" font-size="9">libera</text>
+          <text x="250" y="104" text-anchor="middle" fill="#FACC15" font-size="9">energiza</text>
+
+          <!-- Brain 2: Second Brain -->
+          <rect x="310" y="25" width="165" height="130" rx="14" fill="#1f2937" stroke="#10b981" stroke-width="1.5"/>
+          <text x="392" y="50" text-anchor="middle" fill="#10b981" font-size="11" font-weight="bold">📖 Segundo Cérebro</text>
+          <text x="392" y="70" text-anchor="middle" fill="#9ca3af" font-size="8">LLM + Obsidian Wiki</text>
+          <rect x="322" y="80" width="143" height="15" rx="3" fill="#374151"/>
+          <text x="393" y="91" text-anchor="middle" fill="#d1d5db" font-size="8">✓ Memória ilimitada</text>
+          <rect x="322" y="100" width="143" height="15" rx="3" fill="#374151"/>
+          <text x="393" y="111" text-anchor="middle" fill="#d1d5db" font-size="8">✓ Conexões automáticas</text>
+          <rect x="322" y="120" width="143" height="15" rx="3" fill="#374151"/>
+          <text x="393" y="131" text-anchor="middle" fill="#d1d5db" font-size="8">✓ Persistência entre sessões</text>
+
+          <defs>
+            <marker id="yArr" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto">
+              <path d="M 0 0 L 8 4 L 0 8 z" fill="#FACC15"/>
+            </marker>
+          </defs>
+        </svg>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+          <h4 class="font-bold text-emerald-400 mb-4">✓ O que o 2Cérebro faz</h4>
+          <ul class="space-y-3 text-neutral-300">
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Armazena conhecimento indefinidamente em Markdown</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Cria links entre ideias automaticamente</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Responde perguntas usando o conhecimento compilado</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Melhora com cada nova ingestão</span></li>
+          </ul>
+        </div>
+        <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+          <h4 class="font-bold text-red-400 mb-4">✗ O que ele NÃO substitui</h4>
+          <ul class="space-y-3 text-neutral-300">
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Pensamento crítico e julgamento humano</span></li>
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Curadoria das fontes (garbage in = garbage out)</span></li>
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Criatividade original (ele amplifica, não cria)</span></li>
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>A leitura das fontes originais quando necessário</span></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- TÓPICO 3 -->
+    <section id="topico-3" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">3</span>
+        <h2 class="text-2xl font-bold">🤖 O LLM como Compilador de Conhecimento</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">A metáfora do compilador é precisa: assim como um compilador transforma código-fonte em código executável, o LLM transforma <strong class="text-emerald-400">fontes brutas em conhecimento estruturado e consultável</strong>.</p>
+
+      <!-- SVG: Compiler analogy -->
+      <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+        <h3 class="text-base font-semibold text-emerald-400 mb-4">⚙️ Analogia com Compilador de Código</h3>
+        <svg viewBox="0 0 500 160" class="w-full" xmlns="http://www.w3.org/2000/svg">
+          <!-- Code compiler row -->
+          <text x="10" y="30" fill="#9ca3af" font-size="9" font-weight="bold">CÓDIGO:</text>
+          <rect x="70" y="15" width="100" height="30" rx="6" fill="#374151" stroke="#6b7280" stroke-width="1"/>
+          <text x="120" y="35" text-anchor="middle" fill="#d1d5db" font-size="9">código-fonte.c</text>
+          <path d="M 175 30 L 215 30" stroke="#6b7280" stroke-width="1.5" marker-end="url(#gArr)"/>
+          <rect x="220" y="12" width="80" height="36" rx="6" fill="#1f2937" stroke="#FACC15" stroke-width="1.5"/>
+          <text x="260" y="28" text-anchor="middle" fill="#FACC15" font-size="9" font-weight="bold">gcc</text>
+          <text x="260" y="42" text-anchor="middle" fill="#9ca3af" font-size="8">compilador</text>
+          <path d="M 305 30 L 345 30" stroke="#6b7280" stroke-width="1.5" marker-end="url(#gArr)"/>
+          <rect x="350" y="15" width="100" height="30" rx="6" fill="#374151" stroke="#10b981" stroke-width="1"/>
+          <text x="400" y="35" text-anchor="middle" fill="#10b981" font-size="9">programa.exe</text>
+
+          <!-- Knowledge compiler row -->
+          <text x="10" y="90" fill="#9ca3af" font-size="9" font-weight="bold">WIKI:</text>
+          <rect x="70" y="75" width="100" height="30" rx="6" fill="#374151" stroke="#6b7280" stroke-width="1"/>
+          <text x="120" y="93" text-anchor="middle" fill="#d1d5db" font-size="9">raw/artigo.md</text>
+          <path d="M 175 90 L 215 90" stroke="#10b981" stroke-width="1.5" marker-end="url(#gArr2)"/>
+          <rect x="220" y="72" width="80" height="36" rx="6" fill="#1f2937" stroke="#FACC15" stroke-width="2"/>
+          <text x="260" y="88" text-anchor="middle" fill="#FACC15" font-size="9" font-weight="bold">🤖 LLM</text>
+          <text x="260" y="102" text-anchor="middle" fill="#9ca3af" font-size="8">compilador</text>
+          <path d="M 305 90 L 345 90" stroke="#10b981" stroke-width="1.5" marker-end="url(#gArr2)"/>
+          <rect x="350" y="75" width="100" height="30" rx="6" fill="#374151" stroke="#10b981" stroke-width="1"/>
+          <text x="400" y="93" text-anchor="middle" fill="#10b981" font-size="9">wiki/ml.md ✓</text>
+
+          <!-- Parallel lines -->
+          <line x1="60" y1="50" x2="480" y2="50" stroke="#374151" stroke-width="0.5" stroke-dasharray="4,4"/>
+          <text x="10" y="140" fill="#9ca3af" font-size="8">Ambos: entrada bruta → processamento → saída estruturada e executável</text>
+
+          <defs>
+            <marker id="gArr" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto"><path d="M 0 0 L 6 3 L 0 6 z" fill="#6b7280"/></marker>
+            <marker id="gArr2" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto"><path d="M 0 0 L 6 3 L 0 6 z" fill="#10b981"/></marker>
+          </defs>
+        </svg>
+      </div>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/40 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">💡</span> Dica: Sessões vs. Compilações</h3>
+        <p class="text-neutral-300">Pense em cada sessão com o LLM como uma "compilação parcial". O wiki vai sendo construído incrementalmente — cada ingestão adiciona ao compilado anterior. Ao contrário de uma conversa comum que recomeça do zero, <strong>o wiki persiste e cresce</strong>.</p>
+      </div>
+    </section>
+
+    <!-- TÓPICO 4 -->
+    <section id="topico-4" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">4</span>
+        <h2 class="text-2xl font-bold">🔗 Persistência Entre Sessões</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">O maior problema dos LLMs para uso como segundo cérebro é a ausência de memória. Cada sessão começa do zero. <strong class="text-emerald-400">O wiki resolve isso ao externalizar o conhecimento em arquivos</strong> — que existem independentemente do LLM.</p>
+
+      <!-- Timeline: session problem vs solution -->
+      <div class="space-y-4 mb-6">
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-12 h-12 rounded-full bg-red-500/20 flex items-center justify-center">
+            <span class="text-red-400 font-bold text-sm">❌</span>
+          </div>
+          <div class="flex-1 bg-dark-800 rounded-xl p-4 border border-dark-600">
+            <h4 class="font-semibold text-red-400 mb-1">Sem wiki — LLM padrão</h4>
+            <p class="text-sm text-neutral-400">Sessão 1 → aprende → fecha. Sessão 2 → começa do zero. Todo aprendizado da sessão 1 se perdeu. Você repete contexto a cada conversa.</p>
+          </div>
+        </div>
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-12 h-12 rounded-full bg-emerald-500/20 flex items-center justify-center">
+            <span class="text-emerald-400 font-bold text-sm">✓</span>
+          </div>
+          <div class="flex-1 bg-dark-800 rounded-xl p-4 border border-dark-600">
+            <h4 class="font-semibold text-emerald-400 mb-1">Com wiki — 2Cérebro</h4>
+            <p class="text-sm text-neutral-400">Sessão 1 → aprende → escreve wiki/ → fecha. Sessão 2 → lê wiki/ → continua exatamente do ponto onde parou. O conhecimento persiste nos arquivos Markdown.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-blue-400 mb-3">📂 O Arquivo como Memória</h3>
+        <p class="text-neutral-300 mb-3">A beleza do sistema é sua simplicidade: o "banco de dados" é uma pasta de arquivos .md. Não há servidor, não há embeddings, não há infraestrutura. O Obsidian é apenas um visualizador. O Git é o controle de versão. O Claude Code é o processador.</p>
+        <div class="bg-dark-800/50 rounded-lg p-3 font-mono text-sm">
+          <div class="text-emerald-400">vault/</div>
+          <div class="ml-4 text-neutral-400">├── raw/ <span class="text-neutral-600"># imutável</span></div>
+          <div class="ml-4 text-neutral-400">├── wiki/ <span class="text-neutral-600"># compilado pelo LLM</span></div>
+          <div class="ml-4 text-neutral-400">├── CLAUDE.md <span class="text-neutral-600"># regras</span></div>
+          <div class="ml-4 text-neutral-400">├── index.md <span class="text-neutral-600"># catálogo</span></div>
+          <div class="ml-4 text-neutral-400">└── log.md <span class="text-neutral-600"># histórico</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TÓPICO 5 -->
+    <section id="topico-5" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">5</span>
+        <h2 class="text-2xl font-bold">📈 Sistema que Cresce com o Tempo</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">Diferente de um banco de dados que apenas cresce em linhas, o wiki cresce em <strong class="text-emerald-400">densidade e conexões</strong>. Cada nova ingestão não só adiciona páginas — ela enriquece as páginas existentes com novos links e contextos.</p>
+
+      <!-- SVG: Compounding knowledge -->
+      <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+        <h3 class="text-base font-semibold text-emerald-400 mb-4">📈 Valor Composto do Conhecimento</h3>
+        <svg viewBox="0 0 500 180" class="w-full" xmlns="http://www.w3.org/2000/svg">
+          <line x1="50" y1="20" x2="50" y2="160" stroke="#374151" stroke-width="1"/>
+          <line x1="50" y1="160" x2="480" y2="160" stroke="#374151" stroke-width="1"/>
+          <text x="40" y="25" text-anchor="end" fill="#6b7280" font-size="8">Alto</text>
+          <text x="40" y="160" text-anchor="end" fill="#6b7280" font-size="8">Baixo</text>
+          <text x="50" y="175" text-anchor="middle" fill="#6b7280" font-size="8">Mês 1</text>
+          <text x="180" y="175" text-anchor="middle" fill="#6b7280" font-size="8">Mês 3</text>
+          <text x="310" y="175" text-anchor="middle" fill="#6b7280" font-size="8">Mês 6</text>
+          <text x="440" y="175" text-anchor="middle" fill="#6b7280" font-size="8">Mês 12</text>
+          <!-- Linear growth (traditional notes) -->
+          <path d="M 50 155 L 180 140 L 310 125 L 440 110" stroke="#6b7280" stroke-width="2" fill="none" stroke-dasharray="4,3"/>
+          <text x="450" y="107" fill="#6b7280" font-size="8">Notas simples</text>
+          <!-- Exponential growth (wiki) -->
+          <path d="M 50 155 Q 150 145 180 130 Q 260 100 310 75 Q 380 40 440 25" stroke="#10b981" stroke-width="2.5" fill="none"/>
+          <text x="450" y="22" fill="#10b981" font-size="8">LLM Wiki</text>
+          <!-- Data points -->
+          <circle cx="50" cy="155" r="4" fill="#10b981"/>
+          <circle cx="180" cy="130" r="4" fill="#10b981"/>
+          <circle cx="310" cy="75" r="4" fill="#10b981"/>
+          <circle cx="440" cy="25" r="4" fill="#10b981"/>
+          <!-- Annotations -->
+          <text x="180" y="120" text-anchor="middle" fill="#10b981" font-size="7">links criam</text>
+          <text x="180" y="112" text-anchor="middle" fill="#10b981" font-size="7">valor extra</text>
+        </svg>
+      </div>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/40 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3">💡 O Efeito Rede do Conhecimento</h3>
+        <p class="text-neutral-300">Com 10 páginas wiki, você tem ~45 possíveis conexões. Com 100 páginas, ~4.950 possíveis conexões. O valor cresce quadraticamente com o número de nós — como o efeito Metcalfe nas redes de comunicação. <strong>Cada nova página torna todas as antigas mais valiosas.</strong></p>
+      </div>
+    </section>
+
+    <!-- TÓPICO 6 -->
+    <section id="topico-6" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">6</span>
+        <h2 class="text-2xl font-bold">🎯 Para Quem é o 2Cérebro?</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">O sistema é projetado para pessoas que consomem <strong class="text-emerald-400">muito conhecimento e precisam conectá-lo</strong>. Não é para quem precisa de busca simples — é para quem precisa de síntese e insights.</p>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+        <div class="bg-dark-800 rounded-xl border border-dark-600 p-5">
+          <div class="text-3xl mb-3">👨‍💻</div>
+          <h4 class="font-semibold text-emerald-400 mb-2">Desenvolvedores</h4>
+          <p class="text-sm text-neutral-400">Documentação técnica, decisões de arquitetura, pesquisa de bibliotecas — tudo conectado e acessível via prompt.</p>
+        </div>
+        <div class="bg-dark-800 rounded-xl border border-dark-600 p-5">
+          <div class="text-3xl mb-3">🔬</div>
+          <h4 class="font-semibold text-emerald-400 mb-2">Pesquisadores</h4>
+          <p class="text-sm text-neutral-400">Papers, experimentos, citações e sínteses — um wiki que conecta a literatura e acelera a descoberta de padrões.</p>
+        </div>
+        <div class="bg-dark-800 rounded-xl border border-dark-600 p-5">
+          <div class="text-3xl mb-3">💼</div>
+          <h4 class="font-semibold text-emerald-400 mb-2">Consultores</h4>
+          <p class="text-sm text-neutral-400">Metodologias, cases, frameworks — o segundo cérebro que lembra de tudo que você já aprendeu sobre cada cliente e domínio.</p>
+        </div>
+      </div>
+
+      <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-red-400 mb-3 flex items-center"><span class="mr-2">⚠️</span> Atenção: Não Funciona Sem Curadoria</h3>
+        <p class="text-neutral-300">O sistema amplifica a qualidade das fontes que você ingere. Se você ingerir artigos superficiais, você terá um wiki superficial. A curadoria das fontes é responsabilidade sua — o LLM compila, mas não julga a relevância do que você escolhe ingerir.</p>
+      </div>
+    </section>
+
+    <!-- RESUMO -->
+    <section class="mb-12">
+      <div class="bg-gradient-to-br from-emerald-900/40 via-dark-800 to-dark-800 rounded-xl border border-emerald-500/30 p-8">
+        <h2 class="text-2xl font-bold mb-6 flex items-center"><span class="mr-3">✅</span> O que Aprendemos</h2>
+        <div class="space-y-4 mb-8">
+          <div class="flex items-start space-x-3"><span class="text-emerald-400 mt-1">✓</span><div><strong class="text-white">Nossa memória esquece 70% em 24h</strong><span class="text-neutral-400"> — não é fraqueza, é design evolutivo que precisamos superar com sistemas externos.</span></div></div>
+          <div class="flex items-start space-x-3"><span class="text-emerald-400 mt-1">✓</span><div><strong class="text-white">O LLM é um compilador</strong><span class="text-neutral-400"> — transforma fontes brutas em conhecimento estruturado e interligado.</span></div></div>
+          <div class="flex items-start space-x-3"><span class="text-emerald-400 mt-1">✓</span><div><strong class="text-white">Persistência via arquivos Markdown</strong><span class="text-neutral-400"> — o wiki existe nos arquivos, não na memória do modelo.</span></div></div>
+          <div class="flex items-start space-x-3"><span class="text-emerald-400 mt-1">✓</span><div><strong class="text-white">Valor composto com o tempo</strong><span class="text-neutral-400"> — cada nova página torna todas as existentes mais valiosas.</span></div></div>
+          <div class="flex items-start space-x-3"><span class="text-emerald-400 mt-1">✓</span><div><strong class="text-white">Curadoria é responsabilidade humana</strong><span class="text-neutral-400"> — o sistema amplifica qualidade, não a cria.</span></div></div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-4 mb-8">
+          <h3 class="font-semibold text-emerald-400 mb-2">Próximo Módulo:</h3>
+          <p class="text-neutral-300">1.2 — Como o Conhecimento se Relaciona: grafos, backlinks e o Graph View do Obsidian.</p>
+        </div>
+        <div class="flex flex-col sm:flex-row gap-4">
+          <a href="index.html" class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors">← Voltar para Trilha 1</a>
+          <a href="modulo-1-2.html" class="flex-1 text-center px-6 py-3 bg-emerald-600 text-white rounded-lg font-semibold hover:bg-emerald-500 transition-colors">Próximo: Como o Conhecimento se Relaciona →</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="border-t border-dark-600 py-8 mt-8">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm"><p>2Cérebro — Módulo 1.1 — 2026</p></div>
+  </footer>
+
+  <script>
+    const tt=document.getElementById('theme-toggle');
+    const di=document.getElementById('theme-toggle-dark-icon');
+    const li=document.getElementById('theme-toggle-light-icon');
+    const html=document.documentElement;
+    if(localStorage.getItem('theme')==='light'){di.classList.remove('hidden');html.classList.remove('dark');}else{li.classList.remove('hidden');}
+    tt.addEventListener('click',()=>{di.classList.toggle('hidden');li.classList.toggle('hidden');html.classList.toggle('dark');localStorage.setItem('theme',html.classList.contains('dark')?'dark':'light');});
+  </script>
+</body>
+</html>
