@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Módulo 3.2 — Otimização e Escalabilidade | 2Cérebro</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config={darkMode:'class',theme:{extend:{colors:{primary:'#FACC15',dark:{900:'#111827',800:'#1f2937',700:'#374151',600:'#4b5563'}}}}}</script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body{font-family:'Inter',sans-serif;}
+    html:not(.dark) body{background-color:#f8fafc;}
+    html:not(.dark) .bg-dark-900{background-color:#ffffff;}
+    html:not(.dark) .bg-dark-800{background-color:#f9fafb;}
+    html:not(.dark) .bg-dark-700{background-color:#f3f4f6;}
+    html:not(.dark) .bg-dark-600{background-color:#e5e7eb;}
+    html:not(.dark) .text-neutral-100{color:#111827;}
+    html:not(.dark) .text-neutral-300{color:#4b5563;}
+    html:not(.dark) .text-neutral-400{color:#6b7280;}
+    html:not(.dark) .text-neutral-500{color:#9ca3af;}
+    html:not(.dark) .border-dark-600{border-color:#d1d5db;}
+    html:not(.dark) .border-dark-700{border-color:#e5e7eb;}
+    html:not(.dark) .text-purple-400{color:#7c3aed;}
+    html:not(.dark) .bg-purple-500\/20{background-color:rgba(124,58,237,0.12);}
+    html:not(.dark) .border-purple-500\/30{border-color:rgba(124,58,237,0.25);}
+    html:not(.dark) [class*="bg-gradient-to"]{background-image:none!important;}
+    html:not(.dark) .text-primary{color:#a16207;}
+    html:not(.dark) .bg-primary\/10{background-color:rgba(161,98,7,0.08);}
+    html:not(.dark) .border-primary\/40{border-color:rgba(161,98,7,0.25);}
+    html:not(.dark) .text-sky-400{color:#0369a1;}
+    html:not(.dark) .text-yellow-400{color:#a16207;}
+    html:not(.dark) .hover\:text-sky-300:hover{color:#0284c7;}
+    html:not(.dark) .hover\:text-yellow-300:hover{color:#854d0e;}
+    html:not(.dark) .bg-dark-900\/95{background-color:rgba(255,255,255,0.95);}
+  </style>
+</head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen">
+
+  <nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-14">
+        <div class="flex items-center space-x-4">
+          <a href="../../index.html" class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300"><span class="text-2xl">🧠</span><span class="font-bold text-lg hidden sm:inline">2Cérebro</span></a>
+          <span class="text-neutral-600">|</span>
+          <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300 text-sm font-medium">INEMA.CLUB</a>
+        </div>
+        <div class="flex items-center space-x-1 sm:space-x-2">
+          <a href="../trilha1/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors"><span class="sm:hidden">T1</span><span class="hidden sm:inline">Fundamentos</span></a>
+          <a href="../trilha2/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors"><span class="sm:hidden">T2</span><span class="hidden sm:inline">Implementação</span></a>
+          <a href="index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-purple-400 bg-purple-500/10"><span class="sm:hidden">T3</span><span class="hidden sm:inline">Avançado</span></a>
+          <button id="theme-toggle" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2">
+            <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+            <svg id="theme-toggle-light-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+    <div class="flex items-center space-x-2 text-sm text-neutral-400">
+      <a href="../../index.html" class="hover:text-purple-400">Início</a>
+      <span>/</span>
+      <a href="index.html" class="hover:text-purple-400">Trilha 3 — Avançado</a>
+      <span>/</span>
+      <span class="text-purple-400">Módulo 3.2</span>
+    </div>
+  </nav>
+
+  <header class="bg-gradient-to-br from-purple-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <span class="inline-block px-3 py-1 bg-purple-500/20 text-purple-400 text-xs font-semibold rounded-full mb-4">MÓDULO 3.2</span>
+      <h1 class="text-3xl sm:text-4xl font-bold mb-4">⚡ Otimização e Escalabilidade</h1>
+      <p class="text-lg text-neutral-400 max-w-3xl">Quando o vault cresce para centenas de notas: estratégias de indexação hierárquica, compressão de contexto e gerenciamento de tokens em escala.</p>
+      <div class="grid grid-cols-4 gap-4 mt-8 max-w-lg">
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-purple-400">6</div><div class="text-xs text-neutral-400">Tópicos</div></div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-purple-400">55</div><div class="text-xs text-neutral-400">Minutos</div></div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-purple-400">Avançado</div><div class="text-xs text-neutral-400">Nível</div></div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-purple-400">Prática</div><div class="text-xs text-neutral-400">Tipo</div></div>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+    <!-- TÓPICO 1 -->
+    <section id="topico-1" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">1</span>
+        <h2 class="text-2xl font-bold">📏 O Problema de Escala</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">Com 50 notas, qualquer abordagem funciona. Com 500 notas, o LLM não pode ler tudo a cada consulta. Com 5.000, precisamos de <strong class="text-purple-400">indexação hierárquica e estratégia de contexto</strong>.</p>
+
+      <!-- SVG: Scale problem -->
+      <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+        <h3 class="text-base font-semibold text-purple-400 mb-4">📈 Tokens vs. Notas no Vault</h3>
+        <svg viewBox="0 0 680 220" class="w-full" xmlns="http://www.w3.org/2000/svg">
+          <!-- Axes -->
+          <line x1="60" y1="20" x2="60" y2="180" stroke="#4b5563" stroke-width="1.5"/>
+          <line x1="60" y1="180" x2="640" y2="180" stroke="#4b5563" stroke-width="1.5"/>
+
+          <!-- Y axis labels -->
+          <text x="10" y="185" fill="#6b7280" font-size="8">0</text>
+          <text x="10" y="145" fill="#6b7280" font-size="8">25k</text>
+          <text x="10" y="105" fill="#6b7280" font-size="8">50k</text>
+          <text x="10" y="65" fill="#6b7280" font-size="8">75k</text>
+          <text x="10" y="25" fill="#6b7280" font-size="8">100k</text>
+          <text x="55" y="8" fill="#9ca3af" font-size="8" text-anchor="middle">tokens</text>
+
+          <!-- X axis labels -->
+          <text x="130" y="195" fill="#6b7280" font-size="8" text-anchor="middle">50 notas</text>
+          <text x="270" y="195" fill="#6b7280" font-size="8" text-anchor="middle">200 notas</text>
+          <text x="410" y="195" fill="#6b7280" font-size="8" text-anchor="middle">500 notas</text>
+          <text x="570" y="195" fill="#6b7280" font-size="8" text-anchor="middle">1000 notas</text>
+
+          <!-- Grid -->
+          <line x1="60" y1="140" x2="640" y2="140" stroke="#1f2937" stroke-width="1"/>
+          <line x1="60" y1="100" x2="640" y2="100" stroke="#1f2937" stroke-width="1"/>
+          <line x1="60" y1="60" x2="640" y2="60" stroke="#1f2937" stroke-width="1"/>
+
+          <!-- Line 1: Naive (read all) - steep red -->
+          <polyline points="60,172 130,160 270,130 410,80 570,20" stroke="#ef4444" stroke-width="2" fill="none"/>
+          <text x="580" y="18" fill="#ef4444" font-size="8">Ler tudo</text>
+
+          <!-- Line 2: With index.md -->
+          <polyline points="60,172 130,168 270,158 410,142 570,120" stroke="#FACC15" stroke-width="2" fill="none"/>
+          <text x="580" y="118" fill="#FACC15" font-size="8">index.md</text>
+
+          <!-- Line 3: Hierarchical index -->
+          <polyline points="60,172 130,170 270,165 410,158 570,148" stroke="#10b981" stroke-width="2" fill="none"/>
+          <text x="580" y="146" fill="#10b981" font-size="8">Hierárquico</text>
+
+          <!-- Context limit line -->
+          <line x1="60" y1="40" x2="640" y2="40" stroke="#ef4444" stroke-width="1" stroke-dasharray="5,5" opacity="0.5"/>
+          <text x="65" y="36" fill="#ef4444" font-size="7">limite de contexto (~128k tokens)</text>
+
+          <!-- Danger zone -->
+          <rect x="350" y="20" width="290" height="20" rx="3" fill="#ef4444" opacity="0.1"/>
+          <text x="490" y="34" fill="#ef4444" font-size="8" text-anchor="middle">⚠ zona de risco para "Ler tudo"</text>
+
+          <!-- Points -->
+          <circle cx="130" cy="172" r="4" fill="#ef4444"/>
+          <circle cx="130" cy="168" r="4" fill="#FACC15"/>
+          <circle cx="130" cy="170" r="4" fill="#10b981"/>
+
+          <!-- Legend -->
+          <line x1="65" y1="208" x2="85" y2="208" stroke="#ef4444" stroke-width="2"/>
+          <text x="90" y="212" fill="#9ca3af" font-size="8">Ler todas as notas</text>
+          <line x1="195" y1="208" x2="215" y2="208" stroke="#FACC15" stroke-width="2"/>
+          <text x="220" y="212" fill="#9ca3af" font-size="8">Via index.md</text>
+          <line x1="300" y1="208" x2="320" y2="208" stroke="#10b981" stroke-width="2"/>
+          <text x="325" y="212" fill="#9ca3af" font-size="8">Indexação hierárquica</text>
+        </svg>
+      </div>
+    </section>
+
+    <!-- TÓPICO 2 -->
+    <section id="topico-2" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">2</span>
+        <h2 class="text-2xl font-bold">🗂️ Indexação Hierárquica</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">A solução para vaults grandes é um <strong class="text-purple-400">índice de dois níveis</strong>: o index.md principal aponta para índices de subdomínio, que por sua vez apontam para notas individuais.</p>
+
+      <!-- SVG: Hierarchical index -->
+      <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+        <h3 class="text-base font-semibold text-purple-400 mb-4">🗂️ Índice Hierárquico de 2 Níveis</h3>
+        <svg viewBox="0 0 680 260" class="w-full" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <marker id="hi" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#7c3aed"/></marker>
+          </defs>
+          <!-- Root: index.md -->
+          <rect x="270" y="10" width="140" height="40" rx="6" fill="#2e1065" stroke="#7c3aed" stroke-width="2"/>
+          <text x="340" y="28" fill="#c084fc" font-size="10" text-anchor="middle" font-weight="bold">index.md</text>
+          <text x="340" y="42" fill="#d8b4fe" font-size="8" text-anchor="middle">Mapa principal (~2k tokens)</text>
+
+          <!-- Sub-indexes -->
+          <rect x="50" y="90" width="130" height="40" rx="6" fill="#1e3a5f" stroke="#3b82f6"/>
+          <text x="115" y="108" fill="#60a5fa" font-size="9" text-anchor="middle" font-weight="bold">index-fundamentos.md</text>
+          <text x="115" y="122" fill="#93c5fd" font-size="8" text-anchor="middle">45 notas listadas</text>
+
+          <rect x="205" y="90" width="130" height="40" rx="6" fill="#064e3b" stroke="#10b981"/>
+          <text x="270" y="108" fill="#10b981" font-size="9" text-anchor="middle" font-weight="bold">index-projetos.md</text>
+          <text x="270" y="122" fill="#6ee7b7" font-size="8" text-anchor="middle">32 projetos listados</text>
+
+          <rect x="360" y="90" width="130" height="40" rx="6" fill="#451a03" stroke="#FACC15"/>
+          <text x="425" y="108" fill="#FACC15" font-size="9" text-anchor="middle" font-weight="bold">index-pessoas.md</text>
+          <text x="425" y="122" fill="#fde68a" font-size="8" text-anchor="middle">28 pessoas listadas</text>
+
+          <rect x="515" y="90" width="130" height="40" rx="6" fill="#2e1065" stroke="#7c3aed"/>
+          <text x="580" y="108" fill="#c084fc" font-size="9" text-anchor="middle" font-weight="bold">index-refs.md</text>
+          <text x="580" y="122" fill="#d8b4fe" font-size="8" text-anchor="middle">67 referências</text>
+
+          <!-- Arrows root to sub -->
+          <line x1="310" y1="50" x2="160" y2="90" stroke="#7c3aed" stroke-width="1.5" marker-end="url(#hi)"/>
+          <line x1="330" y1="50" x2="290" y2="90" stroke="#7c3aed" stroke-width="1.5" marker-end="url(#hi)"/>
+          <line x1="350" y1="50" x2="420" y2="90" stroke="#7c3aed" stroke-width="1.5" marker-end="url(#hi)"/>
+          <line x1="370" y1="50" x2="570" y2="90" stroke="#7c3aed" stroke-width="1.5" marker-end="url(#hi)"/>
+
+          <!-- Individual notes (simplified) -->
+          <rect x="50" y="165" width="80" height="25" rx="4" fill="#111827" stroke="#374151"/>
+          <text x="90" y="181" fill="#6b7280" font-size="8" text-anchor="middle">pytorch.md</text>
+          <rect x="140" y="165" width="80" height="25" rx="4" fill="#111827" stroke="#374151"/>
+          <text x="180" y="181" fill="#6b7280" font-size="8" text-anchor="middle">transformers.md</text>
+
+          <rect x="240" y="165" width="80" height="25" rx="4" fill="#111827" stroke="#374151"/>
+          <text x="280" y="181" fill="#6b7280" font-size="8" text-anchor="middle">alpha.md</text>
+          <rect x="330" y="165" width="80" height="25" rx="4" fill="#111827" stroke="#374151"/>
+          <text x="370" y="181" fill="#6b7280" font-size="8" text-anchor="middle">beta.md</text>
+
+          <rect x="420" y="165" width="80" height="25" rx="4" fill="#111827" stroke="#374151"/>
+          <text x="460" y="181" fill="#6b7280" font-size="8" text-anchor="middle">joao.md</text>
+          <rect x="510" y="165" width="80" height="25" rx="4" fill="#111827" stroke="#374151"/>
+          <text x="550" y="181" fill="#6b7280" font-size="8" text-anchor="middle">maria.md</text>
+
+          <!-- Arrows sub to notes -->
+          <line x1="100" y1="130" x2="90" y2="165" stroke="#3b82f6" stroke-width="1" opacity="0.5"/>
+          <line x1="130" y1="130" x2="180" y2="165" stroke="#3b82f6" stroke-width="1" opacity="0.5"/>
+          <line x1="250" y1="130" x2="270" y2="165" stroke="#10b981" stroke-width="1" opacity="0.5"/>
+          <line x1="290" y1="130" x2="370" y2="165" stroke="#10b981" stroke-width="1" opacity="0.5"/>
+          <line x1="420" y1="130" x2="455" y2="165" stroke="#FACC15" stroke-width="1" opacity="0.5"/>
+          <line x1="440" y1="130" x2="550" y2="165" stroke="#FACC15" stroke-width="1" opacity="0.5"/>
+
+          <!-- Token cost annotation -->
+          <rect x="50" y="210" width="580" height="40" rx="6" fill="#111827" stroke="#374151"/>
+          <text x="340" y="228" fill="#9ca3af" font-size="9" text-anchor="middle">Custo de consulta: index.md (2k) + index-projetos.md (3k) + alpha.md (1.5k) = 6.5k tokens</text>
+          <text x="340" y="243" fill="#6b7280" font-size="8" text-anchor="middle">vs. ler tudo: 172 notas × 500 tokens = 86k tokens — 13× mais barato</text>
+        </svg>
+      </div>
+    </section>
+
+    <!-- TÓPICO 3 -->
+    <section id="topico-3" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">3</span>
+        <h2 class="text-2xl font-bold">🗜️ Compressão de Contexto</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">Para notas muito longas, o LLM pode criar uma <strong class="text-purple-400">versão comprimida</strong> — um resumo de 3-5 linhas que captura os fatos-chave. O index.md aponta para esses resumos, não para as notas completas.</p>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div class="bg-dark-800 rounded-xl border border-dark-600 p-5">
+          <div class="text-purple-400 font-semibold mb-3">Nota Completa (500 tokens)</div>
+          <pre class="text-xs text-neutral-400 overflow-x-auto"><code># Projeto Alpha — Fase 2
+
+## Contexto
+O projeto Alpha iniciou em Janeiro como...
+[histórico longo de 3 parágrafos]
+
+## Decisões Técnicas
+Em Fevereiro, o time decidiu migrar de...
+[detalhes de 5 decisões]
+
+## Status Atual
+O sprint 8 está em andamento...
+[atualizações semanais dos últimos 3 meses]
+
+## Riscos
+[lista de 12 riscos identificados]
+
+## Ação Items
+[50 items de backlog]</code></pre>
+        </div>
+        <div class="bg-dark-800 rounded-xl border border-dark-600 p-5">
+          <div class="text-purple-400 font-semibold mb-3">Resumo no Index (50 tokens)</div>
+          <pre class="text-xs text-neutral-400 overflow-x-auto"><code>## projeto-alpha
+Status: Sprint 8, 75% completo
+Tech: FastAPI + PostgreSQL
+Líder: [[joao-carlos]]
+Risco principal: bug em prod (P1)
+Demo: 2024-03-22 para cliente
+→ [[projeto-alpha]] (nota completa)</code></pre>
+          <div class="mt-3 bg-dark-700 rounded p-2">
+            <p class="text-xs text-emerald-400">10× menos tokens para decisão de leitura</p>
+            <p class="text-xs text-neutral-500">LLM decide se precisa da nota completa baseado no resumo</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/40 p-5">
+        <div class="text-primary font-semibold mb-2">💡 Padrão "Abstract + Full"</div>
+        <p class="text-sm text-neutral-300">Cada nota tem um resumo de 3-5 linhas no topo. O index.md replica esses resumos. O LLM lê resumos para decidir quais notas completas precisa — como um abstract científico.</p>
+      </div>
+    </section>
+
+    <!-- TÓPICO 4 -->
+    <section id="topico-4" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">4</span>
+        <h2 class="text-2xl font-bold">🔀 Sharding: Múltiplos Vaults</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">Quando um vault supera ~1.000 notas, considere <strong class="text-purple-400">sharding por domínio</strong>: múltiplos vaults especializados com um vault-raiz que os referencia.</p>
+
+      <!-- SVG: Sharding diagram -->
+      <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+        <h3 class="text-base font-semibold text-purple-400 mb-4">🔀 Arquitetura Multi-Vault</h3>
+        <svg viewBox="0 0 680 220" class="w-full" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <marker id="mv" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#c084fc"/></marker>
+          </defs>
+          <!-- Root vault -->
+          <rect x="270" y="10" width="140" height="60" rx="8" fill="#2e1065" stroke="#7c3aed" stroke-width="2"/>
+          <text x="340" y="33" fill="#c084fc" font-size="11" text-anchor="middle" font-weight="bold">🧠 vault-raiz</text>
+          <text x="340" y="48" fill="#d8b4fe" font-size="8" text-anchor="middle">index global</text>
+          <text x="340" y="62" fill="#d8b4fe" font-size="8" text-anchor="middle">ponteiros para sub-vaults</text>
+
+          <!-- Sub vaults -->
+          <rect x="30" y="120" width="140" height="80" rx="8" fill="#064e3b" stroke="#10b981" stroke-width="1.5"/>
+          <text x="100" y="145" fill="#10b981" font-size="10" text-anchor="middle" font-weight="bold">🔬 vault-tecnico</text>
+          <text x="100" y="160" fill="#6ee7b7" font-size="8" text-anchor="middle">Python, ML, infra</text>
+          <text x="100" y="174" fill="#6ee7b7" font-size="8" text-anchor="middle">800 notas</text>
+          <text x="100" y="188" fill="#4b5563" font-size="8" text-anchor="middle">~/tech-brain/</text>
+
+          <rect x="195" y="120" width="140" height="80" rx="8" fill="#1e3a5f" stroke="#3b82f6" stroke-width="1.5"/>
+          <text x="265" y="145" fill="#60a5fa" font-size="10" text-anchor="middle" font-weight="bold">📊 vault-negocios</text>
+          <text x="265" y="160" fill="#93c5fd" font-size="8" text-anchor="middle">Projetos, clientes</text>
+          <text x="265" y="174" fill="#93c5fd" font-size="8" text-anchor="middle">600 notas</text>
+          <text x="265" y="188" fill="#4b5563" font-size="8" text-anchor="middle">~/biz-brain/</text>
+
+          <rect x="360" y="120" width="140" height="80" rx="8" fill="#451a03" stroke="#FACC15" stroke-width="1.5"/>
+          <text x="430" y="145" fill="#FACC15" font-size="10" text-anchor="middle" font-weight="bold">📚 vault-pessoal</text>
+          <text x="430" y="160" fill="#fde68a" font-size="8" text-anchor="middle">Livros, estudos</text>
+          <text x="430" y="174" fill="#fde68a" font-size="8" text-anchor="middle">400 notas</text>
+          <text x="430" y="188" fill="#4b5563" font-size="8" text-anchor="middle">~/personal-brain/</text>
+
+          <rect x="525" y="120" width="140" height="80" rx="8" fill="#2e1065" stroke="#7c3aed" stroke-width="1.5"/>
+          <text x="595" y="145" fill="#c084fc" font-size="10" text-anchor="middle" font-weight="bold">👥 vault-pessoas</text>
+          <text x="595" y="160" fill="#d8b4fe" font-size="8" text-anchor="middle">Contatos, reuniões</text>
+          <text x="595" y="174" fill="#d8b4fe" font-size="8" text-anchor="middle">300 notas</text>
+          <text x="595" y="188" fill="#4b5563" font-size="8" text-anchor="middle">~/people-brain/</text>
+
+          <!-- Arrows -->
+          <line x1="310" y1="70" x2="140" y2="120" stroke="#c084fc" stroke-width="1.5" marker-end="url(#mv)"/>
+          <line x1="325" y1="70" x2="270" y2="120" stroke="#c084fc" stroke-width="1.5" marker-end="url(#mv)"/>
+          <line x1="355" y1="70" x2="420" y2="120" stroke="#c084fc" stroke-width="1.5" marker-end="url(#mv)"/>
+          <line x1="370" y1="70" x2="570" y2="120" stroke="#c084fc" stroke-width="1.5" marker-end="url(#mv)"/>
+        </svg>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="bg-dark-800 rounded-lg p-4 border border-emerald-500/30">
+          <div class="text-emerald-400 font-semibold mb-2">Vantagens</div>
+          <ul class="space-y-1 text-sm text-neutral-300">
+            <li>→ Consultas mais rápidas (contexto menor)</li>
+            <li>→ Colaboração possível por domínio</li>
+            <li>→ Agents especializados por vault</li>
+          </ul>
+        </div>
+        <div class="bg-dark-800 rounded-lg p-4 border border-red-500/30">
+          <div class="text-red-400 font-semibold mb-2">Desvantagens</div>
+          <ul class="space-y-1 text-sm text-neutral-300">
+            <li>→ Links cross-vault são mais complexos</li>
+            <li>→ Manutenção de múltiplos CLAUDE.md</li>
+            <li>→ Overhead de orquestração</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- TÓPICO 5 -->
+    <section id="topico-5" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">5</span>
+        <h2 class="text-2xl font-bold">🚀 Caching de Consultas Frequentes</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">Algumas consultas são feitas todo dia: status de projetos, dashboard de métricas, lista de tarefas. <strong class="text-purple-400">Pre-computar essas consultas</strong> reduz custo e latência.</p>
+
+      <div class="bg-dark-800 rounded-xl border border-dark-600 p-5 mb-6">
+        <h3 class="text-purple-400 font-semibold mb-3">Nota de Dashboard Pré-computado</h3>
+        <pre class="text-sm text-neutral-300 overflow-x-auto"><code><span class="text-neutral-500"># dashboard.md — atualizado diariamente pelo agente</span>
+
+<span class="text-purple-400">## Status (atualizado: 2024-03-20)</span>
+
+<span class="text-blue-400">### Projetos Ativos</span>
+| Projeto | Status | Prazo | Líder |
+|---------|--------|-------|-------|
+| Alpha | Sprint 8 — 75% | Mar 22 | João |
+| Beta | Em pausa | Abr 01 | Maria |
+
+<span class="text-blue-400">### Bloqueadores</span>
+- [P1] Bug PostgreSQL em Alpha (João, hoje)
+- [P2] Aprovação cliente para Beta (vendas, Thu)
+
+<span class="text-blue-400">### Esta Semana</span>
+- Demo Alpha — Sexta 14h
+- Standup Beta — Qui 10h
+
+<span class="text-neutral-500">Gerado por: agente-dashboard — raw/agenda/*.md</span></code></pre>
+      </div>
+    </section>
+
+    <!-- TÓPICO 6 -->
+    <section id="topico-6" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">6</span>
+        <h2 class="text-2xl font-bold">📊 Benchmarks e Metas de Performance</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">Defina metas de performance para seu vault. Um sistema lento ou caro vai ser abandonado — o objetivo é <strong class="text-purple-400">resposta em menos de 30 segundos e menos de 5k tokens por consulta</strong>.</p>
+
+      <div class="overflow-x-auto mb-6">
+        <table class="w-full text-sm border-collapse">
+          <thead>
+            <tr class="bg-dark-700">
+              <th class="text-left p-3 text-purple-400 border border-dark-600">Tamanho do Vault</th>
+              <th class="text-left p-3 text-purple-400 border border-dark-600">Estratégia</th>
+              <th class="text-left p-3 text-purple-400 border border-dark-600">Tokens/Consulta</th>
+              <th class="text-left p-3 text-purple-400 border border-dark-600">Latência</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="border-b border-dark-600">
+              <td class="p-3 text-neutral-300 border border-dark-600">&lt; 100 notas</td>
+              <td class="p-3 text-emerald-400 border border-dark-600">index.md simples</td>
+              <td class="p-3 text-neutral-300 border border-dark-600">2-5k</td>
+              <td class="p-3 text-neutral-300 border border-dark-600">&lt; 10s</td>
+            </tr>
+            <tr class="border-b border-dark-600">
+              <td class="p-3 text-neutral-300 border border-dark-600">100-500 notas</td>
+              <td class="p-3 text-blue-400 border border-dark-600">Índice hierárquico + resumos</td>
+              <td class="p-3 text-neutral-300 border border-dark-600">5-10k</td>
+              <td class="p-3 text-neutral-300 border border-dark-600">&lt; 20s</td>
+            </tr>
+            <tr class="border-b border-dark-600">
+              <td class="p-3 text-neutral-300 border border-dark-600">500-2.000 notas</td>
+              <td class="p-3 text-yellow-400 border border-dark-600">Multi-índice + dashboard cache</td>
+              <td class="p-3 text-neutral-300 border border-dark-600">8-15k</td>
+              <td class="p-3 text-neutral-300 border border-dark-600">&lt; 30s</td>
+            </tr>
+            <tr class="border-b border-dark-600">
+              <td class="p-3 text-neutral-300 border border-dark-600">&gt; 2.000 notas</td>
+              <td class="p-3 text-purple-400 border border-dark-600">Sharding + agentes especializados</td>
+              <td class="p-3 text-neutral-300 border border-dark-600">5-10k por shard</td>
+              <td class="p-3 text-neutral-300 border border-dark-600">&lt; 30s</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="bg-purple-500/10 rounded-xl border border-purple-500/30 p-5">
+        <div class="text-purple-400 font-semibold mb-3">✅ Conceitos-chave do módulo</div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span class="text-sm text-neutral-300">Escala requer estratégia — não "ler tudo"</span></div>
+          <div class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span class="text-sm text-neutral-300">Índice hierárquico: global → domínio → nota</span></div>
+          <div class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span class="text-sm text-neutral-300">Compressão: resumo 50 tokens + nota completa</span></div>
+          <div class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span class="text-sm text-neutral-300">Sharding: múltiplos vaults por domínio</span></div>
+          <div class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span class="text-sm text-neutral-300">Dashboard pré-computado para consultas frequentes</span></div>
+          <div class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span class="text-sm text-neutral-300">Meta: &lt;5k tokens e &lt;30s por consulta</span></div>
+        </div>
+      </div>
+    </section>
+
+    <div class="flex justify-between items-center mt-8 pt-8 border-t border-dark-600">
+      <a href="modulo-3-1.html" class="flex items-center space-x-2 px-4 py-2 rounded-lg bg-dark-800 border border-dark-600 hover:border-purple-500/50 transition-colors text-neutral-300 hover:text-purple-400">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+        <span>3.1 — Grafos Complexos</span>
+      </a>
+      <a href="modulo-3-3.html" class="flex items-center space-x-2 px-4 py-2 rounded-lg bg-purple-500/20 border border-purple-500/30 hover:bg-purple-500/30 transition-colors text-purple-400">
+        <span>3.3 — Integrações Avançadas</span>
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+  </main>
+
+  <footer class="border-t border-dark-600 mt-16 py-8">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <p class="text-neutral-500 text-sm">2Cérebro · <a href="https://inema.club" class="text-sky-400 hover:text-sky-300">INEMA.CLUB</a></p>
+    </div>
+  </footer>
+
+  <script>
+    const toggle = document.getElementById('theme-toggle');
+    const darkIcon = document.getElementById('theme-toggle-dark-icon');
+    const lightIcon = document.getElementById('theme-toggle-light-icon');
+    const html = document.documentElement;
+    function applyTheme(isDark) {
+      html.classList.toggle('dark', isDark);
+      darkIcon.classList.toggle('hidden', isDark);
+      lightIcon.classList.toggle('hidden', !isDark);
+    }
+    const saved = localStorage.getItem('theme');
+    applyTheme(saved !== 'light');
+    toggle.addEventListener('click', () => {
+      const isDark = html.classList.contains('dark');
+      localStorage.setItem('theme', isDark ? 'light' : 'dark');
+      applyTheme(!isDark);
+    });
+  </script>
+</body>
+</html>

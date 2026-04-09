@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Módulo 3.4 — Multi-Agentes e Sistemas Distribuídos | 2Cérebro</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config={darkMode:'class',theme:{extend:{colors:{primary:'#FACC15',dark:{900:'#111827',800:'#1f2937',700:'#374151',600:'#4b5563'}}}}}</script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body{font-family:'Inter',sans-serif;}
+    html:not(.dark) body{background-color:#f8fafc;}
+    html:not(.dark) .bg-dark-900{background-color:#ffffff;}
+    html:not(.dark) .bg-dark-800{background-color:#f9fafb;}
+    html:not(.dark) .bg-dark-700{background-color:#f3f4f6;}
+    html:not(.dark) .bg-dark-600{background-color:#e5e7eb;}
+    html:not(.dark) .text-neutral-100{color:#111827;}
+    html:not(.dark) .text-neutral-300{color:#4b5563;}
+    html:not(.dark) .text-neutral-400{color:#6b7280;}
+    html:not(.dark) .text-neutral-500{color:#9ca3af;}
+    html:not(.dark) .border-dark-600{border-color:#d1d5db;}
+    html:not(.dark) .border-dark-700{border-color:#e5e7eb;}
+    html:not(.dark) .text-purple-400{color:#7c3aed;}
+    html:not(.dark) .bg-purple-500\/20{background-color:rgba(124,58,237,0.12);}
+    html:not(.dark) .border-purple-500\/30{border-color:rgba(124,58,237,0.25);}
+    html:not(.dark) [class*="bg-gradient-to"]{background-image:none!important;}
+    html:not(.dark) .text-primary{color:#a16207;}
+    html:not(.dark) .bg-primary\/10{background-color:rgba(161,98,7,0.08);}
+    html:not(.dark) .border-primary\/40{border-color:rgba(161,98,7,0.25);}
+    html:not(.dark) .text-sky-400{color:#0369a1;}
+    html:not(.dark) .text-yellow-400{color:#a16207;}
+    html:not(.dark) .hover\:text-sky-300:hover{color:#0284c7;}
+    html:not(.dark) .hover\:text-yellow-300:hover{color:#854d0e;}
+    html:not(.dark) .bg-dark-900\/95{background-color:rgba(255,255,255,0.95);}
+  </style>
+</head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen">
+
+  <nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-14">
+        <div class="flex items-center space-x-4">
+          <a href="../../index.html" class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300"><span class="text-2xl">🧠</span><span class="font-bold text-lg hidden sm:inline">2Cérebro</span></a>
+          <span class="text-neutral-600">|</span>
+          <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300 text-sm font-medium">INEMA.CLUB</a>
+        </div>
+        <div class="flex items-center space-x-1 sm:space-x-2">
+          <a href="../trilha1/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors"><span class="sm:hidden">T1</span><span class="hidden sm:inline">Fundamentos</span></a>
+          <a href="../trilha2/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors"><span class="sm:hidden">T2</span><span class="hidden sm:inline">Implementação</span></a>
+          <a href="index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-purple-400 bg-purple-500/10"><span class="sm:hidden">T3</span><span class="hidden sm:inline">Avançado</span></a>
+          <button id="theme-toggle" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2">
+            <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+            <svg id="theme-toggle-light-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+    <div class="flex items-center space-x-2 text-sm text-neutral-400">
+      <a href="../../index.html" class="hover:text-purple-400">Início</a>
+      <span>/</span>
+      <a href="index.html" class="hover:text-purple-400">Trilha 3 — Avançado</a>
+      <span>/</span>
+      <span class="text-purple-400">Módulo 3.4</span>
+    </div>
+  </nav>
+
+  <header class="bg-gradient-to-br from-purple-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <span class="inline-block px-3 py-1 bg-purple-500/20 text-purple-400 text-xs font-semibold rounded-full mb-4">MÓDULO 3.4</span>
+      <h1 class="text-3xl sm:text-4xl font-bold mb-4">🤖 Multi-Agentes e Sistemas Distribuídos</h1>
+      <p class="text-lg text-neutral-400 max-w-3xl">Orquestrando múltiplos agentes especializados sobre o mesmo vault: o futuro do segundo cérebro como sistema cognitivo distribuído.</p>
+      <div class="grid grid-cols-4 gap-4 mt-8 max-w-lg">
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-purple-400">6</div><div class="text-xs text-neutral-400">Tópicos</div></div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-purple-400">70</div><div class="text-xs text-neutral-400">Minutos</div></div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-purple-400">Expert</div><div class="text-xs text-neutral-400">Nível</div></div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-purple-400">Arquitetura</div><div class="text-xs text-neutral-400">Tipo</div></div>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+    <!-- TÓPICO 1 -->
+    <section id="topico-1" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">1</span>
+        <h2 class="text-2xl font-bold">🧠 Por que Multi-Agentes?</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">Um único agente generalista não escala para tarefas complexas e paralelas. <strong class="text-purple-400">Agentes especializados</strong> executam tarefas simultâneas com contexto focado — como uma equipe em vez de um único funcionário.</p>
+
+      <!-- SVG: Single vs Multi-agent -->
+      <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+        <h3 class="text-base font-semibold text-purple-400 mb-4">🤖 Agente Único vs. Multi-Agentes</h3>
+        <svg viewBox="0 0 680 240" class="w-full" xmlns="http://www.w3.org/2000/svg">
+          <!-- LEFT: Single agent bottleneck -->
+          <text x="10" y="18" fill="#ef4444" font-size="11" font-weight="bold">❌ Agente Único (gargalo)</text>
+          <rect x="10" y="28" width="270" height="200" rx="8" fill="#1f2937" stroke="#374151"/>
+
+          <!-- Tasks queue -->
+          <rect x="20" y="40" width="90" height="20" rx="3" fill="#374151"/>
+          <text x="65" y="54" fill="#9ca3af" font-size="8" text-anchor="middle">ingerir raw/</text>
+          <rect x="20" y="65" width="90" height="20" rx="3" fill="#374151"/>
+          <text x="65" y="79" fill="#9ca3af" font-size="8" text-anchor="middle">auditar vault</text>
+          <rect x="20" y="90" width="90" height="20" rx="3" fill="#374151"/>
+          <text x="65" y="104" fill="#9ca3af" font-size="8" text-anchor="middle">coletar GitHub</text>
+          <rect x="20" y="115" width="90" height="20" rx="3" fill="#374151"/>
+          <text x="65" y="129" fill="#9ca3af" font-size="8" text-anchor="middle">dashboard</text>
+          <text x="65" y="155" fill="#ef4444" font-size="20" text-anchor="middle">⏳</text>
+          <text x="65" y="175" fill="#ef4444" font-size="8" text-anchor="middle">Fila longa!</text>
+          <text x="65" y="188" fill="#ef4444" font-size="8" text-anchor="middle">Latência alta</text>
+
+          <!-- Single agent -->
+          <circle cx="200" cy="110" r="35" fill="#1c1917" stroke="#FACC15" stroke-width="2"/>
+          <text x="200" y="107" fill="#FACC15" font-size="11" text-anchor="middle">🤖</text>
+          <text x="200" y="122" fill="#fde68a" font-size="8" text-anchor="middle">Agente único</text>
+          <line x1="110" y1="110" x2="165" y2="110" stroke="#ef4444" stroke-width="1"/>
+          <text x="137" y="106" fill="#ef4444" font-size="7">→ sequencial</text>
+
+          <!-- Divider -->
+          <line x1="300" y1="10" x2="300" y2="230" stroke="#374151" stroke-width="1" stroke-dasharray="4,4"/>
+
+          <!-- RIGHT: Multi-agent parallel -->
+          <text x="315" y="18" fill="#10b981" font-size="11" font-weight="bold">✅ Multi-Agentes (paralelo)</text>
+          <rect x="315" y="28" width="355" height="200" rx="8" fill="#1f2937" stroke="#374151"/>
+
+          <!-- Orchestrator -->
+          <rect x="430" y="38" width="120" height="30" rx="6" fill="#2e1065" stroke="#7c3aed" stroke-width="1.5"/>
+          <text x="490" y="57" fill="#c084fc" font-size="9" text-anchor="middle" font-weight="bold">🎯 Orquestrador</text>
+
+          <!-- Specialist agents (parallel) -->
+          <circle cx="350" cy="130" r="28" fill="#064e3b" stroke="#10b981" stroke-width="1.5"/>
+          <text x="350" y="127" fill="#10b981" font-size="8" text-anchor="middle">🤖 Ingester</text>
+          <text x="350" y="140" fill="#6ee7b7" font-size="7" text-anchor="middle">raw/→wiki/</text>
+
+          <circle cx="440" cy="160" r="28" fill="#1e3a5f" stroke="#3b82f6" stroke-width="1.5"/>
+          <text x="440" y="157" fill="#60a5fa" font-size="8" text-anchor="middle">🤖 Auditor</text>
+          <text x="440" y="170" fill="#93c5fd" font-size="7" text-anchor="middle">lint vault</text>
+
+          <circle cx="540" cy="130" r="28" fill="#451a03" stroke="#FACC15" stroke-width="1.5"/>
+          <text x="540" y="127" fill="#FACC15" font-size="8" text-anchor="middle">🤖 Collector</text>
+          <text x="540" y="140" fill="#fde68a" font-size="7" text-anchor="middle">APIs externas</text>
+
+          <circle cx="610" cy="160" r="28" fill="#2e1065" stroke="#7c3aed" stroke-width="1.5"/>
+          <text x="610" y="157" fill="#c084fc" font-size="8" text-anchor="middle">🤖 Reporter</text>
+          <text x="610" y="170" fill="#d8b4fe" font-size="7" text-anchor="middle">dashboard</text>
+
+          <!-- Lines from orchestrator -->
+          <line x1="455" y1="68" x2="370" y2="104" stroke="#7c3aed" stroke-width="1"/>
+          <line x1="475" y1="68" x2="445" y2="134" stroke="#7c3aed" stroke-width="1"/>
+          <line x1="510" y1="68" x2="524" y2="104" stroke="#7c3aed" stroke-width="1"/>
+          <line x1="525" y1="68" x2="595" y2="134" stroke="#7c3aed" stroke-width="1"/>
+
+          <!-- Parallel indicator -->
+          <text x="490" y="215" fill="#10b981" font-size="9" text-anchor="middle" font-weight="bold">Todos executam simultaneamente ⚡</text>
+        </svg>
+      </div>
+    </section>
+
+    <!-- TÓPICO 2 -->
+    <section id="topico-2" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">2</span>
+        <h2 class="text-2xl font-bold">🎯 Agentes Especializados</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">Cada agente tem um <strong class="text-purple-400">CLAUDE.md específico</strong>, um conjunto de ferramentas limitado e um escopo claro. A especialização reduz erros e melhora qualidade.</p>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div class="bg-dark-800 rounded-xl border border-emerald-500/30 p-5">
+          <div class="text-emerald-400 font-semibold mb-3">🤖 Agente Ingester</div>
+          <pre class="text-xs text-neutral-400 overflow-x-auto"><code><span class="text-neutral-500"># CLAUDE-ingester.md</span>
+Você é o Agente Ingester.
+
+<span class="text-emerald-400">## Sua única responsabilidade</span>
+Processar arquivos de raw/ e criar/atualizar
+notas em wiki/ seguindo as regras de
+estrutura definidas em CLAUDE.md principal.
+
+<span class="text-emerald-400">## Ferramentas permitidas</span>
+- Read: sim (raw/ e wiki/)
+- Write: sim (apenas wiki/)
+- Edit: sim (apenas wiki/)
+- Bash: NÃO
+
+<span class="text-emerald-400">## Nunca</span>
+- Modificar raw/
+- Deletar notas existentes
+- Fazer suposições — só o que está no raw/</code></pre>
+        </div>
+        <div class="bg-dark-800 rounded-xl border border-blue-500/30 p-5">
+          <div class="text-blue-400 font-semibold mb-3">🤖 Agente Auditor</div>
+          <pre class="text-xs text-neutral-400 overflow-x-auto"><code><span class="text-neutral-500"># CLAUDE-auditor.md</span>
+Você é o Agente Auditor.
+
+<span class="text-blue-400">## Sua única responsabilidade</span>
+Verificar a saúde do vault: encontrar
+órfãos, inconsistências, links quebrados
+e notas desatualizadas.
+
+<span class="text-blue-400">## Ferramentas permitidas</span>
+- Read: sim (wiki/ apenas)
+- Write: sim (audit-report.md apenas)
+- Edit: NÃO
+- Bash: NÃO
+
+<span class="text-blue-400">## Output</span>
+Sempre gere um relatório estruturado em
+audit-report.md com severidade (P0/P1/P2)</code></pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- TÓPICO 3 -->
+    <section id="topico-3" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">3</span>
+        <h2 class="text-2xl font-bold">🎭 O Orquestrador</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">O orquestrador é um agente de nível superior que <strong class="text-purple-400">delega tarefas, monitora resultados e coordena conflitos</strong> entre agentes especializados.</p>
+
+      <!-- SVG: Orchestrator loop -->
+      <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+        <h3 class="text-base font-semibold text-purple-400 mb-4">🎭 Loop do Orquestrador</h3>
+        <svg viewBox="0 0 680 220" class="w-full" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <marker id="orch" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#c084fc"/></marker>
+          </defs>
+
+          <!-- Orchestrator central -->
+          <circle cx="340" cy="110" r="50" fill="#2e1065" stroke="#7c3aed" stroke-width="2"/>
+          <text x="340" y="106" fill="#c084fc" font-size="11" text-anchor="middle" font-weight="bold">🎯</text>
+          <text x="340" y="121" fill="#c084fc" font-size="9" text-anchor="middle">Orquestrador</text>
+
+          <!-- Step 1: Plan -->
+          <rect x="20" y="30" width="130" height="50" rx="8" fill="#1f2937" stroke="#374151"/>
+          <text x="85" y="52" fill="#9ca3af" font-size="9" text-anchor="middle" font-weight="bold">1. Planejar</text>
+          <text x="85" y="67" fill="#6b7280" font-size="8" text-anchor="middle">Quais agentes acionar?</text>
+          <line x1="150" y1="55" x2="292" y2="90" stroke="#c084fc" stroke-width="1.5" marker-end="url(#orch)"/>
+
+          <!-- Step 2: Dispatch -->
+          <rect x="530" y="30" width="130" height="50" rx="8" fill="#1f2937" stroke="#374151"/>
+          <text x="595" y="52" fill="#9ca3af" font-size="9" text-anchor="middle" font-weight="bold">2. Despachar</text>
+          <text x="595" y="67" fill="#6b7280" font-size="8" text-anchor="middle">subprocess.run(claude)</text>
+          <line x1="388" y1="90" x2="530" y2="55" stroke="#c084fc" stroke-width="1.5" marker-end="url(#orch)"/>
+
+          <!-- Step 3: Monitor -->
+          <rect x="530" y="140" width="130" height="50" rx="8" fill="#1f2937" stroke="#374151"/>
+          <text x="595" y="162" fill="#9ca3af" font-size="9" text-anchor="middle" font-weight="bold">3. Monitorar</text>
+          <text x="595" y="177" fill="#6b7280" font-size="8" text-anchor="middle">Timeout? Erro? OK?</text>
+          <line x1="595" y1="140" x2="595" y2="80" stroke="#374151" stroke-width="1"/>
+          <line x1="530" y1="165" x2="388" y2="130" stroke="#c084fc" stroke-width="1.5" marker-end="url(#orch)"/>
+
+          <!-- Step 4: Merge -->
+          <rect x="20" y="140" width="130" height="50" rx="8" fill="#064e3b" stroke="#10b981"/>
+          <text x="85" y="162" fill="#10b981" font-size="9" text-anchor="middle" font-weight="bold">4. Consolidar</text>
+          <text x="85" y="177" fill="#6ee7b7" font-size="8" text-anchor="middle">Merge resultados</text>
+          <line x1="292" y1="130" x2="150" y2="165" stroke="#c084fc" stroke-width="1.5" marker-end="url(#orch)"/>
+
+          <!-- Conflict resolution -->
+          <rect x="200" y="185" width="280" height="28" rx="6" fill="#1f2937" stroke="#374151"/>
+          <text x="340" y="203" fill="#9ca3af" font-size="8" text-anchor="middle">⚔ Conflito? Orquestrador decide prioridade</text>
+          <line x1="85" y1="190" x2="200" y2="200" stroke="#374151" stroke-width="1" stroke-dasharray="3,3"/>
+
+          <!-- Agents being dispatched -->
+          <circle cx="470" cy="80" r="18" fill="#064e3b" stroke="#10b981"/>
+          <text x="470" y="84" fill="#10b981" font-size="7" text-anchor="middle">Ingester</text>
+          <circle cx="560" cy="105" r="18" fill="#1e3a5f" stroke="#3b82f6"/>
+          <text x="560" y="109" fill="#60a5fa" font-size="7" text-anchor="middle">Auditor</text>
+          <circle cx="500" cy="155" r="18" fill="#451a03" stroke="#FACC15"/>
+          <text x="500" y="159" fill="#FACC15" font-size="7" text-anchor="middle">Collector</text>
+
+          <line x1="595" y1="55" x2="487" y2="67" stroke="#10b981" stroke-width="1" opacity="0.6"/>
+          <line x1="595" y1="65" x2="576" y2="90" stroke="#3b82f6" stroke-width="1" opacity="0.6"/>
+          <line x1="595" y1="70" x2="517" y2="140" stroke="#FACC15" stroke-width="1" opacity="0.6"/>
+        </svg>
+      </div>
+
+      <div class="bg-dark-800 rounded-xl border border-dark-600 p-5 mb-6">
+        <h3 class="text-purple-400 font-semibold mb-3">orchestrator.py</h3>
+        <pre class="text-sm text-neutral-300 overflow-x-auto"><code><span class="text-blue-400">import</span> subprocess, threading, json
+<span class="text-blue-400">from</span> pathlib <span class="text-blue-400">import</span> Path
+
+<span class="text-purple-400">def</span> <span class="text-yellow-400">run_agent</span>(agent_name: str, prompt: str, vault_path: str) -> str:
+    <span class="text-neutral-500">"""Executa um agente especializado via Claude Code CLI"""</span>
+    result = subprocess.run(
+        [<span class="text-emerald-400">"claude"</span>, <span class="text-emerald-400">"--print"</span>, <span class="text-emerald-400">"--dangerously-skip-permissions"</span>,
+         <span class="text-emerald-400">"--system-prompt"</span>, f<span class="text-emerald-400">"CLAUDE-{agent_name}.md"</span>, prompt],
+        cwd=vault_path, capture_output=<span class="text-blue-400">True</span>, text=<span class="text-blue-400">True</span>,
+        timeout=<span class="text-yellow-400">300</span>
+    )
+    <span class="text-blue-400">return</span> result.stdout
+
+<span class="text-purple-400">def</span> <span class="text-yellow-400">orchestrate_daily</span>(vault_path: str):
+    <span class="text-neutral-500">"""Ciclo diário de orquestração paralela"""</span>
+    results = {}
+
+    <span class="text-neutral-500"># Executar agentes em paralelo via threads</span>
+    threads = [
+        threading.Thread(target=<span class="text-blue-400">lambda</span>: results.update({
+            <span class="text-emerald-400">"ingester"</span>: run_agent(<span class="text-emerald-400">"ingester"</span>, <span class="text-emerald-400">"Ingira todos os arquivos novos em raw/"</span>, vault_path)
+        })),
+        threading.Thread(target=<span class="text-blue-400">lambda</span>: results.update({
+            <span class="text-emerald-400">"auditor"</span>: run_agent(<span class="text-emerald-400">"auditor"</span>, <span class="text-emerald-400">"Audite o vault e gere audit-report.md"</span>, vault_path)
+        })),
+        threading.Thread(target=<span class="text-blue-400">lambda</span>: results.update({
+            <span class="text-emerald-400">"reporter"</span>: run_agent(<span class="text-emerald-400">"reporter"</span>, <span class="text-emerald-400">"Atualize dashboard.md"</span>, vault_path)
+        }))
+    ]
+    <span class="text-blue-400">for</span> t <span class="text-blue-400">in</span> threads: t.start()
+    <span class="text-blue-400">for</span> t <span class="text-blue-400">in</span> threads: t.join(timeout=<span class="text-yellow-400">600</span>)
+    <span class="text-blue-400">return</span> results</code></pre>
+      </div>
+    </section>
+
+    <!-- TÓPICO 4 -->
+    <section id="topico-4" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">4</span>
+        <h2 class="text-2xl font-bold">⚔️ Resolução de Conflitos</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">Quando dois agentes modificam a mesma nota simultaneamente, podem ocorrer conflitos. A solução é <strong class="text-purple-400">design sem conflito</strong>: agentes com domínios exclusivos de escrita.</p>
+
+      <!-- SVG: Conflict resolution -->
+      <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+        <h3 class="text-base font-semibold text-purple-400 mb-4">⚔️ Design Sem Conflito — Domínios Exclusivos</h3>
+        <svg viewBox="0 0 680 200" class="w-full" xmlns="http://www.w3.org/2000/svg">
+          <!-- Vault structure with exclusive write zones -->
+          <text x="10" y="18" fill="#c084fc" font-size="10" font-weight="bold">Cada agente escreve apenas em sua zona</text>
+
+          <!-- Zone 1: Ingester -->
+          <rect x="10" y="30" width="140" height="160" rx="8" fill="#064e3b" stroke="#10b981" stroke-width="2"/>
+          <text x="80" y="52" fill="#10b981" font-size="9" text-anchor="middle" font-weight="bold">🤖 Ingester</text>
+          <text x="80" y="66" fill="#6ee7b7" font-size="8" text-anchor="middle">Escreve em:</text>
+          <rect x="20" y="74" width="120" height="20" rx="3" fill="#111827"/>
+          <text x="80" y="88" fill="#10b981" font-size="8" text-anchor="middle">wiki/fundamentos/</text>
+          <rect x="20" y="100" width="120" height="20" rx="3" fill="#111827"/>
+          <text x="80" y="114" fill="#10b981" font-size="8" text-anchor="middle">wiki/projetos/</text>
+          <rect x="20" y="126" width="120" height="20" rx="3" fill="#111827"/>
+          <text x="80" y="140" fill="#10b981" font-size="8" text-anchor="middle">wiki/pessoas/</text>
+          <text x="80" y="172" fill="#ef4444" font-size="8" text-anchor="middle">❌ nunca: log.md</text>
+          <text x="80" y="185" fill="#ef4444" font-size="8" text-anchor="middle">❌ nunca: dashboard.md</text>
+
+          <!-- Zone 2: Auditor -->
+          <rect x="165" y="30" width="140" height="160" rx="8" fill="#1e3a5f" stroke="#3b82f6" stroke-width="2"/>
+          <text x="235" y="52" fill="#60a5fa" font-size="9" text-anchor="middle" font-weight="bold">🤖 Auditor</text>
+          <text x="235" y="66" fill="#93c5fd" font-size="8" text-anchor="middle">Escreve em:</text>
+          <rect x="175" y="74" width="120" height="20" rx="3" fill="#111827"/>
+          <text x="235" y="88" fill="#60a5fa" font-size="8" text-anchor="middle">audit-report.md</text>
+          <rect x="175" y="100" width="120" height="20" rx="3" fill="#111827"/>
+          <text x="235" y="114" fill="#60a5fa" font-size="8" text-anchor="middle">health-metrics.md</text>
+          <text x="235" y="145" fill="#ef4444" font-size="8" text-anchor="middle">❌ nunca: wiki/</text>
+          <text x="235" y="160" fill="#ef4444" font-size="8" text-anchor="middle">❌ nunca: raw/</text>
+
+          <!-- Zone 3: Collector -->
+          <rect x="320" y="30" width="140" height="160" rx="8" fill="#451a03" stroke="#FACC15" stroke-width="2"/>
+          <text x="390" y="52" fill="#FACC15" font-size="9" text-anchor="middle" font-weight="bold">🤖 Collector</text>
+          <text x="390" y="66" fill="#fde68a" font-size="8" text-anchor="middle">Escreve em:</text>
+          <rect x="330" y="74" width="120" height="20" rx="3" fill="#111827"/>
+          <text x="390" y="88" fill="#FACC15" font-size="8" text-anchor="middle">raw/github/</text>
+          <rect x="330" y="100" width="120" height="20" rx="3" fill="#111827"/>
+          <text x="390" y="114" fill="#FACC15" font-size="8" text-anchor="middle">raw/slack/</text>
+          <rect x="330" y="126" width="120" height="20" rx="3" fill="#111827"/>
+          <text x="390" y="140" fill="#FACC15" font-size="8" text-anchor="middle">raw/meetings/</text>
+          <text x="390" y="172" fill="#ef4444" font-size="8" text-anchor="middle">❌ nunca: wiki/</text>
+
+          <!-- Zone 4: Reporter -->
+          <rect x="475" y="30" width="195" height="160" rx="8" fill="#2e1065" stroke="#7c3aed" stroke-width="2"/>
+          <text x="572" y="52" fill="#c084fc" font-size="9" text-anchor="middle" font-weight="bold">🤖 Reporter</text>
+          <text x="572" y="66" fill="#d8b4fe" font-size="8" text-anchor="middle">Lê de: tudo | Escreve em:</text>
+          <rect x="485" y="74" width="175" height="20" rx="3" fill="#111827"/>
+          <text x="572" y="88" fill="#c084fc" font-size="8" text-anchor="middle">dashboard.md</text>
+          <rect x="485" y="100" width="175" height="20" rx="3" fill="#111827"/>
+          <text x="572" y="114" fill="#c084fc" font-size="8" text-anchor="middle">reports/weekly-YYYY-WW.md</text>
+          <text x="572" y="145" fill="#ef4444" font-size="8" text-anchor="middle">❌ nunca: wiki/ direto</text>
+          <text x="572" y="160" fill="#ef4444" font-size="8" text-anchor="middle">❌ nunca: raw/</text>
+        </svg>
+      </div>
+    </section>
+
+    <!-- TÓPICO 5 -->
+    <section id="topico-5" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">5</span>
+        <h2 class="text-2xl font-bold">📡 Comunicação entre Agentes</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">Agentes se comunicam <strong class="text-purple-400">através de arquivos compartilhados</strong> — o vault como barramento de mensagens. Cada agente escreve seu output em um arquivo específico que outros agentes podem ler.</p>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div class="bg-dark-800 rounded-xl border border-dark-600 p-5">
+          <div class="text-purple-400 font-semibold mb-3">Arquivo de Estado Compartilhado</div>
+          <pre class="text-xs text-neutral-400 overflow-x-auto"><code><span class="text-neutral-500"># agent-state.md (somente leitura)</span>
+<span class="text-purple-400">## Status dos Agentes</span>
+
+<span class="text-emerald-400">Ingester:</span>
+  last_run: 2024-03-20T22:00
+  files_processed: 12
+  status: completed ✅
+
+<span class="text-blue-400">Auditor:</span>
+  last_run: 2024-03-20T22:05
+  issues_found: 3
+  status: completed ✅
+
+<span class="text-yellow-400">Collector:</span>
+  last_run: 2024-03-20T21:45
+  github_prs: 5
+  status: completed ✅
+
+<span class="text-purple-400">Reporter:</span>
+  last_run: 2024-03-20T22:10
+  status: waiting_ingester ⏳</code></pre>
+        </div>
+        <div class="bg-dark-800 rounded-xl border border-dark-600 p-5">
+          <div class="text-purple-400 font-semibold mb-3">Sequência com Dependências</div>
+          <pre class="text-xs text-neutral-400 overflow-x-auto"><code><span class="text-neutral-500"># Fase 1: Paralela (sem deps)</span>
+run_parallel([
+    collector,   <span class="text-neutral-500"># raw/ ← APIs</span>
+    auditor,     <span class="text-neutral-500"># health check</span>
+])
+
+<span class="text-neutral-500"># Fase 2: Ingester (deps: collector)</span>
+wait_for(collector)
+run_agent(ingester)  <span class="text-neutral-500"># raw/ → wiki/</span>
+
+<span class="text-neutral-500"># Fase 3: Reporter (deps: todos)</span>
+wait_for([ingester, auditor])
+run_agent(reporter)  <span class="text-neutral-500"># dashboard.md</span>
+
+<span class="text-neutral-500"># Total: 3 fases vs. 4 sequenciais</span>
+<span class="text-neutral-500"># Tempo: ~40% mais rápido</span></code></pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- TÓPICO 6 -->
+    <section id="topico-6" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">6</span>
+        <h2 class="text-2xl font-bold">🔮 O Segundo Cérebro do Futuro</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">O sistema que construímos ao longo do curso é o <strong class="text-purple-400">estado da arte atual</strong>. Mas para onde estamos indo? A convergência de LLMs mais capazes, agentes autônomos e ferramentas de memória está criando algo fundamentalmente novo.</p>
+
+      <!-- SVG: Future vision -->
+      <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+        <h3 class="text-base font-semibold text-purple-400 mb-4">🔮 Visão: O Segundo Cérebro em 2026</h3>
+        <svg viewBox="0 0 680 220" class="w-full" xmlns="http://www.w3.org/2000/svg">
+          <!-- Timeline -->
+          <line x1="40" y1="110" x2="640" y2="110" stroke="#374151" stroke-width="2"/>
+
+          <!-- Now -->
+          <circle cx="120" cy="110" r="12" fill="#7c3aed"/>
+          <text x="120" y="135" fill="#c084fc" font-size="8" text-anchor="middle">Hoje</text>
+          <rect x="50" y="40" width="140" height="55" rx="6" fill="#2e1065" stroke="#7c3aed"/>
+          <text x="120" y="60" fill="#c084fc" font-size="9" text-anchor="middle" font-weight="bold">Estado Atual</text>
+          <text x="120" y="75" fill="#d8b4fe" font-size="7" text-anchor="middle">Agente semi-automático</text>
+          <text x="120" y="88" fill="#d8b4fe" font-size="7" text-anchor="middle">CLAUDE.md manual</text>
+          <line x1="120" y1="95" x2="120" y2="98" stroke="#7c3aed"/>
+
+          <!-- Near future -->
+          <circle cx="300" cy="110" r="12" fill="#3b82f6"/>
+          <text x="300" y="135" fill="#60a5fa" font-size="8" text-anchor="middle">2025</text>
+          <rect x="230" y="145" width="140" height="55" rx="6" fill="#1e3a5f" stroke="#3b82f6"/>
+          <text x="300" y="165" fill="#60a5fa" font-size="9" text-anchor="middle" font-weight="bold">Proativo</text>
+          <text x="300" y="180" fill="#93c5fd" font-size="7" text-anchor="middle">Agente sugere links</text>
+          <text x="300" y="193" fill="#93c5fd" font-size="7" text-anchor="middle">Auto-auditoria</text>
+          <line x1="300" y1="122" x2="300" y2="145" stroke="#3b82f6"/>
+
+          <!-- Medium future -->
+          <circle cx="480" cy="110" r="12" fill="#10b981"/>
+          <text x="480" y="135" fill="#10b981" font-size="8" text-anchor="middle">2025-26</text>
+          <rect x="410" y="40" width="140" height="55" rx="6" fill="#064e3b" stroke="#10b981"/>
+          <text x="480" y="60" fill="#10b981" font-size="9" text-anchor="middle" font-weight="bold">Cognitivo</text>
+          <text x="480" y="75" fill="#6ee7b7" font-size="7" text-anchor="middle">Raciocínio cross-vault</text>
+          <text x="480" y="88" fill="#6ee7b7" font-size="7" text-anchor="middle">Hipóteses automáticas</text>
+          <line x1="480" y1="95" x2="480" y2="98" stroke="#10b981"/>
+
+          <!-- Far future -->
+          <circle cx="620" cy="110" r="12" fill="#FACC15"/>
+          <text x="620" y="135" fill="#FACC15" font-size="8" text-anchor="middle">2026+</text>
+          <rect x="553" y="145" width="120" height="55" rx="6" fill="#451a03" stroke="#FACC15"/>
+          <text x="613" y="165" fill="#FACC15" font-size="9" text-anchor="middle" font-weight="bold">Autônomo</text>
+          <text x="613" y="180" fill="#fde68a" font-size="7" text-anchor="middle">Self-improving</text>
+          <text x="613" y="193" fill="#fde68a" font-size="7" text-anchor="middle">Collaborative memory</text>
+          <line x1="620" y1="122" x2="613" y2="145" stroke="#FACC15"/>
+        </svg>
+      </div>
+
+      <div class="bg-purple-500/10 rounded-xl border border-purple-500/30 p-5 mb-6">
+        <div class="text-purple-400 font-semibold mb-3">🎓 Parabéns — Você Completou o Curso!</div>
+        <p class="text-sm text-neutral-300 mb-4">Você percorreu as 3 trilhas do 2Cérebro: entendeu os fundamentos, implementou o sistema e agora domina conceitos avançados de grafos, escalabilidade, integrações e multi-agentes.</p>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div class="bg-dark-800 rounded-lg p-3 border border-emerald-500/30 text-center">
+            <div class="text-emerald-400 text-lg font-bold">T1</div>
+            <div class="text-sm text-neutral-300">Fundamentos</div>
+            <div class="text-xs text-neutral-500">4 módulos ✅</div>
+          </div>
+          <div class="bg-dark-800 rounded-lg p-3 border border-blue-500/30 text-center">
+            <div class="text-blue-400 text-lg font-bold">T2</div>
+            <div class="text-sm text-neutral-300">Implementação</div>
+            <div class="text-xs text-neutral-500">4 módulos ✅</div>
+          </div>
+          <div class="bg-dark-800 rounded-lg p-3 border border-purple-500/30 text-center">
+            <div class="text-purple-400 text-lg font-bold">T3</div>
+            <div class="text-sm text-neutral-300">Avançado</div>
+            <div class="text-xs text-neutral-500">4 módulos ✅</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-purple-500/10 rounded-xl border border-purple-500/30 p-5">
+        <div class="text-purple-400 font-semibold mb-3">✅ Conceitos-chave do módulo</div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span class="text-sm text-neutral-300">Multi-agentes = paralelismo + especialização</span></div>
+          <div class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span class="text-sm text-neutral-300">Cada agente tem CLAUDE.md e domínio exclusivo</span></div>
+          <div class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span class="text-sm text-neutral-300">Orquestrador delega, monitora e consolida</span></div>
+          <div class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span class="text-sm text-neutral-300">Domínios exclusivos eliminam conflitos</span></div>
+          <div class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span class="text-sm text-neutral-300">Comunicação via arquivos compartilhados</span></div>
+          <div class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span class="text-sm text-neutral-300">O futuro: sistemas cognitivos autônomos</span></div>
+        </div>
+      </div>
+    </section>
+
+    <div class="flex justify-between items-center mt-8 pt-8 border-t border-dark-600">
+      <a href="modulo-3-3.html" class="flex items-center space-x-2 px-4 py-2 rounded-lg bg-dark-800 border border-dark-600 hover:border-purple-500/50 transition-colors text-neutral-300 hover:text-purple-400">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+        <span>3.3 — Integrações Avançadas</span>
+      </a>
+      <a href="../../index.html" class="flex items-center space-x-2 px-4 py-2 rounded-lg bg-purple-500/20 border border-purple-500/30 hover:bg-purple-500/30 transition-colors text-purple-400">
+        <span>Início — Landing Page</span>
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+  </main>
+
+  <footer class="border-t border-dark-600 mt-16 py-8">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <p class="text-neutral-500 text-sm">2Cérebro · <a href="https://inema.club" class="text-sky-400 hover:text-sky-300">INEMA.CLUB</a></p>
+    </div>
+  </footer>
+
+  <script>
+    const toggle = document.getElementById('theme-toggle');
+    const darkIcon = document.getElementById('theme-toggle-dark-icon');
+    const lightIcon = document.getElementById('theme-toggle-light-icon');
+    const html = document.documentElement;
+    function applyTheme(isDark) {
+      html.classList.toggle('dark', isDark);
+      darkIcon.classList.toggle('hidden', isDark);
+      lightIcon.classList.toggle('hidden', !isDark);
+    }
+    const saved = localStorage.getItem('theme');
+    applyTheme(saved !== 'light');
+    toggle.addEventListener('click', () => {
+      const isDark = html.classList.contains('dark');
+      localStorage.setItem('theme', isDark ? 'light' : 'dark');
+      applyTheme(!isDark);
+    });
+  </script>
+</body>
+</html>

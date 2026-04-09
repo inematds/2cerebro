@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Módulo 2.1 — Configurando o Vault no Obsidian | 2Cérebro</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config={darkMode:'class',theme:{extend:{colors:{primary:'#FACC15',dark:{900:'#111827',800:'#1f2937',700:'#374151',600:'#4b5563'}}}}}</script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body{font-family:'Inter',sans-serif;}
+    html:not(.dark) body{background-color:#f8fafc;}
+    html:not(.dark) .bg-dark-900{background-color:#ffffff;}
+    html:not(.dark) .bg-dark-800{background-color:#f9fafb;}
+    html:not(.dark) .bg-dark-700{background-color:#f3f4f6;}
+    html:not(.dark) .bg-dark-600{background-color:#e5e7eb;}
+    html:not(.dark) .text-neutral-100{color:#111827;}
+    html:not(.dark) .text-neutral-300{color:#4b5563;}
+    html:not(.dark) .text-neutral-400{color:#6b7280;}
+    html:not(.dark) .text-neutral-500{color:#9ca3af;}
+    html:not(.dark) .border-dark-600{border-color:#d1d5db;}
+    html:not(.dark) .border-dark-700{border-color:#e5e7eb;}
+    html:not(.dark) .text-blue-400{color:#1d4ed8;}
+    html:not(.dark) .bg-blue-500\/20{background-color:rgba(29,78,216,0.12);}
+    html:not(.dark) .border-blue-500\/30{border-color:rgba(29,78,216,0.25);}
+    html:not(.dark) [class*="bg-gradient-to"]{background-image:none!important;}
+    html:not(.dark) .text-primary{color:#a16207;}
+    html:not(.dark) .bg-primary\/10{background-color:rgba(161,98,7,0.08);}
+    html:not(.dark) .border-primary\/40{border-color:rgba(161,98,7,0.25);}
+    html:not(.dark) .text-sky-400{color:#0369a1;}
+    html:not(.dark) .text-yellow-400{color:#a16207;}
+    html:not(.dark) .hover\:text-sky-300:hover{color:#0284c7;}
+    html:not(.dark) .hover\:text-yellow-300:hover{color:#854d0e;}
+    html:not(.dark) .bg-dark-900\/95{background-color:rgba(255,255,255,0.95);}
+  </style>
+</head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen">
+
+  <nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-14">
+        <div class="flex items-center space-x-4">
+          <a href="../../index.html" class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300"><span class="text-2xl">🧠</span><span class="font-bold text-lg hidden sm:inline">2Cérebro</span></a>
+          <span class="text-neutral-600">|</span>
+          <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300 text-sm font-medium">INEMA.CLUB</a>
+        </div>
+        <div class="flex items-center space-x-1 sm:space-x-2">
+          <a href="../trilha1/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors"><span class="sm:hidden">T1</span><span class="hidden sm:inline">Fundamentos</span></a>
+          <a href="index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-blue-400 bg-blue-500/10"><span class="sm:hidden">T2</span><span class="hidden sm:inline">Implementação</span></a>
+          <a href="../trilha3/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors"><span class="sm:hidden">T3</span><span class="hidden sm:inline">Avançado</span></a>
+          <button id="theme-toggle" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2">
+            <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+            <svg id="theme-toggle-light-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+    <div class="flex items-center space-x-2 text-sm text-neutral-400">
+      <a href="../../index.html" class="hover:text-blue-400">Início</a>
+      <span>/</span>
+      <a href="index.html" class="hover:text-blue-400">Trilha 2 — Implementação</a>
+      <span>/</span>
+      <span class="text-blue-400">Módulo 2.1</span>
+    </div>
+  </nav>
+
+  <header class="bg-gradient-to-br from-blue-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <span class="inline-block px-3 py-1 bg-blue-500/20 text-blue-400 text-xs font-semibold rounded-full mb-4">MÓDULO 2.1</span>
+      <h1 class="text-3xl sm:text-4xl font-bold mb-4">🗂️ Configurando o Vault no Obsidian</h1>
+      <p class="text-lg text-neutral-400 max-w-3xl">Do zero ao segundo cérebro funcional: estrutura de pastas, plugins essenciais e configurações para integrar com o Claude Code.</p>
+      <div class="grid grid-cols-4 gap-4 mt-8 max-w-lg">
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-blue-400">6</div><div class="text-xs text-neutral-400">Tópicos</div></div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-blue-400">45</div><div class="text-xs text-neutral-400">Minutos</div></div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-blue-400">Intermediário</div><div class="text-xs text-neutral-400">Nível</div></div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-blue-400">Prática</div><div class="text-xs text-neutral-400">Tipo</div></div>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+    <!-- TÓPICO 1 -->
+    <section id="topico-1" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">1</span>
+        <h2 class="text-2xl font-bold">📥 Instalando o Obsidian</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">O Obsidian é um editor de Markdown local — seus dados ficam <strong class="text-blue-400">no seu computador</strong>, não em nuvem. Isso é essencial para o Claude Code acessar o vault via sistema de arquivos.</p>
+
+      <!-- SVG: Obsidian setup flow -->
+      <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+        <h3 class="text-base font-semibold text-blue-400 mb-4">🔧 Fluxo de Instalação</h3>
+        <svg viewBox="0 0 680 160" class="w-full" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#3b82f6"/></marker>
+          </defs>
+          <!-- Step boxes -->
+          <rect x="10" y="40" width="120" height="80" rx="8" fill="#1e3a5f" stroke="#3b82f6" stroke-width="1.5"/>
+          <text x="70" y="72" fill="#60a5fa" font-size="24" text-anchor="middle">⬇️</text>
+          <text x="70" y="95" fill="#60a5fa" font-size="9" text-anchor="middle" font-weight="bold">1. Download</text>
+          <text x="70" y="108" fill="#93c5fd" font-size="8" text-anchor="middle">obsidian.md</text>
+
+          <line x1="130" y1="80" x2="148" y2="80" stroke="#3b82f6" stroke-width="1.5" marker-end="url(#arr)"/>
+
+          <rect x="150" y="40" width="120" height="80" rx="8" fill="#1e3a5f" stroke="#3b82f6" stroke-width="1.5"/>
+          <text x="210" y="72" fill="#60a5fa" font-size="24" text-anchor="middle">📁</text>
+          <text x="210" y="95" fill="#60a5fa" font-size="9" text-anchor="middle" font-weight="bold">2. Criar Vault</text>
+          <text x="210" y="108" fill="#93c5fd" font-size="8" text-anchor="middle">~/meu-cerebro/</text>
+
+          <line x1="270" y1="80" x2="288" y2="80" stroke="#3b82f6" stroke-width="1.5" marker-end="url(#arr)"/>
+
+          <rect x="290" y="40" width="120" height="80" rx="8" fill="#1e3a5f" stroke="#3b82f6" stroke-width="1.5"/>
+          <text x="350" y="72" fill="#60a5fa" font-size="24" text-anchor="middle">🔌</text>
+          <text x="350" y="95" fill="#60a5fa" font-size="9" text-anchor="middle" font-weight="bold">3. Plugins</text>
+          <text x="350" y="108" fill="#93c5fd" font-size="8" text-anchor="middle">Dataview + Templater</text>
+
+          <line x1="410" y1="80" x2="428" y2="80" stroke="#3b82f6" stroke-width="1.5" marker-end="url(#arr)"/>
+
+          <rect x="430" y="40" width="120" height="80" rx="8" fill="#1e3a5f" stroke="#3b82f6" stroke-width="1.5"/>
+          <text x="490" y="72" fill="#60a5fa" font-size="24" text-anchor="middle">⚙️</text>
+          <text x="490" y="95" fill="#60a5fa" font-size="9" text-anchor="middle" font-weight="bold">4. CLAUDE.md</text>
+          <text x="490" y="108" fill="#93c5fd" font-size="8" text-anchor="middle">Schema do sistema</text>
+
+          <line x1="550" y1="80" x2="568" y2="80" stroke="#3b82f6" stroke-width="1.5" marker-end="url(#arr)"/>
+
+          <rect x="570" y="40" width="105" height="80" rx="8" fill="#064e3b" stroke="#10b981" stroke-width="1.5"/>
+          <text x="622" y="72" fill="#10b981" font-size="24" text-anchor="middle">✅</text>
+          <text x="622" y="95" fill="#10b981" font-size="9" text-anchor="middle" font-weight="bold">Pronto!</text>
+          <text x="622" y="108" fill="#6ee7b7" font-size="8" text-anchor="middle">Vault + Claude Code</text>
+        </svg>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="bg-dark-800 rounded-lg p-4 border border-blue-500/30">
+          <div class="text-blue-400 font-semibold mb-2">Por que local?</div>
+          <p class="text-sm text-neutral-300">O Claude Code acessa o vault diretamente pelo sistema de arquivos. Não precisa de API, não tem custo de sincronização, funciona offline.</p>
+        </div>
+        <div class="bg-dark-800 rounded-lg p-4 border border-blue-500/30">
+          <div class="text-blue-400 font-semibold mb-2">Sync opcional</div>
+          <p class="text-sm text-neutral-300">Após configurar localmente, você pode sincronizar via Git (gratuito) ou Obsidian Sync (pago) para ter acesso em múltiplos dispositivos.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TÓPICO 2 -->
+    <section id="topico-2" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">2</span>
+        <h2 class="text-2xl font-bold">📂 Estrutura de Pastas do Vault</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">A estrutura de pastas segue diretamente a arquitetura de 3 camadas. <strong class="text-blue-400">Crie exatamente esta estrutura</strong> — o CLAUDE.md e o agente de atualização dependem desses caminhos.</p>
+
+      <div class="bg-dark-800 rounded-xl border border-dark-600 p-5 mb-6">
+        <h3 class="text-blue-400 font-semibold mb-3">Estrutura Completa do Vault</h3>
+        <pre class="text-sm overflow-x-auto leading-relaxed"><code><span class="text-blue-400">~/meu-cerebro/</span>          <span class="text-neutral-500"># Raiz do vault Obsidian</span>
+<span class="text-neutral-400">│</span>
+<span class="text-neutral-400">├── </span><span class="text-yellow-400">CLAUDE.md</span>           <span class="text-neutral-500"># Schema do sistema (obrigatório)</span>
+<span class="text-neutral-400">├── </span><span class="text-emerald-400">index.md</span>            <span class="text-neutral-500"># Mapa de navegação do vault</span>
+<span class="text-neutral-400">├── </span><span class="text-blue-400">log.md</span>              <span class="text-neutral-500"># Log de compilações</span>
+<span class="text-neutral-400">│</span>
+<span class="text-neutral-400">├── </span><span class="text-neutral-300">📁 raw/</span>             <span class="text-neutral-500"># Captura bruta — nunca editar</span>
+<span class="text-neutral-400">│   ├── </span><span class="text-neutral-500">reunioes/</span>
+<span class="text-neutral-400">│   ├── </span><span class="text-neutral-500">artigos/</span>
+<span class="text-neutral-400">│   └── </span><span class="text-neutral-500">pensamentos/</span>
+<span class="text-neutral-400">│</span>
+<span class="text-neutral-400">└── </span><span class="text-neutral-300">📁 wiki/</span>            <span class="text-neutral-500"># Conhecimento compilado pelo LLM</span>
+<span class="text-neutral-400">    ├── </span><span class="text-neutral-500">fundamentos/</span>    <span class="text-neutral-500"># Conceitos e teoria</span>
+<span class="text-neutral-400">    ├── </span><span class="text-neutral-500">projetos/</span>       <span class="text-neutral-500"># Projetos e iniciativas</span>
+<span class="text-neutral-400">    ├── </span><span class="text-neutral-500">pessoas/</span>        <span class="text-neutral-500"># Contatos e equipes</span>
+<span class="text-neutral-400">    └── </span><span class="text-neutral-500">referencias/</span>    <span class="text-neutral-500"># Fontes e recursos</span></code></pre>
+      </div>
+
+      <div class="bg-dark-800 rounded-xl border border-dark-600 p-5 mb-6">
+        <h3 class="text-blue-400 font-semibold mb-3">Criando via terminal</h3>
+        <pre class="text-sm text-neutral-300 overflow-x-auto"><code><span class="text-neutral-500"># Criar estrutura completa com um comando</span>
+mkdir -p ~/meu-cerebro/<span class="text-blue-400">{raw/{reunioes,artigos,pensamentos},wiki/{fundamentos,projetos,pessoas,referencias}}</span>
+
+<span class="text-neutral-500"># Criar arquivos schema</span>
+touch ~/meu-cerebro/<span class="text-yellow-400">CLAUDE.md</span>
+touch ~/meu-cerebro/<span class="text-emerald-400">index.md</span>
+touch ~/meu-cerebro/<span class="text-blue-400">log.md</span></code></pre>
+      </div>
+    </section>
+
+    <!-- TÓPICO 3 -->
+    <section id="topico-3" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">3</span>
+        <h2 class="text-2xl font-bold">🔌 Plugins Essenciais</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">Três plugins transformam o Obsidian básico em um sistema de conhecimento inteligente. Instale-os via <strong class="text-blue-400">Settings → Community Plugins → Browse</strong>.</p>
+
+      <!-- SVG: Plugin ecosystem -->
+      <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+        <h3 class="text-base font-semibold text-blue-400 mb-4">🔌 Ecossistema de Plugins</h3>
+        <svg viewBox="0 0 680 200" class="w-full" xmlns="http://www.w3.org/2000/svg">
+          <!-- Central: Obsidian -->
+          <circle cx="340" cy="100" r="40" fill="#1e3a5f" stroke="#3b82f6" stroke-width="2"/>
+          <text x="340" y="96" fill="#60a5fa" font-size="11" text-anchor="middle" font-weight="bold">Obsidian</text>
+          <text x="340" y="110" fill="#93c5fd" font-size="9" text-anchor="middle">Core</text>
+
+          <!-- Plugin 1: Dataview -->
+          <circle cx="140" cy="60" r="50" fill="#1f2937" stroke="#10b981" stroke-width="1.5"/>
+          <text x="140" y="52" fill="#10b981" font-size="11" text-anchor="middle" font-weight="bold">Dataview</text>
+          <text x="140" y="66" fill="#6ee7b7" font-size="8" text-anchor="middle">SQL nas notas</text>
+          <text x="140" y="79" fill="#6b7280" font-size="8" text-anchor="middle">Consultas dinâmicas</text>
+          <line x1="188" y1="75" x2="302" y2="90" stroke="#10b981" stroke-width="1.5" opacity="0.6"/>
+
+          <!-- Plugin 2: Templater -->
+          <circle cx="140" cy="155" r="50" fill="#1f2937" stroke="#FACC15" stroke-width="1.5"/>
+          <text x="140" y="148" fill="#FACC15" font-size="11" text-anchor="middle" font-weight="bold">Templater</text>
+          <text x="140" y="162" fill="#fde68a" font-size="8" text-anchor="middle">Templates JS</text>
+          <text x="140" y="175" fill="#6b7280" font-size="8" text-anchor="middle">Auto-preenchimento</text>
+          <line x1="189" y1="142" x2="302" y2="108" stroke="#FACC15" stroke-width="1.5" opacity="0.6"/>
+
+          <!-- Plugin 3: Git -->
+          <circle cx="540" cy="60" r="50" fill="#1f2937" stroke="#f97316" stroke-width="1.5"/>
+          <text x="540" y="52" fill="#f97316" font-size="11" text-anchor="middle" font-weight="bold">Obsidian Git</text>
+          <text x="540" y="66" fill="#fdba74" font-size="8" text-anchor="middle">Backup automático</text>
+          <text x="540" y="79" fill="#6b7280" font-size="8" text-anchor="middle">Sync via GitHub</text>
+          <line x1="492" y1="75" x2="378" y2="90" stroke="#f97316" stroke-width="1.5" opacity="0.6"/>
+
+          <!-- Plugin 4: Graph Analysis -->
+          <circle cx="540" cy="155" r="50" fill="#1f2937" stroke="#7c3aed" stroke-width="1.5"/>
+          <text x="540" y="148" fill="#c084fc" font-size="11" text-anchor="middle" font-weight="bold">Graph Analysis</text>
+          <text x="540" y="162" fill="#d8b4fe" font-size="8" text-anchor="middle">Análise do grafo</text>
+          <text x="540" y="175" fill="#6b7280" font-size="8" text-anchor="middle">Métricas de links</text>
+          <line x1="491" y1="141" x2="378" y2="110" stroke="#7c3aed" stroke-width="1.5" opacity="0.6"/>
+        </svg>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="bg-dark-800 rounded-lg p-4 border border-emerald-500/30">
+          <div class="text-emerald-400 font-semibold mb-2">Dataview</div>
+          <p class="text-sm text-neutral-300 mb-2">Consulta suas notas como um banco de dados. Exemplo:</p>
+          <pre class="text-xs text-neutral-400 bg-dark-700 rounded p-2"><code>```dataview
+TABLE updated, status
+FROM "wiki/"
+WHERE status = "active"
+SORT updated DESC
+```</code></pre>
+        </div>
+        <div class="bg-dark-800 rounded-lg p-4 border border-yellow-500/30">
+          <div class="text-yellow-400 font-semibold mb-2">Templater</div>
+          <p class="text-sm text-neutral-300 mb-2">Templates com JavaScript. Cria automaticamente o frontmatter:</p>
+          <pre class="text-xs text-neutral-400 bg-dark-700 rounded p-2"><code>---
+title: &lt;% tp.file.title %&gt;
+created: &lt;% tp.date.now("YYYY-MM-DD") %&gt;
+status: draft
+tags: []
+---</code></pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- TÓPICO 4 -->
+    <section id="topico-4" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">4</span>
+        <h2 class="text-2xl font-bold">⚙️ Escrevendo o CLAUDE.md do Vault</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">O CLAUDE.md é o contrato entre você e o LLM. Ele define as <strong class="text-blue-400">regras de operação</strong> — o que o LLM pode e não pode fazer, como organizar o conhecimento e qual o propósito do vault.</p>
+
+      <div class="bg-dark-800 rounded-xl border border-dark-600 p-5 mb-6">
+        <h3 class="text-blue-400 font-semibold mb-3">Template CLAUDE.md Completo</h3>
+        <pre class="text-sm text-neutral-300 overflow-x-auto leading-relaxed"><code><span class="text-neutral-500"># CLAUDE.md — Segundo Cérebro de [Nome]</span>
+
+<span class="text-blue-400">## Propósito</span>
+<span class="text-neutral-400">Este vault é o segundo cérebro de [Seu Nome].
+Área de atuação: [ex: engenharia de ML, produto, etc.]
+Objetivo: capturar, compilar e consultar conhecimento
+de trabalho de forma eficiente.</span>
+
+<span class="text-blue-400">## Estrutura</span>
+<span class="text-neutral-400">- raw/        → capturas brutas (NUNCA edite)
+- wiki/       → conhecimento compilado (edite aqui)
+- CLAUDE.md   → este arquivo (regras do sistema)
+- index.md    → mapa do vault (atualize sempre)
+- log.md      → histórico de compilações</span>
+
+<span class="text-blue-400">## Operações Disponíveis</span>
+<span class="text-neutral-400">### INGERIR (processar raw/ → wiki/)
+Quando solicitado a "ingerir" um arquivo de raw/:
+1. Leia o arquivo raw/ completo
+2. Identifique o conceito/projeto/pessoa central
+3. Crie ou atualize a nota wiki/ correspondente
+4. Adicione [[links]] para notas existentes relevantes
+5. Atualize index.md se criar nota nova
+6. Registre em log.md com data e ação realizada
+
+### CONSULTAR (responder perguntas)
+1. Leia index.md para localizar notas relevantes
+2. Leia as notas wiki/ identificadas
+3. Responda com base apenas no wiki/ (não invente)
+
+### AUDITAR (lint do vault)
+1. Verifique notas sem links (órfãos)
+2. Identifique notas com status: draft antigo
+3. Reporte inconsistências entre notas</span>
+
+<span class="text-blue-400">## Categorias wiki/</span>
+<span class="text-neutral-400">fundamentos/  → conceitos técnicos, teoria
+projetos/     → projetos ativos e concluídos
+pessoas/      → contatos, equipes, stakeholders
+referencias/  → livros, artigos, ferramentas</span>
+
+<span class="text-blue-400">## Regras Críticas</span>
+<span class="text-neutral-400">- NUNCA modifique arquivos em raw/
+- SEMPRE crie links [[bidirecionais]] nas notas
+- SEMPRE registre ações no log.md
+- Notas wiki devem ter frontmatter completo</span></code></pre>
+      </div>
+    </section>
+
+    <!-- TÓPICO 5 -->
+    <section id="topico-5" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">5</span>
+        <h2 class="text-2xl font-bold">🔗 Conectando Obsidian ao Claude Code</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">O Claude Code acessa o vault como qualquer diretório local. A integração é <strong class="text-blue-400">simples e direta</strong> — você abre o terminal na raiz do vault e usa o claude CLI.</p>
+
+      <!-- SVG: Integration diagram -->
+      <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+        <h3 class="text-base font-semibold text-blue-400 mb-4">🔗 Arquitetura de Integração</h3>
+        <svg viewBox="0 0 680 200" class="w-full" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <marker id="ab" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#3b82f6"/></marker>
+          </defs>
+          <!-- Obsidian box -->
+          <rect x="20" y="50" width="160" height="110" rx="10" fill="#1e3a5f" stroke="#3b82f6" stroke-width="1.5"/>
+          <text x="100" y="78" fill="#60a5fa" font-size="12" text-anchor="middle" font-weight="bold">Obsidian</text>
+          <text x="100" y="94" fill="#93c5fd" font-size="9" text-anchor="middle">Interface visual</text>
+          <text x="100" y="110" fill="#93c5fd" font-size="9" text-anchor="middle">Graph View</text>
+          <text x="100" y="126" fill="#93c5fd" font-size="9" text-anchor="middle">Edição de notas</text>
+          <text x="100" y="142" fill="#93c5fd" font-size="9" text-anchor="middle">Backlinks UI</text>
+
+          <!-- Filesystem box (shared) -->
+          <rect x="250" y="30" width="180" height="150" rx="10" fill="#1f2937" stroke="#FACC15" stroke-width="2"/>
+          <text x="340" y="58" fill="#FACC15" font-size="12" text-anchor="middle" font-weight="bold">📁 ~/meu-cerebro/</text>
+          <text x="340" y="74" fill="#fde68a" font-size="9" text-anchor="middle">Sistema de Arquivos Local</text>
+          <rect x="265" y="85" width="150" height="16" rx="3" fill="#451a03" stroke="#FACC15" stroke-width="1"/>
+          <text x="340" y="97" fill="#FACC15" font-size="8" text-anchor="middle">CLAUDE.md</text>
+          <rect x="265" y="108" width="150" height="16" rx="3" fill="#064e3b" stroke="#10b981" stroke-width="1"/>
+          <text x="340" y="120" fill="#10b981" font-size="8" text-anchor="middle">raw/</text>
+          <rect x="265" y="131" width="150" height="16" rx="3" fill="#1e3a5f" stroke="#3b82f6" stroke-width="1"/>
+          <text x="340" y="143" fill="#60a5fa" font-size="8" text-anchor="middle">wiki/</text>
+          <text x="340" y="170" fill="#6b7280" font-size="8" text-anchor="middle">index.md · log.md</text>
+
+          <!-- Claude Code box -->
+          <rect x="500" y="50" width="160" height="110" rx="10" fill="#1c1917" stroke="#FACC15" stroke-width="1.5"/>
+          <text x="580" y="78" fill="#FACC15" font-size="12" text-anchor="middle" font-weight="bold">Claude Code</text>
+          <text x="580" y="94" fill="#fde68a" font-size="9" text-anchor="middle">CLI no terminal</text>
+          <text x="580" y="110" fill="#fde68a" font-size="9" text-anchor="middle">Lê/escreve arquivos</text>
+          <text x="580" y="126" fill="#fde68a" font-size="9" text-anchor="middle">Processa raw/</text>
+          <text x="580" y="142" fill="#fde68a" font-size="9" text-anchor="middle">Atualiza wiki/</text>
+
+          <!-- Arrows -->
+          <line x1="180" y1="105" x2="250" y2="105" stroke="#3b82f6" stroke-width="1.5" marker-end="url(#ab)"/>
+          <line x1="250" y1="115" x2="180" y2="115" stroke="#3b82f6" stroke-width="1.5" marker-end="url(#ab)"/>
+          <line x1="430" y1="105" x2="500" y2="105" stroke="#FACC15" stroke-width="1.5" marker-end="url(#ab)"/>
+          <line x1="500" y1="115" x2="430" y2="115" stroke="#FACC15" stroke-width="1.5" marker-end="url(#ab)"/>
+
+          <text x="215" y="101" fill="#3b82f6" font-size="7" text-anchor="middle">lê</text>
+          <text x="215" y="128" fill="#3b82f6" font-size="7" text-anchor="middle">salva</text>
+          <text x="465" y="101" fill="#FACC15" font-size="7" text-anchor="middle">lê</text>
+          <text x="465" y="128" fill="#FACC15" font-size="7" text-anchor="middle">escreve</text>
+        </svg>
+      </div>
+
+      <div class="bg-dark-800 rounded-xl border border-dark-600 p-5 mb-6">
+        <h3 class="text-blue-400 font-semibold mb-3">Usando o Claude Code no vault</h3>
+        <pre class="text-sm text-neutral-300 overflow-x-auto"><code><span class="text-neutral-500"># Abra o terminal na raiz do vault</span>
+cd ~/meu-cerebro
+
+<span class="text-neutral-500"># Claude Code lê CLAUDE.md automaticamente ao iniciar</span>
+claude
+
+<span class="text-neutral-500"># Ou passe um prompt direto</span>
+claude "ingira o arquivo raw/reunioes/2024-03-20.md"
+
+<span class="text-neutral-500"># Consulta</span>
+claude "o que sabemos sobre o projeto alpha?"</code></pre>
+      </div>
+    </section>
+
+    <!-- TÓPICO 6 -->
+    <section id="topico-6" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">6</span>
+        <h2 class="text-2xl font-bold">✅ Checklist de Configuração</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">Antes de começar a usar o sistema, verifique todos os itens desta lista. Um vault mal configurado vai gerar comportamentos inesperados no LLM.</p>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div class="bg-dark-800 rounded-xl border border-blue-500/30 p-5">
+          <div class="text-blue-400 font-semibold mb-4">Estrutura</div>
+          <div class="space-y-3">
+            <label class="flex items-center space-x-3 cursor-pointer">
+              <input type="checkbox" class="w-4 h-4 rounded border-dark-600 text-blue-400">
+              <span class="text-sm text-neutral-300">Pasta raw/ criada</span>
+            </label>
+            <label class="flex items-center space-x-3 cursor-pointer">
+              <input type="checkbox" class="w-4 h-4 rounded border-dark-600 text-blue-400">
+              <span class="text-sm text-neutral-300">Pasta wiki/ com subcategorias</span>
+            </label>
+            <label class="flex items-center space-x-3 cursor-pointer">
+              <input type="checkbox" class="w-4 h-4 rounded border-dark-600 text-blue-400">
+              <span class="text-sm text-neutral-300">CLAUDE.md criado na raiz</span>
+            </label>
+            <label class="flex items-center space-x-3 cursor-pointer">
+              <input type="checkbox" class="w-4 h-4 rounded border-dark-600 text-blue-400">
+              <span class="text-sm text-neutral-300">index.md e log.md criados</span>
+            </label>
+          </div>
+        </div>
+        <div class="bg-dark-800 rounded-xl border border-blue-500/30 p-5">
+          <div class="text-blue-400 font-semibold mb-4">Plugins e Claude Code</div>
+          <div class="space-y-3">
+            <label class="flex items-center space-x-3 cursor-pointer">
+              <input type="checkbox" class="w-4 h-4 rounded border-dark-600 text-blue-400">
+              <span class="text-sm text-neutral-300">Dataview instalado e ativo</span>
+            </label>
+            <label class="flex items-center space-x-3 cursor-pointer">
+              <input type="checkbox" class="w-4 h-4 rounded border-dark-600 text-blue-400">
+              <span class="text-sm text-neutral-300">Templater instalado</span>
+            </label>
+            <label class="flex items-center space-x-3 cursor-pointer">
+              <input type="checkbox" class="w-4 h-4 rounded border-dark-600 text-blue-400">
+              <span class="text-sm text-neutral-300">claude CLI disponível no terminal</span>
+            </label>
+            <label class="flex items-center space-x-3 cursor-pointer">
+              <input type="checkbox" class="w-4 h-4 rounded border-dark-600 text-blue-400">
+              <span class="text-sm text-neutral-300">Teste: claude "leia o CLAUDE.md e descreva o sistema"</span>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-blue-500/10 rounded-xl border border-blue-500/30 p-5">
+        <div class="text-blue-400 font-semibold mb-3">✅ Conceitos-chave do módulo</div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div class="flex items-start space-x-2"><span class="text-blue-400">✓</span><span class="text-sm text-neutral-300">Vault local = acesso direto pelo Claude Code</span></div>
+          <div class="flex items-start space-x-2"><span class="text-blue-400">✓</span><span class="text-sm text-neutral-300">Estrutura raw/ + wiki/ é obrigatória</span></div>
+          <div class="flex items-start space-x-2"><span class="text-blue-400">✓</span><span class="text-sm text-neutral-300">CLAUDE.md define o comportamento do LLM</span></div>
+          <div class="flex items-start space-x-2"><span class="text-blue-400">✓</span><span class="text-sm text-neutral-300">Dataview + Templater são os plugins-chave</span></div>
+          <div class="flex items-start space-x-2"><span class="text-blue-400">✓</span><span class="text-sm text-neutral-300">Integração = cd vault + claude CLI</span></div>
+          <div class="flex items-start space-x-2"><span class="text-blue-400">✓</span><span class="text-sm text-neutral-300">Git opcional mas recomendado para backup</span></div>
+        </div>
+      </div>
+    </section>
+
+    <div class="flex justify-between items-center mt-8 pt-8 border-t border-dark-600">
+      <a href="index.html" class="flex items-center space-x-2 px-4 py-2 rounded-lg bg-dark-800 border border-dark-600 hover:border-blue-500/50 transition-colors text-neutral-300 hover:text-blue-400">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+        <span>Trilha 2 — Índice</span>
+      </a>
+      <a href="modulo-2-2.html" class="flex items-center space-x-2 px-4 py-2 rounded-lg bg-blue-500/20 border border-blue-500/30 hover:bg-blue-500/30 transition-colors text-blue-400">
+        <span>2.2 — Ingerindo Conhecimento</span>
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+  </main>
+
+  <footer class="border-t border-dark-600 mt-16 py-8">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <p class="text-neutral-500 text-sm">2Cérebro · <a href="https://inema.club" class="text-sky-400 hover:text-sky-300">INEMA.CLUB</a></p>
+    </div>
+  </footer>
+
+  <script>
+    const toggle = document.getElementById('theme-toggle');
+    const darkIcon = document.getElementById('theme-toggle-dark-icon');
+    const lightIcon = document.getElementById('theme-toggle-light-icon');
+    const html = document.documentElement;
+    function applyTheme(isDark) {
+      html.classList.toggle('dark', isDark);
+      darkIcon.classList.toggle('hidden', isDark);
+      lightIcon.classList.toggle('hidden', !isDark);
+    }
+    const saved = localStorage.getItem('theme');
+    applyTheme(saved !== 'light');
+    toggle.addEventListener('click', () => {
+      const isDark = html.classList.contains('dark');
+      localStorage.setItem('theme', isDark ? 'light' : 'dark');
+      applyTheme(!isDark);
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Módulo 2.4 — Consultando e Auditando | 2Cérebro</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config={darkMode:'class',theme:{extend:{colors:{primary:'#FACC15',dark:{900:'#111827',800:'#1f2937',700:'#374151',600:'#4b5563'}}}}}</script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body{font-family:'Inter',sans-serif;}
+    html:not(.dark) body{background-color:#f8fafc;}
+    html:not(.dark) .bg-dark-900{background-color:#ffffff;}
+    html:not(.dark) .bg-dark-800{background-color:#f9fafb;}
+    html:not(.dark) .bg-dark-700{background-color:#f3f4f6;}
+    html:not(.dark) .bg-dark-600{background-color:#e5e7eb;}
+    html:not(.dark) .text-neutral-100{color:#111827;}
+    html:not(.dark) .text-neutral-300{color:#4b5563;}
+    html:not(.dark) .text-neutral-400{color:#6b7280;}
+    html:not(.dark) .text-neutral-500{color:#9ca3af;}
+    html:not(.dark) .border-dark-600{border-color:#d1d5db;}
+    html:not(.dark) .border-dark-700{border-color:#e5e7eb;}
+    html:not(.dark) .text-blue-400{color:#1d4ed8;}
+    html:not(.dark) .bg-blue-500\/20{background-color:rgba(29,78,216,0.12);}
+    html:not(.dark) .border-blue-500\/30{border-color:rgba(29,78,216,0.25);}
+    html:not(.dark) [class*="bg-gradient-to"]{background-image:none!important;}
+    html:not(.dark) .text-primary{color:#a16207;}
+    html:not(.dark) .bg-primary\/10{background-color:rgba(161,98,7,0.08);}
+    html:not(.dark) .border-primary\/40{border-color:rgba(161,98,7,0.25);}
+    html:not(.dark) .text-sky-400{color:#0369a1;}
+    html:not(.dark) .text-yellow-400{color:#a16207;}
+    html:not(.dark) .hover\:text-sky-300:hover{color:#0284c7;}
+    html:not(.dark) .hover\:text-yellow-300:hover{color:#854d0e;}
+    html:not(.dark) .bg-dark-900\/95{background-color:rgba(255,255,255,0.95);}
+  </style>
+</head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen">
+
+  <nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-14">
+        <div class="flex items-center space-x-4">
+          <a href="../../index.html" class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300"><span class="text-2xl">🧠</span><span class="font-bold text-lg hidden sm:inline">2Cérebro</span></a>
+          <span class="text-neutral-600">|</span>
+          <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300 text-sm font-medium">INEMA.CLUB</a>
+        </div>
+        <div class="flex items-center space-x-1 sm:space-x-2">
+          <a href="../trilha1/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors"><span class="sm:hidden">T1</span><span class="hidden sm:inline">Fundamentos</span></a>
+          <a href="index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-blue-400 bg-blue-500/10"><span class="sm:hidden">T2</span><span class="hidden sm:inline">Implementação</span></a>
+          <a href="../trilha3/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors"><span class="sm:hidden">T3</span><span class="hidden sm:inline">Avançado</span></a>
+          <button id="theme-toggle" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2">
+            <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+            <svg id="theme-toggle-light-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+    <div class="flex items-center space-x-2 text-sm text-neutral-400">
+      <a href="../../index.html" class="hover:text-blue-400">Início</a>
+      <span>/</span>
+      <a href="index.html" class="hover:text-blue-400">Trilha 2 — Implementação</a>
+      <span>/</span>
+      <span class="text-blue-400">Módulo 2.4</span>
+    </div>
+  </nav>
+
+  <header class="bg-gradient-to-br from-blue-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <span class="inline-block px-3 py-1 bg-blue-500/20 text-blue-400 text-xs font-semibold rounded-full mb-4">MÓDULO 2.4</span>
+      <h1 class="text-3xl sm:text-4xl font-bold mb-4">🔍 Consultando e Auditando o Vault</h1>
+      <p class="text-lg text-neutral-400 max-w-3xl">Como fazer perguntas eficazes ao seu segundo cérebro, e como manter o vault saudável com auditorias regulares.</p>
+      <div class="grid grid-cols-4 gap-4 mt-8 max-w-lg">
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-blue-400">6</div><div class="text-xs text-neutral-400">Tópicos</div></div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-blue-400">40</div><div class="text-xs text-neutral-400">Minutos</div></div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-blue-400">Intermediário</div><div class="text-xs text-neutral-400">Nível</div></div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-blue-400">Prática</div><div class="text-xs text-neutral-400">Tipo</div></div>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+    <!-- TÓPICO 1 -->
+    <section id="topico-1" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">1</span>
+        <h2 class="text-2xl font-bold">❓ Como o LLM Consulta o Wiki</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">Ao receber uma pergunta, o LLM não varre todos os arquivos — ele usa o <strong class="text-blue-400">index.md como mapa</strong> para identificar notas relevantes e então as lê. Isso reduz o uso de tokens drasticamente.</p>
+
+      <!-- SVG: Query flow -->
+      <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+        <h3 class="text-base font-semibold text-blue-400 mb-4">🔍 Fluxo de Consulta</h3>
+        <svg viewBox="0 0 680 200" class="w-full" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <marker id="aq" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#3b82f6"/></marker>
+          </defs>
+
+          <!-- User question -->
+          <rect x="10" y="70" width="130" height="60" rx="8" fill="#1e3a5f" stroke="#3b82f6"/>
+          <text x="75" y="93" fill="#60a5fa" font-size="9" text-anchor="middle" font-weight="bold">Pergunta:</text>
+          <text x="75" y="107" fill="#93c5fd" font-size="8" text-anchor="middle">"O que decidimos</text>
+          <text x="75" y="120" fill="#93c5fd" font-size="8" text-anchor="middle">sobre Python 3.12?"</text>
+
+          <line x1="140" y1="100" x2="158" y2="100" stroke="#3b82f6" stroke-width="1.5" marker-end="url(#aq)"/>
+
+          <!-- Step 1: Read index -->
+          <rect x="160" y="50" width="120" height="100" rx="8" fill="#064e3b" stroke="#10b981"/>
+          <text x="220" y="74" fill="#10b981" font-size="9" text-anchor="middle" font-weight="bold">1. Lê index.md</text>
+          <line x1="170" y1="82" x2="270" y2="82" stroke="#374151"/>
+          <text x="220" y="96" fill="#6ee7b7" font-size="8" text-anchor="middle">Identifica:</text>
+          <text x="220" y="110" fill="#6ee7b7" font-size="8" text-anchor="middle">- python-3-12.md ✓</text>
+          <text x="220" y="124" fill="#6ee7b7" font-size="8" text-anchor="middle">- sprint-planning ✓</text>
+          <text x="220" y="138" fill="#6ee7b7" font-size="8" text-anchor="middle">- joao.md ✓</text>
+
+          <line x1="280" y1="100" x2="298" y2="100" stroke="#3b82f6" stroke-width="1.5" marker-end="url(#aq)"/>
+
+          <!-- Step 2: Read notes -->
+          <rect x="300" y="20" width="120" height="160" rx="8" fill="#1f2937" stroke="#374151"/>
+          <text x="360" y="44" fill="#9ca3af" font-size="9" text-anchor="middle" font-weight="bold">2. Lê notas</text>
+          <line x1="310" y1="52" x2="410" y2="52" stroke="#374151"/>
+          <rect x="312" y="62" width="96" height="28" rx="4" fill="#064e3b" stroke="#10b981" stroke-width="1"/>
+          <text x="360" y="80" fill="#10b981" font-size="8" text-anchor="middle">python-3-12.md</text>
+          <rect x="312" y="98" width="96" height="28" rx="4" fill="#1e3a5f" stroke="#3b82f6" stroke-width="1"/>
+          <text x="360" y="116" fill="#60a5fa" font-size="8" text-anchor="middle">sprint-planning.md</text>
+          <rect x="312" y="134" width="96" height="28" rx="4" fill="#2e1065" stroke="#7c3aed" stroke-width="1"/>
+          <text x="360" y="152" fill="#c084fc" font-size="8" text-anchor="middle">joao.md</text>
+
+          <line x1="420" y1="100" x2="438" y2="100" stroke="#3b82f6" stroke-width="1.5" marker-end="url(#aq)"/>
+
+          <!-- Step 3: Synthesize -->
+          <rect x="440" y="50" width="120" height="100" rx="8" fill="#1c1917" stroke="#FACC15"/>
+          <text x="500" y="74" fill="#FACC15" font-size="9" text-anchor="middle" font-weight="bold">3. Sintetiza</text>
+          <line x1="450" y1="82" x2="550" y2="82" stroke="#374151"/>
+          <text x="500" y="96" fill="#fde68a" font-size="8" text-anchor="middle">Combina contexto</text>
+          <text x="500" y="110" fill="#fde68a" font-size="8" text-anchor="middle">das 3 notas em</text>
+          <text x="500" y="124" fill="#fde68a" font-size="8" text-anchor="middle">uma resposta</text>
+          <text x="500" y="138" fill="#fde68a" font-size="8" text-anchor="middle">coerente</text>
+
+          <line x1="560" y1="100" x2="578" y2="100" stroke="#10b981" stroke-width="1.5" marker-end="url(#aq)"/>
+
+          <!-- Answer -->
+          <rect x="580" y="60" width="90" height="80" rx="8" fill="#064e3b" stroke="#10b981"/>
+          <text x="625" y="84" fill="#10b981" font-size="9" text-anchor="middle" font-weight="bold">Resposta</text>
+          <text x="625" y="98" fill="#6ee7b7" font-size="7" text-anchor="middle">Decisão: migrar</text>
+          <text x="625" y="111" fill="#6ee7b7" font-size="7" text-anchor="middle">em Sprint 5.</text>
+          <text x="625" y="124" fill="#6ee7b7" font-size="7" text-anchor="middle">João lidera.</text>
+          <text x="625" y="137" fill="#6ee7b7" font-size="7" text-anchor="middle">Risco: distutils</text>
+        </svg>
+      </div>
+    </section>
+
+    <!-- TÓPICO 2 -->
+    <section id="topico-2" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">2</span>
+        <h2 class="text-2xl font-bold">💬 Tipos de Perguntas Eficazes</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">Nem toda pergunta é igual. Perguntas <strong class="text-blue-400">específicas e contextualizadas</strong> produzem respostas muito melhores do que perguntas genéricas.</p>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div class="space-y-4">
+          <div class="text-emerald-400 font-semibold">✅ Perguntas Eficazes</div>
+          <div class="bg-dark-800 rounded-lg p-4 border border-emerald-500/30">
+            <p class="text-sm text-neutral-400 mb-2">Factual sobre projeto:</p>
+            <p class="text-sm text-emerald-400 italic">"Qual o status atual do projeto Alpha e quais são os bloqueadores?"</p>
+          </div>
+          <div class="bg-dark-800 rounded-lg p-4 border border-emerald-500/30">
+            <p class="text-sm text-neutral-400 mb-2">Comparação:</p>
+            <p class="text-sm text-emerald-400 italic">"Quais são as diferenças entre FastAPI e Flask mencionadas no vault?"</p>
+          </div>
+          <div class="bg-dark-800 rounded-lg p-4 border border-emerald-500/30">
+            <p class="text-sm text-neutral-400 mb-2">Síntese temporal:</p>
+            <p class="text-sm text-emerald-400 italic">"Quais decisões técnicas tomamos em março de 2024?"</p>
+          </div>
+          <div class="bg-dark-800 rounded-lg p-4 border border-emerald-500/30">
+            <p class="text-sm text-neutral-400 mb-2">Relacional:</p>
+            <p class="text-sm text-emerald-400 italic">"O que o João está liderando atualmente?"</p>
+          </div>
+        </div>
+        <div class="space-y-4">
+          <div class="text-red-400 font-semibold">❌ Perguntas Ineficazes</div>
+          <div class="bg-dark-800 rounded-lg p-4 border border-red-500/30">
+            <p class="text-sm text-neutral-400 mb-2">Muito genérica:</p>
+            <p class="text-sm text-red-400 italic">"O que você sabe?"</p>
+            <p class="text-xs text-neutral-500 mt-1">LLM não sabe por onde começar</p>
+          </div>
+          <div class="bg-dark-800 rounded-lg p-4 border border-red-500/30">
+            <p class="text-sm text-neutral-400 mb-2">Fora do vault:</p>
+            <p class="text-sm text-red-400 italic">"Qual é a melhor linguagem de programação?"</p>
+            <p class="text-xs text-neutral-500 mt-1">Responde com treinamento geral, não seu vault</p>
+          </div>
+          <div class="bg-dark-800 rounded-lg p-4 border border-red-500/30">
+            <p class="text-sm text-neutral-400 mb-2">Sem âncora:</p>
+            <p class="text-sm text-red-400 italic">"Me fale sobre machine learning"</p>
+            <p class="text-xs text-neutral-500 mt-1">Não especifica se quer do vault ou treinamento</p>
+          </div>
+          <div class="bg-dark-800 rounded-lg p-4 border border-red-500/30">
+            <p class="text-sm text-neutral-400 mb-2">Impossível de responder:</p>
+            <p class="text-sm text-red-400 italic">"O que vai acontecer com o projeto?"</p>
+            <p class="text-xs text-neutral-500 mt-1">LLM não prevê o futuro — só o que foi registrado</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TÓPICO 3 -->
+    <section id="topico-3" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">3</span>
+        <h2 class="text-2xl font-bold">📊 Consultando com Dataview</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">Para consultas estruturadas, o plugin Dataview permite <strong class="text-blue-400">queries tipo SQL diretamente no Obsidian</strong> — sem precisar do LLM. Ideal para dashboards e relatórios recorrentes.</p>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div class="bg-dark-800 rounded-xl border border-dark-600 p-5">
+          <div class="text-blue-400 font-semibold mb-3">📋 Projetos Ativos</div>
+          <pre class="text-xs text-neutral-400 overflow-x-auto"><code>```dataview
+TABLE status, updated
+FROM "wiki/projetos"
+WHERE status = "active"
+SORT updated DESC
+```</code></pre>
+          <p class="text-xs text-neutral-500 mt-3">Lista todos os projetos ativos com data de última atualização</p>
+        </div>
+        <div class="bg-dark-800 rounded-xl border border-dark-600 p-5">
+          <div class="text-blue-400 font-semibold mb-3">👥 Pessoas por Projeto</div>
+          <pre class="text-xs text-neutral-400 overflow-x-auto"><code>```dataview
+TABLE file.outlinks
+FROM "wiki/pessoas"
+WHERE length(file.outlinks) > 2
+SORT file.name ASC
+```</code></pre>
+          <p class="text-xs text-neutral-500 mt-3">Lista pessoas com mais de 2 conexões no vault</p>
+        </div>
+        <div class="bg-dark-800 rounded-xl border border-dark-600 p-5">
+          <div class="text-blue-400 font-semibold mb-3">⚠️ Notas Desatualizadas</div>
+          <pre class="text-xs text-neutral-400 overflow-x-auto"><code>```dataview
+LIST
+FROM "wiki/"
+WHERE updated < date(today) - dur(30 days)
+AND status = "active"
+```</code></pre>
+          <p class="text-xs text-neutral-500 mt-3">Notas ativas não atualizadas há mais de 30 dias</p>
+        </div>
+        <div class="bg-dark-800 rounded-xl border border-dark-600 p-5">
+          <div class="text-blue-400 font-semibold mb-3">🔗 Notas Órfãs</div>
+          <pre class="text-xs text-neutral-400 overflow-x-auto"><code>```dataview
+LIST
+FROM "wiki/"
+WHERE length(file.inlinks) = 0
+AND length(file.outlinks) = 0
+```</code></pre>
+          <p class="text-xs text-neutral-500 mt-3">Notas sem nenhum link — candidatas à conexão ou remoção</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TÓPICO 4 -->
+    <section id="topico-4" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">4</span>
+        <h2 class="text-2xl font-bold">🔧 Auditoria: Lint do Vault</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">A auditoria identifica problemas de saúde no vault: <strong class="text-blue-400">notas órfãs, inconsistências, links quebrados e conteúdo desatualizado</strong>. Faça semanalmente.</p>
+
+      <!-- SVG: Audit process -->
+      <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+        <h3 class="text-base font-semibold text-blue-400 mb-4">🔧 Processo de Auditoria</h3>
+        <svg viewBox="0 0 680 220" class="w-full" xmlns="http://www.w3.org/2000/svg">
+          <!-- LLM reads vault -->
+          <rect x="10" y="70" width="140" height="80" rx="8" fill="#1c1917" stroke="#FACC15"/>
+          <text x="80" y="100" fill="#FACC15" font-size="10" text-anchor="middle" font-weight="bold">🤖 LLM Auditor</text>
+          <text x="80" y="114" fill="#fde68a" font-size="8" text-anchor="middle">Lê index.md</text>
+          <text x="80" y="127" fill="#fde68a" font-size="8" text-anchor="middle">+ todas notas wiki/</text>
+          <text x="80" y="140" fill="#fde68a" font-size="8" text-anchor="middle">+ log.md</text>
+
+          <defs>
+            <marker id="aa" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#3b82f6"/></marker>
+          </defs>
+          <line x1="150" y1="110" x2="168" y2="110" stroke="#3b82f6" stroke-width="1.5" marker-end="url(#aa)"/>
+
+          <!-- 4 findings boxes -->
+          <rect x="170" y="10" width="130" height="65" rx="6" fill="#1f2937" stroke="#ef4444"/>
+          <text x="235" y="32" fill="#ef4444" font-size="9" text-anchor="middle" font-weight="bold">🔴 Órfãos</text>
+          <text x="235" y="48" fill="#fca5a5" font-size="8" text-anchor="middle">draft-ideias.md — sem links</text>
+          <text x="235" y="61" fill="#fca5a5" font-size="8" text-anchor="middle">old-meeting.md — isolado</text>
+          <line x1="170" y1="42" x2="150" y2="95" stroke="#ef4444" stroke-width="1" opacity="0.5" stroke-dasharray="3,3"/>
+
+          <rect x="310" y="10" width="130" height="65" rx="6" fill="#1f2937" stroke="#f97316"/>
+          <text x="375" y="32" fill="#f97316" font-size="9" text-anchor="middle" font-weight="bold">🟠 Desatualizados</text>
+          <text x="375" y="48" fill="#fdba74" font-size="8" text-anchor="middle">projeto-beta — 45 dias</text>
+          <text x="375" y="61" fill="#fdba74" font-size="8" text-anchor="middle">sem atualização</text>
+          <line x1="310" y1="42" x2="260" y2="85" stroke="#f97316" stroke-width="1" opacity="0.5" stroke-dasharray="3,3"/>
+
+          <rect x="170" y="145" width="130" height="65" rx="6" fill="#1f2937" stroke="#eab308"/>
+          <text x="235" y="167" fill="#eab308" font-size="9" text-anchor="middle" font-weight="bold">🟡 Inconsistências</text>
+          <text x="235" y="183" fill="#fde68a" font-size="8" text-anchor="middle">joao.md diz "líder"</text>
+          <text x="235" y="196" fill="#fde68a" font-size="8" text-anchor="middle">alpha.md diz "ex-líder"</text>
+          <line x1="170" y1="167" x2="150" y2="125" stroke="#eab308" stroke-width="1" opacity="0.5" stroke-dasharray="3,3"/>
+
+          <rect x="310" y="145" width="130" height="65" rx="6" fill="#1f2937" stroke="#10b981"/>
+          <text x="375" y="167" fill="#10b981" font-size="9" text-anchor="middle" font-weight="bold">🟢 Saudáveis</text>
+          <text x="375" y="183" fill="#6ee7b7" font-size="8" text-anchor="middle">87% das notas OK</text>
+          <text x="375" y="196" fill="#6ee7b7" font-size="8" text-anchor="middle">grafo bem conectado</text>
+          <line x1="310" y1="167" x2="260" y2="135" stroke="#10b981" stroke-width="1" opacity="0.5" stroke-dasharray="3,3"/>
+
+          <!-- Report -->
+          <rect x="480" y="60" width="190" height="100" rx="8" fill="#1f2937" stroke="#374151"/>
+          <text x="575" y="82" fill="#9ca3af" font-size="10" text-anchor="middle" font-weight="bold">📋 Relatório</text>
+          <line x1="490" y1="90" x2="660" y2="90" stroke="#374151"/>
+          <text x="495" y="107" fill="#ef4444" font-size="8">2 notas órfãs</text>
+          <text x="495" y="120" fill="#f97316" font-size="8">1 projeto desatualizado</text>
+          <text x="495" y="133" fill="#eab308" font-size="8">1 inconsistência encontrada</text>
+          <text x="495" y="146" fill="#10b981" font-size="8">Ação: revisar 4 itens</text>
+          <line x1="440" y1="110" x2="480" y2="110" stroke="#3b82f6" stroke-width="1.5" marker-end="url(#aa)"/>
+        </svg>
+      </div>
+
+      <div class="bg-dark-800 rounded-xl border border-dark-600 p-5 mb-6">
+        <h3 class="text-blue-400 font-semibold mb-3">Prompt de Auditoria Semanal</h3>
+        <pre class="text-sm text-neutral-300 overflow-x-auto"><code><span class="text-blue-400">Faça uma auditoria completa do vault:
+
+1. Liste notas wiki/ sem nenhum [[link]] (órfãos)
+2. Liste notas com status "active" não atualizadas
+   há mais de 30 dias
+3. Identifique contradições entre notas
+   (mesmo conceito com informações diferentes)
+4. Verifique se index.md está completo
+5. Reporte links [[quebrados]] (notas referenciadas
+   que não existem)
+
+Gere um relatório em formato de checklist com
+ações recomendadas para cada problema.</span></code></pre>
+      </div>
+    </section>
+
+    <!-- TÓPICO 5 -->
+    <section id="topico-5" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">5</span>
+        <h2 class="text-2xl font-bold">📈 Métricas de Saúde do Vault</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">Um vault saudável tem métricas específicas. Monitore esses números mensalmente para garantir que o sistema não está degenerando.</p>
+
+      <!-- SVG: Health metrics dashboard -->
+      <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+        <h3 class="text-base font-semibold text-blue-400 mb-4">📊 Dashboard de Saúde (exemplo)</h3>
+        <svg viewBox="0 0 680 220" class="w-full" xmlns="http://www.w3.org/2000/svg">
+          <!-- Metric cards -->
+          <!-- Card 1 -->
+          <rect x="10" y="20" width="140" height="90" rx="8" fill="#064e3b" stroke="#10b981"/>
+          <text x="80" y="50" fill="#10b981" font-size="28" text-anchor="middle" font-weight="bold">94%</text>
+          <text x="80" y="70" fill="#6ee7b7" font-size="10" text-anchor="middle">Notas Conectadas</text>
+          <text x="80" y="86" fill="#6b7280" font-size="8" text-anchor="middle">≥ 1 link</text>
+          <rect x="20" y="96" width="120" height="6" rx="3" fill="#374151"/>
+          <rect x="20" y="96" width="113" height="6" rx="3" fill="#10b981"/>
+
+          <!-- Card 2 -->
+          <rect x="165" y="20" width="140" height="90" rx="8" fill="#1e3a5f" stroke="#3b82f6"/>
+          <text x="235" y="50" fill="#60a5fa" font-size="28" text-anchor="middle" font-weight="bold">2.4</text>
+          <text x="235" y="70" fill="#93c5fd" font-size="10" text-anchor="middle">Links Médios/Nota</text>
+          <text x="235" y="86" fill="#6b7280" font-size="8" text-anchor="middle">Meta: ≥ 2.0</text>
+          <rect x="175" y="96" width="120" height="6" rx="3" fill="#374151"/>
+          <rect x="175" y="96" width="96" height="6" rx="3" fill="#3b82f6"/>
+
+          <!-- Card 3 -->
+          <rect x="320" y="20" width="140" height="90" rx="8" fill="#451a03" stroke="#FACC15"/>
+          <text x="390" y="50" fill="#FACC15" font-size="28" text-anchor="middle" font-weight="bold">87%</text>
+          <text x="390" y="70" fill="#fde68a" font-size="10" text-anchor="middle">Notas Atuais</text>
+          <text x="390" y="86" fill="#6b7280" font-size="8" text-anchor="middle">Atualizadas &lt; 30d</text>
+          <rect x="330" y="96" width="120" height="6" rx="3" fill="#374151"/>
+          <rect x="330" y="96" width="104" height="6" rx="3" fill="#FACC15"/>
+
+          <!-- Card 4 -->
+          <rect x="475" y="20" width="140" height="90" rx="8" fill="#2e1065" stroke="#7c3aed"/>
+          <text x="545" y="50" fill="#c084fc" font-size="28" text-anchor="middle" font-weight="bold">142</text>
+          <text x="545" y="70" fill="#d8b4fe" font-size="10" text-anchor="middle">Notas no Wiki</text>
+          <text x="545" y="86" fill="#6b7280" font-size="8" text-anchor="middle">+12 este mês</text>
+          <rect x="485" y="96" width="120" height="6" rx="3" fill="#374151"/>
+          <rect x="485" y="96" width="70" height="6" rx="3" fill="#7c3aed"/>
+
+          <!-- Growth chart -->
+          <rect x="10" y="125" width="660" height="85" rx="8" fill="#111827" stroke="#374151"/>
+          <text x="25" y="145" fill="#9ca3af" font-size="9" font-weight="bold">Crescimento do Vault (notas/mês)</text>
+
+          <!-- Chart bars -->
+          <rect x="60" y="175" width="30" height="20" rx="2" fill="#3b82f6" opacity="0.6"/>
+          <text x="75" y="210" fill="#6b7280" font-size="7" text-anchor="middle">Jan</text>
+          <text x="75" y="172" fill="#60a5fa" font-size="7" text-anchor="middle">8</text>
+
+          <rect x="110" y="168" width="30" height="27" rx="2" fill="#3b82f6" opacity="0.7"/>
+          <text x="125" y="210" fill="#6b7280" font-size="7" text-anchor="middle">Fev</text>
+          <text x="125" y="165" fill="#60a5fa" font-size="7" text-anchor="middle">11</text>
+
+          <rect x="160" y="160" width="30" height="35" rx="2" fill="#3b82f6" opacity="0.8"/>
+          <text x="175" y="210" fill="#6b7280" font-size="7" text-anchor="middle">Mar</text>
+          <text x="175" y="157" fill="#60a5fa" font-size="7" text-anchor="middle">14</text>
+
+          <rect x="210" y="152" width="30" height="43" rx="2" fill="#3b82f6" opacity="0.9"/>
+          <text x="225" y="210" fill="#6b7280" font-size="7" text-anchor="middle">Abr</text>
+          <text x="225" y="149" fill="#60a5fa" font-size="7" text-anchor="middle">17</text>
+
+          <rect x="260" y="155" width="30" height="40" rx="2" fill="#10b981" opacity="0.9"/>
+          <text x="275" y="210" fill="#6b7280" font-size="7" text-anchor="middle">Mai</text>
+          <text x="275" y="152" fill="#10b981" font-size="7" text-anchor="middle">16</text>
+
+          <rect x="310" y="148" width="30" height="47" rx="2" fill="#10b981"/>
+          <text x="325" y="210" fill="#6b7280" font-size="7" text-anchor="middle">Jun</text>
+          <text x="325" y="145" fill="#10b981" font-size="7" text-anchor="middle">19</text>
+
+          <text x="400" y="175" fill="#4b5563" font-size="8">← Agente automático ativado →</text>
+          <line x1="370" y1="165" x2="370" y2="195" stroke="#FACC15" stroke-width="1" stroke-dasharray="3,3"/>
+
+          <rect x="380" y="150" width="30" height="45" rx="2" fill="#FACC15" opacity="0.8"/>
+          <text x="395" y="210" fill="#6b7280" font-size="7" text-anchor="middle">Jul</text>
+          <text x="395" y="147" fill="#FACC15" font-size="7" text-anchor="middle">18</text>
+
+          <rect x="430" y="140" width="30" height="55" rx="2" fill="#FACC15" opacity="0.9"/>
+          <text x="445" y="210" fill="#6b7280" font-size="7" text-anchor="middle">Ago</text>
+          <text x="445" y="137" fill="#FACC15" font-size="7" text-anchor="middle">22</text>
+
+          <rect x="480" y="132" width="30" height="63" rx="2" fill="#FACC15"/>
+          <text x="495" y="210" fill="#6b7280" font-size="7" text-anchor="middle">Set</text>
+          <text x="495" y="129" fill="#FACC15" font-size="7" text-anchor="middle">25</text>
+        </svg>
+      </div>
+    </section>
+
+    <!-- TÓPICO 6 -->
+    <section id="topico-6" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">6</span>
+        <h2 class="text-2xl font-bold">🎯 Casos de Uso: Quando Usar Cada Modo</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">O sistema tem três modos principais: consulta via LLM, consulta via Dataview e auditoria. Saber quando usar cada um <strong class="text-blue-400">economiza tempo e tokens</strong>.</p>
+
+      <div class="overflow-x-auto mb-6">
+        <table class="w-full text-sm border-collapse">
+          <thead>
+            <tr class="bg-dark-700">
+              <th class="text-left p-3 text-blue-400 border border-dark-600">Situação</th>
+              <th class="text-left p-3 text-blue-400 border border-dark-600">Melhor Abordagem</th>
+              <th class="text-left p-3 text-blue-400 border border-dark-600">Exemplo</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="border-b border-dark-600 hover:bg-dark-700/50">
+              <td class="p-3 text-neutral-300 border border-dark-600">Pergunta de contexto</td>
+              <td class="p-3 text-emerald-400 border border-dark-600">LLM + wiki/</td>
+              <td class="p-3 text-neutral-400 border border-dark-600">"O que decidimos sobre X?"</td>
+            </tr>
+            <tr class="border-b border-dark-600 hover:bg-dark-700/50">
+              <td class="p-3 text-neutral-300 border border-dark-600">Listar projetos ativos</td>
+              <td class="p-3 text-blue-400 border border-dark-600">Dataview query</td>
+              <td class="p-3 text-neutral-400 border border-dark-600">TABLE status FROM "wiki/projetos"</td>
+            </tr>
+            <tr class="border-b border-dark-600 hover:bg-dark-700/50">
+              <td class="p-3 text-neutral-300 border border-dark-600">Saúde do grafo</td>
+              <td class="p-3 text-purple-400 border border-dark-600">LLM audit</td>
+              <td class="p-3 text-neutral-400 border border-dark-600">Prompt de auditoria semanal</td>
+            </tr>
+            <tr class="border-b border-dark-600 hover:bg-dark-700/50">
+              <td class="p-3 text-neutral-300 border border-dark-600">Conexões rápidas</td>
+              <td class="p-3 text-yellow-400 border border-dark-600">Graph View (Obsidian)</td>
+              <td class="p-3 text-neutral-400 border border-dark-600">Visual do grafo no UI</td>
+            </tr>
+            <tr class="hover:bg-dark-700/50">
+              <td class="p-3 text-neutral-300 border border-dark-600">Síntese criativa</td>
+              <td class="p-3 text-emerald-400 border border-dark-600">LLM + múltiplas notas</td>
+              <td class="p-3 text-neutral-400 border border-dark-600">"Conecte os conceitos de X e Y"</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="bg-blue-500/10 rounded-xl border border-blue-500/30 p-5">
+        <div class="text-blue-400 font-semibold mb-3">✅ Conceitos-chave do módulo</div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div class="flex items-start space-x-2"><span class="text-blue-400">✓</span><span class="text-sm text-neutral-300">LLM usa index.md para localizar notas relevantes</span></div>
+          <div class="flex items-start space-x-2"><span class="text-blue-400">✓</span><span class="text-sm text-neutral-300">Perguntas específicas produzem respostas melhores</span></div>
+          <div class="flex items-start space-x-2"><span class="text-blue-400">✓</span><span class="text-sm text-neutral-300">Dataview = SQL estruturado sem LLM</span></div>
+          <div class="flex items-start space-x-2"><span class="text-blue-400">✓</span><span class="text-sm text-neutral-300">Auditoria semanal mantém vault saudável</span></div>
+          <div class="flex items-start space-x-2"><span class="text-blue-400">✓</span><span class="text-sm text-neutral-300">Métricas: conectividade, links/nota, atualidade</span></div>
+          <div class="flex items-start space-x-2"><span class="text-blue-400">✓</span><span class="text-sm text-neutral-300">Cada modo tem seu caso de uso ideal</span></div>
+        </div>
+      </div>
+    </section>
+
+    <div class="flex justify-between items-center mt-8 pt-8 border-t border-dark-600">
+      <a href="modulo-2-3.html" class="flex items-center space-x-2 px-4 py-2 rounded-lg bg-dark-800 border border-dark-600 hover:border-blue-500/50 transition-colors text-neutral-300 hover:text-blue-400">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+        <span>2.3 — Agente de Atualização</span>
+      </a>
+      <a href="../trilha3/index.html" class="flex items-center space-x-2 px-4 py-2 rounded-lg bg-blue-500/20 border border-blue-500/30 hover:bg-blue-500/30 transition-colors text-blue-400">
+        <span>Trilha 3 — Avançado</span>
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+  </main>
+
+  <footer class="border-t border-dark-600 mt-16 py-8">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <p class="text-neutral-500 text-sm">2Cérebro · <a href="https://inema.club" class="text-sky-400 hover:text-sky-300">INEMA.CLUB</a></p>
+    </div>
+  </footer>
+
+  <script>
+    const toggle = document.getElementById('theme-toggle');
+    const darkIcon = document.getElementById('theme-toggle-dark-icon');
+    const lightIcon = document.getElementById('theme-toggle-light-icon');
+    const html = document.documentElement;
+    function applyTheme(isDark) {
+      html.classList.toggle('dark', isDark);
+      darkIcon.classList.toggle('hidden', isDark);
+      lightIcon.classList.toggle('hidden', !isDark);
+    }
+    const saved = localStorage.getItem('theme');
+    applyTheme(saved !== 'light');
+    toggle.addEventListener('click', () => {
+      const isDark = html.classList.contains('dark');
+      localStorage.setItem('theme', isDark ? 'light' : 'dark');
+      applyTheme(!isDark);
+    });
+  </script>
+</body>
+</html>

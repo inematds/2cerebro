@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Módulo 3.3 — Integrações Avançadas | 2Cérebro</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config={darkMode:'class',theme:{extend:{colors:{primary:'#FACC15',dark:{900:'#111827',800:'#1f2937',700:'#374151',600:'#4b5563'}}}}}</script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body{font-family:'Inter',sans-serif;}
+    html:not(.dark) body{background-color:#f8fafc;}
+    html:not(.dark) .bg-dark-900{background-color:#ffffff;}
+    html:not(.dark) .bg-dark-800{background-color:#f9fafb;}
+    html:not(.dark) .bg-dark-700{background-color:#f3f4f6;}
+    html:not(.dark) .bg-dark-600{background-color:#e5e7eb;}
+    html:not(.dark) .text-neutral-100{color:#111827;}
+    html:not(.dark) .text-neutral-300{color:#4b5563;}
+    html:not(.dark) .text-neutral-400{color:#6b7280;}
+    html:not(.dark) .text-neutral-500{color:#9ca3af;}
+    html:not(.dark) .border-dark-600{border-color:#d1d5db;}
+    html:not(.dark) .border-dark-700{border-color:#e5e7eb;}
+    html:not(.dark) .text-purple-400{color:#7c3aed;}
+    html:not(.dark) .bg-purple-500\/20{background-color:rgba(124,58,237,0.12);}
+    html:not(.dark) .border-purple-500\/30{border-color:rgba(124,58,237,0.25);}
+    html:not(.dark) [class*="bg-gradient-to"]{background-image:none!important;}
+    html:not(.dark) .text-primary{color:#a16207;}
+    html:not(.dark) .bg-primary\/10{background-color:rgba(161,98,7,0.08);}
+    html:not(.dark) .border-primary\/40{border-color:rgba(161,98,7,0.25);}
+    html:not(.dark) .text-sky-400{color:#0369a1;}
+    html:not(.dark) .text-yellow-400{color:#a16207;}
+    html:not(.dark) .hover\:text-sky-300:hover{color:#0284c7;}
+    html:not(.dark) .hover\:text-yellow-300:hover{color:#854d0e;}
+    html:not(.dark) .bg-dark-900\/95{background-color:rgba(255,255,255,0.95);}
+  </style>
+</head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen">
+
+  <nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-14">
+        <div class="flex items-center space-x-4">
+          <a href="../../index.html" class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300"><span class="text-2xl">🧠</span><span class="font-bold text-lg hidden sm:inline">2Cérebro</span></a>
+          <span class="text-neutral-600">|</span>
+          <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300 text-sm font-medium">INEMA.CLUB</a>
+        </div>
+        <div class="flex items-center space-x-1 sm:space-x-2">
+          <a href="../trilha1/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors"><span class="sm:hidden">T1</span><span class="hidden sm:inline">Fundamentos</span></a>
+          <a href="../trilha2/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors"><span class="sm:hidden">T2</span><span class="hidden sm:inline">Implementação</span></a>
+          <a href="index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-purple-400 bg-purple-500/10"><span class="sm:hidden">T3</span><span class="hidden sm:inline">Avançado</span></a>
+          <button id="theme-toggle" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2">
+            <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+            <svg id="theme-toggle-light-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+    <div class="flex items-center space-x-2 text-sm text-neutral-400">
+      <a href="../../index.html" class="hover:text-purple-400">Início</a>
+      <span>/</span>
+      <a href="index.html" class="hover:text-purple-400">Trilha 3 — Avançado</a>
+      <span>/</span>
+      <span class="text-purple-400">Módulo 3.3</span>
+    </div>
+  </nav>
+
+  <header class="bg-gradient-to-br from-purple-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <span class="inline-block px-3 py-1 bg-purple-500/20 text-purple-400 text-xs font-semibold rounded-full mb-4">MÓDULO 3.3</span>
+      <h1 class="text-3xl sm:text-4xl font-bold mb-4">🔌 Integrações Avançadas</h1>
+      <p class="text-lg text-neutral-400 max-w-3xl">Conectando o segundo cérebro a APIs externas: GitHub, Slack, calendário e bancos de dados — captura automática de múltiplas fontes.</p>
+      <div class="grid grid-cols-4 gap-4 mt-8 max-w-lg">
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-purple-400">6</div><div class="text-xs text-neutral-400">Tópicos</div></div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-purple-400">65</div><div class="text-xs text-neutral-400">Minutos</div></div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-purple-400">Avançado</div><div class="text-xs text-neutral-400">Nível</div></div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-purple-400">Código</div><div class="text-xs text-neutral-400">Tipo</div></div>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+    <!-- TÓPICO 1 -->
+    <section id="topico-1" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">1</span>
+        <h2 class="text-2xl font-bold">🌐 Arquitetura de Integração</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">Integrações avançadas transformam o segundo cérebro em um <strong class="text-purple-400">sistema de captura automática</strong>. Em vez de você anotar manualmente, scripts coletam dados de APIs e os depositam em raw/.</p>
+
+      <!-- SVG: Integration architecture -->
+      <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+        <h3 class="text-base font-semibold text-purple-400 mb-4">🌐 Hub de Integrações</h3>
+        <svg viewBox="0 0 680 260" class="w-full" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <marker id="int" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#c084fc"/></marker>
+          </defs>
+
+          <!-- External sources -->
+          <rect x="10" y="20" width="100" height="40" rx="6" fill="#1f2937" stroke="#374151"/>
+          <text x="60" y="44" fill="#9ca3af" font-size="9" text-anchor="middle">🐙 GitHub</text>
+
+          <rect x="10" y="75" width="100" height="40" rx="6" fill="#1f2937" stroke="#374151"/>
+          <text x="60" y="99" fill="#9ca3af" font-size="9" text-anchor="middle">💬 Slack</text>
+
+          <rect x="10" y="130" width="100" height="40" rx="6" fill="#1f2937" stroke="#374151"/>
+          <text x="60" y="154" fill="#9ca3af" font-size="9" text-anchor="middle">📅 Calendar</text>
+
+          <rect x="10" y="185" width="100" height="40" rx="6" fill="#1f2937" stroke="#374151"/>
+          <text x="60" y="209" fill="#9ca3af" font-size="9" text-anchor="middle">📧 Email</text>
+
+          <rect x="10" y="230" width="100" height="25" rx="6" fill="#1f2937" stroke="#374151"/>
+          <text x="60" y="247" fill="#9ca3af" font-size="9" text-anchor="middle">🗂️ Jira / Linear</text>
+
+          <!-- Arrows to hub -->
+          <line x1="110" y1="40" x2="200" y2="130" stroke="#c084fc" stroke-width="1" marker-end="url(#int)" opacity="0.6"/>
+          <line x1="110" y1="95" x2="200" y2="135" stroke="#c084fc" stroke-width="1" marker-end="url(#int)" opacity="0.6"/>
+          <line x1="110" y1="150" x2="200" y2="140" stroke="#c084fc" stroke-width="1" marker-end="url(#int)" opacity="0.6"/>
+          <line x1="110" y1="205" x2="200" y2="145" stroke="#c084fc" stroke-width="1" marker-end="url(#int)" opacity="0.6"/>
+          <line x1="110" y1="240" x2="200" y2="150" stroke="#c084fc" stroke-width="1" marker-end="url(#int)" opacity="0.6"/>
+
+          <!-- Hub: Integration scripts -->
+          <rect x="200" y="80" width="150" height="110" rx="10" fill="#2e1065" stroke="#7c3aed" stroke-width="2"/>
+          <text x="275" y="106" fill="#c084fc" font-size="10" text-anchor="middle" font-weight="bold">🤖 Integration</text>
+          <text x="275" y="120" fill="#c084fc" font-size="10" text-anchor="middle" font-weight="bold">Hub (Python)</text>
+          <text x="275" y="138" fill="#d8b4fe" font-size="8" text-anchor="middle">• Polling a cada 15min</text>
+          <text x="275" y="152" fill="#d8b4fe" font-size="8" text-anchor="middle">• Normaliza dados</text>
+          <text x="275" y="166" fill="#d8b4fe" font-size="8" text-anchor="middle">• Deduplica eventos</text>
+          <text x="275" y="180" fill="#d8b4fe" font-size="8" text-anchor="middle">• Grava em raw/</text>
+
+          <!-- Arrow to raw/ -->
+          <line x1="350" y1="135" x2="388" y2="135" stroke="#7c3aed" stroke-width="1.5" marker-end="url(#int)"/>
+
+          <!-- raw/ -->
+          <rect x="390" y="90" width="120" height="90" rx="8" fill="#1f2937" stroke="#374151"/>
+          <text x="450" y="114" fill="#9ca3af" font-size="9" text-anchor="middle" font-weight="bold">📁 raw/</text>
+          <rect x="400" y="122" width="100" height="16" rx="3" fill="#111827" stroke="#374151"/>
+          <text x="450" y="134" fill="#6b7280" font-size="7" text-anchor="middle">github-prs-2024-03-20.md</text>
+          <rect x="400" y="143" width="100" height="16" rx="3" fill="#111827" stroke="#374151"/>
+          <text x="450" y="155" fill="#6b7280" font-size="7" text-anchor="middle">slack-digest-2024-03-20.md</text>
+          <rect x="400" y="164" width="100" height="16" rx="3" fill="#111827" stroke="#374151"/>
+          <text x="450" y="176" fill="#6b7280" font-size="7" text-anchor="middle">meetings-this-week.md</text>
+
+          <!-- Arrow raw/ to LLM -->
+          <line x1="510" y1="135" x2="548" y2="135" stroke="#FACC15" stroke-width="1.5" marker-end="url(#int)"/>
+
+          <!-- LLM + wiki/ -->
+          <rect x="550" y="90" width="120" height="90" rx="8" fill="#1c1917" stroke="#FACC15" stroke-width="1.5"/>
+          <text x="610" y="114" fill="#FACC15" font-size="9" text-anchor="middle" font-weight="bold">🤖 LLM</text>
+          <text x="610" y="128" fill="#fde68a" font-size="8" text-anchor="middle">Compila raw/</text>
+          <text x="610" y="141" fill="#fde68a" font-size="8" text-anchor="middle">→ wiki/ automático</text>
+          <rect x="558" y="152" width="104" height="16" rx="3" fill="#064e3b" stroke="#10b981"/>
+          <text x="610" y="164" fill="#10b981" font-size="7" text-anchor="middle">wiki/ atualizado ✓</text>
+        </svg>
+      </div>
+    </section>
+
+    <!-- TÓPICO 2 -->
+    <section id="topico-2" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">2</span>
+        <h2 class="text-2xl font-bold">🐙 Integração com GitHub</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">O GitHub é uma fonte rica de contexto técnico: PRs, issues, commits e releases. <strong class="text-purple-400">Coletar automaticamente esse contexto</strong> elimina a necessidade de documentar decisões técnicas manualmente.</p>
+
+      <div class="bg-dark-800 rounded-xl border border-dark-600 p-5 mb-6">
+        <h3 class="text-purple-400 font-semibold mb-3">Script: github_collector.py</h3>
+        <pre class="text-sm text-neutral-300 overflow-x-auto"><code><span class="text-neutral-500">"""Coleta atividade GitHub e grava em raw/"""</span>
+<span class="text-blue-400">import</span> requests
+<span class="text-blue-400">from</span> datetime <span class="text-blue-400">import</span> date
+<span class="text-blue-400">from</span> pathlib <span class="text-blue-400">import</span> Path
+
+<span class="text-purple-400">def</span> <span class="text-yellow-400">collect_github_activity</span>(token: str, org: str, vault_path: str):
+    headers = {<span class="text-emerald-400">"Authorization"</span>: f<span class="text-emerald-400">"token {token}"</span>}
+    today = date.today().isoformat()
+
+    <span class="text-neutral-500"># Coleta PRs merged hoje</span>
+    prs = requests.get(
+        f<span class="text-emerald-400">"https://api.github.com/search/issues"</span>,
+        params={<span class="text-emerald-400">"q"</span>: f<span class="text-emerald-400">"org:{org} is:pr merged:{today}"</span>},
+        headers=headers
+    ).json()[<span class="text-emerald-400">"items"</span>]
+
+    <span class="text-neutral-500"># Formata como nota raw/</span>
+    content = f<span class="text-emerald-400">"""# GitHub Activity — {today}
+
+## PRs Merged
+"""</span>
+    <span class="text-blue-400">for</span> pr <span class="text-blue-400">in</span> prs:
+        content += f<span class="text-emerald-400">"""
+### [{pr['title']}]({pr['html_url']})
+- Repo: {pr['repository_url'].split('/')[-1]}
+- Autor: @{pr['user']['login']}
+- Body: {pr['body'][:200] <span class="text-blue-400">if</span> pr['body'] <span class="text-blue-400">else</span> 'sem descrição'}
+"""</span>
+
+    <span class="text-neutral-500"># Salva em raw/</span>
+    raw_path = Path(vault_path) / <span class="text-emerald-400">"raw"</span> / <span class="text-emerald-400">"github"</span>
+    raw_path.mkdir(exist_ok=<span class="text-blue-400">True</span>)
+    (raw_path / f<span class="text-emerald-400">"github-{today}.md"</span>).write_text(content)
+    <span class="text-blue-400">print</span>(f<span class="text-emerald-400">"✅ {len(prs)} PRs coletados"</span>)</code></pre>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="bg-dark-800 rounded-lg p-4 border border-emerald-500/30">
+          <div class="text-emerald-400 font-semibold mb-2">O que coletar</div>
+          <ul class="space-y-1 text-sm text-neutral-300">
+            <li>→ PRs merged com descrição e reviewers</li>
+            <li>→ Issues criadas e fechadas</li>
+            <li>→ Releases com changelog</li>
+            <li>→ Review comments em PRs importantes</li>
+          </ul>
+        </div>
+        <div class="bg-dark-800 rounded-lg p-4 border border-red-500/30">
+          <div class="text-red-400 font-semibold mb-2">Evite coletar</div>
+          <ul class="space-y-1 text-sm text-neutral-300">
+            <li>→ Todos os commits (muito ruído)</li>
+            <li>→ Build logs (não agrega contexto)</li>
+            <li>→ Dependabot PRs (automatizados)</li>
+            <li>→ Draft PRs (incompletos)</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- TÓPICO 3 -->
+    <section id="topico-3" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">3</span>
+        <h2 class="text-2xl font-bold">💬 Integração com Slack</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">Decisões importantes frequentemente acontecem no Slack e se perdem. O coletor de Slack filtra por <strong class="text-purple-400">canais e palavras-chave específicas</strong> para capturar apenas o que importa.</p>
+
+      <div class="bg-dark-800 rounded-xl border border-dark-600 p-5 mb-6">
+        <h3 class="text-purple-400 font-semibold mb-3">Script: slack_collector.py</h3>
+        <pre class="text-sm text-neutral-300 overflow-x-auto"><code><span class="text-neutral-500">"""Coleta mensagens relevantes do Slack"""</span>
+<span class="text-blue-400">from</span> slack_sdk <span class="text-blue-400">import</span> WebClient
+<span class="text-blue-400">from</span> pathlib <span class="text-blue-400">import</span> Path
+<span class="text-blue-400">import</span> re
+
+<span class="text-neutral-500"># Canais e keywords de interesse</span>
+CANAIS_IMPORTANTES = [<span class="text-emerald-400">"#decisoes-tecnicas"</span>, <span class="text-emerald-400">"#arquitetura"</span>, <span class="text-emerald-400">"#produto"</span>]
+KEYWORDS = [<span class="text-emerald-400">"decidimos"</span>, <span class="text-emerald-400">"aprovado"</span>, <span class="text-emerald-400">"mudança"</span>, <span class="text-emerald-400">"importante"</span>, <span class="text-emerald-400">"atenção"</span>]
+
+<span class="text-purple-400">def</span> <span class="text-yellow-400">collect_slack_digest</span>(token: str, vault_path: str):
+    client = WebClient(token=token)
+    digest = []
+
+    <span class="text-blue-400">for</span> channel_name <span class="text-blue-400">in</span> CANAIS_IMPORTANTES:
+        <span class="text-neutral-500"># Busca mensagens das últimas 24h</span>
+        history = client.conversations_history(
+            channel=channel_name,
+            oldest=str(time.time() - <span class="text-yellow-400">86400</span>)
+        )
+        <span class="text-blue-400">for</span> msg <span class="text-blue-400">in</span> history[<span class="text-emerald-400">"messages"</span>]:
+            text = msg.get(<span class="text-emerald-400">"text"</span>, <span class="text-emerald-400">""</span>)
+            <span class="text-neutral-500"># Filtra por keywords relevantes</span>
+            <span class="text-blue-400">if</span> any(kw <span class="text-blue-400">in</span> text.lower() <span class="text-blue-400">for</span> kw <span class="text-blue-400">in</span> KEYWORDS):
+                digest.append({
+                    <span class="text-emerald-400">"canal"</span>: channel_name,
+                    <span class="text-emerald-400">"texto"</span>: text[:500],
+                    <span class="text-emerald-400">"user"</span>: msg.get(<span class="text-emerald-400">"user"</span>)
+                })
+
+    <span class="text-neutral-500"># Grava digest em raw/</span>
+    <span class="text-blue-400">if</span> digest:
+        today = date.today().isoformat()
+        content = format_digest(digest)
+        (Path(vault_path) / <span class="text-emerald-400">f"raw/slack/slack-digest-{today}.md"</span>).write_text(content)</code></pre>
+      </div>
+    </section>
+
+    <!-- TÓPICO 4 -->
+    <section id="topico-4" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">4</span>
+        <h2 class="text-2xl font-bold">📅 Integração com Calendário</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">O calendário sabe quais reuniões você teve. Com a API do Google Calendar, o agente <strong class="text-purple-400">cria automaticamente uma nota de reunião</strong> em raw/ com os participantes e a agenda antes de cada meeting.</p>
+
+      <div class="bg-dark-800 rounded-xl border border-dark-600 p-5 mb-6">
+        <h3 class="text-purple-400 font-semibold mb-3">Script: calendar_collector.py</h3>
+        <pre class="text-sm text-neutral-300 overflow-x-auto"><code><span class="text-neutral-500">"""Cria notas de reunião automaticamente antes dos meetings"""</span>
+<span class="text-blue-400">from</span> google.oauth2.credentials <span class="text-blue-400">import</span> Credentials
+<span class="text-blue-400">from</span> googleapiclient.discovery <span class="text-blue-400">import</span> build
+
+<span class="text-purple-400">def</span> <span class="text-yellow-400">create_meeting_notes</span>(creds_path: str, vault_path: str):
+    creds = Credentials.from_authorized_user_file(creds_path)
+    service = build(<span class="text-emerald-400">"calendar"</span>, <span class="text-emerald-400">"v3"</span>, credentials=creds)
+
+    <span class="text-neutral-500"># Busca eventos de amanhã</span>
+    tomorrow_start = get_tomorrow_iso_start()
+    tomorrow_end = get_tomorrow_iso_end()
+
+    events = service.events().list(
+        calendarId=<span class="text-emerald-400">"primary"</span>,
+        timeMin=tomorrow_start,
+        timeMax=tomorrow_end,
+        singleEvents=<span class="text-blue-400">True</span>
+    ).execute().get(<span class="text-emerald-400">"items"</span>, [])
+
+    <span class="text-blue-400">for</span> event <span class="text-blue-400">in</span> events:
+        attendees = [a[<span class="text-emerald-400">"email"</span>] <span class="text-blue-400">for</span> a <span class="text-blue-400">in</span> event.get(<span class="text-emerald-400">"attendees"</span>, [])]
+        <span class="text-neutral-500"># Cria template de nota em raw/</span>
+        note = f<span class="text-emerald-400">"""# Meeting: {event['summary']}
+Data: {event['start']['dateTime']}
+Participantes: {', '.join(attendees)}
+Agenda: {event.get('description', 'sem agenda')}
+
+## Notas (preencher durante a reunião)
+
+## Decisões
+
+## Ação Items
+- [ ]
+"""</span>
+        filename = slugify(event[<span class="text-emerald-400">"summary"</span>]) + <span class="text-emerald-400">".md"</span>
+        (Path(vault_path) / <span class="text-emerald-400">"raw/reunioes"</span> / filename).write_text(note)</code></pre>
+      </div>
+    </section>
+
+    <!-- TÓPICO 5 -->
+    <section id="topico-5" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">5</span>
+        <h2 class="text-2xl font-bold">🔒 Segurança e Dados Sensíveis</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">Integrações com APIs externas envolvem <strong class="text-purple-400">tokens, senhas e dados pessoais</strong>. Nunca armazene credenciais no vault — use variáveis de ambiente e seja cuidadoso com PII.</p>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div class="bg-dark-800 rounded-xl border border-emerald-500/30 p-5">
+          <div class="text-emerald-400 font-semibold mb-3">✅ Práticas Seguras</div>
+          <pre class="text-xs text-neutral-400 overflow-x-auto"><code><span class="text-neutral-500"># Nunca isso:</span>
+GITHUB_TOKEN = "ghp_abc123..."
+
+<span class="text-neutral-500"># Use variáveis de ambiente:</span>
+<span class="text-blue-400">import</span> os
+token = os.environ[<span class="text-emerald-400">"GITHUB_TOKEN"</span>]
+
+<span class="text-neutral-500"># .env (nunca commitar)</span>
+GITHUB_TOKEN=ghp_abc123
+SLACK_TOKEN=xoxb-abc123
+
+<span class="text-neutral-500"># .gitignore</span>
+.env
+*.credentials.json
+vault/raw/emails/  <span class="text-neutral-500"># PII</span></code></pre>
+        </div>
+        <div class="bg-dark-800 rounded-xl border border-red-500/30 p-5">
+          <div class="text-red-400 font-semibold mb-3">⚠ Cuidados com PII</div>
+          <ul class="space-y-2 text-sm text-neutral-300">
+            <li class="flex items-start space-x-2"><span class="text-red-400">→</span><span>Emails de clientes: nunca armazene no vault</span></li>
+            <li class="flex items-start space-x-2"><span class="text-red-400">→</span><span>Dados de usuários: anonimize antes de ingerir</span></li>
+            <li class="flex items-start space-x-2"><span class="text-red-400">→</span><span>Senhas/tokens: jamais apareçam em notas</span></li>
+            <li class="flex items-start space-x-2"><span class="text-red-400">→</span><span>Se sync via Git: todo vault é semi-público</span></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- TÓPICO 6 -->
+    <section id="topico-6" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">6</span>
+        <h2 class="text-2xl font-bold">🎛️ Orquestração: Integration Hub</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">Com múltiplos coletores, você precisa de um orquestrador que <strong class="text-purple-400">coordena execução, trata erros e monitora saúde</strong> de todas as integrações.</p>
+
+      <div class="bg-dark-800 rounded-xl border border-dark-600 p-5 mb-6">
+        <h3 class="text-purple-400 font-semibold mb-3">integration_hub.py — Orquestrador</h3>
+        <pre class="text-sm text-neutral-300 overflow-x-auto"><code><span class="text-blue-400">import</span> schedule, time, logging
+<span class="text-blue-400">from</span> collectors <span class="text-blue-400">import</span> github_collector, slack_collector, calendar_collector
+
+logging.basicConfig(level=logging.INFO)
+log = logging.getLogger(<span class="text-emerald-400">"hub"</span>)
+
+<span class="text-blue-400">def</span> <span class="text-yellow-400">run_collector</span>(name: str, func):
+    <span class="text-blue-400">try</span>:
+        func()
+        log.info(f<span class="text-emerald-400">"✅ {name} concluído"</span>)
+    <span class="text-blue-400">except</span> Exception <span class="text-blue-400">as</span> e:
+        log.error(f<span class="text-emerald-400">"❌ {name} falhou: {e}"</span>)
+        <span class="text-neutral-500"># Alerta — sem quebrar os outros coletores</span>
+
+<span class="text-neutral-500"># Agenda</span>
+schedule.every(<span class="text-yellow-400">15</span>).minutes.do(run_collector, <span class="text-emerald-400">"GitHub"</span>, github_collector.collect)
+schedule.every(<span class="text-yellow-400">30</span>).minutes.do(run_collector, <span class="text-emerald-400">"Slack"</span>, slack_collector.collect)
+schedule.every().day.at(<span class="text-emerald-400">"08:00"</span>).do(run_collector, <span class="text-emerald-400">"Calendar"</span>, calendar_collector.create_notes)
+schedule.every().day.at(<span class="text-emerald-400">"22:00"</span>).do(ingest_all_raw)  <span class="text-neutral-500"># LLM ingere tudo</span>
+
+log.info(<span class="text-emerald-400">"🚀 Integration Hub iniciado"</span>)
+<span class="text-blue-400">while True</span>:
+    schedule.run_pending()
+    time.sleep(<span class="text-yellow-400">60</span>)</code></pre>
+      </div>
+
+      <div class="bg-purple-500/10 rounded-xl border border-purple-500/30 p-5">
+        <div class="text-purple-400 font-semibold mb-3">✅ Conceitos-chave do módulo</div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span class="text-sm text-neutral-300">APIs externas → raw/ → LLM compila → wiki/</span></div>
+          <div class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span class="text-sm text-neutral-300">GitHub: PRs, issues, releases por API</span></div>
+          <div class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span class="text-sm text-neutral-300">Slack: filtrar por canal e keyword</span></div>
+          <div class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span class="text-sm text-neutral-300">Calendar: pré-criar templates de reunião</span></div>
+          <div class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span class="text-sm text-neutral-300">Credenciais: sempre em variáveis de ambiente</span></div>
+          <div class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span class="text-sm text-neutral-300">Hub: orquestra todos os coletores com retry</span></div>
+        </div>
+      </div>
+    </section>
+
+    <div class="flex justify-between items-center mt-8 pt-8 border-t border-dark-600">
+      <a href="modulo-3-2.html" class="flex items-center space-x-2 px-4 py-2 rounded-lg bg-dark-800 border border-dark-600 hover:border-purple-500/50 transition-colors text-neutral-300 hover:text-purple-400">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+        <span>3.2 — Otimização e Escalabilidade</span>
+      </a>
+      <a href="modulo-3-4.html" class="flex items-center space-x-2 px-4 py-2 rounded-lg bg-purple-500/20 border border-purple-500/30 hover:bg-purple-500/30 transition-colors text-purple-400">
+        <span>3.4 — Multi-Agentes</span>
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+  </main>
+
+  <footer class="border-t border-dark-600 mt-16 py-8">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <p class="text-neutral-500 text-sm">2Cérebro · <a href="https://inema.club" class="text-sky-400 hover:text-sky-300">INEMA.CLUB</a></p>
+    </div>
+  </footer>
+
+  <script>
+    const toggle = document.getElementById('theme-toggle');
+    const darkIcon = document.getElementById('theme-toggle-dark-icon');
+    const lightIcon = document.getElementById('theme-toggle-light-icon');
+    const html = document.documentElement;
+    function applyTheme(isDark) {
+      html.classList.toggle('dark', isDark);
+      darkIcon.classList.toggle('hidden', isDark);
+      lightIcon.classList.toggle('hidden', !isDark);
+    }
+    const saved = localStorage.getItem('theme');
+    applyTheme(saved !== 'light');
+    toggle.addEventListener('click', () => {
+      const isDark = html.classList.contains('dark');
+      localStorage.setItem('theme', isDark ? 'light' : 'dark');
+      applyTheme(!isDark);
+    });
+  </script>
+</body>
+</html>
