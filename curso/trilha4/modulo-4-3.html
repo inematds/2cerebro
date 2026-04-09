@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Módulo 4.3 — Interface Conversacional para o Wiki | 2Cérebro</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config={darkMode:'class',theme:{extend:{colors:{primary:'#FACC15',dark:{900:'#111827',800:'#1f2937',700:'#374151',600:'#4b5563'}}}}}</script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body{font-family:'Inter',sans-serif;}
+    html:not(.dark) body{background-color:#f8fafc;}
+    html:not(.dark) .bg-dark-900{background-color:#ffffff;}
+    html:not(.dark) .bg-dark-800{background-color:#f9fafb;}
+    html:not(.dark) .bg-dark-700{background-color:#f3f4f6;}
+    html:not(.dark) .bg-dark-600{background-color:#e5e7eb;}
+    html:not(.dark) .text-neutral-100{color:#111827;}
+    html:not(.dark) .text-neutral-300{color:#4b5563;}
+    html:not(.dark) .text-neutral-400{color:#6b7280;}
+    html:not(.dark) .text-neutral-500{color:#9ca3af;}
+    html:not(.dark) .border-dark-600{border-color:#d1d5db;}
+    html:not(.dark) .border-dark-700{border-color:#e5e7eb;}
+    html:not(.dark) .text-amber-400{color:#92400e;}
+    html:not(.dark) .bg-amber-500\/20{background-color:rgba(217,119,6,0.12);}
+    html:not(.dark) .border-amber-500\/30{border-color:rgba(217,119,6,0.25);}
+    html:not(.dark) [class*="bg-gradient-to"]{background-image:none!important;}
+    html:not(.dark) .text-primary{color:#a16207;}
+    html:not(.dark) .bg-primary\/10{background-color:rgba(161,98,7,0.08);}
+    html:not(.dark) .border-primary\/40{border-color:rgba(161,98,7,0.25);}
+    html:not(.dark) .text-sky-400{color:#0369a1;}
+    html:not(.dark) .text-yellow-400{color:#a16207;}
+    html:not(.dark) .hover\:text-sky-300:hover{color:#0284c7;}
+    html:not(.dark) .hover\:text-yellow-300:hover{color:#854d0e;}
+    html:not(.dark) .bg-dark-900\/95{background-color:rgba(255,255,255,0.95);}
+  </style>
+</head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen">
+
+  <nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-14">
+        <div class="flex items-center space-x-4">
+          <a href="../../index.html" class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300"><span class="text-2xl">🧠</span><span class="font-bold text-lg hidden sm:inline">2Cérebro</span></a>
+          <span class="text-neutral-600">|</span>
+          <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300 text-sm font-medium">INEMA.CLUB</a>
+        </div>
+        <div class="flex items-center space-x-1 sm:space-x-2">
+          <a href="../trilha1/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors"><span class="sm:hidden">T1</span><span class="hidden sm:inline">Fundamentos</span></a>
+          <a href="../trilha2/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors"><span class="sm:hidden">T2</span><span class="hidden sm:inline">Implementação</span></a>
+          <a href="../trilha3/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors"><span class="sm:hidden">T3</span><span class="hidden sm:inline">Avançado</span></a>
+          <a href="index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-amber-400 bg-amber-500/10"><span class="sm:hidden">T4</span><span class="hidden sm:inline">OpenClaw</span></a>
+          <button id="theme-toggle" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2">
+            <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+            <svg id="theme-toggle-light-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+    <div class="flex items-center space-x-2 text-sm text-neutral-400">
+      <a href="../../index.html" class="hover:text-amber-400">Início</a>
+      <span>/</span>
+      <a href="index.html" class="hover:text-amber-400">Trilha 4 — OpenClaw</a>
+      <span>/</span>
+      <span class="text-amber-400">Módulo 4.3</span>
+    </div>
+  </nav>
+
+  <header class="bg-gradient-to-br from-amber-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <span class="inline-block px-3 py-1 bg-amber-500/20 text-amber-400 text-xs font-semibold rounded-full mb-4">MÓDULO 4.3</span>
+      <h1 class="text-3xl sm:text-4xl font-bold mb-4">💬 Interface Conversacional para o Wiki</h1>
+      <p class="text-lg text-neutral-400 max-w-3xl">Design de diálogo para PKM, consultas em linguagem natural, captura mobile sem fricção, alertas proativos e histórico de conversas como fonte de conhecimento.</p>
+      <div class="grid grid-cols-4 gap-4 mt-8 max-w-lg">
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-amber-400">6</div><div class="text-xs text-neutral-400">Tópicos</div></div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-amber-400">45</div><div class="text-xs text-neutral-400">Minutos</div></div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-amber-400">Expert</div><div class="text-xs text-neutral-400">Nível</div></div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-amber-400">Design</div><div class="text-xs text-neutral-400">Tipo</div></div>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+    <!-- TÓPICO 1 -->
+    <section id="topico-1" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">1</span>
+        <h2 class="text-2xl font-bold">🎨 Design da Conversa</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">Conversas com o agente PKM seguem <strong class="text-amber-400">padrões específicos</strong> diferentes de um chatbot genérico. O design do diálogo determina se o agente é confiável e previsível — ou frustrante e inconsistente.</p>
+
+      <div class="bg-gradient-to-br from-amber-900/30 to-dark-800 rounded-xl border border-amber-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-amber-400 mb-4 flex items-center"><span class="mr-2">🎨</span> Padrões de diálogo para PKM</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="space-y-3">
+            <div class="bg-dark-800 rounded-lg p-4">
+              <div class="text-amber-400 text-xs font-semibold mb-1">PADRÃO: Resposta com fonte</div>
+              <div class="text-sm text-neutral-300 mb-1">Toda consulta ao wiki retorna a fonte exata:</div>
+              <div class="bg-dark-700 rounded p-2 text-xs text-neutral-400 italic">"Python async usa event loop... ↗ Fonte: wiki/python-async.md"</div>
+            </div>
+            <div class="bg-dark-800 rounded-lg p-4">
+              <div class="text-amber-400 text-xs font-semibold mb-1">PADRÃO: Confirmação de escrita</div>
+              <div class="text-sm text-neutral-300 mb-1">Antes de escrever qualquer arquivo:</div>
+              <div class="bg-dark-700 rounded p-2 text-xs text-neutral-400 italic">"Vou salvar este documento como raw/inbox/2026-04-09_artigo.md. Confirmar? (s/n)"</div>
+            </div>
+            <div class="bg-dark-800 rounded-lg p-4">
+              <div class="text-amber-400 text-xs font-semibold mb-1">PADRÃO: Query de refinamento</div>
+              <div class="text-sm text-neutral-300 mb-1">Quando encontra mais de um resultado:</div>
+              <div class="bg-dark-700 rounded p-2 text-xs text-neutral-400 italic">"Encontrei 3 páginas sobre Python. Quer detalhes de alguma específica?"</div>
+            </div>
+          </div>
+          <div class="space-y-3">
+            <div class="bg-dark-800 rounded-lg p-4">
+              <div class="text-amber-400 text-xs font-semibold mb-1">PADRÃO: Não-encontrado honesto</div>
+              <div class="text-sm text-neutral-300 mb-1">Quando o tema não existe no wiki:</div>
+              <div class="bg-dark-700 rounded p-2 text-xs text-neutral-400 italic">"Não tenho isso registrado no wiki. Deseja que eu crie uma tarefa de pesquisa?"</div>
+            </div>
+            <div class="bg-dark-800 rounded-lg p-4">
+              <div class="text-amber-400 text-xs font-semibold mb-1">PADRÃO: Confirmação pós-ingestão</div>
+              <div class="text-sm text-neutral-300 mb-1">Após processar um novo documento:</div>
+              <div class="bg-dark-700 rounded p-2 text-xs text-neutral-400 italic">"✓ Ingestão concluída: criado wiki/python-generators.md (847 tokens)"</div>
+            </div>
+            <div class="bg-dark-800 rounded-lg p-4">
+              <div class="text-amber-400 text-xs font-semibold mb-1">PADRÃO: Tom consistente</div>
+              <div class="text-sm text-neutral-300 mb-1">Definido no SOUL.md e mantido sempre:</div>
+              <div class="bg-dark-700 rounded p-2 text-xs text-neutral-400 italic">Direto, conciso, factual, sem rodeios, cita fontes, admite ignorância</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-dark-800 rounded-xl border border-dark-600 p-5">
+        <div class="text-amber-400 font-semibold mb-3">Configurando padrões de diálogo no SOUL.md</div>
+        <pre class="text-xs text-neutral-400 overflow-x-auto leading-relaxed"><code>## Padrões de Diálogo
+
+response_patterns:
+  # Sempre incluir fonte nas respostas sobre o wiki
+  cite_source: true
+  cite_format: "↗ Fonte: wiki/{filename}"
+
+  # Perguntar antes de escrever qualquer arquivo
+  confirm_writes: true
+  confirm_message: "Vou salvar em {path}. Confirmar? (s/n)"
+
+  # Quando não encontrar no wiki
+  not_found: |
+    Não tenho isso registrado no wiki ainda.
+    Deseja criar uma tarefa de pesquisa sobre "{query}"?
+
+  # Quando encontrar múltiplos resultados
+  multiple_results: |
+    Encontrei {count} páginas relacionadas:
+    {list}
+    Qual deseja explorar em mais detalhes?
+
+  # Tom e estilo
+  tone: "direto e conciso"
+  language: "pt-BR"
+  max_response_length: 500  # tokens</code></pre>
+      </div>
+    </section>
+
+    <!-- TÓPICO 2 -->
+    <section id="topico-2" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">2</span>
+        <h2 class="text-2xl font-bold">🔎 Consultas em Linguagem Natural</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">O poder do agente é transformar <strong class="text-amber-400">linguagem natural imprecisa</strong> em consultas precisas ao wiki. Você não precisa lembrar nomes exatos de arquivos — basta perguntar como pensaria.</p>
+
+      <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+        <h3 class="text-base font-semibold text-amber-400 mb-4">🔎 Tipos de consultas e como o agente processa</h3>
+        <svg viewBox="0 0 680 240" class="w-full" xmlns="http://www.w3.org/2000/svg">
+          <!-- Query types on the left -->
+          <rect x="10" y="10" width="300" height="220" rx="8" fill="#1f2937" stroke="#374151"/>
+          <text x="20" y="30" fill="#fbbf24" font-size="9" font-weight="bold">TIPOS DE CONSULTA NATURAL</text>
+
+          <rect x="20" y="38" width="280" height="30" rx="5" fill="#451a03" opacity="0.6"/>
+          <text x="30" y="52" fill="#fbbf24" font-size="8" font-weight="bold">Conceitual</text>
+          <text x="30" y="63" fill="#9ca3af" font-size="7">"O que sei sobre Python async?"</text>
+
+          <rect x="20" y="75" width="280" height="30" rx="5" fill="#451a03" opacity="0.6"/>
+          <text x="30" y="89" fill="#fbbf24" font-size="8" font-weight="bold">Decisional</text>
+          <text x="30" y="100" fill="#9ca3af" font-size="7">"O que decidimos sobre a arquitetura do banco?"</text>
+
+          <rect x="20" y="112" width="280" height="30" rx="5" fill="#451a03" opacity="0.6"/>
+          <text x="30" y="126" fill="#fbbf24" font-size="8" font-weight="bold">Temporal</text>
+          <text x="30" y="137" fill="#9ca3af" font-size="7">"O que anotei este mês sobre ML?"</text>
+
+          <rect x="20" y="149" width="280" height="30" rx="5" fill="#451a03" opacity="0.6"/>
+          <text x="30" y="163" fill="#fbbf24" font-size="8" font-weight="bold">Comparativa</text>
+          <text x="30" y="174" fill="#9ca3af" font-size="7">"Qual a diferença entre FastAPI e Django que registrei?"</text>
+
+          <rect x="20" y="186" width="280" height="30" rx="5" fill="#451a03" opacity="0.6"/>
+          <text x="30" y="200" fill="#fbbf24" font-size="8" font-weight="bold">Follow-up</text>
+          <text x="30" y="211" fill="#9ca3af" font-size="7">"Fale mais sobre o ponto 3 anterior"</text>
+
+          <!-- Arrow -->
+          <text x="325" y="125" text-anchor="middle" fill="#fbbf24" font-size="18">→</text>
+
+          <!-- Processing on the right -->
+          <rect x="350" y="10" width="320" height="220" rx="8" fill="#1f2937" stroke="#374151"/>
+          <text x="360" y="30" fill="#fbbf24" font-size="9" font-weight="bold">PROCESSAMENTO DO AGENTE</text>
+
+          <rect x="360" y="38" width="300" height="38" rx="5" fill="#374151"/>
+          <text x="370" y="54" fill="#d1d5db" font-size="8">1. Parse da intenção via LLM</text>
+          <text x="370" y="67" fill="#9ca3af" font-size="7">identifica: tipo, entidades, período, comparativo</text>
+
+          <rect x="360" y="83" width="300" height="38" rx="5" fill="#374151"/>
+          <text x="370" y="99" fill="#d1d5db" font-size="8">2. Leitura do index.md</text>
+          <text x="370" y="112" fill="#9ca3af" font-size="7">mapeia intenção → páginas relevantes</text>
+
+          <rect x="360" y="128" width="300" height="38" rx="5" fill="#374151"/>
+          <text x="370" y="144" fill="#d1d5db" font-size="8">3. Leitura das páginas selecionadas</text>
+          <text x="370" y="157" fill="#9ca3af" font-size="7">máximo 3-5 páginas (respeita max_context_tokens)</text>
+
+          <rect x="360" y="173" width="300" height="38" rx="5" fill="#374151"/>
+          <text x="370" y="189" fill="#d1d5db" font-size="8">4. Síntese + citação de fonte</text>
+          <text x="370" y="202" fill="#9ca3af" font-size="7">responde em linguagem natural, cita wiki/arquivo.md</text>
+        </svg>
+      </div>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/40 p-5">
+        <div class="text-primary font-semibold mb-3">💡 Como formular consultas melhores</div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+          <div>
+            <div class="text-emerald-400 font-medium mb-2">Consultas mais efetivas</div>
+            <ul class="space-y-1 text-neutral-300">
+              <li>• "O que sei sobre X?" → consulta conceitual</li>
+              <li>• "O que decidimos sobre Y?" → consulta decisional</li>
+              <li>• "Compare A com B no que registrei" → comparativa</li>
+              <li>• "Resumo do que anotei em março" → temporal</li>
+            </ul>
+          </div>
+          <div>
+            <div class="text-red-400 font-medium mb-2">Evite estas formas</div>
+            <ul class="space-y-1 text-neutral-300">
+              <li>• "Pesquise sobre X" → agente não acessa internet</li>
+              <li>• "Qual é a melhor prática de X?" → precisa estar no wiki</li>
+              <li>• Consultas muito vagas sem contexto</li>
+              <li>• Múltiplas perguntas numa única mensagem</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TÓPICO 3 -->
+    <section id="topico-3" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">3</span>
+        <h2 class="text-2xl font-bold">📱 Captura Mobile</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">A captura é o <strong class="text-amber-400">gargalo crítico</strong> de qualquer sistema de segundo cérebro. Com OpenClaw, você elimina esse gargalo: encontrou algo interessante → manda pro Telegram → está no vault em segundos.</p>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div>
+          <h3 class="text-amber-400 font-semibold mb-3">Tipos de captura suportados</h3>
+          <div class="space-y-3">
+            <div class="bg-dark-800 rounded-lg p-4 border border-amber-500/30">
+              <div class="flex items-center space-x-2 mb-2">
+                <span class="text-lg">✍️</span>
+                <span class="text-sm font-semibold text-neutral-300">Texto livre</span>
+              </div>
+              <p class="text-xs text-neutral-400">Digite qualquer nota diretamente no Telegram. O agente cria o arquivo Markdown automaticamente com metadados de data e fonte.</p>
+            </div>
+            <div class="bg-dark-800 rounded-lg p-4 border border-amber-500/30">
+              <div class="flex items-center space-x-2 mb-2">
+                <span class="text-lg">📎</span>
+                <span class="text-sm font-semibold text-neutral-300">Arquivo anexado</span>
+              </div>
+              <p class="text-xs text-neutral-400">PDF, TXT, MD — o Telegram entrega o arquivo, o agente salva em raw/inbox/ com nome baseado em data/hora.</p>
+            </div>
+            <div class="bg-dark-800 rounded-lg p-4 border border-amber-500/30">
+              <div class="flex items-center space-x-2 mb-2">
+                <span class="text-lg">🔗</span>
+                <span class="text-sm font-semibold text-neutral-300">URL para ingestão</span>
+              </div>
+              <p class="text-xs text-neutral-400">Manda uma URL → agente usa skill de browser para fazer scraping do conteúdo → salva como raw/inbox/url-XXXX.md.</p>
+            </div>
+          </div>
+        </div>
+        <div>
+          <h3 class="text-amber-400 font-semibold mb-3">Fluxo de captura de URL</h3>
+          <div class="bg-dark-800 rounded-xl border border-dark-600 p-5">
+            <div class="space-y-3">
+              <div class="flex justify-end">
+                <div class="bg-amber-500/20 border border-amber-500/30 rounded-2xl rounded-tr-sm px-3 py-2 max-w-xs">
+                  <p class="text-xs text-amber-100">https://martinfowler.com/articles/strangler-fig.html</p>
+                </div>
+              </div>
+              <div class="flex justify-start">
+                <div class="bg-dark-700 rounded-2xl rounded-tl-sm px-3 py-2 max-w-xs">
+                  <p class="text-xs text-neutral-300">🔍 Lendo artigo...</p>
+                  <p class="text-xs text-neutral-400 mt-1">Título: Strangler Fig Application (Martin Fowler)</p>
+                  <p class="text-xs text-neutral-400">Salvo em raw/inbox/2026-04-09_strangler-fig.md</p>
+                  <p class="text-xs text-neutral-400 mt-1">Ingerir agora? (s/n)</p>
+                </div>
+              </div>
+              <div class="flex justify-end">
+                <div class="bg-amber-500/20 border border-amber-500/30 rounded-2xl rounded-tr-sm px-3 py-2">
+                  <p class="text-xs text-amber-100">s</p>
+                </div>
+              </div>
+              <div class="flex justify-start">
+                <div class="bg-dark-700 rounded-2xl rounded-tl-sm px-3 py-2 max-w-xs">
+                  <p class="text-xs text-neutral-300">✓ Ingestão concluída</p>
+                  <p class="text-xs text-neutral-400">wiki/strangler-fig-pattern.md criado (1.2k tokens)</p>
+                  <p class="text-xs text-neutral-400">Pergunte: "o que sei sobre strangler fig?"</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-dark-800 rounded-xl border border-dark-600 p-5">
+        <div class="text-amber-400 font-semibold mb-3">Template de arquivo gerado na captura</div>
+        <pre class="text-xs text-neutral-400 overflow-x-auto leading-relaxed"><code># raw/inbox/2026-04-09_1423_strangler-fig.md
+
+---
+captured_at: 2026-04-09T14:23:00
+source_type: url
+source_url: https://martinfowler.com/articles/strangler-fig.html
+captured_via: telegram
+captured_by: user_main
+status: pending_ingestion
+title: "Strangler Fig Application — Martin Fowler"
+---
+
+[conteúdo extraído da URL via skill browser]</code></pre>
+      </div>
+    </section>
+
+    <!-- TÓPICO 4 -->
+    <section id="topico-4" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">4</span>
+        <h2 class="text-2xl font-bold">🔔 Alertas e Notificações</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">O agente não é apenas reativo — ele pode ser <strong class="text-amber-400">proativo</strong>. Notificações push informam sobre ingestões concluídas, arquivos aguardando processamento e a saúde geral do wiki.</p>
+
+      <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+        <h3 class="text-base font-semibold text-amber-400 mb-4">🔔 Tipos de notificação e configuração</h3>
+        <svg viewBox="0 0 680 220" class="w-full" xmlns="http://www.w3.org/2000/svg">
+          <!-- Notification types -->
+          <rect x="10" y="10" width="200" height="195" rx="8" fill="#1f2937" stroke="#374151"/>
+          <text x="20" y="28" fill="#fbbf24" font-size="9" font-weight="bold">EVENTO</text>
+
+          <rect x="18" y="35" width="184" height="28" rx="4" fill="#064e3b" opacity="0.7"/>
+          <text x="28" y="48" fill="#10b981" font-size="8">✓ Ingestão concluída</text>
+          <text x="28" y="59" fill="#6b7280" font-size="7">após processar raw/inbox/</text>
+
+          <rect x="18" y="70" width="184" height="28" rx="4" fill="#451a03" opacity="0.7"/>
+          <text x="28" y="83" fill="#fbbf24" font-size="8">⚠ Inbox acumulando</text>
+          <text x="28" y="94" fill="#6b7280" font-size="7">N arquivos não ingeridos</text>
+
+          <rect x="18" y="105" width="184" height="28" rx="4" fill="#1e3a5f" opacity="0.7"/>
+          <text x="28" y="118" fill="#60a5fa" font-size="8">📋 Daily briefing</text>
+          <text x="28" y="129" fill="#6b7280" font-size="7">relatório matinal do vault</text>
+
+          <rect x="18" y="140" width="184" height="28" rx="4" fill="#2e1065" opacity="0.7"/>
+          <text x="28" y="153" fill="#c084fc" font-size="8">🔧 Lint semanal</text>
+          <text x="28" y="164" fill="#6b7280" font-size="7">problemas detectados no wiki</text>
+
+          <rect x="18" y="175" width="184" height="25" rx="4" fill="#374151" opacity="0.7"/>
+          <text x="28" y="188" fill="#9ca3af" font-size="8">🔄 Ingestão via cron</text>
+          <text x="28" y="197" fill="#6b7280" font-size="7">resultado do agendamento</text>
+
+          <!-- Trigger -->
+          <rect x="230" y="10" width="200" height="195" rx="8" fill="#1f2937" stroke="#374151"/>
+          <text x="240" y="28" fill="#fbbf24" font-size="9" font-weight="bold">TRIGGER</text>
+
+          <text x="240" y="52" fill="#9ca3af" font-size="8">skill exec → ingestão OK</text>
+          <text x="240" y="87" fill="#9ca3af" font-size="8">cron hora: count(inbox) &gt; 5</text>
+          <text x="240" y="122" fill="#9ca3af" font-size="8">cron 8h diário</text>
+          <text x="240" y="157" fill="#9ca3af" font-size="8">cron domingo: lint report</text>
+          <text x="240" y="190" fill="#9ca3af" font-size="8">cron: resultado do job</text>
+
+          <!-- Delivery -->
+          <rect x="450" y="10" width="220" height="195" rx="8" fill="#1f2937" stroke="#374151"/>
+          <text x="460" y="28" fill="#fbbf24" font-size="9" font-weight="bold">ENTREGA</text>
+
+          <text x="460" y="52" fill="#10b981" font-size="8">Telegram imediato ✓</text>
+          <text x="460" y="87" fill="#fbbf24" font-size="8">Telegram + digest noturno</text>
+          <text x="460" y="122" fill="#60a5fa" font-size="8">Telegram (canal principal)</text>
+          <text x="460" y="157" fill="#c084fc" font-size="8">Telegram + Slack (equipe)</text>
+          <text x="460" y="190" fill="#9ca3af" font-size="8">Telegram (silencioso à noite)</text>
+        </svg>
+      </div>
+
+      <div class="bg-dark-800 rounded-xl border border-dark-600 p-5">
+        <div class="text-amber-400 font-semibold mb-3">Configuração de notificações no SOUL.md</div>
+        <pre class="text-xs text-neutral-400 overflow-x-auto leading-relaxed"><code>## Notificações
+
+notifications:
+  # Após ingestão bem-sucedida
+  on_ingestion_complete:
+    channel: telegram
+    message: "✓ Ingestão concluída: {pages_created} páginas em wiki/"
+    immediate: true
+
+  # Inbox acumulando
+  inbox_alert:
+    trigger: "count(raw/inbox/*.md) > 5"
+    channel: telegram
+    message: "⚠ {count} documentos aguardando ingestão em raw/inbox/"
+    cooldown: 4h  # não repetir antes de 4 horas
+
+  # Silenciar no período noturno
+  quiet_hours:
+    start: "23:00"
+    end: "07:00"
+    mode: digest  # acumula e envia de manhã</code></pre>
+      </div>
+    </section>
+
+    <!-- TÓPICO 5 -->
+    <section id="topico-5" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">5</span>
+        <h2 class="text-2xl font-bold">📜 Histórico de Conversas como Raw</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">Conversas com o agente são <strong class="text-amber-400">ricas em conhecimento implícito</strong>: decisões tomadas, insights verbalizados, padrões identificados. Ingerir os logs transforma o diálogo em memória persistente.</p>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div class="bg-dark-800 rounded-xl border border-dark-600 p-5">
+          <div class="text-amber-400 font-semibold mb-3">Exportar conversa para ingestão</div>
+          <pre class="text-xs text-neutral-400 overflow-x-auto leading-relaxed"><code># Comandos especiais no chat:
+/export          → exporta última sessão
+/export week     → exporta últimos 7 dias
+/export topic=X  → filtra por tema
+
+# Arquivo gerado:
+# raw/inbox/chat-export-2026-04.md
+
+---
+export_date: 2026-04-09
+session_count: 23
+topics: [python, arquitetura, projetos]
+---
+
+[Usuário] 14:23: O que sei sobre Python async?
+[Cleo] 14:23: Python async usa event loop...
+
+[Usuário] 15:10: Decidi usar FastAPI em vez de Django
+[Cleo] 15:10: Registrado. Motivos para FastAPI...</code></pre>
+        </div>
+        <div class="bg-dark-800 rounded-xl border border-dark-600 p-5">
+          <div class="text-amber-400 font-semibold mb-3">O que o LLM extrai ao ingerir</div>
+          <div class="space-y-3">
+            <div class="bg-dark-700 rounded-lg p-3">
+              <div class="text-amber-400 text-xs font-semibold">Decisões explícitas</div>
+              <p class="text-xs text-neutral-400 mt-1">"Decidi usar FastAPI" → entrada em wiki/decisoes-tecnicas.md</p>
+            </div>
+            <div class="bg-dark-700 rounded-lg p-3">
+              <div class="text-amber-400 text-xs font-semibold">Perguntas frequentes</div>
+              <p class="text-xs text-neutral-400 mt-1">Identifica temas consultados muitas vezes → sugere aprofundamento</p>
+            </div>
+            <div class="bg-dark-700 rounded-lg p-3">
+              <div class="text-amber-400 text-xs font-semibold">Insights do diálogo</div>
+              <p class="text-xs text-neutral-400 mt-1">Conexões entre tópicos feitas durante a conversa → atualiza páginas relacionadas</p>
+            </div>
+            <div class="bg-dark-700 rounded-lg p-3">
+              <div class="text-amber-400 text-xs font-semibold">Lacunas de conhecimento</div>
+              <p class="text-xs text-neutral-400 mt-1">Temas consultados sem resultado → lista de pesquisa pendente</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/40 p-5">
+        <div class="text-primary font-semibold mb-2">💡 Loop de aprendizado positivo</div>
+        <p class="text-sm text-neutral-300">Quanto mais você usa o agente, melhor ele fica: conversas → logs → ingestão → wiki atualizado → consultas futuras mais precisas. O segundo cérebro cresce organicamente com o uso.</p>
+      </div>
+    </section>
+
+    <!-- TÓPICO 6 -->
+    <section id="topico-6" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">6</span>
+        <h2 class="text-2xl font-bold">🌐 Multi-canal</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">Um único vault, todos os seus canais. Configure <strong class="text-amber-400">identidades e permissões diferentes por canal</strong> — seu WhatsApp pessoal, Telegram profissional e Slack de equipe acessam o mesmo wiki sem duplicação.</p>
+
+      <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+        <h3 class="text-amber-400 font-semibold mb-4">Configuração multi-canal no SOUL.md</h3>
+        <pre class="text-xs text-neutral-400 overflow-x-auto leading-relaxed"><code>## Canais
+
+channels:
+  telegram:
+    token: "${TELEGRAM_BOT_TOKEN}"
+    name: "Cleo"
+    permissions:
+      can_read_wiki: true
+      can_write_inbox: true
+      can_trigger_ingestion: true
+    users:
+      - id: "${MY_TELEGRAM_ID}"
+        role: owner
+
+  whatsapp:
+    adapter: baileys
+    name: "Cleo"
+    permissions:
+      can_read_wiki: true
+      can_write_inbox: true
+      can_trigger_ingestion: false  # apenas leitura no WhatsApp
+    rate_limit: 20/hour  # evitar ban
+
+  slack:
+    token: "${SLACK_BOT_TOKEN}"
+    workspace: "minha-empresa"
+    name: "WikiBot"
+    permissions:
+      can_read_wiki: true
+      can_write_inbox: true
+      can_trigger_ingestion: true
+    channels:
+      - "#conhecimento"  # canal dedicado</code></pre>
+      </div>
+
+      <div class="bg-amber-500/10 rounded-xl border border-amber-500/30 p-5">
+        <div class="text-amber-400 font-semibold mb-3">✅ Conceitos-chave do módulo</div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div class="flex items-start space-x-2"><span class="text-amber-400">✓</span><span class="text-sm text-neutral-300">Padrões de diálogo PKM: fonte citada, confirmar escrita, não inventar</span></div>
+          <div class="flex items-start space-x-2"><span class="text-amber-400">✓</span><span class="text-sm text-neutral-300">Consultas: conceitual, decisional, temporal, comparativa, follow-up</span></div>
+          <div class="flex items-start space-x-2"><span class="text-amber-400">✓</span><span class="text-sm text-neutral-300">Captura mobile: texto, PDF, URL → raw/inbox/ automaticamente</span></div>
+          <div class="flex items-start space-x-2"><span class="text-amber-400">✓</span><span class="text-sm text-neutral-300">Notificações proativas fecham o loop do sistema</span></div>
+          <div class="flex items-start space-x-2"><span class="text-amber-400">✓</span><span class="text-sm text-neutral-300">Logs de conversa como fonte de conhecimento para ingestão</span></div>
+          <div class="flex items-start space-x-2"><span class="text-amber-400">✓</span><span class="text-sm text-neutral-300">Multi-canal: permissões diferentes por plataforma, mesmo vault</span></div>
+        </div>
+      </div>
+    </section>
+
+    <div class="flex justify-between items-center mt-8 pt-8 border-t border-dark-600">
+      <a href="modulo-4-2.html" class="flex items-center space-x-2 px-4 py-2 rounded-lg bg-dark-800 border border-dark-600 hover:border-amber-500/50 transition-colors text-neutral-300 hover:text-amber-400">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+        <span>4.2 — Conectando o Vault</span>
+      </a>
+      <a href="modulo-4-4.html" class="flex items-center space-x-2 px-4 py-2 rounded-lg bg-amber-500/20 border border-amber-500/30 hover:bg-amber-500/30 transition-colors text-amber-400">
+        <span>4.4 — Automações e Workflows</span>
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+  </main>
+
+  <footer class="border-t border-dark-600 mt-16 py-8">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <p class="text-neutral-500 text-sm">2Cérebro · <a href="https://inema.club" class="text-sky-400 hover:text-sky-300">INEMA.CLUB</a></p>
+    </div>
+  </footer>
+
+  <script>
+    const toggle = document.getElementById('theme-toggle');
+    const darkIcon = document.getElementById('theme-toggle-dark-icon');
+    const lightIcon = document.getElementById('theme-toggle-light-icon');
+    const html = document.documentElement;
+    function applyTheme(isDark) {
+      html.classList.toggle('dark', isDark);
+      darkIcon.classList.toggle('hidden', isDark);
+      lightIcon.classList.toggle('hidden', !isDark);
+    }
+    applyTheme(localStorage.getItem('theme') !== 'light');
+    toggle.addEventListener('click', () => {
+      const isDark = html.classList.contains('dark');
+      localStorage.setItem('theme', isDark ? 'light' : 'dark');
+      applyTheme(!isDark);
+    });
+  </script>
+</body>
+</html>

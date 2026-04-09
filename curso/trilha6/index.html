@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trilha 6 — Karpathy Vision | 2Cérebro</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: { extend: { colors: { primary: '#FACC15', dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' } } } }
+    }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+    .topic-explanation { display: none; }
+    .topic-explanation.active { display: block; }
+    html:not(.dark) body { background-color: #f8fafc; }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #9ca3af; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+    html:not(.dark) .text-rose-400 { color: #9f1239; }
+    html:not(.dark) .bg-rose-500\/20 { background-color: rgba(225,29,72,0.12); }
+    html:not(.dark) .bg-rose-500\/10 { background-color: rgba(225,29,72,0.08); }
+    html:not(.dark) .border-rose-500\/30 { border-color: rgba(225,29,72,0.25); }
+    html:not(.dark) .hover\:bg-rose-500\/30:hover { background-color: rgba(225,29,72,0.18); }
+    html:not(.dark) [class*="bg-gradient-to"] { background-image: none !important; }
+    html:not(.dark) .text-primary { color: #a16207; }
+    html:not(.dark) .bg-primary\/10 { background-color: rgba(161,98,7,0.08); }
+    html:not(.dark) .text-sky-400 { color: #0369a1; }
+    html:not(.dark) .text-yellow-400 { color: #a16207; }
+    html:not(.dark) .hover\:text-sky-300:hover { color: #0284c7; }
+    html:not(.dark) .hover\:text-yellow-300:hover { color: #854d0e; }
+    html:not(.dark) .bg-dark-900\/95 { background-color: rgba(255,255,255,0.95); }
+    .modal { display: none; }
+    .modal:not(.hidden) { display: flex; }
+  </style>
+</head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen">
+
+  <nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-14">
+        <div class="flex items-center space-x-4">
+          <a href="../../index.html" class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300">
+            <span class="text-2xl">🧠</span><span class="font-bold text-lg hidden sm:inline">2Cérebro</span>
+          </a>
+          <span class="text-neutral-600">|</span>
+          <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300 text-sm font-medium">INEMA.CLUB</a>
+        </div>
+        <div class="flex items-center space-x-1 sm:space-x-2">
+          <a href="../trilha1/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors">
+            <span class="sm:hidden">T1</span><span class="hidden sm:inline">Fundamentos</span>
+          </a>
+          <a href="../trilha2/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors">
+            <span class="sm:hidden">T2</span><span class="hidden sm:inline">Implementação</span>
+          </a>
+          <a href="../trilha3/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors">
+            <span class="sm:hidden">T3</span><span class="hidden sm:inline">Avançado</span>
+          </a>
+          <a href="index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-rose-400 bg-rose-500/10">
+            <span class="sm:hidden">T6</span><span class="hidden sm:inline">Karpathy</span>
+          </a>
+          <button id="theme-toggle" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2">
+            <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+            <svg id="theme-toggle-light-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <header class="bg-gradient-to-br from-rose-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+        <div>
+          <span class="inline-block px-3 py-1 bg-rose-500/20 text-rose-400 text-xs font-semibold rounded-full mb-4">TRILHA 6</span>
+          <h1 class="text-3xl sm:text-4xl font-bold mb-4">🔭 A Visão Karpathy: O Futuro da Memória LLM</h1>
+          <p class="text-lg text-neutral-400 max-w-xl mb-6">Explore a visão de Andrej Karpathy para LLM Knowledge Bases — o framework que inspirou o 2Cérebro. Entenda por que wikis auto-mantidos superam RAG e como a IA vai transformar a memória humana.</p>
+          <div class="grid grid-cols-4 gap-4 max-w-lg">
+            <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-rose-400">4</div><div class="text-xs text-neutral-400">Módulos</div></div>
+            <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-rose-400">24</div><div class="text-xs text-neutral-400">Tópicos</div></div>
+            <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-rose-400">~3h</div><div class="text-xs text-neutral-400">Duração</div></div>
+            <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-rose-400">Visão</div><div class="text-xs text-neutral-400">Nível</div></div>
+          </div>
+        </div>
+        <!-- Karpathy 3-layer architecture SVG -->
+        <div class="flex justify-center">
+          <svg viewBox="0 0 320 280" class="w-full max-w-xs" xmlns="http://www.w3.org/2000/svg">
+            <!-- Title -->
+            <text x="160" y="20" text-anchor="middle" fill="#fb7185" font-size="11" font-weight="bold">3-Layer Architecture</text>
+
+            <!-- Layer 1: Raw Sources -->
+            <rect x="20" y="40" width="280" height="56" rx="10" fill="#1f2937" stroke="#fb7185" stroke-width="1.5"/>
+            <text x="50" y="62" fill="#fb7185" font-size="10" font-weight="bold">📁 raw/</text>
+            <text x="50" y="78" fill="#9ca3af" font-size="9">Fontes brutas — imutáveis, auditáveis</text>
+            <rect x="200" y="50" width="80" height="30" rx="6" fill="#374151" stroke="#fb7185" stroke-width="1"/>
+            <text x="240" y="64" text-anchor="middle" fill="#fb7185" font-size="8">PDFs, URLs</text>
+            <text x="240" y="75" text-anchor="middle" fill="#9ca3af" font-size="7">Notas, APIs</text>
+
+            <!-- Arrow 1 -->
+            <line x1="160" y1="96" x2="160" y2="118" stroke="#FACC15" stroke-width="2" marker-end="url(#arrow)"/>
+            <text x="165" y="112" fill="#FACC15" font-size="8">LLM Compiler</text>
+
+            <!-- Arrow marker -->
+            <defs>
+              <marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+                <path d="M0,0 L0,6 L8,3 z" fill="#FACC15"/>
+              </marker>
+            </defs>
+
+            <!-- Layer 2: Wiki -->
+            <rect x="20" y="120" width="280" height="56" rx="10" fill="#1f2937" stroke="#fb7185" stroke-width="1.5"/>
+            <text x="50" y="142" fill="#fb7185" font-size="10" font-weight="bold">📖 wiki/</text>
+            <text x="50" y="158" fill="#9ca3af" font-size="9">Conhecimento compilado — Markdown estruturado</text>
+            <rect x="200" y="130" width="80" height="30" rx="6" fill="#374151" stroke="#fb7185" stroke-width="1"/>
+            <text x="240" y="144" text-anchor="middle" fill="#fb7185" font-size="8">Conceitos</text>
+            <text x="240" y="155" text-anchor="middle" fill="#9ca3af" font-size="7">Entidades, Links</text>
+
+            <!-- Arrow 2 -->
+            <line x1="160" y1="176" x2="160" y2="198" stroke="#fb7185" stroke-width="1.5" stroke-dasharray="4,3"/>
+
+            <!-- Layer 3: Schema -->
+            <rect x="20" y="200" width="280" height="56" rx="10" fill="#1f2937" stroke="#9ca3af" stroke-width="1"/>
+            <text x="50" y="222" fill="#9ca3af" font-size="10" font-weight="bold">⚙️ Schema</text>
+            <text x="50" y="238" fill="#6b7280" font-size="9">CLAUDE.md · index.md · log.md</text>
+            <rect x="200" y="210" width="80" height="30" rx="6" fill="#374151" stroke="#6b7280" stroke-width="1"/>
+            <text x="240" y="224" text-anchor="middle" fill="#9ca3af" font-size="8">Regras</text>
+            <text x="240" y="235" text-anchor="middle" fill="#6b7280" font-size="7">Navegação</text>
+
+            <!-- Operations labels -->
+            <text x="10" y="260" fill="#fb7185" font-size="8">⚡ Ingest</text>
+            <text x="100" y="260" fill="#fb7185" font-size="8">🔍 Query</text>
+            <text x="195" y="260" fill="#fb7185" font-size="8">🔎 Lint</text>
+            <line x1="8" y1="264" x2="308" y2="264" stroke="#374151" stroke-width="1"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <!-- CARDS SIMPLES -->
+    <div class="mb-12">
+      <h2 class="text-xl font-bold mb-4 text-neutral-300">Módulos desta Trilha</h2>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <a href="modulo-6-1.html" class="group bg-dark-800 rounded-xl border border-dark-600 hover:border-rose-500/30 p-4 transition-all hover:bg-rose-500/5">
+          <div class="text-rose-400 font-bold text-sm mb-1">6.1</div>
+          <div class="font-semibold text-sm group-hover:text-rose-400 transition-colors">📖 O Blog Post de Karpathy</div>
+          <div class="text-xs text-neutral-500 mt-1">~40 min</div>
+        </a>
+        <a href="modulo-6-2.html" class="group bg-dark-800 rounded-xl border border-dark-600 hover:border-rose-500/30 p-4 transition-all hover:bg-rose-500/5">
+          <div class="text-rose-400 font-bold text-sm mb-1">6.2</div>
+          <div class="font-semibold text-sm group-hover:text-rose-400 transition-colors">⚙️ O Compilador de Conhecimento</div>
+          <div class="text-xs text-neutral-500 mt-1">~45 min</div>
+        </a>
+        <a href="modulo-6-3.html" class="group bg-dark-800 rounded-xl border border-dark-600 hover:border-rose-500/30 p-4 transition-all hover:bg-rose-500/5">
+          <div class="text-rose-400 font-bold text-sm mb-1">6.3</div>
+          <div class="font-semibold text-sm group-hover:text-rose-400 transition-colors">🔄 Wikis Auto-Mantidos</div>
+          <div class="text-xs text-neutral-500 mt-1">~45 min</div>
+        </a>
+        <a href="modulo-6-4.html" class="group bg-dark-800 rounded-xl border border-dark-600 hover:border-rose-500/30 p-4 transition-all hover:bg-rose-500/5">
+          <div class="text-rose-400 font-bold text-sm mb-1">6.4</div>
+          <div class="font-semibold text-sm group-hover:text-rose-400 transition-colors">🚀 O Futuro da Memória Humana</div>
+          <div class="text-xs text-neutral-500 mt-1">~50 min</div>
+        </a>
+      </div>
+    </div>
+
+    <div class="border-t border-dark-600 pt-8 mb-6">
+      <h2 class="text-lg font-bold text-neutral-300">Conteúdo Detalhado</h2>
+    </div>
+
+    <!-- MÓDULO 6.1 -->
+    <div class="bg-dark-800 rounded-xl border border-dark-600 mb-6">
+      <div class="p-6 border-b border-dark-600">
+        <div class="flex items-center justify-between mb-2"><span class="text-rose-400 font-bold">6.1</span><span class="text-xs text-neutral-500">~40 min</span></div>
+        <h3 class="text-2xl font-bold mb-2">📖 O Blog Post de Karpathy</h3>
+        <p class="text-neutral-400 text-sm">A proposta original que mudou como pensamos sobre PKM: o gist de abril de 2026 que colocou o LLM como compilador de conhecimento.</p>
+      </div>
+      <div class="divide-y divide-dark-600">
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-rose-500/20 text-rose-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+            <span class="text-lg">🧑‍💻</span>
+            <div><span class="font-medium">Quem é Andrej Karpathy</span><span class="text-neutral-500 text-sm ml-2">- OpenAI, Tesla, influência na IA</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-rose-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Andrej Karpathy é um dos pesquisadores mais influentes em deep learning: ex-diretor de IA da Tesla (Autopilot) e cofundador/pesquisador sênior da OpenAI. Seu trabalho em LLMs, redes neurais e visão computacional moldou a IA moderna. Seus tutoriais (zero-to-hero, nanoGPT) formaram uma geração de engenheiros de IA.</p></div>
+              <div><span class="text-rose-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Entender quem é Karpathy contextualiza o peso de suas ideias. Quando ele publica um framework, a comunidade técnica toma nota — e suas ideias sobre LLM Knowledge Bases chegaram no momento certo da maturidade dos modelos de linguagem.</p></div>
+              <div><span class="text-rose-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">OpenAI, Tesla Autopilot, deep learning, nanoGPT, zero-to-hero, influência técnica, credibilidade no campo.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-rose-500/20 text-rose-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+            <span class="text-lg">📝</span>
+            <div><span class="font-medium">O Gist de Abril 2026</span><span class="text-neutral-500 text-sm ml-2">- A proposta original da LLM Knowledge Base</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-rose-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Em abril de 2026, Karpathy publicou um gist descrevendo uma arquitetura de 3 camadas para LLM Knowledge Bases: raw/ (fontes brutas), wiki/ (conhecimento compilado) e schema files (CLAUDE.md, index.md, log.md). O documento propõe que o LLM atue como compilador — não como mecanismo de busca.</p></div>
+              <div><span class="text-rose-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">O gist é o documento fundacional do 2Cérebro. Lê-lo (e entender cada escolha de design) revela o raciocínio por trás de cada componente do sistema que você está construindo — não é receita, é princípio.</p></div>
+              <div><span class="text-rose-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Gist de abril 2026, 3 camadas, raw/, wiki/, schema files, LLM como compilador, design decisions.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-rose-500/20 text-rose-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+            <span class="text-lg">💡</span>
+            <div><span class="font-medium">A Ideia Central</span><span class="text-neutral-500 text-sm ml-2">- LLM como compilador, não como chatbot</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-rose-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">A inversão fundamental: em vez de usar o LLM para responder perguntas ao vivo (consultando cada vez), você o usa offline para compilar o conhecimento bruto em páginas wiki estruturadas. Na consulta, o LLM lê o wiki compilado — muito mais barato e consistente.</p></div>
+              <div><span class="text-rose-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Essa inversão é o que separa um sistema de 2ª geração (PKM + RAG) de um de 3ª geração (PKM compilado). Entender o shift mental é o pré-requisito para construir sistemas que realmente escalam.</p></div>
+              <div><span class="text-rose-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Compilação offline vs. consulta ao vivo, LLM como librarian, shift de paradigma, custo de tokens, consistência de resposta.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-rose-500/20 text-rose-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+            <span class="text-lg">⚡</span>
+            <div><span class="font-medium">As Três Operações</span><span class="text-neutral-500 text-sm ml-2">- Ingest, Query, Lint</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-rose-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Três operações definem todo o sistema: Ingest (LLM lê fonte bruta → gera páginas wiki → atualiza index.md e log.md), Query (LLM lê index.md → encontra páginas relevantes → sintetiza resposta) e Lint (LLM audita contradições, páginas órfãs e links quebrados).</p></div>
+              <div><span class="text-rose-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">As três operações são a interface completa do sistema. Tudo que você faz com o 2Cérebro é uma variação de Ingest, Query ou Lint — entender isso simplifica radicalmente o design de prompts e automações.</p></div>
+              <div><span class="text-rose-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Ingest, Query, Lint, index.md, log.md, três operações canônicas, interface mínima e completa.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-rose-500/20 text-rose-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+            <span class="text-lg">🚫</span>
+            <div><span class="font-medium">Por que Não RAG</span><span class="text-neutral-500 text-sm ml-2">- A crítica central aos embeddings</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-rose-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">RAG (Retrieval-Augmented Generation) usa embeddings para buscar chunks de texto relevantes na consulta. A crítica de Karpathy: embeddings são caixas-pretas (não auditáveis), recuperam fragmentos sem contexto, e o conhecimento nunca é integrado — cada consulta começa do zero.</p></div>
+              <div><span class="text-rose-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Entender por que RAG falha para PKM pessoal permite justificar a escolha de compilação. Não é que RAG seja ruim — é que ele foi projetado para outro problema (busca em corpus grande), não para conhecimento pessoal coerente.</p></div>
+              <div><span class="text-rose-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">RAG, embeddings, chunking, busca semântica, fragmentação de contexto, auditabilidade, compilação vs. recuperação.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-rose-500/20 text-rose-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+            <span class="text-lg">🌊</span>
+            <div><span class="font-medium">Impacto na Comunidade</span><span class="text-neutral-500 text-sm ml-2">- Reação ao blog post e implementações</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-rose-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">O gist gerou uma onda de implementações na comunidade: repositórios GitHub, posts no HackerNews, integrações com Obsidian e VS Code. O 2Cérebro é uma dessas implementações — com foco em curso estruturado e prompts prontos para uso imediato.</p></div>
+              <div><span class="text-rose-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Conhecer o ecossistema que surgiu ao redor da ideia permite identificar as melhores implementações de referência, evitar armadilhas comuns e contribuir com a comunidade com implementações próprias.</p></div>
+              <div><span class="text-rose-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Ecossistema de implementações, HackerNews, GitHub, Obsidian plugins, 2Cérebro como implementação, comunidade PKM.</p></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+        <button onclick="openModal('modal-6-1')" class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors">Ver em Modal</button>
+        <a href="modulo-6-1.html" class="px-4 py-2 text-sm bg-rose-600 hover:bg-rose-500 text-white rounded-lg transition-colors">Ver Completo</a>
+      </div>
+    </div>
+
+    <!-- MÓDULO 6.2 -->
+    <div class="bg-dark-800 rounded-xl border border-dark-600 mb-6">
+      <div class="p-6 border-b border-dark-600">
+        <div class="flex items-center justify-between mb-2"><span class="text-rose-400 font-bold">6.2</span><span class="text-xs text-neutral-500">~45 min</span></div>
+        <h3 class="text-2xl font-bold mb-2">⚙️ O Compilador de Conhecimento</h3>
+        <p class="text-neutral-400 text-sm">Como o LLM transforma fontes brutas em wiki estruturado: a analogia com compiladores de software e suas implicações práticas.</p>
+      </div>
+      <div class="divide-y divide-dark-600">
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-rose-500/20 text-rose-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+            <span class="text-lg">🏗️</span>
+            <div><span class="font-medium">O Conceito de Compilação</span><span class="text-neutral-500 text-sm ml-2">- Transformar raw em estruturado</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-rose-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Em ciência da computação, um compilador transforma código-fonte (legível ao humano) em código de máquina (otimizado para execução). A analogia é perfeita: o LLM transforma fontes brutas (PDFs, URLs, notas) em wiki compilado (otimizado para consulta e navegação).</p></div>
+              <div><span class="text-rose-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">A analogia com compiladores não é apenas poética — ela define propriedades concretas do sistema: idempotência (compilar duas vezes dá o mesmo resultado), separação de preocupações (raw é input, wiki é output) e auditabilidade (você pode ver o que foi compilado).</p></div>
+              <div><span class="text-rose-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Compilação, código-fonte vs. binário, idempotência, separação input/output, LLM como compilador, analogia de software.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-rose-500/20 text-rose-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+            <span class="text-lg">📁</span>
+            <div><span class="font-medium">raw/ como Código Fonte</span><span class="text-neutral-500 text-sm ml-2">- Imutável, auditável</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-rose-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">A pasta raw/ contém as fontes originais — nunca modificadas. PDFs, URLs salvas, transcrições, notas brutas. Como código-fonte em um repositório git: o que entrou é o que está lá. O LLM nunca altera raw/ — só lê.</p></div>
+              <div><span class="text-rose-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">A imutabilidade de raw/ é o que garante auditabilidade: você sempre pode rastrear de onde veio uma afirmação no wiki. "Essa conclusão veio de qual fonte?" → cheque raw/. Sem isso, o sistema perde credibilidade ao longo do tempo.</p></div>
+              <div><span class="text-rose-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">raw/ imutável, rastreabilidade, auditabilidade, git analogy, fontes originais, leitura sem modificação.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-rose-500/20 text-rose-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+            <span class="text-lg">📖</span>
+            <div><span class="font-medium">wiki/ como Binário</span><span class="text-neutral-500 text-sm ml-2">- Compilado, otimizado para consulta</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-rose-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">wiki/ é o output compilado: páginas Markdown estruturadas com conceitos, entidades, comparações, cronologias. Diferente do binário de software (ilegível), o wiki compilado é intencionalmente human-readable — qualquer pessoa pode ler e auditar cada página.</p></div>
+              <div><span class="text-rose-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">wiki/ legível é a grande vantagem sobre embeddings: você pode abrir qualquer arquivo e verificar o que o LLM entendeu. Se há erro, você corrige na fonte e recompila — fluxo familiar para qualquer desenvolvedor.</p></div>
+              <div><span class="text-rose-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">wiki/ estruturado, Markdown human-readable, páginas compiladas, auditabilidade do output, diff e correção.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-rose-500/20 text-rose-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+            <span class="text-lg">📋</span>
+            <div><span class="font-medium">CLAUDE.md como Spec do Compilador</span><span class="text-neutral-500 text-sm ml-2">- Regras de transformação</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-rose-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">CLAUDE.md é a especificação do compilador: define quais tipos de páginas criar, como nomear arquivos, qual template usar para cada tipo de nota, como lidar com contradições, e o que fazer em casos ambíguos. É o equivalente ao grammar file de um compilador.</p></div>
+              <div><span class="text-rose-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Um bom CLAUDE.md é o que separa um wiki coerente de um caos de notas. Escrever regras claras de transformação é a habilidade mais importante do sistema — e a mais subestimada por iniciantes.</p></div>
+              <div><span class="text-rose-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">CLAUDE.md, grammar file analogy, regras de compilação, templates de página, tratamento de contradições, especificação de comportamento.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-rose-500/20 text-rose-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+            <span class="text-lg">🔄</span>
+            <div><span class="font-medium">Compilação Incremental</span><span class="text-neutral-500 text-sm ml-2">- Só recompila o que mudou</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-rose-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Como make em C: quando você adiciona uma nova fonte em raw/, só as páginas wiki afetadas precisam ser recompiladas. log.md registra o que foi compilado e quando — permitindo que o agente detecte o que é novo e compile apenas o delta.</p></div>
+              <div><span class="text-rose-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Compilação incremental é o que torna o sistema eficiente em uso contínuo. Sem ela, cada ingestão recompilaria o vault inteiro — exponencialmente mais caro conforme o vault cresce.</p></div>
+              <div><span class="text-rose-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Compilação incremental, log.md como estado, make analogy, delta compilation, eficiência crescente, custo constante de ingestão.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-rose-500/20 text-rose-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+            <span class="text-lg">🚀</span>
+            <div><span class="font-medium">Otimizações do Compilador</span><span class="text-neutral-500 text-sm ml-2">- Compressão, índices, cache</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-rose-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Três otimizações principais: compressão (abstracts densos por página reduzem tokens em 80%), índices (index.md hierárquico para navegação O(1)) e cache (respostas frequentes pré-computadas como páginas wiki). Cada otimização segue a mesma lógica do compilador.</p></div>
+              <div><span class="text-rose-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Otimizações são o que permitem o sistema crescer de 10 para 10.000 páginas mantendo consultas rápidas e baratas. Entender quais otimizações aplicar e quando é a diferença entre um sistema de hobby e um de produção.</p></div>
+              <div><span class="text-rose-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Abstracts densos, indexação hierárquica, cache de consultas, otimizações de compilador, escala, token budget.</p></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+        <button onclick="openModal('modal-6-2')" class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors">Ver em Modal</button>
+        <a href="modulo-6-2.html" class="px-4 py-2 text-sm bg-rose-600 hover:bg-rose-500 text-white rounded-lg transition-colors">Ver Completo</a>
+      </div>
+    </div>
+
+    <!-- MÓDULO 6.3 -->
+    <div class="bg-dark-800 rounded-xl border border-dark-600 mb-6">
+      <div class="p-6 border-b border-dark-600">
+        <div class="flex items-center justify-between mb-2"><span class="text-rose-400 font-bold">6.3</span><span class="text-xs text-neutral-500">~45 min</span></div>
+        <h3 class="text-2xl font-bold mb-2">🔄 Wikis Auto-Mantidos</h3>
+        <p class="text-neutral-400 text-sm">Por que humanos nunca conseguiram manter wikis atualizados — e como LLMs resolvem o problema de custo de manutenção com custo marginal zero.</p>
+      </div>
+      <div class="divide-y divide-dark-600">
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-rose-500/20 text-rose-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+            <span class="text-lg">😩</span>
+            <div><span class="font-medium">Por que Humanos Falham na Manutenção</span><span class="text-neutral-500 text-sm ml-2">- Fricção cognitiva</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-rose-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">A manutenção de wikis humanos falha por fricção cognitiva: lembrar de atualizar referências cruzadas, detectar contradições com notas antigas, eliminar duplicatas, verificar links. São tarefas de bookkeeping — exaustivas para o cérebro, triviais para LLMs.</p></div>
+              <div><span class="text-rose-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Entender o ponto exato de falha humana é o que revela por que a solução LLM não é apenas conveniência — é uma mudança qualitativa. O bottleneck não é criar notas, é manter coerência entre elas. LLMs fazem isso por natureza.</p></div>
+              <div><span class="text-rose-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Fricção cognitiva, bookkeeping, referências cruzadas, deduplicação, manutenção de coerência, falha humana em escala.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-rose-500/20 text-rose-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+            <span class="text-lg">🤖</span>
+            <div><span class="font-medium">LLMs como Curadores Incansáveis</span><span class="text-neutral-500 text-sm ml-2">- Sem cansaço, sem viés de omissão</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-rose-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">LLMs não ficam entediados com manutenção de bookkeeping, não omitem verificações por preguiça, não esquecem de atualizar um link. Cada ingestão passa pelo mesmo processo rigoroso — índice verificado, log atualizado, contradições sinalizadas. Curadoria sem custo cognitivo humano.</p></div>
+              <div><span class="text-rose-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Confiar o bookkeeping ao LLM libera energia mental para o que humanos fazem melhor: criar, interpretar, decidir. A curadoria mecanizada é o que torna o sistema sustentável por anos, não semanas.</p></div>
+              <div><span class="text-rose-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Curadoria automatizada, sem viés de omissão, bookkeeping delegado, processo rigoroso e repetível, sustentabilidade do sistema.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-rose-500/20 text-rose-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+            <span class="text-lg">🛡️</span>
+            <div><span class="font-medium">Lint como Sistema Imunológico</span><span class="text-neutral-500 text-sm ml-2">- Detectar inconsistências automaticamente</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-rose-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">A operação Lint audita o wiki como um sistema imunológico: detecta afirmações contraditórias entre páginas, notas órfãs sem links de entrada, links apontando para páginas inexistentes, e conceitos duplicados em páginas separadas. Roda periodicamente como "vacina" do vault.</p></div>
+              <div><span class="text-rose-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Wikis sem lint acumulam entropia silenciosamente — contradições aparecem sem sinalização, páginas ficam desatualizadas, o índice perde precisão. Lint periódico é o que garante que o sistema melhore com o tempo em vez de degradar.</p></div>
+              <div><span class="text-rose-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Lint periódico, sistema imunológico, contradições detectadas, páginas órfãs, links quebrados, entropia controlada, melhoria contínua.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-rose-500/20 text-rose-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+            <span class="text-lg">💰</span>
+            <div><span class="font-medium">O Custo Marginal Zero</span><span class="text-neutral-500 text-sm ml-2">- Cada nova consulta não custa ingestão</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-rose-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">No modelo compilado, o custo de ingestão é pago uma vez. Todas as consultas subsequentes leem o wiki já compilado — muito mais barato que reprocessar as fontes brutas a cada pergunta. Com RAG, cada consulta paga o custo de embedding + retrieval. Com compilação, é apenas leitura do wiki.</p></div>
+              <div><span class="text-rose-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">O custo marginal zero é o argumento econômico central do sistema. Para uso intenso (dezenas de consultas por dia), a compilação antecipada se paga rapidamente — e o sistema fica mais barato conforme mais você usa.</p></div>
+              <div><span class="text-rose-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Custo de ingestão amortizado, consultas baratas, token budget por consulta, economia de escala, ROI do sistema compilado.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-rose-500/20 text-rose-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+            <span class="text-lg">🌱</span>
+            <div><span class="font-medium">Evolução vs Criação</span><span class="text-neutral-500 text-sm ml-2">- Wikis que crescem com o tempo</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-rose-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Wikis tradicionais são criados e depois decaem. O LLM wiki evolui: cada nova ingestão enriquece páginas existentes, adiciona links cruzados, refina definições. Depois de um ano de ingestão, as páginas sobre seus tópicos centrais são muito mais ricas que no dia 1 — sem esforço adicional.</p></div>
+              <div><span class="text-rose-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Entender que o sistema melhora com uso muda o incentivo para ingerir conteúdo. Cada PDF, artigo ou nota que você processa não é trabalho — é investimento que rende dividendos em todas as consultas futuras sobre aquele tema.</p></div>
+              <div><span class="text-rose-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Evolução do wiki, enriquecimento progressivo, links cruzados emergentes, maturidade do vault, investimento vs. esforço.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-rose-500/20 text-rose-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+            <span class="text-lg">🌙</span>
+            <div><span class="font-medium">A Grande Promessa</span><span class="text-neutral-500 text-sm ml-2">- PKM que funciona enquanto você dorme</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-rose-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">A promessa de Karpathy: um sistema que ingere, organiza, verifica e indexa seu conhecimento de forma autônoma — com supervisão mínima. Automações com n8n ou scripts podem disparar ingestões noturnas, lint semanal e atualizações do índice sem intervenção humana.</p></div>
+              <div><span class="text-rose-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">A autonomia não é o objetivo — é o resultado de um sistema bem projetado. Quando regras são claras (CLAUDE.md), operações são simples (Ingest/Query/Lint) e automações estão configuradas, o sistema se mantém sozinho. PKM sustentável pela primeira vez na história.</p></div>
+              <div><span class="text-rose-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Autonomia do sistema, ingestões noturnas, lint automático, supervisão mínima, sustentabilidade de longo prazo, PKM assíncrono.</p></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+        <button onclick="openModal('modal-6-3')" class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors">Ver em Modal</button>
+        <a href="modulo-6-3.html" class="px-4 py-2 text-sm bg-rose-600 hover:bg-rose-500 text-white rounded-lg transition-colors">Ver Completo</a>
+      </div>
+    </div>
+
+    <!-- MÓDULO 6.4 -->
+    <div class="bg-dark-800 rounded-xl border border-dark-600 mb-6">
+      <div class="p-6 border-b border-dark-600">
+        <div class="flex items-center justify-between mb-2"><span class="text-rose-400 font-bold">6.4</span><span class="text-xs text-neutral-500">~50 min</span></div>
+        <h3 class="text-2xl font-bold mb-2">🚀 O Futuro da Memória Humana</h3>
+        <p class="text-neutral-400 text-sm">Memória aumentada, grafos coletivos de conhecimento e como posicionar-se para o futuro onde LLMs serão infraestrutura de memória social.</p>
+      </div>
+      <div class="divide-y divide-dark-600">
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-rose-500/20 text-rose-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+            <span class="text-lg">🧠</span>
+            <div><span class="font-medium">Memória Aumentada</span><span class="text-neutral-500 text-sm ml-2">- Além das limitações cognitivas humanas</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-rose-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">A memória humana é limitada por capacidade (~7 itens em working memory), pela curva de esquecimento de Ebbinghaus e pelo viés de disponibilidade. Um LLM wiki não tem nenhuma dessas limitações: armazena milhares de conceitos com igual fidelidade e os recupera instantaneamente.</p></div>
+              <div><span class="text-rose-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Entender as limitações específicas que o sistema supera ajuda a calibrar onde confiar no wiki (precisão de fatos, rastreamento de referências) e onde confiar no seu próprio julgamento (síntese criativa, tomada de decisão).</p></div>
+              <div><span class="text-rose-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Working memory, Ebbinghaus, viés de disponibilidade, memória aumentada, complementaridade humano-LLM, divisão cognitiva do trabalho.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-rose-500/20 text-rose-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+            <span class="text-lg">🌐</span>
+            <div><span class="font-medium">Grafos de Conhecimento Coletivos</span><span class="text-neutral-500 text-sm ml-2">- O próximo passo</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-rose-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">O próximo passo natural: múltiplas pessoas com vaults individuais cujos wikis se intercomunicam. Uma equipe de engenharia onde cada membro tem seu vault, e o vault da equipe agrega e sintetiza o conhecimento de todos — sem perda de autoria ou contexto individual.</p></div>
+              <div><span class="text-rose-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Grafos coletivos são onde o impacto organizacional do sistema se materializa. Entender o padrão agora permite projetar vaults pessoais que sejam compatíveis com agregação futura — estrutura, nomenclatura e taxonomia pensadas para interoperabilidade.</p></div>
+              <div><span class="text-rose-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Vaults federados, knowledge graph coletivo, autoria preservada, agregação de contexto, interoperabilidade de vaults, equipes com memória compartilhada.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-rose-500/20 text-rose-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+            <span class="text-lg">🔮</span>
+            <div><span class="font-medium">LLM Native Memory</span><span class="text-neutral-500 text-sm ml-2">- Quando o modelo lembra de verdade</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-rose-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">A fronteira futura: modelos com memória nativa persistente — não apenas contexto de janela, mas aprendizado contínuo de interações anteriores. O LLM wiki pode ser o stepping stone: quando memória nativa chegar, o vault compilado em Markdown é o formato natural de input para fine-tuning ou RAG de alta qualidade.</p></div>
+              <div><span class="text-rose-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Construir um vault hoje em formato aberto (Markdown) posiciona você para aproveitar memória nativa quando chegar — sem migração. Seus anos de ingestão se tornam o dataset de treinamento personalizado do seu futuro modelo.</p></div>
+              <div><span class="text-rose-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Memória nativa de LLM, aprendizado contínuo, fine-tuning personalizado, vault como dataset, Markdown como formato perene, preparação para o futuro.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-rose-500/20 text-rose-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+            <span class="text-lg">🏛️</span>
+            <div><span class="font-medium">O Segundo Cérebro como Infraestrutura Social</span><span class="text-neutral-500 text-sm ml-2">- Além do individual</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-rose-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Quando organizações, universidades e comunidades adotam LLM wikis, o conhecimento institucional deixa de ser perdido na saída de funcionários. O vault da empresa captura decisões, aprende com projetos passados e responde perguntas sobre "por que fizemos X em 2022" com precisão.</p></div>
+              <div><span class="text-rose-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">A infraestrutura social de memória muda quais habilidades são valiosas. Saber projetar e operar LLM wikis coloca você na posição de arquiteto de memória organizacional — uma das funções mais estratégicas da próxima década.</p></div>
+              <div><span class="text-rose-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Memória institucional, vault organizacional, conhecimento persistente além de pessoas, arquiteto de memória, infraestrutura de conhecimento.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-rose-500/20 text-rose-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+            <span class="text-lg">⚠️</span>
+            <div><span class="font-medium">Riscos e Cuidados</span><span class="text-neutral-500 text-sm ml-2">- Dependência, privacidade, qualidade</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-rose-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Três riscos principais: dependência (atrofia da memória humana por delegação excessiva), privacidade (dados sensíveis no vault em nuvem), e qualidade (o LLM pode compilar erros com a mesma confiança que fatos corretos). Cada risco tem mitigação específica.</p></div>
+              <div><span class="text-rose-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Sistemas poderosos têm falhas proporcionais ao poder. Conhecer os riscos antes de escalar o uso permite projetar salvaguardas: revisão humana periódica, vaults locais para dados sensíveis, fact-checking de afirmações críticas.</p></div>
+              <div><span class="text-rose-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Dependência cognitiva, privacidade de dados, alucinações compiladas, revisão humana, vault local, fact-checking, uso responsável.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-rose-500/20 text-rose-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+            <span class="text-lg">🎯</span>
+            <div><span class="font-medium">Como se Posicionar Agora</span><span class="text-neutral-500 text-sm ml-2">- Construir hoje para o futuro</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-rose-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Três movimentos práticos: (1) começar um vault pessoal hoje com a arquitetura correta, (2) desenvolver habilidades de prompt engineering para CLAUDE.md e operações de Ingest/Query/Lint, e (3) documentar e compartilhar aprendizados para construir reputação no espaço emergente de LLM Knowledge Bases.</p></div>
+              <div><span class="text-rose-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">A janela de vantagem para early adopters é real mas finita. Quem construir fluência agora terá anos de aprendizado acumulado quando a categoria explodir. O 2Cérebro é a curva de aprendizado mais eficiente disponível hoje.</p></div>
+              <div><span class="text-rose-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Early adopter advantage, vault pessoal, prompt engineering para PKM, reputação em LLM KB, janela de oportunidade, aprendizado acumulado.</p></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+        <button onclick="openModal('modal-6-4')" class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors">Ver em Modal</button>
+        <a href="modulo-6-4.html" class="px-4 py-2 text-sm bg-rose-600 hover:bg-rose-500 text-white rounded-lg transition-colors">Ver Completo</a>
+      </div>
+    </div>
+
+    <!-- NAVEGAÇÃO -->
+    <div class="flex flex-col sm:flex-row gap-4 mt-12">
+      <a href="../trilha3/index.html" class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors">← Trilha 3: Avançado</a>
+      <a href="../../index.html" class="flex-1 text-center px-6 py-3 bg-rose-600 text-white rounded-lg font-semibold hover:bg-rose-500 transition-colors">Voltar ao Início →</a>
+    </div>
+  </main>
+
+  <!-- MODAIS -->
+  <div id="modal-6-1" class="modal hidden fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80" onclick="if(event.target === this) closeModal()">
+    <div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600">
+      <div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0">
+        <div class="flex items-center space-x-3">
+          <span class="text-rose-400 font-bold">6.1</span>
+          <span class="font-semibold">📖 O Blog Post de Karpathy</span>
+        </div>
+        <button onclick="closeModal()" class="text-neutral-400 hover:text-white text-2xl leading-none">&times;</button>
+      </div>
+      <iframe src="modulo-6-1.html" class="flex-1 w-full rounded-b-xl"></iframe>
+    </div>
+  </div>
+
+  <div id="modal-6-2" class="modal hidden fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80" onclick="if(event.target === this) closeModal()">
+    <div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600">
+      <div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0">
+        <div class="flex items-center space-x-3">
+          <span class="text-rose-400 font-bold">6.2</span>
+          <span class="font-semibold">⚙️ O Compilador de Conhecimento</span>
+        </div>
+        <button onclick="closeModal()" class="text-neutral-400 hover:text-white text-2xl leading-none">&times;</button>
+      </div>
+      <iframe src="modulo-6-2.html" class="flex-1 w-full rounded-b-xl"></iframe>
+    </div>
+  </div>
+
+  <div id="modal-6-3" class="modal hidden fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80" onclick="if(event.target === this) closeModal()">
+    <div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600">
+      <div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0">
+        <div class="flex items-center space-x-3">
+          <span class="text-rose-400 font-bold">6.3</span>
+          <span class="font-semibold">🔄 Wikis Auto-Mantidos</span>
+        </div>
+        <button onclick="closeModal()" class="text-neutral-400 hover:text-white text-2xl leading-none">&times;</button>
+      </div>
+      <iframe src="modulo-6-3.html" class="flex-1 w-full rounded-b-xl"></iframe>
+    </div>
+  </div>
+
+  <div id="modal-6-4" class="modal hidden fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80" onclick="if(event.target === this) closeModal()">
+    <div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600">
+      <div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0">
+        <div class="flex items-center space-x-3">
+          <span class="text-rose-400 font-bold">6.4</span>
+          <span class="font-semibold">🚀 O Futuro da Memória Humana</span>
+        </div>
+        <button onclick="closeModal()" class="text-neutral-400 hover:text-white text-2xl leading-none">&times;</button>
+      </div>
+      <iframe src="modulo-6-4.html" class="flex-1 w-full rounded-b-xl"></iframe>
+    </div>
+  </div>
+
+  <footer class="border-t border-dark-600 py-8 mt-16">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+      <p>2Cérebro — Trilha 6: Karpathy Vision · <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300">INEMA.CLUB</a></p>
+    </div>
+  </footer>
+
+  <script>
+    function toggleTopic(button) {
+      const topicItem = button.closest('.topic-item');
+      const explanation = topicItem.querySelector('.topic-explanation');
+      const moduleCard = button.closest('.bg-dark-800');
+      moduleCard.querySelectorAll('.topic-explanation.active').forEach(exp => {
+        if (exp !== explanation) exp.classList.remove('active');
+      });
+      explanation.classList.toggle('active');
+    }
+
+    function openModal(modalId) {
+      const modal = document.getElementById(modalId);
+      if (modal) { modal.classList.remove('hidden'); document.body.style.overflow = 'hidden'; }
+    }
+
+    function closeModal() {
+      document.querySelectorAll('.modal').forEach(modal => modal.classList.add('hidden'));
+      document.body.style.overflow = 'auto';
+    }
+
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
+
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+    const html = document.documentElement;
+
+    if (localStorage.getItem('theme') === 'light' || (!localStorage.getItem('theme') && !html.classList.contains('dark'))) {
+      themeToggleDarkIcon.classList.remove('hidden');
+      html.classList.remove('dark');
+    } else {
+      themeToggleLightIcon.classList.remove('hidden');
+    }
+
+    themeToggle.addEventListener('click', () => {
+      themeToggleDarkIcon.classList.toggle('hidden');
+      themeToggleLightIcon.classList.toggle('hidden');
+      html.classList.toggle('dark');
+      localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+    });
+  </script>
+</body>
+</html>

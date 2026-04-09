@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Módulo 4.2 — Conectando o Vault ao OpenClaw | 2Cérebro</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config={darkMode:'class',theme:{extend:{colors:{primary:'#FACC15',dark:{900:'#111827',800:'#1f2937',700:'#374151',600:'#4b5563'}}}}}</script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body{font-family:'Inter',sans-serif;}
+    html:not(.dark) body{background-color:#f8fafc;}
+    html:not(.dark) .bg-dark-900{background-color:#ffffff;}
+    html:not(.dark) .bg-dark-800{background-color:#f9fafb;}
+    html:not(.dark) .bg-dark-700{background-color:#f3f4f6;}
+    html:not(.dark) .bg-dark-600{background-color:#e5e7eb;}
+    html:not(.dark) .text-neutral-100{color:#111827;}
+    html:not(.dark) .text-neutral-300{color:#4b5563;}
+    html:not(.dark) .text-neutral-400{color:#6b7280;}
+    html:not(.dark) .text-neutral-500{color:#9ca3af;}
+    html:not(.dark) .border-dark-600{border-color:#d1d5db;}
+    html:not(.dark) .border-dark-700{border-color:#e5e7eb;}
+    html:not(.dark) .text-amber-400{color:#92400e;}
+    html:not(.dark) .bg-amber-500\/20{background-color:rgba(217,119,6,0.12);}
+    html:not(.dark) .border-amber-500\/30{border-color:rgba(217,119,6,0.25);}
+    html:not(.dark) [class*="bg-gradient-to"]{background-image:none!important;}
+    html:not(.dark) .text-primary{color:#a16207;}
+    html:not(.dark) .bg-primary\/10{background-color:rgba(161,98,7,0.08);}
+    html:not(.dark) .border-primary\/40{border-color:rgba(161,98,7,0.25);}
+    html:not(.dark) .text-sky-400{color:#0369a1;}
+    html:not(.dark) .text-yellow-400{color:#a16207;}
+    html:not(.dark) .hover\:text-sky-300:hover{color:#0284c7;}
+    html:not(.dark) .hover\:text-yellow-300:hover{color:#854d0e;}
+    html:not(.dark) .bg-dark-900\/95{background-color:rgba(255,255,255,0.95);}
+  </style>
+</head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen">
+
+  <nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-14">
+        <div class="flex items-center space-x-4">
+          <a href="../../index.html" class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300"><span class="text-2xl">🧠</span><span class="font-bold text-lg hidden sm:inline">2Cérebro</span></a>
+          <span class="text-neutral-600">|</span>
+          <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300 text-sm font-medium">INEMA.CLUB</a>
+        </div>
+        <div class="flex items-center space-x-1 sm:space-x-2">
+          <a href="../trilha1/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors"><span class="sm:hidden">T1</span><span class="hidden sm:inline">Fundamentos</span></a>
+          <a href="../trilha2/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors"><span class="sm:hidden">T2</span><span class="hidden sm:inline">Implementação</span></a>
+          <a href="../trilha3/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors"><span class="sm:hidden">T3</span><span class="hidden sm:inline">Avançado</span></a>
+          <a href="index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-amber-400 bg-amber-500/10"><span class="sm:hidden">T4</span><span class="hidden sm:inline">OpenClaw</span></a>
+          <button id="theme-toggle" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2">
+            <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+            <svg id="theme-toggle-light-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+    <div class="flex items-center space-x-2 text-sm text-neutral-400">
+      <a href="../../index.html" class="hover:text-amber-400">Início</a>
+      <span>/</span>
+      <a href="index.html" class="hover:text-amber-400">Trilha 4 — OpenClaw</a>
+      <span>/</span>
+      <span class="text-amber-400">Módulo 4.2</span>
+    </div>
+  </nav>
+
+  <header class="bg-gradient-to-br from-amber-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <span class="inline-block px-3 py-1 bg-amber-500/20 text-amber-400 text-xs font-semibold rounded-full mb-4">MÓDULO 4.2</span>
+      <h1 class="text-3xl sm:text-4xl font-bold mb-4">🔗 Conectando o Vault ao OpenClaw</h1>
+      <p class="text-lg text-neutral-400 max-w-3xl">Configure o SOUL.md para integrar o vault Obsidian como backend de conhecimento — permissões, caminhos, primeira consulta e fluxo de ingestão via mensagem.</p>
+      <div class="grid grid-cols-4 gap-4 mt-8 max-w-lg">
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-amber-400">6</div><div class="text-xs text-neutral-400">Tópicos</div></div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-amber-400">45</div><div class="text-xs text-neutral-400">Minutos</div></div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-amber-400">Expert</div><div class="text-xs text-neutral-400">Nível</div></div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-amber-400">Prático</div><div class="text-xs text-neutral-400">Tipo</div></div>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+    <!-- TÓPICO 1 -->
+    <section id="topico-1" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">1</span>
+        <h2 class="text-2xl font-bold">🏛️ Arquitetura de Integração</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">A integração é direta: o OpenClaw acessa o vault via <strong class="text-amber-400">filesystem local</strong>. Sem banco de dados intermediário, sem embeddings, sem sincronização — apenas leitura e escrita de arquivos Markdown onde o Obsidian já os mantém.</p>
+
+      <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+        <h3 class="text-base font-semibold text-amber-400 mb-4">🏛️ Fluxo de consulta completo</h3>
+        <svg viewBox="0 0 680 200" class="w-full" xmlns="http://www.w3.org/2000/svg">
+          <!-- Step boxes -->
+          <rect x="10" y="70" width="90" height="60" rx="8" fill="#1f2937" stroke="#fbbf24" stroke-width="1.5"/>
+          <text x="55" y="95" text-anchor="middle" fill="#fbbf24" font-size="10">📱</text>
+          <text x="55" y="110" text-anchor="middle" fill="#d1d5db" font-size="8" font-weight="bold">Usuário</text>
+          <text x="55" y="122" text-anchor="middle" fill="#9ca3af" font-size="7">Telegram</text>
+
+          <rect x="130" y="70" width="100" height="60" rx="8" fill="#1f2937" stroke="#fbbf24" stroke-width="1.5"/>
+          <text x="180" y="95" text-anchor="middle" fill="#fbbf24" font-size="10">🌐</text>
+          <text x="180" y="110" text-anchor="middle" fill="#d1d5db" font-size="8" font-weight="bold">WS Gateway</text>
+          <text x="180" y="122" text-anchor="middle" fill="#9ca3af" font-size="7">normaliza msg</text>
+
+          <rect x="260" y="70" width="110" height="60" rx="8" fill="#1f2937" stroke="#fbbf24" stroke-width="2"/>
+          <text x="315" y="93" text-anchor="middle" fill="#fbbf24" font-size="10">🤖</text>
+          <text x="315" y="108" text-anchor="middle" fill="#fbbf24" font-size="8" font-weight="bold">Orquestrador</text>
+          <text x="315" y="120" text-anchor="middle" fill="#9ca3af" font-size="7">LLM + SOUL.md</text>
+
+          <rect x="400" y="35" width="110" height="50" rx="8" fill="#1f2937" stroke="#FACC15" stroke-width="1.5"/>
+          <text x="455" y="57" text-anchor="middle" fill="#FACC15" font-size="10">📋</text>
+          <text x="455" y="72" text-anchor="middle" fill="#d1d5db" font-size="8" font-weight="bold">index.md</text>
+
+          <rect x="400" y="115" width="110" height="50" rx="8" fill="#1f2937" stroke="#10b981" stroke-width="1.5"/>
+          <text x="455" y="137" text-anchor="middle" fill="#10b981" font-size="10">📖</text>
+          <text x="455" y="152" text-anchor="middle" fill="#d1d5db" font-size="8" font-weight="bold">wiki/pagina.md</text>
+
+          <rect x="550" y="70" width="120" height="60" rx="8" fill="#1f2937" stroke="#fbbf24" stroke-width="1.5"/>
+          <text x="610" y="95" text-anchor="middle" fill="#fbbf24" font-size="10">💬</text>
+          <text x="610" y="110" text-anchor="middle" fill="#d1d5db" font-size="8" font-weight="bold">Resposta</text>
+          <text x="610" y="122" text-anchor="middle" fill="#9ca3af" font-size="7">com fonte citada</text>
+
+          <!-- Arrows -->
+          <defs><marker id="arr" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0,0 L0,6 L6,3 z" fill="#fbbf24"/></marker>
+          <marker id="arr2" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0,0 L0,6 L6,3 z" fill="#FACC15"/></marker>
+          <marker id="arr3" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0,0 L0,6 L6,3 z" fill="#10b981"/></marker></defs>
+
+          <line x1="100" y1="100" x2="128" y2="100" stroke="#fbbf24" stroke-width="1.5" marker-end="url(#arr)"/>
+          <line x1="230" y1="100" x2="258" y2="100" stroke="#fbbf24" stroke-width="1.5" marker-end="url(#arr)"/>
+          <line x1="370" y1="90" x2="398" y2="60" stroke="#FACC15" stroke-width="1.5" marker-end="url(#arr2)"/>
+          <line x1="370" y1="110" x2="398" y2="140" stroke="#10b981" stroke-width="1.5" marker-end="url(#arr3)"/>
+          <line x1="510" y1="60" x2="548" y2="85" stroke="#fbbf24" stroke-width="1" stroke-dasharray="3,2"/>
+          <line x1="510" y1="140" x2="548" y2="115" stroke="#fbbf24" stroke-width="1" stroke-dasharray="3,2"/>
+
+          <!-- Labels -->
+          <text x="55" y="155" text-anchor="middle" fill="#6b7280" font-size="7">1. pergunta</text>
+          <text x="180" y="155" text-anchor="middle" fill="#6b7280" font-size="7">2. normaliza</text>
+          <text x="315" y="155" text-anchor="middle" fill="#6b7280" font-size="7">3. orquestra</text>
+          <text x="455" y="20" fill="#6b7280" font-size="7" text-anchor="middle">4. lê índice</text>
+          <text x="455" y="178" fill="#6b7280" font-size="7" text-anchor="middle">5. lê páginas</text>
+          <text x="610" y="155" text-anchor="middle" fill="#6b7280" font-size="7">6. responde</text>
+        </svg>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div class="bg-dark-800 rounded-lg p-4 border border-amber-500/30">
+          <div class="text-amber-400 font-semibold mb-2">Sem embeddings</div>
+          <p class="text-sm text-neutral-300">O LLM lê os arquivos Markdown diretamente. Nenhum processo de indexação vetorial necessário.</p>
+        </div>
+        <div class="bg-dark-800 rounded-lg p-4 border border-amber-500/30">
+          <div class="text-amber-400 font-semibold mb-2">index.md como mapa</div>
+          <p class="text-sm text-neutral-300">O agente sempre começa pelo index.md para encontrar as páginas relevantes antes de ler o conteúdo.</p>
+        </div>
+        <div class="bg-dark-800 rounded-lg p-4 border border-amber-500/30">
+          <div class="text-amber-400 font-semibold mb-2">Latência local</div>
+          <p class="text-sm text-neutral-300">Leitura de arquivo local: &lt;5ms. Gargalo real é o LLM, não o acesso ao vault.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TÓPICO 2 -->
+    <section id="topico-2" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">2</span>
+        <h2 class="text-2xl font-bold">📝 Configurando o SOUL.md para o Wiki</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">A seção <strong class="text-amber-400">knowledge_base</strong> do SOUL.md é onde você instrui o agente sobre a estrutura do vault — caminhos, como interpretar o index.md, limites de tokens e formato de resposta com citação de fonte.</p>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div class="bg-dark-800 rounded-xl border border-dark-600 p-5">
+          <div class="text-amber-400 font-semibold mb-3">SOUL.md — seção knowledge_base</div>
+          <pre class="text-xs text-neutral-400 overflow-x-auto leading-relaxed"><code>## Fontes de Conhecimento
+
+knowledge_base:
+  # Caminho absoluto do vault
+  vault_root: /home/user/vault/
+
+  # Índice de navegação
+  index_file: /home/user/vault/index.md
+
+  # Pasta de conhecimento compilado
+  wiki_path: /home/user/vault/wiki/
+
+  # Pasta para novos documentos
+  inbox_path: /home/user/vault/raw/inbox/
+
+  # Limite de tokens por consulta
+  max_context_tokens: 8000
+
+  # Formato de citação de fonte
+  cite_format: "Fonte: wiki/{filename}"
+
+  # Comportamento quando não encontrar
+  not_found_message: |
+    Não tenho essa informação registrada no wiki.
+    Deseja que eu adicione como tarefa de pesquisa?</code></pre>
+        </div>
+        <div class="bg-dark-800 rounded-xl border border-dark-600 p-5">
+          <div class="text-amber-400 font-semibold mb-3">Instruções de navegação no SOUL.md</div>
+          <pre class="text-xs text-neutral-400 overflow-x-auto leading-relaxed"><code>## Instruções de Consulta
+
+Ao receber uma pergunta sobre o vault:
+1. Leia /home/user/vault/index.md
+2. Identifique as 2-3 páginas mais relevantes
+3. Leia o conteúdo de cada página identificada
+4. Sintetize uma resposta baseada APENAS
+   no conteúdo lido
+5. Sempre cite a fonte no formato:
+   "Fonte: wiki/nome-da-pagina.md"
+6. Se não encontrar, use not_found_message
+7. NUNCA invente informações
+
+Exemplos de consultas esperadas:
+- "O que sei sobre Python async?"
+- "O que decidimos sobre a arquitetura X?"
+- "Quais são os projetos ativos?"</code></pre>
+        </div>
+      </div>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/40 p-5">
+        <div class="text-primary font-semibold mb-2">💡 Dica: max_context_tokens</div>
+        <p class="text-sm text-neutral-300">Defina max_context_tokens conservadoramente no início (4000-8000). Se o agente tentar ler muitas páginas de uma vez, excede o contexto do LLM e a resposta piora. O index.md bem estruturado é o que permite selecionar poucas páginas com alta precisão.</p>
+      </div>
+    </section>
+
+    <!-- TÓPICO 3 -->
+    <section id="topico-3" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">3</span>
+        <h2 class="text-2xl font-bold">🔐 Permissões de Leitura/Escrita</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">Permissões <strong class="text-amber-400">granulares e explícitas</strong> protegem o vault de acesso indevido. A regra de ouro: o agente tem acesso de leitura ao wiki/ e acesso de escrita apenas ao raw/inbox/ — nunca ao wiki/ diretamente.</p>
+
+      <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+        <h3 class="text-base font-semibold text-amber-400 mb-4">🔐 Modelo de permissões do vault</h3>
+        <svg viewBox="0 0 680 220" class="w-full" xmlns="http://www.w3.org/2000/svg">
+          <!-- Vault structure -->
+          <text x="10" y="25" fill="#fbbf24" font-size="11" font-weight="bold">Estrutura do Vault</text>
+          <rect x="10" y="35" width="280" height="170" rx="8" fill="#1f2937" stroke="#374151" stroke-width="1"/>
+
+          <text x="25" y="58" fill="#9ca3af" font-size="9">📁 vault/</text>
+          <rect x="30" y="65" width="245" height="32" rx="4" fill="#064e3b" stroke="#10b981" stroke-width="1"/>
+          <text x="45" y="79" fill="#10b981" font-size="9">📁 wiki/</text>
+          <text x="45" y="90" fill="#6b7280" font-size="7">páginas compiladas pelo LLM</text>
+
+          <rect x="30" y="103" width="245" height="32" rx="4" fill="#451a03" stroke="#fbbf24" stroke-width="1.5"/>
+          <text x="45" y="117" fill="#fbbf24" font-size="9">📁 raw/inbox/</text>
+          <text x="45" y="128" fill="#6b7280" font-size="7">novos documentos aguardando ingestão</text>
+
+          <rect x="30" y="141" width="245" height="22" rx="4" fill="#1e3a5f" stroke="#6b7280" stroke-width="1"/>
+          <text x="45" y="156" fill="#6b7280" font-size="9">📁 raw/ (outros)</text>
+
+          <rect x="30" y="169" width="245" height="22" rx="4" fill="#1e3a5f" stroke="#6b7280" stroke-width="1"/>
+          <text x="45" y="184" fill="#6b7280" font-size="9">📄 SOUL.md, index.md, log.md</text>
+
+          <!-- Permission table -->
+          <text x="330" y="25" fill="#fbbf24" font-size="11" font-weight="bold">Permissões do Agente</text>
+          <rect x="330" y="35" width="335" height="170" rx="8" fill="#1f2937" stroke="#374151" stroke-width="1"/>
+
+          <!-- Headers -->
+          <rect x="340" y="45" width="150" height="20" rx="3" fill="#374151"/>
+          <text x="415" y="58" text-anchor="middle" fill="#9ca3af" font-size="8" font-weight="bold">Caminho</text>
+          <rect x="500" y="45" width="60" height="20" rx="3" fill="#374151"/>
+          <text x="530" y="58" text-anchor="middle" fill="#9ca3af" font-size="8" font-weight="bold">Ler</text>
+          <rect x="570" y="45" width="80" height="20" rx="3" fill="#374151"/>
+          <text x="610" y="58" text-anchor="middle" fill="#9ca3af" font-size="8" font-weight="bold">Escrever</text>
+
+          <!-- wiki/ row -->
+          <rect x="340" y="70" width="150" height="22" rx="3" fill="#064e3b" opacity="0.5"/>
+          <text x="350" y="84" fill="#10b981" font-size="8">wiki/</text>
+          <text x="530" y="84" text-anchor="middle" fill="#10b981" font-size="11">✓</text>
+          <text x="610" y="84" text-anchor="middle" fill="#ef4444" font-size="11">✗</text>
+
+          <!-- raw/inbox/ row -->
+          <rect x="340" y="97" width="150" height="22" rx="3" fill="#451a03" opacity="0.5"/>
+          <text x="350" y="111" fill="#fbbf24" font-size="8">raw/inbox/</text>
+          <text x="530" y="111" text-anchor="middle" fill="#10b981" font-size="11">✓</text>
+          <text x="610" y="111" text-anchor="middle" fill="#10b981" font-size="11">✓</text>
+
+          <!-- index.md row -->
+          <rect x="340" y="124" width="150" height="22" rx="3" fill="#1e3a5f" opacity="0.5"/>
+          <text x="350" y="138" fill="#60a5fa" font-size="8">index.md</text>
+          <text x="530" y="138" text-anchor="middle" fill="#10b981" font-size="11">✓</text>
+          <text x="610" y="138" text-anchor="middle" fill="#ef4444" font-size="11">✗</text>
+
+          <!-- raw/ others row -->
+          <rect x="340" y="151" width="150" height="22" rx="3" fill="#374151" opacity="0.5"/>
+          <text x="350" y="165" fill="#9ca3af" font-size="8">raw/ (outros)</text>
+          <text x="530" y="165" text-anchor="middle" fill="#ef4444" font-size="11">✗</text>
+          <text x="610" y="165" text-anchor="middle" fill="#ef4444" font-size="11">✗</text>
+
+          <!-- SOUL/log row -->
+          <rect x="340" y="178" width="150" height="22" rx="3" fill="#374151" opacity="0.5"/>
+          <text x="350" y="192" fill="#9ca3af" font-size="8">SOUL.md, log.md</text>
+          <text x="530" y="192" text-anchor="middle" fill="#ef4444" font-size="11">✗</text>
+          <text x="610" y="192" text-anchor="middle" fill="#ef4444" font-size="11">✗</text>
+        </svg>
+      </div>
+
+      <div class="bg-dark-800 rounded-xl border border-dark-600 p-5">
+        <div class="text-amber-400 font-semibold mb-3">Configuração de permissões no SOUL.md</div>
+        <pre class="text-xs text-neutral-400 overflow-x-auto leading-relaxed"><code>## Permissões de Filesystem
+
+skills:
+  - name: filesystem
+    permissions:
+      read:
+        - "/home/user/vault/wiki/"
+        - "/home/user/vault/index.md"
+        - "/home/user/vault/raw/inbox/"  # para confirmar recebimento
+      write:
+        - "/home/user/vault/raw/inbox/"  # ÚNICO diretório de escrita
+      deny:
+        - "/home/user/vault/SOUL.md"     # proteger configuração
+        - "/home/user/vault/log.md"      # proteger histórico
+        - "/home/user/vault/raw/"        # bloquear raw/ geral
+      allowed_extensions:
+        - ".md"
+        - ".txt"
+        - ".pdf"
+      max_file_size: "10MB"
+      audit_log: true  # registra todos os acessos</code></pre>
+      </div>
+    </section>
+
+    <!-- TÓPICO 4 -->
+    <section id="topico-4" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">4</span>
+        <h2 class="text-2xl font-bold">💬 Primeiro Prompt via Telegram</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">O momento de verdade: sua primeira consulta ao vault via Telegram. Vamos acompanhar o fluxo completo de <strong class="text-amber-400">"o que sei sobre X?"</strong> até a resposta com fonte citada.</p>
+
+      <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+        <h3 class="text-amber-400 font-semibold mb-4">Simulação de conversa — primeira consulta</h3>
+
+        <div class="space-y-4">
+          <!-- User message -->
+          <div class="flex justify-end">
+            <div class="bg-amber-500/20 border border-amber-500/30 rounded-2xl rounded-tr-sm px-4 py-3 max-w-sm">
+              <p class="text-sm text-amber-100">O que sei sobre Python async?</p>
+              <p class="text-xs text-amber-400/60 mt-1 text-right">você · 14:23</p>
+            </div>
+          </div>
+
+          <!-- Agent processing -->
+          <div class="flex items-center space-x-2 text-xs text-neutral-500">
+            <div class="w-2 h-2 bg-amber-400 rounded-full animate-pulse"></div>
+            <span>OpenClaw lendo index.md... identificando páginas relevantes... lendo wiki/python-async.md...</span>
+          </div>
+
+          <!-- Agent response -->
+          <div class="flex justify-start">
+            <div class="bg-dark-700 rounded-2xl rounded-tl-sm px-4 py-3 max-w-lg">
+              <p class="text-sm text-neutral-300 mb-2"><strong class="text-amber-400">Python Async</strong> — resumo do que você tem registrado:</p>
+              <p class="text-sm text-neutral-400 mb-3">Python async/await usa o event loop do asyncio para executar corrotinas concorrentemente sem threads. Você usa principalmente com FastAPI e httpx para requests HTTP não-bloqueantes.</p>
+              <p class="text-sm text-neutral-400 mb-2"><strong>Padrões que você documentou:</strong></p>
+              <ul class="text-sm text-neutral-400 space-y-1 mb-3">
+                <li>• asyncio.gather() para paralelizar múltiplos awaits</li>
+                <li>• async context managers com async with</li>
+                <li>• Evitar misturar sync e async — usar run_in_executor quando necessário</li>
+              </ul>
+              <p class="text-xs text-neutral-500">📄 Fonte: wiki/python-async.md · wiki/fastapi-patterns.md</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="bg-emerald-900/20 rounded-lg border border-emerald-500/30 p-4">
+          <div class="text-emerald-400 font-semibold mb-2">✓ O que acontece internamente</div>
+          <ol class="text-sm text-neutral-300 space-y-1">
+            <li>1. Telegram entrega mensagem ao WS Gateway</li>
+            <li>2. Orquestrador recebe e processa com SOUL.md</li>
+            <li>3. Skill filesystem lê index.md (~50ms)</li>
+            <li>4. LLM identifica páginas relevantes</li>
+            <li>5. Filesystem lê cada página selecionada</li>
+            <li>6. LLM sintetiza resposta com citação</li>
+            <li>7. Gateway envia para o Telegram</li>
+          </ol>
+        </div>
+        <div class="bg-dark-800 rounded-lg border border-dark-600 p-4">
+          <div class="text-amber-400 font-semibold mb-2">⏱️ Tempos esperados</div>
+          <div class="space-y-2 text-sm">
+            <div class="flex justify-between"><span class="text-neutral-400">Leitura index.md</span><span class="text-emerald-400">&lt;5ms</span></div>
+            <div class="flex justify-between"><span class="text-neutral-400">Leitura páginas wiki</span><span class="text-emerald-400">&lt;20ms</span></div>
+            <div class="flex justify-between"><span class="text-neutral-400">LLM (cloud)</span><span class="text-amber-400">2-8s</span></div>
+            <div class="flex justify-between"><span class="text-neutral-400">LLM (Ollama local)</span><span class="text-amber-400">5-30s</span></div>
+            <div class="flex justify-between border-t border-dark-600 pt-2 mt-2"><span class="text-neutral-300 font-medium">Total percebido</span><span class="text-amber-400 font-medium">3-35s</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TÓPICO 5 -->
+    <section id="topico-5" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">5</span>
+        <h2 class="text-2xl font-bold">📥 Ingestão via Mensagem</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">O fluxo inverso: você envia um arquivo ou texto pelo celular → o agente salva em raw/inbox/ → dispara a ingestão → wiki/ atualizado. <strong class="text-amber-400">Zero fricção de captura</strong>.</p>
+
+      <div class="space-y-4 mb-6">
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-10 h-10 rounded-full bg-amber-500/20 flex items-center justify-center">
+            <span class="text-amber-400 font-bold text-sm">1</span>
+          </div>
+          <div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600">
+            <h4 class="font-semibold text-white mb-1">Você envia o documento pelo Telegram</h4>
+            <p class="text-sm text-neutral-400">Pode ser texto livre, PDF anexado, ou URL. O agente aceita qualquer formato configurado em allowed_extensions.</p>
+          </div>
+        </div>
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-10 h-10 rounded-full bg-amber-500/20 flex items-center justify-center">
+            <span class="text-amber-400 font-bold text-sm">2</span>
+          </div>
+          <div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600">
+            <h4 class="font-semibold text-white mb-2">OpenClaw salva em raw/inbox/</h4>
+            <pre class="text-xs text-neutral-400 overflow-x-auto"><code># Arquivo criado automaticamente:
+# raw/inbox/2026-04-09_1423_telegram-upload.md
+
+---
+source: telegram
+received_at: 2026-04-09T14:23:00
+sender: user_id_123
+original_filename: artigo-python.pdf
+status: pending_ingestion
+---
+
+[conteúdo do documento aqui]</code></pre>
+          </div>
+        </div>
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-10 h-10 rounded-full bg-amber-500/20 flex items-center justify-center">
+            <span class="text-amber-400 font-bold text-sm">3</span>
+          </div>
+          <div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600">
+            <h4 class="font-semibold text-white mb-2">Ingestão disparada (automática ou manual)</h4>
+            <pre class="text-xs text-neutral-400 overflow-x-auto"><code># Via skill exec — chama Claude Code
+claude "ingerir raw/inbox/ → wiki/" --vault /home/user/vault
+
+# Ou o agente responde confirmando e pergunta:
+"📥 Documento salvo em raw/inbox/.
+ Deseja ingerir agora? (pode levar 2-3 min)"</code></pre>
+          </div>
+        </div>
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-10 h-10 rounded-full bg-amber-500/20 flex items-center justify-center">
+            <span class="text-amber-400 font-bold text-sm">4</span>
+          </div>
+          <div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600">
+            <h4 class="font-semibold text-white mb-1">Confirmação de sucesso via Telegram</h4>
+            <p class="text-sm text-neutral-400">O agente notifica quando a ingestão termina: "✓ Ingestão concluída: 2 páginas criadas/atualizadas em wiki/. Páginas: python-async-advanced.md, asyncio-patterns.md"</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TÓPICO 6 -->
+    <section id="topico-6" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">6</span>
+        <h2 class="text-2xl font-bold">✅ Testando a Integração</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">Uma integração não testada é uma integração que vai falhar em produção. Execute este checklist <strong class="text-amber-400">antes de usar o sistema no dia a dia</strong>.</p>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div class="bg-dark-800 rounded-xl border border-dark-600 p-5">
+          <div class="text-amber-400 font-semibold mb-3">Checklist de validação</div>
+          <div class="space-y-3">
+            <div class="flex items-start space-x-3">
+              <span class="text-emerald-400 mt-0.5">□</span>
+              <div>
+                <div class="text-sm font-medium text-neutral-300">Teste de leitura do wiki</div>
+                <div class="text-xs text-neutral-500">Perguntar sobre uma página que você sabe que existe</div>
+              </div>
+            </div>
+            <div class="flex items-start space-x-3">
+              <span class="text-emerald-400 mt-0.5">□</span>
+              <div>
+                <div class="text-sm font-medium text-neutral-300">Teste de "não encontrado"</div>
+                <div class="text-xs text-neutral-500">Perguntar sobre algo que não existe no wiki — agente deve admitir, não inventar</div>
+              </div>
+            </div>
+            <div class="flex items-start space-x-3">
+              <span class="text-emerald-400 mt-0.5">□</span>
+              <div>
+                <div class="text-sm font-medium text-neutral-300">Teste de permissões negadas</div>
+                <div class="text-xs text-neutral-500">Pedir para o agente ler SOUL.md — deve recusar</div>
+              </div>
+            </div>
+            <div class="flex items-start space-x-3">
+              <span class="text-emerald-400 mt-0.5">□</span>
+              <div>
+                <div class="text-sm font-medium text-neutral-300">Teste de ingestão</div>
+                <div class="text-xs text-neutral-500">Enviar arquivo de teste → confirmar criação em raw/inbox/</div>
+              </div>
+            </div>
+            <div class="flex items-start space-x-3">
+              <span class="text-emerald-400 mt-0.5">□</span>
+              <div>
+                <div class="text-sm font-medium text-neutral-300">Verificação de logs</div>
+                <div class="text-xs text-neutral-500">Checar audit_log para confirmar todos os acessos registrados</div>
+              </div>
+            </div>
+            <div class="flex items-start space-x-3">
+              <span class="text-emerald-400 mt-0.5">□</span>
+              <div>
+                <div class="text-sm font-medium text-neutral-300">Teste de citação de fonte</div>
+                <div class="text-xs text-neutral-500">Confirmar que respostas incluem "Fonte: wiki/..."</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="bg-dark-800 rounded-xl border border-dark-600 p-5">
+          <div class="text-amber-400 font-semibold mb-3">Comandos de diagnóstico</div>
+          <pre class="text-xs text-neutral-400 overflow-x-auto leading-relaxed"><code># Verificar status do OpenClaw
+curl http://localhost:3000/health
+
+# Ver logs em tempo real
+pm2 logs openclaw --lines 50
+
+# Testar leitura de arquivo direto
+curl http://localhost:3000/debug/read \
+  -d '{"path": "/vault/index.md"}'
+
+# Ver audit log de filesystem
+cat /home/user/vault/.openclaw-audit.log \
+  | tail -20
+
+# Testar conexão Telegram
+curl http://localhost:3000/debug/channels</code></pre>
+          <div class="mt-3 p-3 bg-red-900/20 rounded-lg border border-red-500/30">
+            <p class="text-xs text-red-400">⚠️ Remova ou proteja os endpoints /debug em produção</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-amber-500/10 rounded-xl border border-amber-500/30 p-5">
+        <div class="text-amber-400 font-semibold mb-3">✅ Conceitos-chave do módulo</div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div class="flex items-start space-x-2"><span class="text-amber-400">✓</span><span class="text-sm text-neutral-300">Vault como backend de filesystem — sem banco de dados</span></div>
+          <div class="flex items-start space-x-2"><span class="text-amber-400">✓</span><span class="text-sm text-neutral-300">index.md é o ponto de entrada para toda consulta</span></div>
+          <div class="flex items-start space-x-2"><span class="text-amber-400">✓</span><span class="text-sm text-neutral-300">Permissões explícitas: escrita apenas em raw/inbox/</span></div>
+          <div class="flex items-start space-x-2"><span class="text-amber-400">✓</span><span class="text-sm text-neutral-300">Ingestão via mensagem elimina fricção de captura</span></div>
+          <div class="flex items-start space-x-2"><span class="text-amber-400">✓</span><span class="text-sm text-neutral-300">Sempre citar fonte wiki/ nas respostas</span></div>
+          <div class="flex items-start space-x-2"><span class="text-amber-400">✓</span><span class="text-sm text-neutral-300">Testar sistematicamente antes de depender do sistema</span></div>
+        </div>
+      </div>
+    </section>
+
+    <div class="flex justify-between items-center mt-8 pt-8 border-t border-dark-600">
+      <a href="modulo-4-1.html" class="flex items-center space-x-2 px-4 py-2 rounded-lg bg-dark-800 border border-dark-600 hover:border-amber-500/50 transition-colors text-neutral-300 hover:text-amber-400">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+        <span>4.1 — O que é OpenClaw</span>
+      </a>
+      <a href="modulo-4-3.html" class="flex items-center space-x-2 px-4 py-2 rounded-lg bg-amber-500/20 border border-amber-500/30 hover:bg-amber-500/30 transition-colors text-amber-400">
+        <span>4.3 — Interface Conversacional</span>
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+  </main>
+
+  <footer class="border-t border-dark-600 mt-16 py-8">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <p class="text-neutral-500 text-sm">2Cérebro · <a href="https://inema.club" class="text-sky-400 hover:text-sky-300">INEMA.CLUB</a></p>
+    </div>
+  </footer>
+
+  <script>
+    const toggle = document.getElementById('theme-toggle');
+    const darkIcon = document.getElementById('theme-toggle-dark-icon');
+    const lightIcon = document.getElementById('theme-toggle-light-icon');
+    const html = document.documentElement;
+    function applyTheme(isDark) {
+      html.classList.toggle('dark', isDark);
+      darkIcon.classList.toggle('hidden', isDark);
+      lightIcon.classList.toggle('hidden', !isDark);
+    }
+    applyTheme(localStorage.getItem('theme') !== 'light');
+    toggle.addEventListener('click', () => {
+      const isDark = html.classList.contains('dark');
+      localStorage.setItem('theme', isDark ? 'light' : 'dark');
+      applyTheme(!isDark);
+    });
+  </script>
+</body>
+</html>

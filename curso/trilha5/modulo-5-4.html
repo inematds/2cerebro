@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Módulo 5.4 — Telegram como Interface do Segundo Cérebro | 2Cérebro</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config={darkMode:'class',theme:{extend:{colors:{primary:'#FACC15',dark:{900:'#111827',800:'#1f2937',700:'#374151',600:'#4b5563'}}}}}</script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body{font-family:'Inter',sans-serif;}
+    html:not(.dark) body{background-color:#f8fafc;}
+    html:not(.dark) .bg-dark-900{background-color:#ffffff;}
+    html:not(.dark) .bg-dark-800{background-color:#f9fafb;}
+    html:not(.dark) .bg-dark-700{background-color:#f3f4f6;}
+    html:not(.dark) .bg-dark-600{background-color:#e5e7eb;}
+    html:not(.dark) .text-neutral-100{color:#111827;}
+    html:not(.dark) .text-neutral-300{color:#4b5563;}
+    html:not(.dark) .text-neutral-400{color:#6b7280;}
+    html:not(.dark) .text-neutral-500{color:#9ca3af;}
+    html:not(.dark) .border-dark-600{border-color:#d1d5db;}
+    html:not(.dark) .border-dark-700{border-color:#e5e7eb;}
+    html:not(.dark) .text-teal-400{color:#0f766e;}
+    html:not(.dark) .bg-teal-500\/20{background-color:rgba(13,148,136,0.12);}
+    html:not(.dark) .border-teal-500\/30{border-color:rgba(13,148,136,0.25);}
+    html:not(.dark) [class*="bg-gradient-to"]{background-image:none!important;}
+    html:not(.dark) .text-primary{color:#a16207;}
+    html:not(.dark) .bg-primary\/10{background-color:rgba(161,98,7,0.08);}
+    html:not(.dark) .border-primary\/40{border-color:rgba(161,98,7,0.25);}
+    html:not(.dark) .text-sky-400{color:#0369a1;}
+    html:not(.dark) .text-yellow-400{color:#a16207;}
+    html:not(.dark) .hover\:text-sky-300:hover{color:#0284c7;}
+    html:not(.dark) .hover\:text-yellow-300:hover{color:#854d0e;}
+    html:not(.dark) .bg-dark-900\/95{background-color:rgba(255,255,255,0.95);}
+  </style>
+</head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen">
+
+  <nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-14">
+        <div class="flex items-center space-x-4">
+          <a href="../../index.html" class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300"><span class="text-2xl">🧠</span><span class="font-bold text-lg hidden sm:inline">2Cérebro</span></a>
+          <span class="text-neutral-600">|</span>
+          <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300 text-sm font-medium">INEMA.CLUB</a>
+        </div>
+        <div class="flex items-center space-x-1 sm:space-x-2">
+          <a href="../trilha1/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors"><span class="sm:hidden">T1</span><span class="hidden sm:inline">Fundamentos</span></a>
+          <a href="../trilha2/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors"><span class="sm:hidden">T2</span><span class="hidden sm:inline">Implementação</span></a>
+          <a href="../trilha3/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors"><span class="sm:hidden">T3</span><span class="hidden sm:inline">Avançado</span></a>
+          <a href="../trilha4/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-amber-400 hover:bg-amber-500/10 transition-colors"><span class="sm:hidden">T4</span><span class="hidden sm:inline">Automação</span></a>
+          <a href="index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-teal-400 bg-teal-500/10"><span class="sm:hidden">T5</span><span class="hidden sm:inline">Intelecto</span></a>
+          <button id="theme-toggle" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2">
+            <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+            <svg id="theme-toggle-light-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+    <div class="flex items-center space-x-2 text-sm text-neutral-400">
+      <a href="../../index.html" class="hover:text-teal-400">Início</a>
+      <span>/</span>
+      <a href="index.html" class="hover:text-teal-400">Trilha 5 — Intelecto</a>
+      <span>/</span>
+      <span class="text-teal-400">Módulo 5.4</span>
+    </div>
+  </nav>
+
+  <header class="bg-gradient-to-br from-teal-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <span class="inline-block px-3 py-1 bg-teal-500/20 text-teal-400 text-xs font-semibold rounded-full mb-4">MÓDULO 5.4</span>
+      <h1 class="text-3xl sm:text-4xl font-bold mb-4">📱 Telegram como Interface do Segundo Cérebro</h1>
+      <p class="text-lg text-neutral-400 max-w-3xl">Design de UX para captura sem fricção, comandos customizados /ingere e /audit, ingestão multi-modal de arquivos, notificações proativas e segundo cérebro colaborativo em grupos.</p>
+      <div class="grid grid-cols-4 gap-4 mt-8 max-w-lg">
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-teal-400">6</div><div class="text-xs text-neutral-400">Tópicos</div></div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-teal-400">45</div><div class="text-xs text-neutral-400">Minutos</div></div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-teal-400">Prático</div><div class="text-xs text-neutral-400">Nível</div></div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-teal-400">Build</div><div class="text-xs text-neutral-400">Tipo</div></div>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+    <!-- TÓPICO 1 -->
+    <section id="topico-1" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-teal-500/20 text-teal-400 font-bold text-xl">1</span>
+        <h2 class="text-2xl font-bold">🎨 Design da Interface de Captura no Telegram</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">A qualidade do segundo cérebro depende da <strong class="text-teal-400">frequência de captura</strong>. Interface com fricção é abandonada. O design correto torna a captura tão natural quanto pensar em voz alta.</p>
+
+      <!-- SVG: UX principles -->
+      <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+        <h3 class="text-base font-semibold text-teal-400 mb-4">🎨 Princípios UX para Captura</h3>
+        <svg viewBox="0 0 680 200" class="w-full" xmlns="http://www.w3.org/2000/svg">
+          <!-- Principle 1: Zero friction -->
+          <rect x="10" y="20" width="145" height="160" rx="8" fill="#1f2937" stroke="#2dd4bf" stroke-width="1.5"/>
+          <text x="82" y="45" text-anchor="middle" fill="#2dd4bf" font-size="10" font-weight="bold">⚡ Zero Fricção</text>
+          <text x="82" y="65" text-anchor="middle" fill="#9ca3af" font-size="8">Abriu Telegram?</text>
+          <text x="82" y="78" text-anchor="middle" fill="#9ca3af" font-size="8">Digite e envie.</text>
+          <text x="82" y="95" text-anchor="middle" fill="#9ca3af" font-size="8">Sem abrir app,</text>
+          <text x="82" y="108" text-anchor="middle" fill="#9ca3af" font-size="8">sem fazer login,</text>
+          <text x="82" y="121" text-anchor="middle" fill="#9ca3af" font-size="8">sem escolher pasta.</text>
+          <text x="82" y="148" text-anchor="middle" fill="#4b5563" font-size="7">Captura &lt;5 segundos</text>
+          <!-- Principle 2: Immediate feedback -->
+          <rect x="170" y="20" width="145" height="160" rx="8" fill="#1f2937" stroke="#FACC15" stroke-width="1.5"/>
+          <text x="242" y="45" text-anchor="middle" fill="#FACC15" font-size="10" font-weight="bold">✅ Feedback Imediato</text>
+          <text x="242" y="65" text-anchor="middle" fill="#9ca3af" font-size="8">Confirme em &lt;2s:</text>
+          <text x="242" y="80" text-anchor="middle" fill="#9ca3af" font-size="8">"✅ Capturado!"</text>
+          <text x="242" y="96" text-anchor="middle" fill="#9ca3af" font-size="8">+ comentário breve</text>
+          <text x="242" y="109" text-anchor="middle" fill="#9ca3af" font-size="8">sobre o conteúdo</text>
+          <text x="242" y="125" text-anchor="middle" fill="#9ca3af" font-size="8">Usuário sabe que</text>
+          <text x="242" y="138" text-anchor="middle" fill="#9ca3af" font-size="8">o sistema recebeu</text>
+          <text x="242" y="158" text-anchor="middle" fill="#4b5563" font-size="7">Confiança no sistema</text>
+          <!-- Principle 3: Contextual suggestion -->
+          <rect x="330" y="20" width="155" height="160" rx="8" fill="#1f2937" stroke="#10b981" stroke-width="1.5"/>
+          <text x="407" y="45" text-anchor="middle" fill="#10b981" font-size="10" font-weight="bold">🎯 Sugestão Contextual</text>
+          <text x="407" y="65" text-anchor="middle" fill="#9ca3af" font-size="8">Após capturar,</text>
+          <text x="407" y="78" text-anchor="middle" fill="#9ca3af" font-size="8">Intelecto sugere:</text>
+          <text x="407" y="95" text-anchor="middle" fill="#9ca3af" font-size="8">"Isso parece relacionado</text>
+          <text x="407" y="108" text-anchor="middle" fill="#9ca3af" font-size="8">a [[bm25]] no seu vault.</text>
+          <text x="407" y="121" text-anchor="middle" fill="#9ca3af" font-size="8">Quer compilar agora</text>
+          <text x="407" y="134" text-anchor="middle" fill="#9ca3af" font-size="8">ou depois?"</text>
+          <text x="407" y="158" text-anchor="middle" fill="#4b5563" font-size="7">Conexão automática</text>
+          <!-- Principle 4: Progressive disclosure -->
+          <rect x="500" y="20" width="170" height="160" rx="8" fill="#1f2937" stroke="#60a5fa" stroke-width="1.5"/>
+          <text x="585" y="45" text-anchor="middle" fill="#60a5fa" font-size="10" font-weight="bold">📊 Progressive Disclosure</text>
+          <text x="585" y="65" text-anchor="middle" fill="#9ca3af" font-size="8">Captura básica:</text>
+          <text x="585" y="78" text-anchor="middle" fill="#9ca3af" font-size="8">só text → raw/</text>
+          <text x="585" y="95" text-anchor="middle" fill="#9ca3af" font-size="8">Captura avançada:</text>
+          <text x="585" y="108" text-anchor="middle" fill="#9ca3af" font-size="8">/ingere URL --tag</text>
+          <text x="585" y="124" text-anchor="middle" fill="#9ca3af" font-size="8">Poder completo só</text>
+          <text x="585" y="137" text-anchor="middle" fill="#9ca3af" font-size="8">quando necessário</text>
+          <text x="585" y="158" text-anchor="middle" fill="#4b5563" font-size="7">Baixa curva de aprendizado</text>
+        </svg>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+          <h4 class="font-bold text-emerald-400 mb-4">✓ Design correto</h4>
+          <ul class="space-y-2 text-neutral-300 text-sm">
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Texto livre capturado automaticamente, sem comandos</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Confirmação imediata com emoji e resumo de 1 linha</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Sugestão contextual de páginas do vault relacionadas</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Comandos avançados disponíveis mas não obrigatórios</span></li>
+          </ul>
+        </div>
+        <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+          <h4 class="font-bold text-red-400 mb-4">✗ Design com fricção</h4>
+          <ul class="space-y-2 text-neutral-300 text-sm">
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Exigir /comando antes de qualquer captura</span></li>
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Pedir tag ou categoria antes de salvar</span></li>
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Sem confirmação — usuário não sabe se foi salvo</span></li>
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Resposta muito longa que esconde a confirmação</span></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- TÓPICO 2 -->
+    <section id="topico-2" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-teal-500/20 text-teal-400 font-bold text-xl">2</span>
+        <h2 class="text-2xl font-bold">⌨️ Comandos Customizados</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">Comandos explícitos criam <strong class="text-teal-400">intenções declaradas</strong> — o usuário sabe exatamente o que o sistema vai fazer. Crítico para operações como ingestão e auditoria que não devem acontecer acidentalmente.</p>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div class="bg-dark-800 rounded-xl border border-dark-600 p-5">
+          <div class="text-teal-400 font-semibold mb-3">Registro dos comandos no BotFather</div>
+          <pre class="text-xs text-neutral-400 overflow-x-auto"><code># No BotFather: /setcommands
+# Selecione seu bot, depois:
+
+ingere - Capturar URL ou texto no vault
+consulta - Busca híbrida SQLite+wiki
+audit - Auditar vault (órfãos, gaps)
+status - Estatísticas do vault e memória
+compilar - Compilar raw/ pendentes
+sync - Sincronizar vault → SQLite</code></pre>
+        </div>
+        <div class="bg-dark-800 rounded-xl border border-dark-600 p-5">
+          <div class="text-teal-400 font-semibold mb-3">Handlers Python (main.py)</div>
+          <pre class="text-xs text-neutral-400 overflow-x-auto"><code>from telegram.ext import CommandHandler
+
+# Registrar todos os comandos
+handlers = [
+    CommandHandler("ingere", ingere_handler),
+    CommandHandler("consulta", consulta_handler),
+    CommandHandler("audit", audit_handler),
+    CommandHandler("status", status_handler),
+    CommandHandler("compilar", compilar_handler),
+    CommandHandler("sync", sync_handler),
+]
+for h in handlers:
+    app.add_handler(h)</code></pre>
+        </div>
+      </div>
+
+      <div class="space-y-4">
+        <div class="bg-dark-800 rounded-xl border border-dark-600 p-5">
+          <div class="text-teal-400 font-semibold mb-3">/audit — Auditar o vault via Telegram</div>
+          <pre class="text-xs text-neutral-400 overflow-x-auto"><code>async def audit_handler(update: Update, ctx: ContextTypes.DEFAULT_TYPE):
+    """Executa lint do vault e reporta problemas"""
+    await update.message.reply_text("🔍 Auditando vault...")
+
+    wiki_dir = VAULT_DIR / "wiki"
+    index = (wiki_dir / "index.md").read_text()
+
+    # Páginas no index
+    indexed = set(re.findall(r'\[\[([^\]]+)\]\]', index))
+    # Arquivos existentes
+    files = {f.stem for f in wiki_dir.glob("*.md") if f.stem != "index"}
+
+    orphans = files - indexed   # Arquivos sem entrada no index
+    missing = indexed - files   # Entradas no index sem arquivo
+
+    report = f"📊 **Auditoria do Vault**\n\n"
+    report += f"✅ Páginas indexadas: {len(indexed)}\n"
+    report += f"📄 Arquivos wiki: {len(files)}\n\n"
+    if orphans:
+        report += f"⚠️ Órfãos ({len(orphans)}):\n"
+        for o in list(orphans)[:5]:
+            report += f"  • {o}\n"
+    if missing:
+        report += f"\n❌ Faltando ({len(missing)}):\n"
+        for m in list(missing)[:5]:
+            report += f"  • {m}\n"
+    if not orphans and not missing:
+        report += "✅ Vault saudável! Nenhum problema encontrado."
+
+    await update.message.reply_text(report, parse_mode='Markdown')</code></pre>
+        </div>
+
+        <div class="bg-dark-800 rounded-xl border border-dark-600 p-5">
+          <div class="text-teal-400 font-semibold mb-3">/status — Dashboard do segundo cérebro</div>
+          <pre class="text-xs text-neutral-400 overflow-x-auto"><code>async def status_handler(update: Update, ctx: ContextTypes.DEFAULT_TYPE):
+    wiki_dir = VAULT_DIR / "wiki"
+    conn = sqlite3.connect(DB_PATH)
+
+    wiki_count = len(list(wiki_dir.glob("*.md")))
+    mem_count = conn.execute("SELECT COUNT(*) FROM memories").fetchone()[0]
+    vault_mems = conn.execute(
+        "SELECT COUNT(*) FROM memories WHERE source='vault'"
+    ).fetchone()[0]
+
+    # Última página modificada
+    pages = sorted(wiki_dir.glob("*.md"), key=lambda f: f.stat().st_mtime)
+    last_page = pages[-1].stem if pages else "—"
+
+    report = (
+        f"📊 **Status do Segundo Cérebro**\n\n"
+        f"📖 Páginas wiki: {wiki_count}\n"
+        f"🧠 Memórias SQLite: {mem_count}\n"
+        f"🔗 Memórias do vault: {vault_mems}\n"
+        f"📝 Última página: {last_page}\n"
+    )
+    await update.message.reply_text(report, parse_mode='Markdown')</code></pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- TÓPICO 3 -->
+    <section id="topico-3" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-teal-500/20 text-teal-400 font-bold text-xl">3</span>
+        <h2 class="text-2xl font-bold">📎 Envio de Arquivos Multi-Modal</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">PDFs, imagens de whiteboard, gravações de reunião — tudo pode se tornar conhecimento estruturado no vault via Telegram. O <strong class="text-teal-400">pipeline multi-modal</strong> converte cada tipo de arquivo para texto antes de salvar em raw/.</p>
+
+      <!-- SVG: Multimodal pipeline -->
+      <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+        <h3 class="text-base font-semibold text-teal-400 mb-4">📎 Pipeline Multi-Modal</h3>
+        <svg viewBox="0 0 680 180" class="w-full" xmlns="http://www.w3.org/2000/svg">
+          <!-- File types -->
+          <rect x="10" y="20" width="75" height="40" rx="6" fill="#1f2937" stroke="#2dd4bf" stroke-width="1"/>
+          <text x="47" y="44" text-anchor="middle" fill="#2dd4bf" font-size="9">📄 PDF</text>
+          <rect x="10" y="70" width="75" height="40" rx="6" fill="#1f2937" stroke="#2dd4bf" stroke-width="1"/>
+          <text x="47" y="94" text-anchor="middle" fill="#2dd4bf" font-size="9">🖼️ Imagem</text>
+          <rect x="10" y="120" width="75" height="40" rx="6" fill="#1f2937" stroke="#2dd4bf" stroke-width="1"/>
+          <text x="47" y="144" text-anchor="middle" fill="#2dd4bf" font-size="9">🎙️ Áudio</text>
+
+          <!-- Arrows to processors -->
+          <line x1="85" y1="40" x2="140" y2="55" stroke="#4b5563" stroke-width="1"/>
+          <line x1="85" y1="90" x2="140" y2="90" stroke="#4b5563" stroke-width="1"/>
+          <line x1="85" y1="140" x2="140" y2="125" stroke="#4b5563" stroke-width="1"/>
+
+          <!-- Processors -->
+          <rect x="143" y="30" width="110" height="40" rx="6" fill="#1f2937" stroke="#FACC15" stroke-width="1.5"/>
+          <text x="198" y="48" text-anchor="middle" fill="#FACC15" font-size="8">pypdf → texto</text>
+          <text x="198" y="62" text-anchor="middle" fill="#6b7280" font-size="7">Extrai conteúdo do PDF</text>
+
+          <rect x="143" y="78" width="110" height="40" rx="6" fill="#1f2937" stroke="#FACC15" stroke-width="1.5"/>
+          <text x="198" y="93" text-anchor="middle" fill="#FACC15" font-size="8">Vision LLM → desc.</text>
+          <text x="198" y="107" text-anchor="middle" fill="#6b7280" font-size="7">GPT-4V, Claude describe</text>
+
+          <rect x="143" y="126" width="110" height="40" rx="6" fill="#1f2937" stroke="#FACC15" stroke-width="1.5"/>
+          <text x="198" y="141" text-anchor="middle" fill="#FACC15" font-size="8">Whisper → transcrição</text>
+          <text x="198" y="155" text-anchor="middle" fill="#6b7280" font-size="7">Áudio → texto completo</text>
+
+          <!-- Arrow to raw/ -->
+          <line x1="253" y1="50" x2="310" y2="88" stroke="#0d9488" stroke-width="1.5"/>
+          <line x1="253" y1="98" x2="310" y2="95" stroke="#0d9488" stroke-width="1.5"/>
+          <line x1="253" y1="146" x2="310" y2="103" stroke="#0d9488" stroke-width="1.5"/>
+
+          <!-- raw/ -->
+          <rect x="312" y="68" width="100" height="50" rx="8" fill="#1f2937" stroke="#0d9488" stroke-width="2"/>
+          <text x="362" y="89" text-anchor="middle" fill="#0d9488" font-size="10">📂 raw/</text>
+          <text x="362" y="107" text-anchor="middle" fill="#6b7280" font-size="7">+ metadados YAML</text>
+
+          <!-- Arrow to LLM -->
+          <line x1="412" y1="93" x2="450" y2="93" stroke="#60a5fa" stroke-width="1.5"/>
+          <polygon points="450,89 458,93 450,97" fill="#60a5fa"/>
+
+          <!-- LLM compile -->
+          <rect x="460" y="68" width="100" height="50" rx="8" fill="#1f2937" stroke="#60a5fa" stroke-width="2"/>
+          <text x="510" y="89" text-anchor="middle" fill="#60a5fa" font-size="9">🤖 Compila</text>
+          <text x="510" y="104" text-anchor="middle" fill="#6b7280" font-size="7">Estrutura + wiki/</text>
+
+          <!-- Arrow to wiki -->
+          <line x1="560" y1="93" x2="595" y2="93" stroke="#10b981" stroke-width="1.5"/>
+          <polygon points="595,89 603,93 595,97" fill="#10b981"/>
+
+          <!-- wiki/ -->
+          <rect x="605" y="68" width="65" height="50" rx="8" fill="#1f2937" stroke="#10b981" stroke-width="2"/>
+          <text x="637" y="89" text-anchor="middle" fill="#10b981" font-size="9">📖 wiki/</text>
+          <text x="637" y="104" text-anchor="middle" fill="#6b7280" font-size="7">página nova</text>
+        </svg>
+      </div>
+
+      <div class="bg-dark-800 rounded-xl border border-dark-600 p-5 mb-6">
+        <div class="text-teal-400 font-semibold mb-3">Handler de documentos/arquivos (main.py)</div>
+        <pre class="text-xs text-neutral-400 overflow-x-auto"><code>from telegram.ext import MessageHandler, filters
+import io, base64
+
+async def document_handler(update: Update, ctx: ContextTypes.DEFAULT_TYPE):
+    """Processa PDFs, imagens e áudios enviados pelo Telegram"""
+    msg = update.message
+    timestamp = datetime.datetime.now().strftime('%Y-%m-%d-%H%M')
+    content = ""
+
+    if msg.document and msg.document.mime_type == 'application/pdf':
+        # PDF: extrai texto com pypdf
+        file = await ctx.bot.get_file(msg.document.file_id)
+        pdf_bytes = await file.download_as_bytearray()
+        from pypdf import PdfReader
+        reader = PdfReader(io.BytesIO(bytes(pdf_bytes)))
+        content = "\n".join(page.extract_text() for page in reader.pages)
+        tipo = "pdf"
+
+    elif msg.photo:
+        # Imagem: descreve com vision model
+        photo = msg.photo[-1]  # Maior resolução
+        file = await ctx.bot.get_file(photo.file_id)
+        img_bytes = await file.download_as_bytearray()
+        b64 = base64.b64encode(bytes(img_bytes)).decode()
+        # Chama LLM com vision (OpenRouter)
+        content = await describe_image_with_llm(b64)
+        tipo = "imagem"
+
+    elif msg.voice or msg.audio:
+        # Áudio: transcreve com Whisper
+        audio = msg.voice or msg.audio
+        file = await ctx.bot.get_file(audio.file_id)
+        audio_path = f"/tmp/audio-{timestamp}.ogg"
+        await file.download_to_drive(audio_path)
+        import openai
+        client = openai.OpenAI()
+        with open(audio_path, 'rb') as f:
+            content = client.audio.transcriptions.create(
+                model="whisper-1", file=f
+            ).text
+        tipo = "audio-transcricao"
+
+    if content:
+        filename = VAULT_RAW / f"{tipo}-{timestamp}.md"
+        caption = msg.caption or ""
+        filename.write_text(
+            f"---\ntipo: {tipo}\norigem: telegram\ndata: {timestamp}\n"
+            f"legenda: {caption}\n---\n\n{content[:8000]}"
+        )
+        await msg.reply_text(f"✅ {tipo.upper()} processado e salvo em raw/")
+    else:
+        await msg.reply_text("❓ Formato não suportado.")
+
+# Registrar handler para todos os tipos de arquivo
+app.add_handler(MessageHandler(
+    filters.Document.ALL | filters.PHOTO | filters.AUDIO | filters.VOICE,
+    document_handler
+))</code></pre>
+      </div>
+    </section>
+
+    <!-- TÓPICO 4 -->
+    <section id="topico-4" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-teal-500/20 text-teal-400 font-bold text-xl">4</span>
+        <h2 class="text-2xl font-bold">🔔 Notificações Inteligentes</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">O Intelecto como assistente <strong class="text-teal-400">proativo</strong> — em vez de esperar perguntas, ele lembra, sugere e monitora. Um segundo cérebro que fala com você, não apenas responde.</p>
+
+      <div class="bg-dark-800 rounded-xl border border-dark-600 p-5 mb-6">
+        <div class="text-teal-400 font-semibold mb-3">Notificações via JobQueue</div>
+        <pre class="text-xs text-neutral-400 overflow-x-auto"><code>from telegram.ext import Application
+from datetime import time as t
+import sqlite3, pathlib, datetime
+
+async def daily_vault_health(context):
+    """Enviado diariamente: saúde do vault e pendências"""
+    wiki_dir = pathlib.Path.home() / "vault" / "wiki"
+    raw_dir = pathlib.Path.home() / "vault" / "raw"
+
+    # Conta arquivos raw/ não compilados
+    raw_pending = len(list(raw_dir.glob("*.md")))
+
+    # Páginas sem atualização há 90+ dias
+    stale = []
+    cutoff = datetime.datetime.now().timestamp() - (90 * 86400)
+    for f in wiki_dir.glob("*.md"):
+        if f.stat().st_mtime < cutoff and f.stem != "index":
+            stale.append(f.stem)
+
+    msg = "🌅 **Relatório Diário do Vault**\n\n"
+    if raw_pending:
+        msg += f"⏳ {raw_pending} arquivo(s) em raw/ aguardando compilação\n"
+        msg += "   Use /compilar para processar\n\n"
+    if stale:
+        msg += f"📅 Páginas com 90+ dias sem revisão:\n"
+        for s in stale[:3]:
+            msg += f"   • {s}\n"
+        msg += "\n"
+    if not raw_pending and not stale:
+        msg += "✅ Vault em dia! Nada pendente.\n"
+
+    await context.bot.send_message(
+        chat_id=YOUR_USER_ID, text=msg, parse_mode='Markdown'
+    )
+
+async def suggest_connections(context):
+    """Semanalmente: sugere conexões entre novas capturas e páginas"""
+    conn = sqlite3.connect(DB_PATH)
+    # Novas memórias da última semana
+    new_mems = conn.execute(
+        "SELECT content FROM memories WHERE source='conversation' "
+        "AND created_at > date('now', '-7 days') LIMIT 5"
+    ).fetchall()
+    if new_mems:
+        # Usa LLM para sugerir conexões (chamada simplificada)
+        await context.bot.send_message(
+            chat_id=YOUR_USER_ID,
+            text="💡 Esta semana você falou sobre:\n" +
+                 "\n".join(f"• {m[0][:80]}..." for m in new_mems[:3]) +
+                 "\n\nAlgum desses merece virar página wiki?"
+        )
+
+# Registrar jobs
+app.job_queue.run_daily(daily_vault_health, time=t(8, 0, 0))   # 8h
+app.job_queue.run_weekly(suggest_connections, day_of_week=0)    # Domingo</code></pre>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div class="bg-dark-800 rounded-lg p-4 border border-teal-500/30">
+          <div class="text-teal-400 font-semibold mb-2">📅 Diário (8h)</div>
+          <p class="text-sm text-neutral-300">Relatório de raw/ pendentes e páginas wiki sem revisão há 90+ dias.</p>
+        </div>
+        <div class="bg-dark-800 rounded-lg p-4 border border-teal-500/30">
+          <div class="text-teal-400 font-semibold mb-2">📆 Semanal</div>
+          <p class="text-sm text-neutral-300">Sugestão de conexões entre capturas recentes e páginas existentes no vault.</p>
+        </div>
+        <div class="bg-dark-800 rounded-lg p-4 border border-teal-500/30">
+          <div class="text-teal-400 font-semibold mb-2">🎯 Evento</div>
+          <p class="text-sm text-neutral-300">Alerta quando nova página wiki é compilada com sugestão de link bidirecional.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TÓPICO 5 -->
+    <section id="topico-5" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-teal-500/20 text-teal-400 font-bold text-xl">5</span>
+        <h2 class="text-2xl font-bold">👥 Grupos e Segundo Cérebro Colaborativo</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">O Intelecto em um <strong class="text-teal-400">grupo Telegram</strong> permite que uma equipe construa um vault compartilhado. Cada membro contribui, o conhecimento coletivo cresce e o Intelecto serve como interface única.</p>
+
+      <div class="bg-gradient-to-br from-teal-900/30 to-dark-800 rounded-xl border border-teal-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-teal-400 mb-4 flex items-center"><span class="mr-2">👥</span> Configuração para Grupos</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <p class="text-neutral-300 text-sm mb-3">Em grupos, o Intelecto usa metadados de autoria para cada captura:</p>
+            <pre class="text-xs text-neutral-400"><code># Em vault/raw/raw-2026-01-15.md
+---
+tipo: texto
+origem: telegram-grupo
+autor: @joao_silva
+data: 2026-01-15-1430
+grupo: equipe-engenharia
+---
+
+Discutimos hoje a migração do
+banco de dados para PostgreSQL...</code></pre>
+          </div>
+          <div>
+            <p class="text-neutral-300 text-sm mb-3">Adaptar o handler para grupos:</p>
+            <pre class="text-xs text-neutral-400"><code">async def group_message_handler(update, ctx):
+    user = update.message.from_user
+    # Só processa se marcado com hashtag
+    if '#captura' not in text and \
+       not text.startswith('/ingere'):
+        return  # Ignora conversas normais
+    autor = f"@{user.username}"
+    # Salva com metadados de autoria
+    ...</code></pre>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6">
+        <h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center"><span class="mr-2">📊</span> Casos de Uso em Equipe</h3>
+        <ul class="space-y-2 text-neutral-300">
+          <li><strong>#captura</strong> — Qualquer mensagem com #captura vai para raw/ do vault compartilhado</li>
+          <li><strong>/consulta [query]</strong> — Busca no vault coletivo com atribuição de autoria</li>
+          <li><strong>/audit</strong> — Auditoria do vault compartilhado, visível para toda a equipe</li>
+          <li><strong>Reuniões</strong> — Áudio da reunião enviado → transcrição → wiki de decisões</li>
+          <li><strong>Onboarding</strong> — Novo membro consulta o vault e recebe contexto completo da equipe</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- TÓPICO 6 -->
+    <section id="topico-6" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-teal-500/20 text-teal-400 font-bold text-xl">6</span>
+        <h2 class="text-2xl font-bold">🏗️ Construindo Seu Pipeline Completo</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">Um roteiro de <strong class="text-teal-400">4 semanas</strong> para ter o sistema completo funcionando, com entregas de valor em cada fase — você pode parar em qualquer etapa com um sistema já útil.</p>
+
+      <div class="space-y-4 mb-6">
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-12 h-12 rounded-full bg-teal-500/20 flex items-center justify-center"><span class="text-teal-400 font-bold text-sm">S1</span></div>
+          <div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600">
+            <div class="flex items-center justify-between mb-2">
+              <h4 class="font-semibold text-white">Semana 1 — Intelecto básico no Telegram</h4>
+              <span class="text-xs text-emerald-400 bg-emerald-900/30 px-2 py-1 rounded">MVP funcional</span>
+            </div>
+            <ul class="text-sm text-neutral-400 space-y-1">
+              <li>• Clone e configure o Intelecto com .env e BotFather</li>
+              <li>• Personalize SOUL.md com seu perfil e tom desejado</li>
+              <li>• Converse normalmente — memórias começam a se formar</li>
+              <li>• Valor entregue: assistente pessoal funcional no Telegram</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-12 h-12 rounded-full bg-teal-500/20 flex items-center justify-center"><span class="text-teal-400 font-bold text-sm">S2</span></div>
+          <div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600">
+            <div class="flex items-center justify-between mb-2">
+              <h4 class="font-semibold text-white">Semana 2 — Consciência do vault via USER.md</h4>
+              <span class="text-xs text-teal-400 bg-teal-900/30 px-2 py-1 rounded">Integração leve</span>
+            </div>
+            <ul class="text-sm text-neutral-400 space-y-1">
+              <li>• Adicione catálogo do vault ao USER.md (domínios, projetos, páginas)</li>
+              <li>• Intelecto começa a referenciar páginas do wiki nas respostas</li>
+              <li>• Adicione handler /ingere para captura de URLs pelo Telegram</li>
+              <li>• Valor entregue: captura via Telegram + Intelecto ciente do vault</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-12 h-12 rounded-full bg-teal-500/20 flex items-center justify-center"><span class="text-teal-400 font-bold text-sm">S3</span></div>
+          <div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600">
+            <div class="flex items-center justify-between mb-2">
+              <h4 class="font-semibold text-white">Semana 3 — bridge.py e consulta híbrida</h4>
+              <span class="text-xs text-blue-400 bg-blue-900/30 px-2 py-1 rounded">Integração profunda</span>
+            </div>
+            <ul class="text-sm text-neutral-400 space-y-1">
+              <li>• Implemente bridge.py e execute a primeira sincronização</li>
+              <li>• Configure watcher.py para sincronização automática</li>
+              <li>• Adicione lógica de consulta híbrida ao handler de mensagens</li>
+              <li>• Valor entregue: respostas com conhecimento específico do vault</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-12 h-12 rounded-full bg-teal-500/20 flex items-center justify-center"><span class="text-teal-400 font-bold text-sm">S4</span></div>
+          <div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600">
+            <div class="flex items-center justify-between mb-2">
+              <h4 class="font-semibold text-white">Semana 4 — Automações e pipeline completo</h4>
+              <span class="text-xs text-purple-400 bg-purple-900/30 px-2 py-1 rounded">Sistema completo</span>
+            </div>
+            <ul class="text-sm text-neutral-400 space-y-1">
+              <li>• Registre /audit, /status no BotFather e implemente handlers</li>
+              <li>• Configure JobQueue para notificações proativas diárias</li>
+              <li>• Adicione handler de arquivos (PDF, imagem, áudio)</li>
+              <li>• Valor entregue: segundo cérebro completo e proativo</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/40 p-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">🎯</span> Princípio fundamental</h3>
+        <p class="text-neutral-300">O segundo cérebro é uma prática, não um sistema. O Intelecto + vault Obsidian é a infraestrutura — mas o valor real vem da consistência da captura e compilação. Um sistema simples usado todos os dias supera um sistema perfeito nunca usado. Comece na Semana 1 e vá adicionando ao seu ritmo.</p>
+      </div>
+    </section>
+
+    <!-- RESUMO FINAL -->
+    <section class="mb-12">
+      <div class="bg-gradient-to-br from-teal-900/40 via-dark-800 to-dark-800 rounded-xl border border-teal-500/30 p-8">
+        <h2 class="text-2xl font-bold mb-6 flex items-center"><span class="mr-3">🎉</span> Trilha 5 Concluída!</h2>
+        <p class="text-neutral-400 mb-6">Você completou a Trilha 5 — Intelecto. Agora tem o conhecimento e os scripts para construir um segundo cérebro integrado: vault Obsidian como memória permanente, Intelecto como assistente via Telegram, e SQLite como contexto de curto prazo.</p>
+        <div class="space-y-4 mb-8">
+          <div class="flex items-start space-x-3"><span class="text-teal-400 mt-1">✓</span><div><strong class="text-white">Módulo 5.1</strong><span class="text-neutral-400"> — Intelecto: arquitetura, SOUL.md, BM25, instalação e backends de modelo</span></div></div>
+          <div class="flex items-start space-x-3"><span class="text-teal-400 mt-1">✓</span><div><strong class="text-white">Módulo 5.2</strong><span class="text-neutral-400"> — SQLite vs Wiki: limitações, vantagens, arquitetura híbrida e modelo mental</span></div></div>
+          <div class="flex items-start space-x-3"><span class="text-teal-400 mt-1">✓</span><div><strong class="text-white">Módulo 5.3</strong><span class="text-neutral-400"> — Integração: USER.md, bridge.py, handler /ingere, consulta híbrida, watcher</span></div></div>
+          <div class="flex items-start space-x-3"><span class="text-teal-400 mt-1">✓</span><div><strong class="text-white">Módulo 5.4</strong><span class="text-neutral-400"> — Telegram: UX de captura, /audit, multi-modal, notificações, grupos, pipeline em 4 semanas</span></div></div>
+        </div>
+        <div class="flex flex-col sm:flex-row gap-4">
+          <a href="modulo-5-3.html" class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors">← Módulo 5.3</a>
+          <a href="index.html" class="flex-1 text-center px-6 py-3 bg-teal-600 text-white rounded-lg font-semibold hover:bg-teal-500 transition-colors">Ver Trilha 5 →</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="border-t border-dark-600 py-8 mt-16">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+      <p>2Cérebro — INEMA.CLUB 2026</p>
+    </div>
+  </footer>
+
+  <script>
+    const themeToggle = document.getElementById('theme-toggle');
+    const darkIcon = document.getElementById('theme-toggle-dark-icon');
+    const lightIcon = document.getElementById('theme-toggle-light-icon');
+    const html = document.documentElement;
+    if (localStorage.getItem('theme') === 'light') {
+      darkIcon.classList.remove('hidden'); html.classList.remove('dark');
+    } else { lightIcon.classList.remove('hidden'); }
+    themeToggle.addEventListener('click', () => {
+      darkIcon.classList.toggle('hidden'); lightIcon.classList.toggle('hidden');
+      html.classList.toggle('dark');
+      localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+    });
+  </script>
+</body>
+</html>

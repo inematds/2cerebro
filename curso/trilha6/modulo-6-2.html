@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Módulo 6.2 — O Compilador de Conhecimento | 2Cérebro</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config={darkMode:'class',theme:{extend:{colors:{primary:'#FACC15',dark:{900:'#111827',800:'#1f2937',700:'#374151',600:'#4b5563'}}}}}</script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body{font-family:'Inter',sans-serif;}
+    html:not(.dark) body{background-color:#f8fafc;}
+    html:not(.dark) .bg-dark-900{background-color:#ffffff;}
+    html:not(.dark) .bg-dark-800{background-color:#f9fafb;}
+    html:not(.dark) .bg-dark-700{background-color:#f3f4f6;}
+    html:not(.dark) .bg-dark-600{background-color:#e5e7eb;}
+    html:not(.dark) .text-neutral-100{color:#111827;}
+    html:not(.dark) .text-neutral-300{color:#4b5563;}
+    html:not(.dark) .text-neutral-400{color:#6b7280;}
+    html:not(.dark) .text-neutral-500{color:#9ca3af;}
+    html:not(.dark) .border-dark-600{border-color:#d1d5db;}
+    html:not(.dark) .border-dark-700{border-color:#e5e7eb;}
+    html:not(.dark) .text-rose-400{color:#9f1239;}
+    html:not(.dark) .bg-rose-500\/20{background-color:rgba(225,29,72,0.12);}
+    html:not(.dark) .border-rose-500\/30{border-color:rgba(225,29,72,0.25);}
+    html:not(.dark) [class*="bg-gradient-to"]{background-image:none!important;}
+    html:not(.dark) .text-primary{color:#a16207;}
+    html:not(.dark) .bg-primary\/10{background-color:rgba(161,98,7,0.08);}
+    html:not(.dark) .border-primary\/40{border-color:rgba(161,98,7,0.25);}
+    html:not(.dark) .text-sky-400{color:#0369a1;}
+    html:not(.dark) .text-yellow-400{color:#a16207;}
+    html:not(.dark) .hover\:text-sky-300:hover{color:#0284c7;}
+    html:not(.dark) .hover\:text-yellow-300:hover{color:#854d0e;}
+    html:not(.dark) .bg-dark-900\/95{background-color:rgba(255,255,255,0.95);}
+  </style>
+</head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen">
+
+  <nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-14">
+        <div class="flex items-center space-x-4">
+          <a href="../../index.html" class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300"><span class="text-2xl">🧠</span><span class="font-bold text-lg hidden sm:inline">2Cérebro</span></a>
+          <span class="text-neutral-600">|</span>
+          <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300 text-sm font-medium">INEMA.CLUB</a>
+        </div>
+        <div class="flex items-center space-x-1 sm:space-x-2">
+          <a href="../trilha1/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors"><span class="sm:hidden">T1</span><span class="hidden sm:inline">Fundamentos</span></a>
+          <a href="../trilha2/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors"><span class="sm:hidden">T2</span><span class="hidden sm:inline">Implementação</span></a>
+          <a href="../trilha3/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors"><span class="sm:hidden">T3</span><span class="hidden sm:inline">Avançado</span></a>
+          <a href="index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-rose-400 bg-rose-500/10"><span class="sm:hidden">T6</span><span class="hidden sm:inline">Karpathy</span></a>
+          <button id="theme-toggle" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2">
+            <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+            <svg id="theme-toggle-light-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+    <div class="flex items-center space-x-2 text-sm text-neutral-400">
+      <a href="../../index.html" class="hover:text-rose-400">Início</a>
+      <span>/</span>
+      <a href="index.html" class="hover:text-rose-400">Trilha 6 — Karpathy Vision</a>
+      <span>/</span>
+      <span class="text-rose-400">Módulo 6.2</span>
+    </div>
+  </nav>
+
+  <header class="bg-gradient-to-br from-rose-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <span class="inline-block px-3 py-1 bg-rose-500/20 text-rose-400 text-xs font-semibold rounded-full mb-4">MÓDULO 6.2</span>
+      <h1 class="text-3xl sm:text-4xl font-bold mb-4">⚙️ O Compilador de Conhecimento</h1>
+      <p class="text-lg text-neutral-400 max-w-3xl">A analogia entre compiladores de software e o LLM wiki — e como ela define cada escolha de design: imutabilidade do raw/, legibilidade do wiki/, e as regras do CLAUDE.md.</p>
+      <div class="grid grid-cols-4 gap-4 mt-8 max-w-lg">
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-rose-400">6</div><div class="text-xs text-neutral-400">Tópicos</div></div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-rose-400">45</div><div class="text-xs text-neutral-400">Minutos</div></div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-rose-400">Técnico</div><div class="text-xs text-neutral-400">Nível</div></div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-rose-400">Conceito</div><div class="text-xs text-neutral-400">Tipo</div></div>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+    <!-- TÓPICO 1 -->
+    <section id="topico-1" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-rose-500/20 text-rose-400 font-bold text-xl">1</span>
+        <h2 class="text-2xl font-bold">🏗️ O Conceito de Compilação</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        A escolha de Karpathy pela palavra <strong class="text-rose-400">"compilador"</strong> é precisa — não metafórica. A analogia com compiladores de software não é poética: ela define propriedades técnicas específicas que o sistema deve ter.
+      </p>
+
+      <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+        <h3 class="text-base font-semibold text-rose-400 mb-4">⚙️ Software vs. Conhecimento: A Analogia Completa</h3>
+        <svg viewBox="0 0 680 200" class="w-full" xmlns="http://www.w3.org/2000/svg">
+          <!-- Software side -->
+          <text x="170" y="20" text-anchor="middle" fill="#9ca3af" font-size="11" font-weight="bold">COMPILADOR DE SOFTWARE</text>
+          <rect x="20" y="35" width="130" height="40" rx="8" fill="#1f2937" stroke="#374151" stroke-width="1.5"/>
+          <text x="85" y="53" text-anchor="middle" fill="#d1d5db" font-size="9">main.c</text>
+          <text x="85" y="66" text-anchor="middle" fill="#6b7280" font-size="8">Código-fonte</text>
+
+          <text x="175" y="58" text-anchor="middle" fill="#FACC15" font-size="11">→ gcc →</text>
+
+          <rect x="220" y="35" width="130" height="40" rx="8" fill="#1f2937" stroke="#374151" stroke-width="1.5"/>
+          <text x="285" y="53" text-anchor="middle" fill="#d1d5db" font-size="9">main.out</text>
+          <text x="285" y="66" text-anchor="middle" fill="#6b7280" font-size="8">Binário executável</text>
+
+          <!-- LLM side -->
+          <text x="510" y="20" text-anchor="middle" fill="#fb7185" font-size="11" font-weight="bold">LLM WIKI COMPILER</text>
+          <rect x="360" y="35" width="130" height="40" rx="8" fill="#1f2937" stroke="#fb7185" stroke-width="1.5"/>
+          <text x="425" y="53" text-anchor="middle" fill="#fb7185" font-size="9">raw/artigo.pdf</text>
+          <text x="425" y="66" text-anchor="middle" fill="#9ca3af" font-size="8">Fonte bruta</text>
+
+          <text x="515" y="58" text-anchor="middle" fill="#FACC15" font-size="10">→ LLM →</text>
+
+          <rect x="560" y="35" width="110" height="40" rx="8" fill="#1f2937" stroke="#fb7185" stroke-width="1.5"/>
+          <text x="615" y="53" text-anchor="middle" fill="#fb7185" font-size="9">wiki/conceito.md</text>
+          <text x="615" y="66" text-anchor="middle" fill="#9ca3af" font-size="8">Página compilada</text>
+
+          <!-- Properties table -->
+          <line x1="10" y1="100" x2="670" y2="100" stroke="#374151" stroke-width="1"/>
+          <text x="10" y="120" fill="#6b7280" font-size="9" font-weight="bold">Propriedade</text>
+          <text x="170" y="120" fill="#6b7280" font-size="9" font-weight="bold">Software</text>
+          <text x="380" y="120" fill="#6b7280" font-size="9" font-weight="bold">LLM Wiki</text>
+
+          <text x="10" y="140" fill="#9ca3af" font-size="8">Input imutável</text>
+          <text x="170" y="140" fill="#4ade80" font-size="8">✓ Código-fonte não muda</text>
+          <text x="380" y="140" fill="#4ade80" font-size="8">✓ raw/ não é modificado</text>
+
+          <text x="10" y="156" fill="#9ca3af" font-size="8">Output auditável</text>
+          <text x="170" y="156" fill="#4ade80" font-size="8">✓ Binário = determinístico</text>
+          <text x="380" y="156" fill="#4ade80" font-size="8">✓ wiki/ = Markdown legível</text>
+
+          <text x="10" y="172" fill="#9ca3af" font-size="8">Recompilação</text>
+          <text x="170" y="172" fill="#4ade80" font-size="8">✓ make detecta mudanças</text>
+          <text x="380" y="172" fill="#4ade80" font-size="8">✓ log.md rastreia ingestões</text>
+
+          <text x="10" y="188" fill="#9ca3af" font-size="8">Regras de compilação</text>
+          <text x="170" y="188" fill="#4ade80" font-size="8">✓ grammar/compiler flags</text>
+          <text x="380" y="188" fill="#4ade80" font-size="8">✓ CLAUDE.md define regras</text>
+        </svg>
+      </div>
+
+      <div class="bg-gradient-to-br from-rose-900/30 to-dark-800 rounded-xl border border-rose-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-rose-400 mb-4 flex items-center"><span class="mr-2">🔑</span> Propriedades que a Analogia Garante</h3>
+        <ul class="space-y-3 text-neutral-300">
+          <li class="flex items-start space-x-2"><span class="text-rose-400 mt-1">•</span><span><strong class="text-rose-400">Idempotência:</strong> compilar as mesmas fontes duas vezes deve produzir o mesmo wiki (dado o mesmo CLAUDE.md)</span></li>
+          <li class="flex items-start space-x-2"><span class="text-rose-400 mt-1">•</span><span><strong class="text-rose-400">Separação input/output:</strong> raw/ e wiki/ são mundos distintos — nunca misturados</span></li>
+          <li class="flex items-start space-x-2"><span class="text-rose-400 mt-1">•</span><span><strong class="text-rose-400">Rastreabilidade:</strong> toda afirmação no wiki pode ser rastreada à fonte em raw/</span></li>
+          <li class="flex items-start space-x-2"><span class="text-rose-400 mt-1">•</span><span><strong class="text-rose-400">Determinismo:</strong> o mesmo input + CLAUDE.md deve gerar output previsível</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- TÓPICO 2 -->
+    <section id="topico-2" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-rose-500/20 text-rose-400 font-bold text-xl">2</span>
+        <h2 class="text-2xl font-bold">📁 raw/ como Código Fonte</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        A pasta raw/ é sagrada: <strong class="text-rose-400">nada é modificado, nada é deletado</strong>. O LLM apenas lê. Essa imutabilidade não é burocracia — é a fundação de toda a auditabilidade do sistema.
+      </p>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+          <h4 class="font-bold text-emerald-400 mb-4">✓ O que vai em raw/</h4>
+          <ul class="space-y-3 text-neutral-300">
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>PDFs de artigos, livros e documentos</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>URLs salvas (conteúdo completo, não apenas link)</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Transcrições de reuniões e podcasts</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Notas brutas de campo ou de estudo</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Exports de outras ferramentas (Notion, Roam, etc.)</span></li>
+          </ul>
+        </div>
+        <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+          <h4 class="font-bold text-red-400 mb-4">✗ O que NUNCA vai em raw/</h4>
+          <ul class="space-y-3 text-neutral-300">
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Arquivos gerados pelo LLM (esses vão em wiki/)</span></li>
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Versões editadas ou anotadas de documentos</span></li>
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Dados sensíveis ou credenciais</span></li>
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Arquivos temporários ou de rascunho sem valor</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center"><span class="mr-2">📊</span> Por que Imutabilidade Importa</h3>
+        <p class="text-neutral-300 mb-3">Imagine descobrir que uma página wiki contém uma afirmação incorreta. Com raw/ imutável:</p>
+        <ul class="space-y-2 text-neutral-300">
+          <li><strong>1.</strong> Você encontra o arquivo em raw/ de onde a informação veio</li>
+          <li><strong>2.</strong> Verifica se a fonte original é confiável ou se o LLM interpretou mal</li>
+          <li><strong>3.</strong> Se for erro de interpretação: ajusta o CLAUDE.md e recompila</li>
+          <li><strong>4.</strong> Se a fonte estiver errada: adiciona nota de refutação em raw/ e recompila</li>
+        </ul>
+        <p class="text-neutral-300 mt-3">Sem raw/ imutável, essa rastreabilidade desaparece — você não consegue distinguir o que veio de onde.</p>
+      </div>
+    </section>
+
+    <!-- TÓPICO 3 -->
+    <section id="topico-3" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-rose-500/20 text-rose-400 font-bold text-xl">3</span>
+        <h2 class="text-2xl font-bold">📖 wiki/ como Binário</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        wiki/ é o output do compilador: <strong class="text-rose-400">conhecimento estruturado, interligado e otimizado para consulta</strong>. Mas diferente do binário de software — que é ilegível por humanos — o wiki compilado é intencionalmente transparente.
+      </p>
+
+      <div class="bg-gradient-to-br from-rose-900/30 to-dark-800 rounded-xl border border-rose-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-rose-400 mb-4 flex items-center"><span class="mr-2">🏗️</span> Estrutura Típica de wiki/</h3>
+        <div class="font-mono text-sm space-y-1">
+          <p class="text-neutral-400">wiki/</p>
+          <p class="text-neutral-400 ml-4">├── conceitos/</p>
+          <p class="text-neutral-300 ml-8">│   ├── <span class="text-rose-400">machine-learning.md</span>  <span class="text-neutral-500 text-xs"># página de conceito</span></p>
+          <p class="text-neutral-300 ml-8">│   ├── <span class="text-rose-400">transformer.md</span></p>
+          <p class="text-neutral-300 ml-8">│   └── <span class="text-rose-400">attention-mechanism.md</span></p>
+          <p class="text-neutral-400 ml-4">├── entidades/</p>
+          <p class="text-neutral-300 ml-8">│   ├── <span class="text-rose-400">openai.md</span>  <span class="text-neutral-500 text-xs"># página de entidade/organização</span></p>
+          <p class="text-neutral-300 ml-8">│   └── <span class="text-rose-400">karpathy-andrej.md</span></p>
+          <p class="text-neutral-400 ml-4">├── comparacoes/</p>
+          <p class="text-neutral-300 ml-8">│   └── <span class="text-rose-400">rag-vs-compilacao.md</span>  <span class="text-neutral-500 text-xs"># página de comparação</span></p>
+          <p class="text-neutral-400 ml-4">└── cronologias/</p>
+          <p class="text-neutral-300 ml-8">    └── <span class="text-rose-400">evolucao-llms.md</span></p>
+        </div>
+      </div>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">💡</span> A Grande Vantagem: Human-Readable</h3>
+        <p class="text-neutral-300 mb-3">A decisão mais importante de design: wiki/ em Markdown puro. Isso significa que:</p>
+        <ul class="space-y-2 text-neutral-300">
+          <li class="flex items-start space-x-2"><span class="text-primary mt-1">•</span><span>Você pode <strong>ler qualquer página</strong> no editor de texto ou Obsidian</span></li>
+          <li class="flex items-start space-x-2"><span class="text-primary mt-1">•</span><span>Você pode <strong>editar manualmente</strong> se o LLM errou algo</span></li>
+          <li class="flex items-start space-x-2"><span class="text-primary mt-1">•</span><span>Você pode <strong>versionar com git</strong> e ver exatamente o que mudou</span></li>
+          <li class="flex items-start space-x-2"><span class="text-primary mt-1">•</span><span>O formato <strong>sobrevive a qualquer ferramenta</strong> — Markdown não vai morrer</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- TÓPICO 4 -->
+    <section id="topico-4" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-rose-500/20 text-rose-400 font-bold text-xl">4</span>
+        <h2 class="text-2xl font-bold">📋 CLAUDE.md como Spec do Compilador</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Todo compilador tem uma gramática — um conjunto formal de regras que define como transformar input em output. No LLM wiki, o CLAUDE.md é essa gramática: ele define o <strong class="text-rose-400">comportamento completo do sistema</strong>.
+      </p>
+
+      <div class="bg-gradient-to-br from-rose-900/30 to-dark-800 rounded-xl border border-rose-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-rose-400 mb-4 flex items-center"><span class="mr-2">📋</span> O que um Bom CLAUDE.md Define</h3>
+        <div class="space-y-4">
+          <div class="bg-dark-700/50 rounded-lg p-4">
+            <p class="text-rose-400 font-semibold text-sm mb-2">1. Tipos de Páginas</p>
+            <p class="text-neutral-300 text-sm">Quais categorias de páginas existem no wiki? Conceitos, Entidades, Comparações, Cronologias, Projetos... Cada tipo tem um template diferente que o LLM deve seguir ao compilar.</p>
+          </div>
+          <div class="bg-dark-700/50 rounded-lg p-4">
+            <p class="text-rose-400 font-semibold text-sm mb-2">2. Regras de Nomenclatura</p>
+            <p class="text-neutral-300 text-sm">Como nomear arquivos? kebab-case? Com data? Por categoria? A consistência da nomenclatura é o que permite o index.md funcionar como catálogo confiável.</p>
+          </div>
+          <div class="bg-dark-700/50 rounded-lg p-4">
+            <p class="text-rose-400 font-semibold text-sm mb-2">3. Comportamento em Ambiguidades</p>
+            <p class="text-neutral-300 text-sm">O que fazer quando uma fonte contradiz uma página existente? Quando um conceito já tem uma página parcial? Regras explícitas evitam decisões inconsistentes entre ingestões.</p>
+          </div>
+          <div class="bg-dark-700/50 rounded-lg p-4">
+            <p class="text-rose-400 font-semibold text-sm mb-2">4. Nível de Detalhe por Tipo</p>
+            <p class="text-neutral-300 text-sm">Páginas de Entidade são mais curtas que páginas de Conceito? Cronologias incluem apenas anos ou datas precisas? Granularidade definida produz wikis consistentes.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-red-400 mb-3 flex items-center"><span class="mr-2">⚠️</span> O Erro Mais Comum</h3>
+        <p class="text-neutral-300">CLAUDE.md vago ou incompleto é a causa número 1 de wikis inconsistentes. Se as regras não cobrem um caso, o LLM inventa um comportamento — e raramente é o mesmo comportamento entre ingestões. Trate CLAUDE.md como código: versionado, testado, revisado.</p>
+      </div>
+    </section>
+
+    <!-- TÓPICO 5 -->
+    <section id="topico-5" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-rose-500/20 text-rose-400 font-bold text-xl">5</span>
+        <h2 class="text-2xl font-bold">🔄 Compilação Incremental</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        A compilação incremental é o que torna o sistema <strong class="text-rose-400">eficiente em uso contínuo</strong>. Como o comando make em C — recompila apenas o que mudou, não o projeto inteiro.
+      </p>
+
+      <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+        <h3 class="text-base font-semibold text-rose-400 mb-4">🔄 Como Funciona a Compilação Incremental</h3>
+        <svg viewBox="0 0 680 180" class="w-full" xmlns="http://www.w3.org/2000/svg">
+          <!-- Step 1 -->
+          <rect x="10" y="20" width="140" height="60" rx="8" fill="#1f2937" stroke="#fb7185" stroke-width="1.5"/>
+          <text x="80" y="42" text-anchor="middle" fill="#fb7185" font-size="10" font-weight="bold">Nova fonte</text>
+          <text x="80" y="57" text-anchor="middle" fill="#9ca3af" font-size="8">raw/novo-artigo.pdf</text>
+          <text x="80" y="70" text-anchor="middle" fill="#6b7280" font-size="7">adicionado em raw/</text>
+
+          <text x="165" y="53" fill="#FACC15" font-size="14">→</text>
+
+          <!-- Step 2: log.md check -->
+          <rect x="175" y="20" width="140" height="60" rx="8" fill="#1f2937" stroke="#374151" stroke-width="1.5"/>
+          <text x="245" y="42" text-anchor="middle" fill="#9ca3af" font-size="10" font-weight="bold">Checar log.md</text>
+          <text x="245" y="57" text-anchor="middle" fill="#9ca3af" font-size="8">já foi ingerido?</text>
+          <text x="245" y="70" text-anchor="middle" fill="#6b7280" font-size="7">timestamp + hash</text>
+
+          <text x="330" y="53" fill="#FACC15" font-size="14">→</text>
+
+          <!-- Step 3: Compile -->
+          <rect x="340" y="20" width="140" height="60" rx="8" fill="#1f2937" stroke="#fb7185" stroke-width="1.5"/>
+          <text x="410" y="42" text-anchor="middle" fill="#fb7185" font-size="10" font-weight="bold">Compilar delta</text>
+          <text x="410" y="57" text-anchor="middle" fill="#9ca3af" font-size="8">só arquivos novos</text>
+          <text x="410" y="70" text-anchor="middle" fill="#6b7280" font-size="7">não o vault inteiro</text>
+
+          <text x="495" y="53" fill="#FACC15" font-size="14">→</text>
+
+          <!-- Step 4: Update -->
+          <rect x="510" y="20" width="160" height="60" rx="8" fill="#1f2937" stroke="#374151" stroke-width="1.5"/>
+          <text x="590" y="42" text-anchor="middle" fill="#9ca3af" font-size="10" font-weight="bold">Atualizar estado</text>
+          <text x="590" y="57" text-anchor="middle" fill="#9ca3af" font-size="8">index.md + log.md</text>
+          <text x="590" y="70" text-anchor="middle" fill="#6b7280" font-size="7">registra ingestão</text>
+
+          <!-- log.md content -->
+          <rect x="10" y="110" width="660" height="60" rx="8" fill="#111827" stroke="#374151" stroke-width="1"/>
+          <text x="30" y="128" fill="#6b7280" font-size="9" font-weight="bold">log.md — exemplo:</text>
+          <text x="30" y="143" fill="#4ade80" font-size="8">2026-04-09 14:23 | INGEST | raw/novo-artigo.pdf | hash:a3f9... | páginas criadas: conceitos/topico.md, entidades/autor.md</text>
+          <text x="30" y="157" fill="#6b7280" font-size="8">2026-04-08 09:11 | INGEST | raw/livro-x.pdf | hash:b2e4... | páginas atualizadas: conceitos/base.md</text>
+        </svg>
+      </div>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">💡</span> O Custo Constante de Ingestão</h3>
+        <p class="text-neutral-300">Independente do tamanho do vault (10 ou 10.000 páginas), ingerir uma nova fonte custa o mesmo: processar apenas aquela fonte + atualizar index.md. O log.md garante que o agente nunca reprocesse o que já foi compilado.</p>
+      </div>
+    </section>
+
+    <!-- TÓPICO 6 -->
+    <section id="topico-6" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-rose-500/20 text-rose-400 font-bold text-xl">6</span>
+        <h2 class="text-2xl font-bold">🚀 Otimizações do Compilador</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Compiladores maduros têm otimizações: dead code elimination, inlining, caching. O LLM wiki tem equivalentes diretos — cada otimização segue a mesma lógica da ciência da computação.
+      </p>
+
+      <div class="space-y-6 mb-6">
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-12 h-12 rounded-full bg-rose-500/20 flex items-center justify-center">
+            <span class="text-rose-400 font-bold text-sm">O1</span>
+          </div>
+          <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+            <h4 class="font-semibold text-white mb-2">🗜️ Compressão — Abstracts Densos</h4>
+            <p class="text-sm text-neutral-400 mb-3">Equivalente: tree shaking / dead code elimination</p>
+            <p class="text-neutral-300 text-sm">Cada página wiki tem uma seção "## Abstract" de 2-3 frases — o máximo de informação no mínimo de tokens. O LLM lê abstracts na fase de Query para decidir quais páginas completas carregar. Redução de ~80% de tokens por consulta.</p>
+          </div>
+        </div>
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-12 h-12 rounded-full bg-rose-500/20 flex items-center justify-center">
+            <span class="text-rose-400 font-bold text-sm">O2</span>
+          </div>
+          <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+            <h4 class="font-semibold text-white mb-2">📑 Índices Hierárquicos — O(1) de Navegação</h4>
+            <p class="text-sm text-neutral-400 mb-3">Equivalente: symbol tables / lookup indices</p>
+            <p class="text-neutral-300 text-sm">index.md aponta para sub-índices por domínio (ml-index.md, finance-index.md). A busca é sempre O(1): lê o sub-índice certo, encontra a página, carrega apenas ela. Sem varredura linear do vault.</p>
+          </div>
+        </div>
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-12 h-12 rounded-full bg-rose-500/20 flex items-center justify-center">
+            <span class="text-rose-400 font-bold text-sm">O3</span>
+          </div>
+          <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+            <h4 class="font-semibold text-white mb-2">⚡ Cache de Consultas — Respostas Pré-computadas</h4>
+            <p class="text-sm text-neutral-400 mb-3">Equivalente: memoization / compile-time evaluation</p>
+            <p class="text-neutral-300 text-sm">Perguntas frequentes geram páginas de cache em wiki/cache/. "Qual o status atual do projeto X?" tem uma resposta cached, atualizada periodicamente. Consultas subsequentes custam ~200 tokens em vez de ~5.000.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- RESUMO -->
+    <section class="mb-12">
+      <div class="bg-gradient-to-br from-rose-900/40 via-dark-800 to-dark-800 rounded-xl border border-rose-500/30 p-8">
+        <h2 class="text-2xl font-bold mb-6 flex items-center"><span class="mr-3">✅</span> Resumo do Módulo 6.2</h2>
+        <div class="space-y-4 mb-8">
+          <div class="flex items-start space-x-3">
+            <span class="text-rose-400 mt-1">✓</span>
+            <div><strong class="text-white">Analogia com compiladores</strong><span class="text-neutral-400"> — não é poética, define propriedades técnicas: idempotência, rastreabilidade, separação input/output</span></div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-rose-400 mt-1">✓</span>
+            <div><strong class="text-white">raw/ imutável</strong><span class="text-neutral-400"> — fundação de toda a auditabilidade do sistema</span></div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-rose-400 mt-1">✓</span>
+            <div><strong class="text-white">wiki/ human-readable</strong><span class="text-neutral-400"> — a grande vantagem sobre embeddings: qualquer página pode ser lida, editada e versionada</span></div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-rose-400 mt-1">✓</span>
+            <div><strong class="text-white">CLAUDE.md como gramática</strong><span class="text-neutral-400"> — regras completas e explícitas produzem wikis consistentes</span></div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-rose-400 mt-1">✓</span>
+            <div><strong class="text-white">Compilação incremental</strong><span class="text-neutral-400"> — custo constante de ingestão independente do tamanho do vault</span></div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-rose-400 mt-1">✓</span>
+            <div><strong class="text-white">Três otimizações</strong><span class="text-neutral-400"> — abstracts, índices hierárquicos e cache reduzem tokens em até 95%</span></div>
+          </div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-4 mb-8">
+          <h3 class="font-semibold text-rose-400 mb-2">Próximo Módulo:</h3>
+          <p class="text-neutral-300">6.3 — Wikis Auto-Mantidos: por que humanos sempre falharam na manutenção de wikis e como LLMs resolvem o problema com custo marginal zero</p>
+        </div>
+        <div class="flex flex-col sm:flex-row gap-4">
+          <a href="modulo-6-1.html" class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors">← 6.1 O Blog Post</a>
+          <a href="modulo-6-3.html" class="flex-1 text-center px-6 py-3 bg-rose-600 text-white rounded-lg font-semibold hover:bg-rose-500 transition-colors">Próximo: 6.3 Wikis Auto-Mantidos →</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="border-t border-dark-600 py-8 mt-16">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+      <p>2Cérebro — Módulo 6.2 · <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300">INEMA.CLUB</a></p>
+    </div>
+  </footer>
+
+  <script>
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+    const html = document.documentElement;
+    if (localStorage.getItem('theme') === 'light' || (!localStorage.getItem('theme') && !html.classList.contains('dark'))) {
+      themeToggleDarkIcon.classList.remove('hidden');
+      html.classList.remove('dark');
+    } else {
+      themeToggleLightIcon.classList.remove('hidden');
+    }
+    themeToggle.addEventListener('click', () => {
+      themeToggleDarkIcon.classList.toggle('hidden');
+      themeToggleLightIcon.classList.toggle('hidden');
+      html.classList.toggle('dark');
+      localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+    });
+  </script>
+</body>
+</html>

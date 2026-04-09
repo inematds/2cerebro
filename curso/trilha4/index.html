@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trilha 4 — OpenClaw | 2Cérebro</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: { extend: { colors: { primary: '#FACC15', dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' } } } }
+    }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+    .topic-explanation { display: none; }
+    .topic-explanation.active { display: block; }
+    html:not(.dark) body { background-color: #f8fafc; }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #9ca3af; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+    html:not(.dark) .text-amber-400 { color: #92400e; }
+    html:not(.dark) .bg-amber-500\/20 { background-color: rgba(217,119,6,0.12); }
+    html:not(.dark) .bg-amber-500\/10 { background-color: rgba(217,119,6,0.08); }
+    html:not(.dark) .border-amber-500\/30 { border-color: rgba(217,119,6,0.25); }
+    html:not(.dark) .hover\:bg-amber-500\/30:hover { background-color: rgba(217,119,6,0.18); }
+    html:not(.dark) [class*="bg-gradient-to"] { background-image: none !important; }
+    html:not(.dark) .text-primary { color: #a16207; }
+    html:not(.dark) .bg-primary\/10 { background-color: rgba(161,98,7,0.08); }
+    html:not(.dark) .border-primary\/40 { border-color: rgba(161,98,7,0.25); }
+    html:not(.dark) .text-sky-400 { color: #0369a1; }
+    html:not(.dark) .text-yellow-400 { color: #a16207; }
+    html:not(.dark) .hover\:text-sky-300:hover { color: #0284c7; }
+    html:not(.dark) .hover\:text-yellow-300:hover { color: #854d0e; }
+    html:not(.dark) .bg-dark-900\/95 { background-color: rgba(255,255,255,0.95); }
+    .modal { display: none; }
+    .modal.active { display: flex; }
+  </style>
+</head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen">
+
+  <nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-14">
+        <div class="flex items-center space-x-4">
+          <a href="../../index.html" class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300">
+            <span class="text-2xl">🧠</span><span class="font-bold text-lg hidden sm:inline">2Cérebro</span>
+          </a>
+          <span class="text-neutral-600">|</span>
+          <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300 text-sm font-medium">INEMA.CLUB</a>
+        </div>
+        <div class="flex items-center space-x-1 sm:space-x-2">
+          <a href="../trilha1/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors">
+            <span class="sm:hidden">T1</span><span class="hidden sm:inline">Fundamentos</span>
+          </a>
+          <a href="../trilha2/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors">
+            <span class="sm:hidden">T2</span><span class="hidden sm:inline">Implementação</span>
+          </a>
+          <a href="../trilha3/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors">
+            <span class="sm:hidden">T3</span><span class="hidden sm:inline">Avançado</span>
+          </a>
+          <a href="index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-amber-400 bg-amber-500/10">
+            <span class="sm:hidden">T4</span><span class="hidden sm:inline">OpenClaw</span>
+          </a>
+          <button id="theme-toggle" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2">
+            <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+            <svg id="theme-toggle-light-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <header class="bg-gradient-to-br from-amber-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+        <div>
+          <span class="inline-block px-3 py-1 bg-amber-500/20 text-amber-400 text-xs font-semibold rounded-full mb-4">TRILHA 4 — AMBER</span>
+          <h1 class="text-3xl sm:text-4xl font-bold mb-4">🤖 OpenClaw: Agente Conversacional</h1>
+          <p class="text-lg text-neutral-400 max-w-xl mb-6">Integre o vault Obsidian com OpenClaw para ter um segundo cérebro acessível via WhatsApp, Telegram e Slack. Configure SOUL.md, conecte o wiki e crie workflows automáticos.</p>
+          <div class="grid grid-cols-4 gap-4 max-w-lg">
+            <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-amber-400">4</div><div class="text-xs text-neutral-400">Módulos</div></div>
+            <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-amber-400">24</div><div class="text-xs text-neutral-400">Tópicos</div></div>
+            <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-amber-400">~3h</div><div class="text-xs text-neutral-400">Duração</div></div>
+            <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-amber-400">Expert</div><div class="text-xs text-neutral-400">Nível</div></div>
+          </div>
+        </div>
+        <!-- OpenClaw architecture SVG -->
+        <div class="flex justify-center">
+          <svg viewBox="0 0 320 260" class="w-full max-w-xs" xmlns="http://www.w3.org/2000/svg">
+            <!-- Central OpenClaw node -->
+            <rect x="100" y="95" width="120" height="55" rx="10" fill="#1f2937" stroke="#fbbf24" stroke-width="2"/>
+            <text x="160" y="118" text-anchor="middle" fill="#fbbf24" font-size="13">🤖</text>
+            <text x="160" y="133" text-anchor="middle" fill="#fbbf24" font-size="9" font-weight="bold">OpenClaw</text>
+            <text x="160" y="145" text-anchor="middle" fill="#9ca3af" font-size="7">SOUL.md runtime</text>
+
+            <!-- Messaging platforms -->
+            <rect x="5" y="20" width="70" height="40" rx="7" fill="#1f2937" stroke="#fbbf24" stroke-width="1.5"/>
+            <text x="40" y="37" text-anchor="middle" fill="#fbbf24" font-size="10">💬</text>
+            <text x="40" y="52" text-anchor="middle" fill="#d1d5db" font-size="7">WhatsApp</text>
+
+            <rect x="5" y="75" width="70" height="40" rx="7" fill="#1f2937" stroke="#fbbf24" stroke-width="1.5"/>
+            <text x="40" y="92" text-anchor="middle" fill="#fbbf24" font-size="10">✈️</text>
+            <text x="40" y="107" text-anchor="middle" fill="#d1d5db" font-size="7">Telegram</text>
+
+            <rect x="5" y="130" width="70" height="40" rx="7" fill="#1f2937" stroke="#fbbf24" stroke-width="1.5"/>
+            <text x="40" y="147" text-anchor="middle" fill="#fbbf24" font-size="10">#</text>
+            <text x="40" y="162" text-anchor="middle" fill="#d1d5db" font-size="7">Slack</text>
+
+            <!-- Vault/Wiki -->
+            <rect x="240" y="40" width="75" height="45" rx="7" fill="#1f2937" stroke="#FACC15" stroke-width="1.5"/>
+            <text x="277" y="60" text-anchor="middle" fill="#FACC15" font-size="10">📖</text>
+            <text x="277" y="75" text-anchor="middle" fill="#d1d5db" font-size="7">Vault Wiki</text>
+
+            <rect x="240" y="100" width="75" height="45" rx="7" fill="#1f2937" stroke="#10b981" stroke-width="1.5"/>
+            <text x="277" y="120" text-anchor="middle" fill="#10b981" font-size="10">📂</text>
+            <text x="277" y="135" text-anchor="middle" fill="#d1d5db" font-size="7">raw/ sources</text>
+
+            <rect x="240" y="160" width="75" height="45" rx="7" fill="#1f2937" stroke="#6b7280" stroke-width="1.5"/>
+            <text x="277" y="180" text-anchor="middle" fill="#9ca3af" font-size="10">⚙️</text>
+            <text x="277" y="195" text-anchor="middle" fill="#d1d5db" font-size="7">Automações</text>
+
+            <!-- Connections: platforms → OpenClaw -->
+            <line x1="75" y1="40" x2="100" y2="112" stroke="#fbbf24" stroke-width="1" stroke-opacity="0.6" stroke-dasharray="4,3"/>
+            <line x1="75" y1="95" x2="100" y2="122" stroke="#fbbf24" stroke-width="1" stroke-opacity="0.6" stroke-dasharray="4,3"/>
+            <line x1="75" y1="150" x2="100" y2="135" stroke="#fbbf24" stroke-width="1" stroke-opacity="0.6" stroke-dasharray="4,3"/>
+
+            <!-- Connections: OpenClaw → vault/raw -->
+            <line x1="220" y1="110" x2="240" y2="63" stroke="#FACC15" stroke-width="1.5" stroke-dasharray="3,3"/>
+            <line x1="220" y1="122" x2="240" y2="122" stroke="#10b981" stroke-width="1.5" stroke-dasharray="3,3"/>
+            <line x1="220" y1="135" x2="240" y2="182" stroke="#9ca3af" stroke-width="1.5" stroke-dasharray="3,3"/>
+
+            <!-- SOUL.md label -->
+            <rect x="95" y="205" width="130" height="22" rx="6" fill="#374151" stroke="#fbbf24" stroke-width="1"/>
+            <text x="160" y="220" text-anchor="middle" fill="#fbbf24" font-size="9">📄 SOUL.md — identidade</text>
+            <line x1="160" y1="150" x2="160" y2="205" stroke="#fbbf24" stroke-width="1" stroke-dasharray="3,3" stroke-opacity="0.5"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <!-- CARDS SIMPLES -->
+    <div class="mb-12">
+      <h2 class="text-xl font-bold mb-4 text-neutral-300">Módulos desta Trilha</h2>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <a href="modulo-4-1.html" class="group bg-dark-800 rounded-xl border border-dark-600 hover:border-amber-500/30 p-4 transition-all hover:bg-amber-500/5">
+          <div class="text-amber-400 font-bold text-sm mb-1">4.1</div>
+          <div class="font-semibold text-sm group-hover:text-amber-400 transition-colors">🤖 O que é OpenClaw</div>
+          <div class="text-xs text-neutral-500 mt-1">~45 min</div>
+        </a>
+        <a href="modulo-4-2.html" class="group bg-dark-800 rounded-xl border border-dark-600 hover:border-amber-500/30 p-4 transition-all hover:bg-amber-500/5">
+          <div class="text-amber-400 font-bold text-sm mb-1">4.2</div>
+          <div class="font-semibold text-sm group-hover:text-amber-400 transition-colors">🔗 Conectando o Vault ao OpenClaw</div>
+          <div class="text-xs text-neutral-500 mt-1">~45 min</div>
+        </a>
+        <a href="modulo-4-3.html" class="group bg-dark-800 rounded-xl border border-dark-600 hover:border-amber-500/30 p-4 transition-all hover:bg-amber-500/5">
+          <div class="text-amber-400 font-bold text-sm mb-1">4.3</div>
+          <div class="font-semibold text-sm group-hover:text-amber-400 transition-colors">💬 Interface Conversacional para o Wiki</div>
+          <div class="text-xs text-neutral-500 mt-1">~45 min</div>
+        </a>
+        <a href="modulo-4-4.html" class="group bg-dark-800 rounded-xl border border-dark-600 hover:border-amber-500/30 p-4 transition-all hover:bg-amber-500/5">
+          <div class="text-amber-400 font-bold text-sm mb-1">4.4</div>
+          <div class="font-semibold text-sm group-hover:text-amber-400 transition-colors">⚡ Automações e Workflows com OpenClaw</div>
+          <div class="text-xs text-neutral-500 mt-1">~45 min</div>
+        </a>
+      </div>
+    </div>
+
+    <div class="border-t border-dark-600 pt-8 mb-6">
+      <h2 class="text-lg font-bold text-neutral-300">Conteúdo Detalhado</h2>
+    </div>
+
+    <!-- MÓDULO 4.1 -->
+    <div class="bg-dark-800 rounded-xl border border-dark-600 mb-6">
+      <div class="p-6 border-b border-dark-600">
+        <div class="flex items-center justify-between mb-2"><span class="text-amber-400 font-bold">4.1</span><span class="text-xs text-neutral-500">~45 min</span></div>
+        <h3 class="text-2xl font-bold mb-2">🤖 O que é OpenClaw</h3>
+        <p class="text-neutral-400 text-sm">Arquitetura, runtime Pi, SOUL.md e canais suportados — entenda o agente conversacional self-hosted que dá voz ao seu segundo cérebro.</p>
+      </div>
+      <div class="divide-y divide-dark-600">
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+            <span class="text-lg">🏗️</span>
+            <div><span class="font-medium">Arquitetura do OpenClaw</span><span class="text-neutral-500 text-sm ml-2">- Pi runtime, WebSocket gateway, skills</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-amber-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">OpenClaw é um agente de IA self-hosted baseado no runtime Pi. Ele expõe um WebSocket gateway que se conecta a plataformas de mensagens e executa skills (plugins) definidos em arquivos de configuração Markdown.</p></div>
+              <div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Entender a arquitetura é o primeiro passo para customizar o agente, adicionar skills e integrar com o vault Obsidian de forma segura e eficiente.</p></div>
+              <div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Runtime Pi, WebSocket gateway, skills como plugins, configuração declarativa, self-hosted, privacidade total dos dados.</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+            <span class="text-lg">📄</span>
+            <div><span class="font-medium">SOUL.md — A Identidade do Agente</span><span class="text-neutral-500 text-sm ml-2">- configuração em Markdown</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-amber-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">SOUL.md é o arquivo central de configuração do agente OpenClaw. Escrito em Markdown simples, define o nome, personalidade, capacidades, fontes de conhecimento e regras de comportamento do agente.</p></div>
+              <div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">É o único arquivo que você precisa editar para transformar o OpenClaw em um assistente especializado no seu vault. Toda a integração com o wiki começa aqui.</p></div>
+              <div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">SOUL.md, persona do agente, seções de capacidades, regras de acesso, integração com fontes de conhecimento, configuração declarativa.</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+            <span class="text-lg">📡</span>
+            <div><span class="font-medium">Canais Suportados</span><span class="text-neutral-500 text-sm ml-2">- WhatsApp, Telegram, Slack, Discord e 20 outros</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-amber-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">OpenClaw suporta mais de 20 plataformas de mensagens via adapters padronizados: WhatsApp (via Baileys), Telegram (Bot API), Slack (Bolt), Discord, SMS, Email, e outros canais via webhooks.</p></div>
+              <div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Um único vault, múltiplos canais de acesso. Você pode consultar seu segundo cérebro pelo WhatsApp no celular e pelo Slack no trabalho, sem reconfigurar nada.</p></div>
+              <div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Adapters de canal, API do Telegram Bot, Baileys para WhatsApp, Slack Bolt, normalização de mensagens, multi-canal sem duplicação de lógica.</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+            <span class="text-lg">🛠️</span>
+            <div><span class="font-medium">Instalação e Setup Local</span><span class="text-neutral-500 text-sm ml-2">- self-hosted, privacidade total</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-amber-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">OpenClaw roda inteiramente na sua máquina ou servidor privado. A instalação usa npm/bun e leva menos de 10 minutos. Nenhum dado do vault sai da sua rede.</p></div>
+              <div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Self-hosting é o que diferencia OpenClaw de assistentes cloud. Seus documentos, conversas e configurações ficam 100% sob seu controle.</p></div>
+              <div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">npm/bun install, variáveis de ambiente, .env config, rodar como serviço (systemd/pm2), portas e firewall, backup da configuração.</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+            <span class="text-lg">🧩</span>
+            <div><span class="font-medium">Skills e Capacidades</span><span class="text-neutral-500 text-sm ml-2">- voz, browser, cron, automações</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-amber-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Skills são módulos que estendem as capacidades do agente: leitura de arquivos, execução de código, acesso ao browser, síntese de voz, cron jobs, chamadas HTTP e integrações com APIs externas.</p></div>
+              <div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">As skills são o que transformam o OpenClaw de um chatbot simples em um agente completo capaz de interagir com o vault, disparar ingestões e enviar notificações proativas.</p></div>
+              <div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">skill de filesystem, skill de browser, skill de cron, skill de HTTP, composição de skills no SOUL.md, permissões por skill, skills customizadas em JavaScript.</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+            <span class="text-lg">⚖️</span>
+            <div><span class="font-medium">OpenClaw vs Assistentes Cloud</span><span class="text-neutral-500 text-sm ml-2">- comparação de privacidade e controle</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-amber-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Comparação objetiva entre OpenClaw (self-hosted) e assistentes cloud como ChatGPT, Gemini e Copilot em dimensões de privacidade, custo, latência, controle e capacidades offline.</p></div>
+              <div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Entender os trade-offs ajuda a tomar decisões arquiteturais corretas. Para segundo cérebro com dados sensíveis, self-hosted é a única opção segura.</p></div>
+              <div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Soberania de dados, custo de inferência local vs cloud, latência, uptime, vendor lock-in, uso de modelos locais (Ollama) vs API, privacidade diferencial.</p></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+        <button onclick="openModal('modal-4-1')" class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors">Ver em Modal</button>
+        <a href="modulo-4-1.html" class="px-4 py-2 text-sm bg-amber-600 hover:bg-amber-500 text-white rounded-lg transition-colors">Ver Completo</a>
+      </div>
+    </div>
+
+    <!-- MÓDULO 4.2 -->
+    <div class="bg-dark-800 rounded-xl border border-dark-600 mb-6">
+      <div class="p-6 border-b border-dark-600">
+        <div class="flex items-center justify-between mb-2"><span class="text-amber-400 font-bold">4.2</span><span class="text-xs text-neutral-500">~45 min</span></div>
+        <h3 class="text-2xl font-bold mb-2">🔗 Conectando o Vault ao OpenClaw</h3>
+        <p class="text-neutral-400 text-sm">Integre o vault Obsidian como backend de conhecimento do agente, configurando permissões, caminhos e o SOUL.md para consultas ao wiki.</p>
+      </div>
+      <div class="divide-y divide-dark-600">
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+            <span class="text-lg">🏛️</span>
+            <div><span class="font-medium">Arquitetura de Integração</span><span class="text-neutral-500 text-sm ml-2">- vault como backend de conhecimento</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-amber-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Modelo arquitetural onde o OpenClaw age como interface conversacional e o vault Obsidian (pasta wiki/) é o backend de conhecimento. O agente lê arquivos Markdown diretamente do filesystem, sem banco de dados intermediário.</p></div>
+              <div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Compreender o fluxo completo — da pergunta no Telegram até a leitura do wiki — é fundamental para depurar problemas e otimizar respostas.</p></div>
+              <div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Filesystem como backend, acesso direto ao vault, caminho absoluto do vault, schema index.md como ponto de entrada, latência de leitura local.</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+            <span class="text-lg">📝</span>
+            <div><span class="font-medium">Configurando o SOUL.md para o Wiki</span><span class="text-neutral-500 text-sm ml-2">- instruindo o agente sobre o vault</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-amber-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Seção específica do SOUL.md que instrui o agente sobre a estrutura do vault: onde estão os arquivos wiki/, como interpretar o index.md, quais operações são permitidas e como formatar respostas com referências.</p></div>
+              <div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">O SOUL.md é a "synapsis" entre o agente e o vault. Instruções bem escritas produzem respostas precisas; instruções vagas produzem alucinações sobre o conteúdo do wiki.</p></div>
+              <div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Seção knowledge_base no SOUL.md, caminho do vault, instruções de leitura do index.md, regras de citação de fontes, limite de tokens por consulta.</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+            <span class="text-lg">🔐</span>
+            <div><span class="font-medium">Permissões de Leitura/Escrita</span><span class="text-neutral-500 text-sm ml-2">- acesso seguro ao filesystem</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-amber-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Configuração granular de permissões no SOUL.md: quais pastas o agente pode ler (wiki/), quais pode escrever (raw/inbox/), e quais são bloqueadas. Inclui whitelist de extensões e tamanho máximo de arquivo.</p></div>
+              <div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Sem controle de permissões, um agente com acesso total ao filesystem é um risco. Permissões explícitas protegem dados sensíveis e evitam escrita acidental em arquivos críticos.</p></div>
+              <div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">read_paths, write_paths, denied_paths, extensões permitidas (.md, .txt), sandbox de filesystem, auditoria de acessos, separação raw/ vs wiki/.</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+            <span class="text-lg">💬</span>
+            <div><span class="font-medium">Primeiro Prompt via Telegram</span><span class="text-neutral-500 text-sm ml-2">- "o que sei sobre X?"</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-amber-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Tutorial passo-a-passo do primeiro fluxo real: enviar "o que sei sobre Python async?" pelo Telegram, o agente lê o index.md, localiza páginas relevantes em wiki/ e responde com síntese + referências.</p></div>
+              <div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Ver a integração funcionando do primeiro ao último byte valida toda a configuração e dá confiança para prosseguir com fluxos mais complexos.</p></div>
+              <div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Fluxo de consulta completo, parsing do index.md, seleção de páginas wiki/, síntese de resposta, formatação para Telegram, tempo de resposta esperado.</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+            <span class="text-lg">📥</span>
+            <div><span class="font-medium">Ingestão via Mensagem</span><span class="text-neutral-500 text-sm ml-2">- enviando arquivos para raw/ pelo celular</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-amber-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Fluxo de captura mobile: enviar um PDF, texto ou link pelo Telegram → OpenClaw salva em raw/inbox/ → dispara ingestão via Claude Code → wiki/ atualizado automaticamente.</p></div>
+              <div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Elimina a fricção de captura. Você encontra um artigo no celular, manda para o agente e em minutos ele está compilado no wiki, acessível para consultas futuras.</p></div>
+              <div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">raw/inbox/ como landing zone, skill de file write, trigger de ingestão, callback de confirmação, suporte a PDF/TXT/URL, validação de tamanho.</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+            <span class="text-lg">✅</span>
+            <div><span class="font-medium">Testando a Integração</span><span class="text-neutral-500 text-sm ml-2">- checklist de validação</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-amber-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Checklist completo para validar a integração: teste de leitura do wiki, teste de escrita em raw/, teste de permissões negadas, teste de resposta a consulta, teste de ingestão e verificação de logs.</p></div>
+              <div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Uma integração não testada sistematicamente falha em produção. O checklist garante que todos os caminhos críticos funcionam antes de você depender do sistema.</p></div>
+              <div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Testes de smoke, validação de permissões, verificação de logs, teste de consulta com página conhecida, teste de ingestão com arquivo de teste, rollback plan.</p></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+        <button onclick="openModal('modal-4-2')" class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors">Ver em Modal</button>
+        <a href="modulo-4-2.html" class="px-4 py-2 text-sm bg-amber-600 hover:bg-amber-500 text-white rounded-lg transition-colors">Ver Completo</a>
+      </div>
+    </div>
+
+    <!-- MÓDULO 4.3 -->
+    <div class="bg-dark-800 rounded-xl border border-dark-600 mb-6">
+      <div class="p-6 border-b border-dark-600">
+        <div class="flex items-center justify-between mb-2"><span class="text-amber-400 font-bold">4.3</span><span class="text-xs text-neutral-500">~45 min</span></div>
+        <h3 class="text-2xl font-bold mb-2">💬 Interface Conversacional para o Wiki</h3>
+        <p class="text-neutral-400 text-sm">Design de diálogo para PKM, consultas em linguagem natural, captura mobile e histórico de conversas como fonte de conhecimento.</p>
+      </div>
+      <div class="divide-y divide-dark-600">
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+            <span class="text-lg">🎨</span>
+            <div><span class="font-medium">Design da Conversa</span><span class="text-neutral-500 text-sm ml-2">- padrões de diálogo para PKM</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-amber-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Padrões de design conversacional adaptados para PKM: respostas com fonte citada, confirmações de ingestão, queries de refinamento, sugestões proativas e mensagens de erro humanizadas.</p></div>
+              <div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Uma interface mal projetada cria frustração. Padrões bem definidos no SOUL.md tornam o agente previsível, confiável e agradável de usar no dia a dia.</p></div>
+              <div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Citação de fonte wiki, confirmação de escrita, query de refinamento ("quer mais detalhes sobre X?"), fallback quando não encontrado, tom consistente, emojis e formatação Markdown.</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+            <span class="text-lg">🔎</span>
+            <div><span class="font-medium">Consultas em Linguagem Natural</span><span class="text-neutral-500 text-sm ml-2">- "o que decidimos sobre Y?"</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-amber-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Técnica para formular perguntas ao wiki de forma natural, como se estivesse conversando com um colega que leu todos os seus documentos: "o que decidimos sobre a arquitetura de banco?", "quais são os pros/cons de X que registrei?"</p></div>
+              <div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Consultas bem formuladas retornam respostas melhores. Entender como o agente mapeia linguagem natural para páginas wiki aumenta a utilidade do sistema.</p></div>
+              <div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Intent parsing, matching de query ao index.md, síntese multi-página, consultas temporais ("o que anotei este mês sobre X?"), consultas comparativas, follow-up questions.</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+            <span class="text-lg">📱</span>
+            <div><span class="font-medium">Captura Mobile</span><span class="text-neutral-500 text-sm ml-2">- enviar nota pelo Telegram → raw/ → wiki/</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-amber-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Fluxo completo de captura mobile: você digita uma nota, ideia ou URL no Telegram → o agente cria um arquivo em raw/inbox/ com metadados → disparada a operação de ingestão → wiki/ atualizado.</p></div>
+              <div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">A captura é o gargalo do segundo cérebro. Reduzir a fricção de "encontrei algo interessante" para "está no wiki" de horas para minutos transforma o hábito de capturar.</p></div>
+              <div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">raw/inbox/ como landing zone, prefixo de data no filename, metadados YAML automáticos, trigger via mensagem Telegram, confirmação de sucesso, fluxo de ingestão automático.</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+            <span class="text-lg">🔔</span>
+            <div><span class="font-medium">Alertas e Notificações</span><span class="text-neutral-500 text-sm ml-2">- OpenClaw avisa sobre atualizações</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-amber-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">OpenClaw pode enviar notificações proativas: "ingestão de X páginas completada", "wiki tem Y páginas desatualizadas", "novo arquivo em raw/ aguardando ingestão". Configuradas via skill de cron no SOUL.md.</p></div>
+              <div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Notificações proativas fecham o loop do sistema. Sem elas, o wiki pode se degradar silenciosamente sem que você perceba.</p></div>
+              <div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Push notifications via Telegram, skill de cron para verificações periódicas, thresholds de alerta, silenciar notificações (modo DND), digests vs alertas imediatos.</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+            <span class="text-lg">📜</span>
+            <div><span class="font-medium">Histórico de Conversas como Raw</span><span class="text-neutral-500 text-sm ml-2">- logs de chat → ingestão</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-amber-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Técnica avançada: exportar logs de conversa com o agente como arquivos raw/ para ingestão. O LLM compila as decisões, insights e notas capturadas nas conversas em páginas wiki/ estruturadas.</p></div>
+              <div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Conversas com o agente são ricas em conhecimento implícito. Ingerir os logs transforma o diálogo em memória persistente, criando um loop de aprendizado positivo.</p></div>
+              <div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Export de logs via /export, formato de log para ingestão, limpeza de ruído nas conversas, extração de decisões e insights, wiki de "diário de conversas".</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+            <span class="text-lg">🌐</span>
+            <div><span class="font-medium">Multi-canal</span><span class="text-neutral-500 text-sm ml-2">- mesma base de conhecimento em canais diferentes</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-amber-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Configuração para acessar o mesmo vault via múltiplos canais simultaneamente: WhatsApp pessoal, Telegram profissional e Slack de equipe, todos lendo o mesmo wiki/ sem duplicação de dados.</p></div>
+              <div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">O segundo cérebro deve estar disponível em qualquer contexto. Multi-canal significa que você acessa o conhecimento onde estiver, sem trocar de aplicativo.</p></div>
+              <div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Configuração de múltiplos adapters no SOUL.md, identidades diferentes por canal, permissões por canal (Slack pode ingerir, WhatsApp só lê), roteamento de notificações.</p></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+        <button onclick="openModal('modal-4-3')" class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors">Ver em Modal</button>
+        <a href="modulo-4-3.html" class="px-4 py-2 text-sm bg-amber-600 hover:bg-amber-500 text-white rounded-lg transition-colors">Ver Completo</a>
+      </div>
+    </div>
+
+    <!-- MÓDULO 4.4 -->
+    <div class="bg-dark-800 rounded-xl border border-dark-600 mb-6">
+      <div class="p-6 border-b border-dark-600">
+        <div class="flex items-center justify-between mb-2"><span class="text-amber-400 font-bold">4.4</span><span class="text-xs text-neutral-500">~45 min</span></div>
+        <h3 class="text-2xl font-bold mb-2">⚡ Automações e Workflows com OpenClaw</h3>
+        <p class="text-neutral-400 text-sm">Cron jobs de ingestão, integrações GitHub, daily briefings e pipelines completos do raw/ ao celular.</p>
+      </div>
+      <div class="divide-y divide-dark-600">
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+            <span class="text-lg">⏰</span>
+            <div><span class="font-medium">Cron Jobs de Ingestão</span><span class="text-neutral-500 text-sm ml-2">- agendamento automático via cron</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-amber-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Configuração de cron jobs no SOUL.md para disparar ingestão automática: verificar raw/inbox/ a cada hora, rodar lint do wiki semanalmente, atualizar páginas de entidades mensalmente.</p></div>
+              <div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Automação elimina a necessidade de lembrar de ingerir manualmente. O vault se mantém atualizado em segundo plano sem intervenção humana.</p></div>
+              <div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Sintaxe cron no SOUL.md, skill de cron, verificação de raw/inbox/, trigger de ingestão via Claude Code CLI, notificação pós-ingestão, log de execuções.</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+            <span class="text-lg">🐙</span>
+            <div><span class="font-medium">Integração GitHub → Wiki via OpenClaw</span><span class="text-neutral-500 text-sm ml-2">- PR summaries automáticos</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-amber-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Webhook do GitHub para o OpenClaw: quando um PR é mergeado, o agente busca o diff e resumo, cria um arquivo raw/github-pr-NNN.md e dispara ingestão para atualizar páginas de projeto no wiki.</p></div>
+              <div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Decisões técnicas ficam registradas automaticamente no segundo cérebro sem esforço adicional. O wiki de projetos se mantém sincronizado com o repositório.</p></div>
+              <div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">GitHub webhooks, payload de PR, skill de HTTP para receber webhook, extração de diff e summary, criação de raw/, mapeamento PR → página de projeto wiki.</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+            <span class="text-lg">🌅</span>
+            <div><span class="font-medium">Daily Briefing</span><span class="text-neutral-500 text-sm ml-2">- resumo diário do vault via mensagem</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-amber-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Cron job matinal (ex: 8h) que gera e envia um briefing pelo Telegram: páginas modificadas ontem, raw/ aguardando ingestão, lembretes de revisão e próximas notas agendadas.</p></div>
+              <div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">O daily briefing transforma o segundo cérebro de passivo para ativo. Em vez de você consultar o wiki, ele vem até você com o que é relevante para o dia.</p></div>
+              <div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Cron diário, leitura de log.md, identificação de modificações recentes, formatação de digest, envio via Telegram, personalização do conteúdo do briefing.</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+            <span class="text-lg">📅</span>
+            <div><span class="font-medium">Workflow de Revisão Semanal</span><span class="text-neutral-500 text-sm ml-2">- OpenClaw facilita o lint</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-amber-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Workflow semanal onde o OpenClaw executa a operação de lint do wiki (contradições, páginas órfãs, links quebrados) e envia o relatório pelo Telegram para revisão humana.</p></div>
+              <div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">O lint é a operação de manutenção do wiki. Sem ele, a qualidade do conhecimento se degrada. O OpenClaw automatiza o gatilho e entrega o relatório no canal certo.</p></div>
+              <div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Operação lint, relatório de contradições, detecção de páginas órfãs, links quebrados, formatação do relatório para Telegram, aprovação e resolução humana via chat.</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+            <span class="text-lg">🚨</span>
+            <div><span class="font-medium">Notificações de Degradação</span><span class="text-neutral-500 text-sm ml-2">- alertas quando wiki precisa de atenção</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-amber-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Sistema de alertas proativos: quando o raw/inbox/ acumula mais de N arquivos não ingeridos, quando uma página wiki não é atualizada há mais de X dias, ou quando o lint detecta problemas críticos.</p></div>
+              <div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Degradação silenciosa é o maior inimigo do segundo cérebro. Alertas proativos garantem que o sistema se mantenha saudável sem revisão manual constante.</p></div>
+              <div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Thresholds configuráveis, verificação de raw/inbox/ por contagem, páginas desatualizadas por data, severidade de alertas, snooze de alertas, escalation policy.</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+            <span class="text-lg">🔄</span>
+            <div><span class="font-medium">Construindo seu Pipeline Completo</span><span class="text-neutral-500 text-sm ml-2">- do raw/ ao celular</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-amber-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Síntese prática: montagem do pipeline completo combinando todos os módulos — captura via Telegram, raw/, ingestão automática, wiki/, consulta conversacional e briefings diários — em um sistema coeso.</p></div>
+              <div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Cada módulo isolado é útil, mas o valor real emerge da integração completa. Este tópico conecta todas as peças em um fluxo de conhecimento que funciona enquanto você dorme.</p></div>
+              <div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Pipeline end-to-end, SOUL.md final consolidado, checklist de produção, monitoramento do sistema, backup e recuperação, evolução incremental do pipeline.</p></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+        <button onclick="openModal('modal-4-4')" class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors">Ver em Modal</button>
+        <a href="modulo-4-4.html" class="px-4 py-2 text-sm bg-amber-600 hover:bg-amber-500 text-white rounded-lg transition-colors">Ver Completo</a>
+      </div>
+    </div>
+
+    <!-- Navegação -->
+    <div class="flex justify-between items-center mt-8 pt-8 border-t border-dark-600">
+      <a href="../trilha3/index.html" class="flex items-center space-x-2 px-4 py-2 rounded-lg bg-dark-800 border border-dark-600 hover:border-amber-500/50 transition-colors text-neutral-300 hover:text-amber-400">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+        <span>Trilha 3 — Avançado</span>
+      </a>
+      <a href="../trilha5/index.html" class="flex items-center space-x-2 px-4 py-2 rounded-lg bg-amber-500/20 border border-amber-500/30 hover:bg-amber-500/30 transition-colors text-amber-400">
+        <span>Trilha 5 — Próxima</span>
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+  </main>
+
+  <footer class="border-t border-dark-600 mt-16 py-8">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <p class="text-neutral-500 text-sm">2Cérebro · <a href="https://inema.club" class="text-sky-400 hover:text-sky-300">INEMA.CLUB</a></p>
+    </div>
+  </footer>
+
+  <!-- Modals -->
+  <div id="modal-4-1" class="modal fixed inset-0 z-50 items-center justify-center p-2 sm:p-4 bg-black/80" onclick="if(event.target===this)closeModal()">
+    <div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600">
+      <div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0">
+        <div class="flex items-center space-x-3"><span class="text-amber-400 font-bold">4.1</span><span class="font-semibold">🤖 O que é OpenClaw</span></div>
+        <button onclick="closeModal()" class="text-neutral-400 hover:text-white text-2xl leading-none">&times;</button>
+      </div>
+      <iframe src="modulo-4-1.html" class="flex-1 w-full rounded-b-xl"></iframe>
+    </div>
+  </div>
+
+  <div id="modal-4-2" class="modal fixed inset-0 z-50 items-center justify-center p-2 sm:p-4 bg-black/80" onclick="if(event.target===this)closeModal()">
+    <div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600">
+      <div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0">
+        <div class="flex items-center space-x-3"><span class="text-amber-400 font-bold">4.2</span><span class="font-semibold">🔗 Conectando o Vault ao OpenClaw</span></div>
+        <button onclick="closeModal()" class="text-neutral-400 hover:text-white text-2xl leading-none">&times;</button>
+      </div>
+      <iframe src="modulo-4-2.html" class="flex-1 w-full rounded-b-xl"></iframe>
+    </div>
+  </div>
+
+  <div id="modal-4-3" class="modal fixed inset-0 z-50 items-center justify-center p-2 sm:p-4 bg-black/80" onclick="if(event.target===this)closeModal()">
+    <div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600">
+      <div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0">
+        <div class="flex items-center space-x-3"><span class="text-amber-400 font-bold">4.3</span><span class="font-semibold">💬 Interface Conversacional para o Wiki</span></div>
+        <button onclick="closeModal()" class="text-neutral-400 hover:text-white text-2xl leading-none">&times;</button>
+      </div>
+      <iframe src="modulo-4-3.html" class="flex-1 w-full rounded-b-xl"></iframe>
+    </div>
+  </div>
+
+  <div id="modal-4-4" class="modal fixed inset-0 z-50 items-center justify-center p-2 sm:p-4 bg-black/80" onclick="if(event.target===this)closeModal()">
+    <div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600">
+      <div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0">
+        <div class="flex items-center space-x-3"><span class="text-amber-400 font-bold">4.4</span><span class="font-semibold">⚡ Automações e Workflows com OpenClaw</span></div>
+        <button onclick="closeModal()" class="text-neutral-400 hover:text-white text-2xl leading-none">&times;</button>
+      </div>
+      <iframe src="modulo-4-4.html" class="flex-1 w-full rounded-b-xl"></iframe>
+    </div>
+  </div>
+
+  <script>
+    function toggleTopic(button) {
+      const topicItem = button.closest('.topic-item');
+      const explanation = topicItem.querySelector('.topic-explanation');
+      const moduleCard = button.closest('.bg-dark-800');
+      moduleCard.querySelectorAll('.topic-explanation.active').forEach(exp => {
+        if (exp !== explanation) exp.classList.remove('active');
+      });
+      explanation.classList.toggle('active');
+    }
+
+    function openModal(modalId) {
+      const modal = document.getElementById(modalId);
+      if (modal) { modal.classList.add('active'); document.body.style.overflow = 'hidden'; }
+    }
+
+    function closeModal() {
+      document.querySelectorAll('.modal').forEach(m => m.classList.remove('active'));
+      document.body.style.overflow = 'auto';
+    }
+
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+    const toggle = document.getElementById('theme-toggle');
+    const darkIcon = document.getElementById('theme-toggle-dark-icon');
+    const lightIcon = document.getElementById('theme-toggle-light-icon');
+    const html = document.documentElement;
+    function applyTheme(isDark) {
+      html.classList.toggle('dark', isDark);
+      darkIcon.classList.toggle('hidden', isDark);
+      lightIcon.classList.toggle('hidden', !isDark);
+    }
+    applyTheme(localStorage.getItem('theme') !== 'light');
+    toggle.addEventListener('click', () => {
+      const isDark = html.classList.contains('dark');
+      localStorage.setItem('theme', isDark ? 'light' : 'dark');
+      applyTheme(!isDark);
+    });
+  </script>
+</body>
+</html>

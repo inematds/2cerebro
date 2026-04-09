@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Módulo 6.3 — Wikis Auto-Mantidos | 2Cérebro</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config={darkMode:'class',theme:{extend:{colors:{primary:'#FACC15',dark:{900:'#111827',800:'#1f2937',700:'#374151',600:'#4b5563'}}}}}</script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body{font-family:'Inter',sans-serif;}
+    html:not(.dark) body{background-color:#f8fafc;}
+    html:not(.dark) .bg-dark-900{background-color:#ffffff;}
+    html:not(.dark) .bg-dark-800{background-color:#f9fafb;}
+    html:not(.dark) .bg-dark-700{background-color:#f3f4f6;}
+    html:not(.dark) .bg-dark-600{background-color:#e5e7eb;}
+    html:not(.dark) .text-neutral-100{color:#111827;}
+    html:not(.dark) .text-neutral-300{color:#4b5563;}
+    html:not(.dark) .text-neutral-400{color:#6b7280;}
+    html:not(.dark) .text-neutral-500{color:#9ca3af;}
+    html:not(.dark) .border-dark-600{border-color:#d1d5db;}
+    html:not(.dark) .border-dark-700{border-color:#e5e7eb;}
+    html:not(.dark) .text-rose-400{color:#9f1239;}
+    html:not(.dark) .bg-rose-500\/20{background-color:rgba(225,29,72,0.12);}
+    html:not(.dark) .border-rose-500\/30{border-color:rgba(225,29,72,0.25);}
+    html:not(.dark) [class*="bg-gradient-to"]{background-image:none!important;}
+    html:not(.dark) .text-primary{color:#a16207;}
+    html:not(.dark) .bg-primary\/10{background-color:rgba(161,98,7,0.08);}
+    html:not(.dark) .border-primary\/40{border-color:rgba(161,98,7,0.25);}
+    html:not(.dark) .text-sky-400{color:#0369a1;}
+    html:not(.dark) .text-yellow-400{color:#a16207;}
+    html:not(.dark) .hover\:text-sky-300:hover{color:#0284c7;}
+    html:not(.dark) .hover\:text-yellow-300:hover{color:#854d0e;}
+    html:not(.dark) .bg-dark-900\/95{background-color:rgba(255,255,255,0.95);}
+  </style>
+</head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen">
+
+  <nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-14">
+        <div class="flex items-center space-x-4">
+          <a href="../../index.html" class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300"><span class="text-2xl">🧠</span><span class="font-bold text-lg hidden sm:inline">2Cérebro</span></a>
+          <span class="text-neutral-600">|</span>
+          <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300 text-sm font-medium">INEMA.CLUB</a>
+        </div>
+        <div class="flex items-center space-x-1 sm:space-x-2">
+          <a href="../trilha1/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors"><span class="sm:hidden">T1</span><span class="hidden sm:inline">Fundamentos</span></a>
+          <a href="../trilha2/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors"><span class="sm:hidden">T2</span><span class="hidden sm:inline">Implementação</span></a>
+          <a href="../trilha3/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors"><span class="sm:hidden">T3</span><span class="hidden sm:inline">Avançado</span></a>
+          <a href="index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-rose-400 bg-rose-500/10"><span class="sm:hidden">T6</span><span class="hidden sm:inline">Karpathy</span></a>
+          <button id="theme-toggle" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2">
+            <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+            <svg id="theme-toggle-light-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+    <div class="flex items-center space-x-2 text-sm text-neutral-400">
+      <a href="../../index.html" class="hover:text-rose-400">Início</a>
+      <span>/</span>
+      <a href="index.html" class="hover:text-rose-400">Trilha 6 — Karpathy Vision</a>
+      <span>/</span>
+      <span class="text-rose-400">Módulo 6.3</span>
+    </div>
+  </nav>
+
+  <header class="bg-gradient-to-br from-rose-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <span class="inline-block px-3 py-1 bg-rose-500/20 text-rose-400 text-xs font-semibold rounded-full mb-4">MÓDULO 6.3</span>
+      <h1 class="text-3xl sm:text-4xl font-bold mb-4">🔄 Wikis Auto-Mantidos</h1>
+      <p class="text-lg text-neutral-400 max-w-3xl">Por que a manutenção de wikis sempre falhou para humanos — e como LLMs mudam a equação com custo marginal zero, curadoria incansável e um sistema imunológico que detecta inconsistências automaticamente.</p>
+      <div class="grid grid-cols-4 gap-4 mt-8 max-w-lg">
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-rose-400">6</div><div class="text-xs text-neutral-400">Tópicos</div></div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-rose-400">45</div><div class="text-xs text-neutral-400">Minutos</div></div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-rose-400">Visão</div><div class="text-xs text-neutral-400">Nível</div></div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-rose-400">Teoria</div><div class="text-xs text-neutral-400">Tipo</div></div>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+    <!-- TÓPICO 1 -->
+    <section id="topico-1" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-rose-500/20 text-rose-400 font-bold text-xl">1</span>
+        <h2 class="text-2xl font-bold">😩 Por que Humanos Falham na Manutenção</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        A Wikipedia é a exceção — não a regra. Para cada wiki comunitário bem-sucedido, existem mil wikis corporativos e pessoais abandonados. Karpathy identifica o problema exato: não é <strong class="text-rose-400">falta de vontade</strong>, é <strong class="text-rose-400">fricção cognitiva estrutural</strong>.
+      </p>
+
+      <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+        <h3 class="text-base font-semibold text-rose-400 mb-4">😩 A Curva de Decaimento do Wiki Humano</h3>
+        <svg viewBox="0 0 680 200" class="w-full" xmlns="http://www.w3.org/2000/svg">
+          <!-- Axes -->
+          <line x1="50" y1="20" x2="50" y2="170" stroke="#374151" stroke-width="1.5"/>
+          <line x1="50" y1="170" x2="660" y2="170" stroke="#374151" stroke-width="1.5"/>
+
+          <!-- Y label -->
+          <text x="15" y="100" fill="#6b7280" font-size="9" transform="rotate(-90 15 100)">Qualidade do Wiki</text>
+
+          <!-- X labels -->
+          <text x="100" y="185" fill="#6b7280" font-size="8" text-anchor="middle">Mês 1</text>
+          <text x="220" y="185" fill="#6b7280" font-size="8" text-anchor="middle">Mês 3</text>
+          <text x="380" y="185" fill="#6b7280" font-size="8" text-anchor="middle">Mês 6</text>
+          <text x="540" y="185" fill="#6b7280" font-size="8" text-anchor="middle">Mês 12</text>
+          <text x="640" y="185" fill="#6b7280" font-size="8" text-anchor="middle">Mês 18</text>
+
+          <!-- Human wiki curve (decaying) -->
+          <path d="M60,30 C120,32 160,50 200,80 C260,120 320,145 400,158 C480,168 560,168 640,168" fill="none" stroke="#ef4444" stroke-width="2.5" stroke-dasharray="6,3"/>
+          <text x="660" y="168" fill="#ef4444" font-size="8">Humano</text>
+
+          <!-- LLM wiki curve (growing) -->
+          <path d="M60,150 C120,140 180,120 260,90 C340,60 440,40 540,30 C580,27 620,25 640,24" fill="none" stroke="#fb7185" stroke-width="2.5"/>
+          <text x="645" y="22" fill="#fb7185" font-size="8">LLM</text>
+
+          <!-- Events on human curve -->
+          <circle cx="100" cy="38" r="4" fill="#374151" stroke="#ef4444"/>
+          <text x="105" y="30" fill="#9ca3af" font-size="7">Entusiasmo inicial</text>
+
+          <circle cx="240" cy="100" r="4" fill="#374151" stroke="#ef4444"/>
+          <text x="245" y="95" fill="#9ca3af" font-size="7">Manutenção se torna chore</text>
+
+          <circle cx="400" cy="158" r="4" fill="#374151" stroke="#ef4444"/>
+          <text x="345" y="153" fill="#9ca3af" font-size="7">Links quebrados ignorados</text>
+
+          <circle cx="540" cy="168" r="4" fill="#374151" stroke="#ef4444"/>
+          <text x="485" y="163" fill="#6b7280" font-size="7">Abandono prático</text>
+        </svg>
+      </div>
+
+      <div class="bg-gradient-to-br from-rose-900/30 to-dark-800 rounded-xl border border-rose-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-rose-400 mb-4 flex items-center"><span class="mr-2">🔬</span> As Quatro Tarefas que Humanos Odeiam</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="bg-dark-700/50 rounded-lg p-4">
+            <p class="text-red-400 font-semibold text-sm mb-1">1. Cross-referencing</p>
+            <p class="text-neutral-300 text-sm">Verificar se o novo conteúdo contradiz algo que foi escrito 6 meses atrás em outra página.</p>
+          </div>
+          <div class="bg-dark-700/50 rounded-lg p-4">
+            <p class="text-red-400 font-semibold text-sm mb-1">2. Deduplicação</p>
+            <p class="text-neutral-300 text-sm">Detectar que o mesmo conceito está em duas páginas diferentes e mesclar sem perder informação.</p>
+          </div>
+          <div class="bg-dark-700/50 rounded-lg p-4">
+            <p class="text-red-400 font-semibold text-sm mb-1">3. Link maintenance</p>
+            <p class="text-neutral-300 text-sm">Verificar se os links internos ainda apontam para páginas válidas após renomeações e reorganizações.</p>
+          </div>
+          <div class="bg-dark-700/50 rounded-lg p-4">
+            <p class="text-red-400 font-semibold text-sm mb-1">4. Consistência de terminologia</p>
+            <p class="text-neutral-300 text-sm">Garantir que o mesmo conceito é chamado pelo mesmo nome em todo o wiki — sem sinônimos inconsistentes.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center"><span class="mr-2">📊</span> O Insight de Karpathy</h3>
+        <p class="text-neutral-300">"O gargalo em PKM não é leitura — é bookkeeping. Cross-referencing, deduplicação, consistência. LLMs fazem esse bookkeeping a custo próximo de zero. O wiki auto-mantido não é ficção científica: é consequência natural de delegar o bookkeeping para quem não se cansa."</p>
+        <p class="text-neutral-400 text-sm mt-2">— Andrej Karpathy, LLM Knowledge Base gist, Abril 2026</p>
+      </div>
+    </section>
+
+    <!-- TÓPICO 2 -->
+    <section id="topico-2" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-rose-500/20 text-rose-400 font-bold text-xl">2</span>
+        <h2 class="text-2xl font-bold">🤖 LLMs como Curadores Incansáveis</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        O que um curador humano excelente faria — se não ficasse cansado, não esquecesse, não ficasse entediado com tarefas repetitivas e nunca precisasse de descanso. <strong class="text-rose-400">Isso é o que o LLM faz por design.</strong>
+      </p>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+          <h4 class="font-bold text-emerald-400 mb-4">✓ O que o LLM faz em cada Ingest</h4>
+          <ul class="space-y-3 text-neutral-300">
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Lê a fonte completa sem fatiga</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Verifica contradições com páginas existentes</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Adiciona links cruzados relevantes</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Atualiza o índice sem esquecer nada</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Registra o processo completo no log</span></li>
+          </ul>
+        </div>
+        <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+          <h4 class="font-bold text-red-400 mb-4">✗ O que o Humano não consegue manter</h4>
+          <ul class="space-y-3 text-neutral-300">
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Lembrar de atualizar 15 páginas relacionadas</span></li>
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Detectar contradição com nota de 8 meses atrás</span></li>
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Fazer cross-referencing completo sem omissões</span></li>
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Manter consistência de nomenclatura a longo prazo</span></li>
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Realizar lint semanal sem atrasar por urgência</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">💡</span> A Divisão Correta do Trabalho</h3>
+        <p class="text-neutral-300">Humanos são melhores em: criar conteúdo original, tomar decisões estratégicas, avaliar qualidade, definir o que importa. LLMs são melhores em: bookkeeping, cross-referencing, deduplicação, manutenção de consistência. O sistema ideal delega cada tarefa para quem a executa melhor.</p>
+      </div>
+    </section>
+
+    <!-- TÓPICO 3 -->
+    <section id="topico-3" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-rose-500/20 text-rose-400 font-bold text-xl">3</span>
+        <h2 class="text-2xl font-bold">🛡️ Lint como Sistema Imunológico</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Um sistema imunológico saudável detecta patógenos antes que causem danos maiores. A operação Lint do LLM wiki funciona exatamente assim: <strong class="text-rose-400">detecta inconsistências antes que se proliferem</strong> e corrompam a integridade do vault.
+      </p>
+
+      <div class="bg-gradient-to-br from-rose-900/30 to-dark-800 rounded-xl border border-rose-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-rose-400 mb-4 flex items-center"><span class="mr-2">🛡️</span> O que a Operação Lint Detecta</h3>
+        <div class="space-y-4">
+          <div class="flex items-start space-x-4">
+            <span class="w-8 h-8 rounded-full bg-rose-500/20 text-rose-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+            <div>
+              <p class="text-rose-400 font-semibold text-sm">Contradições entre páginas</p>
+              <p class="text-neutral-300 text-sm">página-a.md diz "X é verdadeiro" enquanto página-b.md diz "X é falso". Lint detecta e sinaliza qual fonte é mais recente e qual deve ser atualizada.</p>
+            </div>
+          </div>
+          <div class="flex items-start space-x-4">
+            <span class="w-8 h-8 rounded-full bg-rose-500/20 text-rose-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+            <div>
+              <p class="text-rose-400 font-semibold text-sm">Páginas órfãs</p>
+              <p class="text-neutral-300 text-sm">Páginas que existem em wiki/ mas não são referenciadas por nenhuma outra página nem pelo index.md — candidatas a arquivamento ou remoção.</p>
+            </div>
+          </div>
+          <div class="flex items-start space-x-4">
+            <span class="w-8 h-8 rounded-full bg-rose-500/20 text-rose-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+            <div>
+              <p class="text-rose-400 font-semibold text-sm">Links quebrados</p>
+              <p class="text-neutral-300 text-sm">Links internos apontando para [[páginas que não existem]] ou [[páginas que foram renomeadas]] sem redirecionamento.</p>
+            </div>
+          </div>
+          <div class="flex items-start space-x-4">
+            <span class="w-8 h-8 rounded-full bg-rose-500/20 text-rose-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+            <div>
+              <p class="text-rose-400 font-semibold text-sm">Conceitos duplicados</p>
+              <p class="text-neutral-300 text-sm">machine-learning.md e ml.md cobrindo o mesmo conceito com sobreposição significativa — candidatos a merge.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+        <h3 class="text-base font-semibold text-rose-400 mb-4">🗓️ Frequência Recomendada por Tipo de Lint</h3>
+        <div class="overflow-x-auto">
+          <table class="w-full text-sm">
+            <thead>
+              <tr class="border-b border-dark-600">
+                <th class="text-left py-2 text-neutral-400">Tipo de verificação</th>
+                <th class="text-left py-2 text-neutral-400">Frequência</th>
+                <th class="text-left py-2 text-neutral-400">Custo estimado</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="border-b border-dark-700">
+                <td class="py-2 text-neutral-300">Links quebrados</td>
+                <td class="py-2 text-rose-400">Semanal</td>
+                <td class="py-2 text-neutral-400">~500 tokens</td>
+              </tr>
+              <tr class="border-b border-dark-700">
+                <td class="py-2 text-neutral-300">Páginas órfãs</td>
+                <td class="py-2 text-rose-400">Mensal</td>
+                <td class="py-2 text-neutral-400">~1.000 tokens</td>
+              </tr>
+              <tr class="border-b border-dark-700">
+                <td class="py-2 text-neutral-300">Contradições entre páginas</td>
+                <td class="py-2 text-rose-400">Mensal</td>
+                <td class="py-2 text-neutral-400">~3.000 tokens</td>
+              </tr>
+              <tr>
+                <td class="py-2 text-neutral-300">Auditoria completa de qualidade</td>
+                <td class="py-2 text-rose-400">Trimestral</td>
+                <td class="py-2 text-neutral-400">~8.000 tokens</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- TÓPICO 4 -->
+    <section id="topico-4" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-rose-500/20 text-rose-400 font-bold text-xl">4</span>
+        <h2 class="text-2xl font-bold">💰 O Custo Marginal Zero</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        A frase mais importante do gist de Karpathy: <strong class="text-rose-400">"cada nova consulta não custa nova ingestão"</strong>. O custo de compilação é pago uma vez. Tudo depois é leitura barata de Markdown.
+      </p>
+
+      <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+        <h3 class="text-base font-semibold text-rose-400 mb-4">💰 Custo Acumulado: RAG vs. Compilação</h3>
+        <svg viewBox="0 0 680 200" class="w-full" xmlns="http://www.w3.org/2000/svg">
+          <line x1="60" y1="20" x2="60" y2="170" stroke="#374151" stroke-width="1.5"/>
+          <line x1="60" y1="170" x2="660" y2="170" stroke="#374151" stroke-width="1.5"/>
+
+          <text x="15" y="110" fill="#6b7280" font-size="8" transform="rotate(-90 15 110)">Custo Total (tokens)</text>
+
+          <!-- X axis labels -->
+          <text x="120" y="185" fill="#6b7280" font-size="8" text-anchor="middle">10 consultas</text>
+          <text x="240" y="185" fill="#6b7280" font-size="8" text-anchor="middle">50</text>
+          <text x="380" y="185" fill="#6b7280" font-size="8" text-anchor="middle">100</text>
+          <text x="540" y="185" fill="#6b7280" font-size="8" text-anchor="middle">500</text>
+          <text x="650" y="185" fill="#6b7280" font-size="8" text-anchor="middle">1000</text>
+
+          <!-- RAG line (linear, steep) -->
+          <path d="M65,165 L120,140 L240,100 L380,55 L540,25 L650,20" fill="none" stroke="#ef4444" stroke-width="2.5" stroke-dasharray="6,3"/>
+          <text x="655" y="18" fill="#ef4444" font-size="8">RAG</text>
+
+          <!-- Compilation line (step + flat) -->
+          <path d="M65,165 L65,110 L120,108 L240,104 L380,100 L540,97 L650,95" fill="none" stroke="#fb7185" stroke-width="2.5"/>
+          <text x="655" y="93" fill="#fb7185" font-size="8">Compilação</text>
+
+          <!-- Break-even annotation -->
+          <line x1="150" y1="100" x2="150" y2="170" stroke="#FACC15" stroke-width="1" stroke-dasharray="3,3"/>
+          <text x="155" y="95" fill="#FACC15" font-size="8">Break-even</text>
+          <text x="155" y="107" fill="#FACC15" font-size="7">~20 consultas</text>
+
+          <!-- Initial compilation cost annotation -->
+          <text x="68" y="105" fill="#9ca3af" font-size="7">Custo inicial</text>
+          <text x="68" y="115" fill="#9ca3af" font-size="7">compilação</text>
+        </svg>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+        <div class="bg-dark-800 rounded-xl border border-dark-600 p-4 text-center">
+          <div class="text-3xl font-bold text-rose-400 mb-1">~20</div>
+          <div class="text-sm text-neutral-400">consultas para break-even vs. RAG</div>
+        </div>
+        <div class="bg-dark-800 rounded-xl border border-dark-600 p-4 text-center">
+          <div class="text-3xl font-bold text-rose-400 mb-1">95%</div>
+          <div class="text-sm text-neutral-400">menos tokens por consulta após compilação</div>
+        </div>
+        <div class="bg-dark-800 rounded-xl border border-dark-600 p-4 text-center">
+          <div class="text-3xl font-bold text-rose-400 mb-1">∞</div>
+          <div class="text-sm text-neutral-400">ROI após ponto de break-even</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TÓPICO 5 -->
+    <section id="topico-5" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-rose-500/20 text-rose-400 font-bold text-xl">5</span>
+        <h2 class="text-2xl font-bold">🌱 Evolução vs Criação</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Wikis tradicionais são construídos e depois abandonados. O LLM wiki não é construído — ele <strong class="text-rose-400">evolui</strong>. Cada ingestão torna as páginas existentes mais ricas, mais conectadas, mais precisas.
+      </p>
+
+      <div class="space-y-6 mb-6">
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-12 h-12 rounded-full bg-rose-500/20 flex items-center justify-center">
+            <span class="text-rose-400 font-bold">Dia 1</span>
+          </div>
+          <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+            <h4 class="font-semibold text-white mb-2">Ingestão inicial — base fundacional</h4>
+            <p class="text-sm text-neutral-400 mb-2">Primeiros 10 documentos</p>
+            <p class="text-neutral-300 text-sm">Primeiras páginas criadas sobre conceitos centrais do seu domínio. Links cruzados básicos. O vault começa pequeno e simples.</p>
+          </div>
+        </div>
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-12 h-12 rounded-full bg-rose-500/20 flex items-center justify-center">
+            <span class="text-rose-400 font-bold text-xs">Mês 3</span>
+          </div>
+          <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+            <h4 class="font-semibold text-white mb-2">Páginas ganham profundidade</h4>
+            <p class="text-sm text-neutral-400 mb-2">50+ documentos ingeridos</p>
+            <p class="text-neutral-300 text-sm">O mesmo conceito foi abordado por 5 fontes diferentes. A página agrega perspectivas múltiplas, contradições resolvidas, exemplos variados. O wiki já responde melhor que qualquer fonte individual.</p>
+          </div>
+        </div>
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-12 h-12 rounded-full bg-rose-500/20 flex items-center justify-center">
+            <span class="text-rose-400 font-bold text-xs">Ano 1</span>
+          </div>
+          <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+            <h4 class="font-semibold text-white mb-2">Vault maturado — memória profunda</h4>
+            <p class="text-sm text-neutral-400 mb-2">500+ documentos ingeridos</p>
+            <p class="text-neutral-300 text-sm">O vault conhece sua área melhor que qualquer humano. Links cruzados emergentes conectam conceitos que você nunca teria relacionado conscientemente. Consultas produzem sínteses impossíveis sem o sistema.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">💡</span> Mudança de Mentalidade</h3>
+        <p class="text-neutral-300">Cada documento que você ingere não é "trabalho". É um investimento que paga dividendos em todas as consultas futuras sobre aquele tema. Quanto mais você ingere, mais inteligente fica o vault — sem esforço adicional.</p>
+      </div>
+    </section>
+
+    <!-- TÓPICO 6 -->
+    <section id="topico-6" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-rose-500/20 text-rose-400 font-bold text-xl">6</span>
+        <h2 class="text-2xl font-bold">🌙 A Grande Promessa</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        A promessa final de Karpathy é ousada: um PKM que <strong class="text-rose-400">funciona enquanto você dorme</strong>. Não por magia — por design cuidadoso que delega o bookkeeping para LLMs e automatiza as operações rotineiras.
+      </p>
+
+      <div class="bg-gradient-to-br from-rose-900/30 to-dark-800 rounded-xl border border-rose-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-rose-400 mb-4 flex items-center"><span class="mr-2">🌙</span> Um Dia Típico do Sistema Autônomo</h3>
+        <div class="space-y-3">
+          <div class="flex items-center space-x-3">
+            <span class="text-rose-400 text-sm font-mono">02:00</span>
+            <div class="flex-1 bg-dark-700/50 rounded-lg p-3">
+              <p class="text-neutral-300 text-sm">n8n roda script de coleta: pega artigos marcados no Pocket, salva em raw/</p>
+            </div>
+          </div>
+          <div class="flex items-center space-x-3">
+            <span class="text-rose-400 text-sm font-mono">02:15</span>
+            <div class="flex-1 bg-dark-700/50 rounded-lg p-3">
+              <p class="text-neutral-300 text-sm">Ingestão automática: LLM processa novos arquivos em raw/, atualiza wiki/ e index.md</p>
+            </div>
+          </div>
+          <div class="flex items-center space-x-3">
+            <span class="text-rose-400 text-sm font-mono">Domingo 06:00</span>
+            <div class="flex-1 bg-dark-700/50 rounded-lg p-3">
+              <p class="text-neutral-300 text-sm">Lint semanal: LLM verifica links quebrados e páginas órfãs, gera relatório de saúde</p>
+            </div>
+          </div>
+          <div class="flex items-center space-x-3">
+            <span class="text-rose-400 text-sm font-mono">08:00</span>
+            <div class="flex-1 bg-dark-700/50 rounded-lg p-3">
+              <p class="text-neutral-300 text-sm">Você acorda: vault atualizado, relatório de saúde na caixa de entrada, sem ação necessária</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-red-400 mb-3 flex items-center"><span class="mr-2">⚠️</span> A Ressalva Importante</h3>
+        <p class="text-neutral-300">Autonomia total não significa zero supervisão. Você ainda precisa: revisar o relatório de lint periodicamente, validar ingestões importantes manualmente, e atualizar CLAUDE.md quando o domínio evolui. A autonomia é do bookkeeping — a estratégia e o julgamento continuam humanos.</p>
+      </div>
+    </section>
+
+    <!-- RESUMO -->
+    <section class="mb-12">
+      <div class="bg-gradient-to-br from-rose-900/40 via-dark-800 to-dark-800 rounded-xl border border-rose-500/30 p-8">
+        <h2 class="text-2xl font-bold mb-6 flex items-center"><span class="mr-3">✅</span> Resumo do Módulo 6.3</h2>
+        <div class="space-y-4 mb-8">
+          <div class="flex items-start space-x-3">
+            <span class="text-rose-400 mt-1">✓</span>
+            <div><strong class="text-white">Falha humana é estrutural</strong><span class="text-neutral-400"> — não é falta de vontade, é fricção cognitiva em bookkeeping</span></div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-rose-400 mt-1">✓</span>
+            <div><strong class="text-white">LLMs são curadores naturais</strong><span class="text-neutral-400"> — sem cansaço, sem viés de omissão, sem inconsistência entre ingestões</span></div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-rose-400 mt-1">✓</span>
+            <div><strong class="text-white">Lint como sistema imunológico</strong><span class="text-neutral-400"> — detecta contradições, órfãos e links quebrados antes que corrompam o vault</span></div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-rose-400 mt-1">✓</span>
+            <div><strong class="text-white">Custo marginal zero</strong><span class="text-neutral-400"> — break-even em ~20 consultas, depois cada uso é pura economia</span></div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-rose-400 mt-1">✓</span>
+            <div><strong class="text-white">Evolução, não criação</strong><span class="text-neutral-400"> — o vault melhora continuamente sem esforço adicional</span></div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-rose-400 mt-1">✓</span>
+            <div><strong class="text-white">Autonomia do bookkeeping</strong><span class="text-neutral-400"> — PKM que funciona enquanto você dorme, com supervisão humana nos pontos certos</span></div>
+          </div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-4 mb-8">
+          <h3 class="font-semibold text-rose-400 mb-2">Próximo Módulo:</h3>
+          <p class="text-neutral-300">6.4 — O Futuro da Memória Humana: memória aumentada, grafos coletivos e como se posicionar agora para o mundo onde LLMs são infraestrutura de memória</p>
+        </div>
+        <div class="flex flex-col sm:flex-row gap-4">
+          <a href="modulo-6-2.html" class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors">← 6.2 O Compilador</a>
+          <a href="modulo-6-4.html" class="flex-1 text-center px-6 py-3 bg-rose-600 text-white rounded-lg font-semibold hover:bg-rose-500 transition-colors">Próximo: 6.4 O Futuro →</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="border-t border-dark-600 py-8 mt-16">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+      <p>2Cérebro — Módulo 6.3 · <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300">INEMA.CLUB</a></p>
+    </div>
+  </footer>
+
+  <script>
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+    const html = document.documentElement;
+    if (localStorage.getItem('theme') === 'light' || (!localStorage.getItem('theme') && !html.classList.contains('dark'))) {
+      themeToggleDarkIcon.classList.remove('hidden');
+      html.classList.remove('dark');
+    } else {
+      themeToggleLightIcon.classList.remove('hidden');
+    }
+    themeToggle.addEventListener('click', () => {
+      themeToggleDarkIcon.classList.toggle('hidden');
+      themeToggleLightIcon.classList.toggle('hidden');
+      html.classList.toggle('dark');
+      localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+    });
+  </script>
+</body>
+</html>

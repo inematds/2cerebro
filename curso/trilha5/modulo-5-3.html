@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Módulo 5.3 — Integrando Vault Obsidian com Intelecto | 2Cérebro</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config={darkMode:'class',theme:{extend:{colors:{primary:'#FACC15',dark:{900:'#111827',800:'#1f2937',700:'#374151',600:'#4b5563'}}}}}</script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body{font-family:'Inter',sans-serif;}
+    html:not(.dark) body{background-color:#f8fafc;}
+    html:not(.dark) .bg-dark-900{background-color:#ffffff;}
+    html:not(.dark) .bg-dark-800{background-color:#f9fafb;}
+    html:not(.dark) .bg-dark-700{background-color:#f3f4f6;}
+    html:not(.dark) .bg-dark-600{background-color:#e5e7eb;}
+    html:not(.dark) .text-neutral-100{color:#111827;}
+    html:not(.dark) .text-neutral-300{color:#4b5563;}
+    html:not(.dark) .text-neutral-400{color:#6b7280;}
+    html:not(.dark) .text-neutral-500{color:#9ca3af;}
+    html:not(.dark) .border-dark-600{border-color:#d1d5db;}
+    html:not(.dark) .border-dark-700{border-color:#e5e7eb;}
+    html:not(.dark) .text-teal-400{color:#0f766e;}
+    html:not(.dark) .bg-teal-500\/20{background-color:rgba(13,148,136,0.12);}
+    html:not(.dark) .border-teal-500\/30{border-color:rgba(13,148,136,0.25);}
+    html:not(.dark) [class*="bg-gradient-to"]{background-image:none!important;}
+    html:not(.dark) .text-primary{color:#a16207;}
+    html:not(.dark) .bg-primary\/10{background-color:rgba(161,98,7,0.08);}
+    html:not(.dark) .border-primary\/40{border-color:rgba(161,98,7,0.25);}
+    html:not(.dark) .text-sky-400{color:#0369a1;}
+    html:not(.dark) .text-yellow-400{color:#a16207;}
+    html:not(.dark) .hover\:text-sky-300:hover{color:#0284c7;}
+    html:not(.dark) .hover\:text-yellow-300:hover{color:#854d0e;}
+    html:not(.dark) .bg-dark-900\/95{background-color:rgba(255,255,255,0.95);}
+  </style>
+</head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen">
+
+  <nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-14">
+        <div class="flex items-center space-x-4">
+          <a href="../../index.html" class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300"><span class="text-2xl">🧠</span><span class="font-bold text-lg hidden sm:inline">2Cérebro</span></a>
+          <span class="text-neutral-600">|</span>
+          <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300 text-sm font-medium">INEMA.CLUB</a>
+        </div>
+        <div class="flex items-center space-x-1 sm:space-x-2">
+          <a href="../trilha1/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors"><span class="sm:hidden">T1</span><span class="hidden sm:inline">Fundamentos</span></a>
+          <a href="../trilha2/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors"><span class="sm:hidden">T2</span><span class="hidden sm:inline">Implementação</span></a>
+          <a href="../trilha3/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors"><span class="sm:hidden">T3</span><span class="hidden sm:inline">Avançado</span></a>
+          <a href="../trilha4/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-amber-400 hover:bg-amber-500/10 transition-colors"><span class="sm:hidden">T4</span><span class="hidden sm:inline">Automação</span></a>
+          <a href="index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-teal-400 bg-teal-500/10"><span class="sm:hidden">T5</span><span class="hidden sm:inline">Intelecto</span></a>
+          <button id="theme-toggle" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2">
+            <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+            <svg id="theme-toggle-light-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+    <div class="flex items-center space-x-2 text-sm text-neutral-400">
+      <a href="../../index.html" class="hover:text-teal-400">Início</a>
+      <span>/</span>
+      <a href="index.html" class="hover:text-teal-400">Trilha 5 — Intelecto</a>
+      <span>/</span>
+      <span class="text-teal-400">Módulo 5.3</span>
+    </div>
+  </nav>
+
+  <header class="bg-gradient-to-br from-teal-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <span class="inline-block px-3 py-1 bg-teal-500/20 text-teal-400 text-xs font-semibold rounded-full mb-4">MÓDULO 5.3</span>
+      <h1 class="text-3xl sm:text-4xl font-bold mb-4">🔗 Integrando Vault Obsidian com Intelecto</h1>
+      <p class="text-lg text-neutral-400 max-w-3xl">Da teoria à prática: USER.md com contexto do vault, script de bridge, ingestão pelo Telegram, consulta híbrida e sincronização automática com watcher.</p>
+      <div class="grid grid-cols-4 gap-4 mt-8 max-w-lg">
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-teal-400">6</div><div class="text-xs text-neutral-400">Tópicos</div></div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-teal-400">50</div><div class="text-xs text-neutral-400">Minutos</div></div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-teal-400">Prático</div><div class="text-xs text-neutral-400">Nível</div></div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-teal-400">Build</div><div class="text-xs text-neutral-400">Tipo</div></div>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+    <!-- TÓPICO 1 -->
+    <section id="topico-1" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-teal-500/20 text-teal-400 font-bold text-xl">1</span>
+        <h2 class="text-2xl font-bold">📄 Configurando USER.md com o Contexto do Vault</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">A integração mais simples e imediata: sem código. Adicione ao USER.md um <strong class="text-teal-400">catálogo do vault</strong> e o Intelecto passará a ter consciência do seu segundo cérebro em todas as conversas.</p>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div class="bg-dark-800 rounded-xl border border-dark-600 p-5">
+          <div class="text-neutral-400 font-semibold mb-3">USER.md sem vault (antes)</div>
+          <pre class="text-xs text-neutral-400 overflow-x-auto"><code># Contexto do Usuário
+
+Nome: João Silva
+Profissão: Engenheiro de Software
+Linguagem favorita: Python
+Preferências:
+- Respostas diretas e curtas
+- Exemplos de código práticos</code></pre>
+          <p class="text-xs text-neutral-500 mt-3">Intelecto não sabe nada sobre o vault</p>
+        </div>
+        <div class="bg-dark-800 rounded-xl border border-teal-500/30 p-5">
+          <div class="text-teal-400 font-semibold mb-3">USER.md com vault (depois)</div>
+          <pre class="text-xs text-neutral-400 overflow-x-auto"><code># Contexto do Usuário
+
+Nome: João Silva
+Profissão: Engenheiro de Software
+
+## Segundo Cérebro (Obsidian)
+Vault: ~/vault | Páginas: ~150
+
+### Domínios principais
+- Python, FastAPI, SQLite
+- LLMs e Agentes de IA
+- Gestão de Conhecimento
+
+### Projetos ativos
+- api-gateway (produção)
+- intelecto-bridge (dev)
+
+### Conceitos-chave no vault
+[[bm25]], [[fts5]], [[rag-vs-wiki]]
+[[agente-ingestao]], [[index-estrutura]]
+
+Ao mencionar tópicos do vault,
+referencie as páginas relevantes.</code></pre>
+          <p class="text-xs text-neutral-500 mt-3">Intelecto sabe do vault e sugere páginas</p>
+        </div>
+      </div>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/40 p-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">💡</span> Resultado imediato</h3>
+        <p class="text-neutral-300">Com o USER.md atualizado, o Intelecto começa a responder: <em>"Você tem uma página sobre BM25 no seu vault — quer que eu expanda a comparação com embeddings para adicionar lá?"</em>. Zero código, zero infraestrutura. Apenas edição de Markdown.</p>
+      </div>
+    </section>
+
+    <!-- TÓPICO 2 -->
+    <section id="topico-2" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-teal-500/20 text-teal-400 font-bold text-xl">2</span>
+        <h2 class="text-2xl font-bold">🔧 Script de Bridge</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">O bridge.py é o componente central da integração: lê o vault e injeta conhecimento compilado no SQLite do Intelecto. Cerca de <strong class="text-teal-400">80 linhas Python</strong> que fecham o loop entre as duas memórias.</p>
+
+      <div class="bg-dark-800 rounded-xl border border-dark-600 p-5 mb-6">
+        <div class="text-teal-400 font-semibold mb-3">bridge.py — Script completo</div>
+        <pre class="text-xs text-neutral-400 overflow-x-auto"><code>#!/usr/bin/env python3
+"""
+bridge.py — Sincroniza vault Obsidian com memória SQLite do Intelecto
+Uso: python bridge.py [--incremental]
+"""
+import sqlite3, pathlib, re, hashlib, sys
+from datetime import datetime
+
+VAULT_DIR = pathlib.Path.home() / "vault"
+WIKI_DIR = VAULT_DIR / "wiki"
+DB_PATH = pathlib.Path.home() / ".intelecto" / "intelecto.db"
+SYNC_LOG = VAULT_DIR / ".last_sync"
+
+def get_db():
+    conn = sqlite3.connect(DB_PATH)
+    # Garante que a tabela existe
+    conn.execute("""
+        CREATE VIRTUAL TABLE IF NOT EXISTS memories
+        USING fts5(content, source UNINDEXED, page_id UNINDEXED)
+    """)
+    return conn
+
+def parse_index(index_path: pathlib.Path) -> list[dict]:
+    """Extrai entradas do index.md: [[page]] — resumo"""
+    entries = []
+    pattern = re.compile(r'\[\[([^\]]+)\]\].*?—\s*(.+)$', re.MULTILINE)
+    text = index_path.read_text(encoding='utf-8')
+    for match in pattern.finditer(text):
+        page_name, summary = match.groups()
+        entries.append({'page': page_name.strip(), 'summary': summary.strip()})
+    return entries
+
+def sync_page(conn, page_name: str, summary: str):
+    """Lê a página wiki e insere no SQLite como memória estruturada"""
+    page_file = WIKI_DIR / f"{page_name}.md"
+    if not page_file.exists():
+        return
+
+    content = page_file.read_text(encoding='utf-8')
+    # Extrai apenas o corpo (sem frontmatter YAML)
+    body = re.sub(r'^---.*?---\n', '', content, flags=re.DOTALL)[:600]
+
+    page_id = hashlib.md5(page_name.encode()).hexdigest()[:8]
+    memory_text = f"[VAULT:{page_name}] {summary}\n{body}"
+
+    # Remove entrada anterior desta página se existir
+    conn.execute("DELETE FROM memories WHERE page_id = ?", [page_id])
+    conn.execute(
+        "INSERT INTO memories(content, source, page_id) VALUES (?, 'vault', ?)",
+        [memory_text, page_id]
+    )
+
+def main():
+    incremental = '--incremental' in sys.argv
+    conn = get_db()
+    index_path = WIKI_DIR / "index.md"
+
+    if not index_path.exists():
+        print("index.md não encontrado. Configure o vault primeiro.")
+        return
+
+    entries = parse_index(index_path)
+    synced = 0
+
+    for entry in entries:
+        page_file = WIKI_DIR / f"{entry['page']}.md"
+        if incremental and SYNC_LOG.exists():
+            last_sync = SYNC_LOG.stat().st_mtime
+            if page_file.exists() and page_file.stat().st_mtime < last_sync:
+                continue  # Não modificada desde último sync
+        sync_page(conn, entry['page'], entry['summary'])
+        synced += 1
+
+    conn.commit()
+    SYNC_LOG.write_text(datetime.now().isoformat())
+    print(f"Sincronizadas {synced} páginas do vault → SQLite Intelecto")
+
+if __name__ == "__main__":
+    main()</code></pre>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div class="bg-dark-800 rounded-lg p-4 border border-teal-500/30">
+          <div class="text-teal-400 font-semibold mb-2">Execução manual</div>
+          <pre class="text-xs text-neutral-400"><code>python bridge.py</code></pre>
+          <p class="text-xs text-neutral-500 mt-2">Sincroniza todas as páginas</p>
+        </div>
+        <div class="bg-dark-800 rounded-lg p-4 border border-teal-500/30">
+          <div class="text-teal-400 font-semibold mb-2">Incremental</div>
+          <pre class="text-xs text-neutral-400"><code>python bridge.py \
+  --incremental</code></pre>
+          <p class="text-xs text-neutral-500 mt-2">Só páginas modificadas</p>
+        </div>
+        <div class="bg-dark-800 rounded-lg p-4 border border-teal-500/30">
+          <div class="text-teal-400 font-semibold mb-2">Cron automático</div>
+          <pre class="text-xs text-neutral-400"><code># crontab -e
+0 */6 * * * python \
+  ~/bridge.py --incremental</code></pre>
+          <p class="text-xs text-neutral-500 mt-2">A cada 6 horas</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TÓPICO 3 -->
+    <section id="topico-3" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-teal-500/20 text-teal-400 font-bold text-xl">3</span>
+        <h2 class="text-2xl font-bold">📥 Ingestão pelo Telegram</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">O Telegram como interface de captura torna a ingestão <strong class="text-teal-400">tão natural quanto enviar uma mensagem</strong>. O fluxo completo: Telegram → raw/ → LLM compila → wiki/ atualizado.</p>
+
+      <!-- SVG: Ingestion flow -->
+      <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+        <h3 class="text-base font-semibold text-teal-400 mb-4">📥 Fluxo de Ingestão via Telegram</h3>
+        <svg viewBox="0 0 680 160" class="w-full" xmlns="http://www.w3.org/2000/svg">
+          <!-- Step 1: Telegram -->
+          <rect x="10" y="55" width="100" height="50" rx="8" fill="#1f2937" stroke="#2dd4bf" stroke-width="1.5"/>
+          <text x="60" y="75" text-anchor="middle" fill="#2dd4bf" font-size="9">📱 Telegram</text>
+          <text x="60" y="90" text-anchor="middle" fill="#9ca3af" font-size="7">/ingere [URL]</text>
+          <text x="60" y="102" text-anchor="middle" fill="#9ca3af" font-size="7">ou texto livre</text>
+          <text x="60" y="145" text-anchor="middle" fill="#4b5563" font-size="7">1. Usuário</text>
+          <!-- Arrow -->
+          <line x1="110" y1="80" x2="145" y2="80" stroke="#2dd4bf" stroke-width="1.5"/>
+          <polygon points="145,76 153,80 145,84" fill="#2dd4bf"/>
+          <!-- Step 2: Intelecto handler -->
+          <rect x="155" y="45" width="110" height="70" rx="8" fill="#1f2937" stroke="#0d9488" stroke-width="1.5"/>
+          <text x="210" y="65" text-anchor="middle" fill="#0d9488" font-size="9">🧬 Handler</text>
+          <text x="210" y="80" text-anchor="middle" fill="#9ca3af" font-size="7">Intelecto processa</text>
+          <text x="210" y="92" text-anchor="middle" fill="#9ca3af" font-size="7">URL → texto</text>
+          <text x="210" y="104" text-anchor="middle" fill="#9ca3af" font-size="7">salva em raw/</text>
+          <text x="210" y="145" text-anchor="middle" fill="#4b5563" font-size="7">2. Captura</text>
+          <!-- Arrow -->
+          <line x1="265" y1="80" x2="300" y2="80" stroke="#0d9488" stroke-width="1.5"/>
+          <polygon points="300,76 308,80 300,84" fill="#0d9488"/>
+          <!-- Step 3: raw/ -->
+          <rect x="310" y="55" width="100" height="50" rx="8" fill="#1f2937" stroke="#FACC15" stroke-width="1.5"/>
+          <text x="360" y="75" text-anchor="middle" fill="#FACC15" font-size="9">📂 raw/</text>
+          <text x="360" y="90" text-anchor="middle" fill="#9ca3af" font-size="7">fonte-2026-01-15.md</text>
+          <text x="360" y="102" text-anchor="middle" fill="#9ca3af" font-size="7">+ metadados</text>
+          <text x="360" y="145" text-anchor="middle" fill="#4b5563" font-size="7">3. Arquivo raw</text>
+          <!-- Arrow -->
+          <line x1="410" y1="80" x2="445" y2="80" stroke="#FACC15" stroke-width="1.5"/>
+          <polygon points="445,76 453,80 445,84" fill="#FACC15"/>
+          <!-- Step 4: LLM compile -->
+          <rect x="455" y="45" width="100" height="70" rx="8" fill="#1f2937" stroke="#60a5fa" stroke-width="1.5"/>
+          <text x="505" y="65" text-anchor="middle" fill="#60a5fa" font-size="9">🤖 LLM</text>
+          <text x="505" y="80" text-anchor="middle" fill="#9ca3af" font-size="7">Compila raw/</text>
+          <text x="505" y="92" text-anchor="middle" fill="#9ca3af" font-size="7">→ página wiki/</text>
+          <text x="505" y="104" text-anchor="middle" fill="#9ca3af" font-size="7">→ atualiza index</text>
+          <text x="505" y="145" text-anchor="middle" fill="#4b5563" font-size="7">4. Compilação</text>
+          <!-- Arrow -->
+          <line x1="555" y1="80" x2="590" y2="80" stroke="#60a5fa" stroke-width="1.5"/>
+          <polygon points="590,76 598,80 590,84" fill="#60a5fa"/>
+          <!-- Step 5: wiki -->
+          <rect x="600" y="55" width="70" height="50" rx="8" fill="#1f2937" stroke="#10b981" stroke-width="1.5"/>
+          <text x="635" y="75" text-anchor="middle" fill="#10b981" font-size="9">📖 wiki/</text>
+          <text x="635" y="90" text-anchor="middle" fill="#9ca3af" font-size="7">nova página</text>
+          <text x="635" y="102" text-anchor="middle" fill="#9ca3af" font-size="7">compilada</text>
+          <text x="635" y="145" text-anchor="middle" fill="#4b5563" font-size="7">5. Conhecimento</text>
+        </svg>
+      </div>
+
+      <div class="bg-dark-800 rounded-xl border border-dark-600 p-5 mb-6">
+        <div class="text-teal-400 font-semibold mb-3">Handler /ingere no Intelecto (adicionar ao main.py)</div>
+        <pre class="text-xs text-neutral-400 overflow-x-auto"><code>from telegram import Update
+from telegram.ext import CommandHandler, ContextTypes
+import httpx, pathlib, datetime
+
+VAULT_RAW = pathlib.Path.home() / "vault" / "raw"
+
+async def ingere_handler(update: Update, ctx: ContextTypes.DEFAULT_TYPE):
+    """Handler para /ingere [URL ou texto]"""
+    args = ' '.join(ctx.args) if ctx.args else ''
+    if not args:
+        await update.message.reply_text("Uso: /ingere [URL ou texto a ingerir]")
+        return
+
+    # Se for URL, busca o conteúdo
+    if args.startswith('http'):
+        await update.message.reply_text("⏳ Buscando conteúdo da URL...")
+        async with httpx.AsyncClient() as client:
+            resp = await client.get(args, timeout=15)
+            content = f"URL: {args}\n\n{resp.text[:5000]}"
+    else:
+        content = args
+
+    # Salva em raw/
+    timestamp = datetime.datetime.now().strftime('%Y-%m-%d-%H%M')
+    filename = VAULT_RAW / f"raw-{timestamp}.md"
+    filename.write_text(f"---\norigem: telegram\ndata: {timestamp}\n---\n\n{content}")
+
+    await update.message.reply_text(
+        f"✅ Salvo em raw/raw-{timestamp}.md\n"
+        f"Execute o pipeline de ingestão para compilar no wiki."
+    )
+
+# Registrar o handler no Application
+app.add_handler(CommandHandler("ingere", ingere_handler))</code></pre>
+      </div>
+    </section>
+
+    <!-- TÓPICO 4 -->
+    <section id="topico-4" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-teal-500/20 text-teal-400 font-bold text-xl">4</span>
+        <h2 class="text-2xl font-bold">🔀 Consulta Híbrida</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">Na consulta híbrida, o Intelecto combina <strong class="text-teal-400">contexto de conversa (SQLite BM25) com conhecimento estruturado (página wiki)</strong> antes de gerar cada resposta, produzindo sínteses muito mais ricas.</p>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div class="bg-dark-800 rounded-xl border border-dark-600 p-5">
+          <div class="text-neutral-400 font-semibold mb-3">Sem consulta híbrida</div>
+          <div class="space-y-3 text-xs">
+            <div class="bg-dark-700 rounded p-3">
+              <span class="text-blue-400">Usuário:</span>
+              <p class="text-neutral-300 mt-1">Como funciona o BM25 do Intelecto?</p>
+            </div>
+            <div class="bg-dark-700 rounded p-3">
+              <span class="text-teal-400">Intelecto (só SQLite):</span>
+              <p class="text-neutral-300 mt-1">BM25 é um algoritmo de ranking para busca de texto. Usa TF-IDF com normalização de comprimento. O Intelecto usa via SQLite FTS5.</p>
+            </div>
+            <p class="text-neutral-500 text-xs">Resposta genérica, sem o detalhe do seu vault</p>
+          </div>
+        </div>
+        <div class="bg-dark-800 rounded-xl border border-teal-500/30 p-5">
+          <div class="text-teal-400 font-semibold mb-3">Com consulta híbrida</div>
+          <div class="space-y-3 text-xs">
+            <div class="bg-dark-700 rounded p-3">
+              <span class="text-blue-400">Usuário:</span>
+              <p class="text-neutral-300 mt-1">Como funciona o BM25 do Intelecto?</p>
+            </div>
+            <div class="bg-dark-700 rounded p-3">
+              <span class="text-teal-400">Intelecto (SQLite + wiki[[bm25]]):</span>
+              <p class="text-neutral-300 mt-1">Conforme sua página [[bm25]] no vault: o Intelecto usa k1=1.2 e b=0.75 por padrão. Para suas memórias curtas (~100 tokens), você documentou que reduzir k1 para 0.9 melhora o recall em 23%. Quer atualizar a config?</p>
+            </div>
+            <p class="text-neutral-500 text-xs">Resposta com dados específicos do seu vault</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-dark-800 rounded-xl border border-dark-600 p-5">
+        <div class="text-teal-400 font-semibold mb-3">Lógica de consulta híbrida (adicionar ao handler de mensagens)</div>
+        <pre class="text-xs text-neutral-400 overflow-x-auto"><code>import re, pathlib, sqlite3
+
+WIKI_DIR = pathlib.Path.home() / "vault" / "wiki"
+WIKI_PATTERN = re.compile(r'\[\[([^\]]+)\]\]')
+
+def find_wiki_page(query: str, db_path: str) -> str | None:
+    """Busca no SQLite e retorna página wiki relevante se encontrada"""
+    conn = sqlite3.connect(db_path)
+    # Busca memórias do vault (source='vault') relevantes à query
+    rows = conn.execute(
+        "SELECT content FROM memories WHERE memories MATCH ? "
+        "AND source = 'vault' ORDER BY bm25(memories) LIMIT 1",
+        [query]
+    ).fetchall()
+    if not rows:
+        return None
+    # Extrai nome da página do padrão [VAULT:page_name]
+    match = re.search(r'\[VAULT:([^\]]+)\]', rows[0][0])
+    if not match:
+        return None
+    page_name = match.group(1)
+    page_file = WIKI_DIR / f"{page_name}.md"
+    if page_file.exists():
+        return page_file.read_text()[:1500]  # Primeiros 1500 chars
+    return None
+
+# No handler de mensagens, antes de chamar o LLM:
+wiki_context = find_wiki_page(user_message, DB_PATH)
+if wiki_context:
+    system_extra = f"\n\n## Conhecimento do vault do usuário:\n{wiki_context}"
+    # Adicionar ao system prompt desta chamada</code></pre>
+      </div>
+    </section>
+
+    <!-- TÓPICO 5 -->
+    <section id="topico-5" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-teal-500/20 text-teal-400 font-bold text-xl">5</span>
+        <h2 class="text-2xl font-bold">🔄 Sincronização Automática</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">Com um watcher Python monitorando o vault, <strong class="text-teal-400">cada nova página wiki dispara automaticamente a sincronização</strong> com o SQLite do Intelecto — sem cron, sem intervenção manual.</p>
+
+      <div class="bg-dark-800 rounded-xl border border-dark-600 p-5 mb-6">
+        <div class="text-teal-400 font-semibold mb-3">watcher.py — Monitora mudanças no vault</div>
+        <pre class="text-xs text-neutral-400 overflow-x-auto"><code>#!/usr/bin/env python3
+"""
+watcher.py — Monitora wiki/ e sincroniza com SQLite automaticamente
+Dependência: pip install watchdog
+"""
+import time, subprocess, pathlib
+from watchdog.observers import Observer
+from watchdog.events import FileSystemEventHandler
+
+WIKI_DIR = pathlib.Path.home() / "vault" / "wiki"
+BRIDGE_SCRIPT = pathlib.Path.home() / "bridge.py"
+DEBOUNCE_SECONDS = 5  # Evita sync duplo em saves rápidos
+
+class WikiChangeHandler(FileSystemEventHandler):
+    def __init__(self):
+        self._last_sync = 0
+
+    def on_modified(self, event):
+        if event.is_directory or not event.src_path.endswith('.md'):
+            return
+        now = time.time()
+        if now - self._last_sync < DEBOUNCE_SECONDS:
+            return  # Debounce
+        self._last_sync = now
+        page = pathlib.Path(event.src_path).stem
+        print(f"Mudança detectada: {page} — sincronizando...")
+        subprocess.run(
+            ["python", str(BRIDGE_SCRIPT), "--incremental"],
+            capture_output=True
+        )
+        print(f"Sync concluído para {page}")
+
+if __name__ == "__main__":
+    observer = Observer()
+    observer.schedule(WikiChangeHandler(), str(WIKI_DIR), recursive=False)
+    observer.start()
+    print(f"Monitorando {WIKI_DIR}...")
+    try:
+        while True:
+            time.sleep(1)
+    except KeyboardInterrupt:
+        observer.stop()
+    observer.join()</code></pre>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="bg-dark-800 rounded-lg p-4 border border-teal-500/30">
+          <div class="text-teal-400 font-semibold mb-2">Executar o watcher</div>
+          <pre class="text-xs text-neutral-400"><code># Em background
+nohup python watcher.py &gt; \
+  ~/.intelecto/watcher.log 2&gt;&amp;1 &amp;
+
+# Como serviço systemd (recomendado)
+# Ver arquivo intelecto-watcher.service</code></pre>
+        </div>
+        <div class="bg-dark-800 rounded-lg p-4 border border-teal-500/30">
+          <div class="text-teal-400 font-semibold mb-2">Latência de sincronização</div>
+          <ul class="text-xs text-neutral-300 space-y-1">
+            <li>• Mudança no vault detectada: &lt;1s</li>
+            <li>• Debounce (evita duplicatas): 5s</li>
+            <li>• Execução do bridge.py: &lt;3s</li>
+            <li>• Total: &lt;10s do save ao SQLite</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- TÓPICO 6 -->
+    <section id="topico-6" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-teal-500/20 text-teal-400 font-bold text-xl">6</span>
+        <h2 class="text-2xl font-bold">🎯 Exemplo Completo — Ponta a Ponta</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">Veja o sistema completo em ação: da leitura de um artigo à consulta de conhecimento pelo Telegram — <strong class="text-teal-400">o ciclo completo do segundo cérebro integrado</strong>.</p>
+
+      <div class="space-y-4 mb-6">
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-12 h-12 rounded-full bg-teal-500/20 flex items-center justify-center"><span class="text-teal-400 font-bold text-sm">1</span></div>
+          <div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600">
+            <h4 class="font-semibold text-white mb-2">Captura via Telegram</h4>
+            <div class="bg-dark-700 rounded p-3 text-xs">
+              <span class="text-blue-400">Você no Telegram:</span>
+              <p class="text-neutral-300 mt-1">/ingere https://arxiv.org/abs/2024.12345 — artigo sobre otimização de BM25 para textos curtos</p>
+            </div>
+            <div class="bg-dark-700 rounded p-3 text-xs mt-2">
+              <span class="text-teal-400">Intelecto:</span>
+              <p class="text-neutral-300 mt-1">✅ Salvo em raw/raw-2026-01-15-1430.md com metadados. Execute /compilar para adicionar ao wiki.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-12 h-12 rounded-full bg-teal-500/20 flex items-center justify-center"><span class="text-teal-400 font-bold text-sm">2</span></div>
+          <div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600">
+            <h4 class="font-semibold text-white mb-2">Compilação pelo LLM</h4>
+            <p class="text-sm text-neutral-400 mb-2">O pipeline de ingestão (Trilha 1) lê raw/raw-2026-01-15-1430.md e gera:</p>
+            <pre class="text-xs text-neutral-400 overflow-x-auto"><code># wiki/bm25-short-text-optimization.md
+---
+tipo: pesquisa
+relacionados: [[bm25]], [[intelecto-memoria]]
+data: 2026-01-15
+---
+# BM25 para Textos Curtos — Otimizações
+## Problema
+BM25 padrão (k1=1.2, b=0.75) foi calibrado
+para documentos longos. Para memórias curtas (&lt;150 tokens)...
+## Solução proposta
+Reduzir k1 para 0.8-0.9 aumenta recall em 18-25%...</code></pre>
+          </div>
+        </div>
+
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-12 h-12 rounded-full bg-teal-500/20 flex items-center justify-center"><span class="text-teal-400 font-bold text-sm">3</span></div>
+          <div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600">
+            <h4 class="font-semibold text-white mb-2">Watcher sincroniza automaticamente</h4>
+            <pre class="text-xs text-neutral-400"><code># No terminal do watcher:
+Mudança detectada: bm25-short-text-optimization — sincronizando...
+Sync concluído para bm25-short-text-optimization
+# SQLite agora tem a nova memória com source='vault'</code></pre>
+          </div>
+        </div>
+
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-12 h-12 rounded-full bg-teal-500/20 flex items-center justify-center"><span class="text-teal-400 font-bold text-sm">4</span></div>
+          <div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600">
+            <h4 class="font-semibold text-white mb-2">Consulta enriquecida pelo Telegram</h4>
+            <div class="bg-dark-700 rounded p-3 text-xs">
+              <span class="text-blue-400">Você (3 dias depois):</span>
+              <p class="text-neutral-300 mt-1">Devo mudar os parâmetros do BM25 no Intelecto?</p>
+            </div>
+            <div class="bg-dark-700 rounded p-3 text-xs mt-2">
+              <span class="text-teal-400">Intelecto (com consulta híbrida):</span>
+              <p class="text-neutral-300 mt-1">Sim! Conforme sua pesquisa em [[bm25-short-text-optimization]] (15/jan): para as memórias curtas do Intelecto (~100 tokens), reduzir k1 de 1.2 para 0.9 melhora o recall em ~23%. Quer que eu mostre como alterar no código?</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- RESUMO -->
+    <section class="mb-12">
+      <div class="bg-gradient-to-br from-teal-900/40 via-dark-800 to-dark-800 rounded-xl border border-teal-500/30 p-8">
+        <h2 class="text-2xl font-bold mb-6 flex items-center"><span class="mr-3">✅</span> Resumo do Módulo 5.3</h2>
+        <div class="space-y-4 mb-8">
+          <div class="flex items-start space-x-3"><span class="text-teal-400 mt-1">✓</span><div><strong class="text-white">USER.md com vault</strong><span class="text-neutral-400"> — integração zero-code que dá consciência do segundo cérebro ao Intelecto</span></div></div>
+          <div class="flex items-start space-x-3"><span class="text-teal-400 mt-1">✓</span><div><strong class="text-white">bridge.py</strong><span class="text-neutral-400"> — 80 linhas que sincronizam wiki → SQLite com suporte incremental</span></div></div>
+          <div class="flex items-start space-x-3"><span class="text-teal-400 mt-1">✓</span><div><strong class="text-white">Handler /ingere</strong><span class="text-neutral-400"> — captura URLs e texto pelo Telegram, salva em raw/ para ingestão</span></div></div>
+          <div class="flex items-start space-x-3"><span class="text-teal-400 mt-1">✓</span><div><strong class="text-white">Consulta híbrida</strong><span class="text-neutral-400"> — SQLite BM25 + página wiki = respostas com conhecimento específico do seu vault</span></div></div>
+          <div class="flex items-start space-x-3"><span class="text-teal-400 mt-1">✓</span><div><strong class="text-white">watcher.py</strong><span class="text-neutral-400"> — sincronização automática com debounce, latência &lt;10s do save ao SQLite</span></div></div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-4 mb-8">
+          <h3 class="font-semibold text-teal-400 mb-2">Próximo Módulo:</h3>
+          <p class="text-neutral-300">5.4 — Telegram como Interface do Segundo Cérebro: design de captura, comandos customizados, arquivos multi-modal e notificações proativas.</p>
+        </div>
+        <div class="flex flex-col sm:flex-row gap-4">
+          <a href="modulo-5-2.html" class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors">← Módulo 5.2</a>
+          <a href="modulo-5-4.html" class="flex-1 text-center px-6 py-3 bg-teal-600 text-white rounded-lg font-semibold hover:bg-teal-500 transition-colors">Próximo Módulo →</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="border-t border-dark-600 py-8 mt-16">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+      <p>2Cérebro — INEMA.CLUB 2026</p>
+    </div>
+  </footer>
+
+  <script>
+    const themeToggle = document.getElementById('theme-toggle');
+    const darkIcon = document.getElementById('theme-toggle-dark-icon');
+    const lightIcon = document.getElementById('theme-toggle-light-icon');
+    const html = document.documentElement;
+    if (localStorage.getItem('theme') === 'light') {
+      darkIcon.classList.remove('hidden'); html.classList.remove('dark');
+    } else { lightIcon.classList.remove('hidden'); }
+    themeToggle.addEventListener('click', () => {
+      darkIcon.classList.toggle('hidden'); lightIcon.classList.toggle('hidden');
+      html.classList.toggle('dark');
+      localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+    });
+  </script>
+</body>
+</html>

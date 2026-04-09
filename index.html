@@ -60,6 +60,30 @@
     html:not(.dark) .hover\:bg-purple-500\/10:hover { background-color: rgba(124,58,237,0.08); }
     html:not(.dark) .group:hover .group-hover\:text-purple-400 { color: #7c3aed; }
 
+    /* Light mode - amber */
+    html:not(.dark) .text-amber-400 { color: #92400e; }
+    html:not(.dark) .bg-amber-500\/20 { background-color: rgba(146,64,14,0.12); }
+    html:not(.dark) .border-amber-500\/30 { border-color: rgba(146,64,14,0.25); }
+    html:not(.dark) .hover\:text-amber-400:hover { color: #92400e; }
+    html:not(.dark) .hover\:bg-amber-500\/10:hover { background-color: rgba(146,64,14,0.08); }
+    html:not(.dark) .group:hover .group-hover\:text-amber-400 { color: #92400e; }
+
+    /* Light mode - teal */
+    html:not(.dark) .text-teal-400 { color: #0f766e; }
+    html:not(.dark) .bg-teal-500\/20 { background-color: rgba(15,118,110,0.12); }
+    html:not(.dark) .border-teal-500\/30 { border-color: rgba(15,118,110,0.25); }
+    html:not(.dark) .hover\:text-teal-400:hover { color: #0f766e; }
+    html:not(.dark) .hover\:bg-teal-500\/10:hover { background-color: rgba(15,118,110,0.08); }
+    html:not(.dark) .group:hover .group-hover\:text-teal-400 { color: #0f766e; }
+
+    /* Light mode - rose */
+    html:not(.dark) .text-rose-400 { color: #9f1239; }
+    html:not(.dark) .bg-rose-500\/20 { background-color: rgba(159,18,57,0.12); }
+    html:not(.dark) .border-rose-500\/30 { border-color: rgba(159,18,57,0.25); }
+    html:not(.dark) .hover\:text-rose-400:hover { color: #9f1239; }
+    html:not(.dark) .hover\:bg-rose-500\/10:hover { background-color: rgba(159,18,57,0.08); }
+    html:not(.dark) .group:hover .group-hover\:text-rose-400 { color: #9f1239; }
+
     /* Light mode - remove gradientes */
     html:not(.dark) [class*="bg-gradient-to"] { background-image: none !important; }
 
@@ -101,6 +125,18 @@
             <span class="sm:hidden">T3</span>
             <span class="hidden sm:inline">Avançado</span>
           </a>
+          <a href="curso/trilha4/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-amber-400 hover:bg-amber-500/10 transition-colors">
+            <span class="sm:hidden">T4</span>
+            <span class="hidden sm:inline">OpenClaw</span>
+          </a>
+          <a href="curso/trilha5/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-teal-400 hover:bg-teal-500/10 transition-colors">
+            <span class="sm:hidden">T5</span>
+            <span class="hidden sm:inline">Intelecto</span>
+          </a>
+          <a href="curso/trilha6/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-rose-400 hover:bg-rose-500/10 transition-colors">
+            <span class="sm:hidden">T6</span>
+            <span class="hidden sm:inline">Karpathy</span>
+          </a>
           <button id="theme-toggle" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2">
             <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
             <svg id="theme-toggle-light-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
@@ -122,15 +158,15 @@
           </p>
           <div class="grid grid-cols-3 gap-4 mb-8">
             <div class="bg-dark-800 rounded-lg p-4 border border-dark-600 text-center">
-              <div class="text-2xl font-bold text-primary">3</div>
+              <div class="text-2xl font-bold text-primary">6</div>
               <div class="text-xs text-neutral-400 mt-1">Trilhas</div>
             </div>
             <div class="bg-dark-800 rounded-lg p-4 border border-dark-600 text-center">
-              <div class="text-2xl font-bold text-primary">12</div>
+              <div class="text-2xl font-bold text-primary">24</div>
               <div class="text-xs text-neutral-400 mt-1">Módulos</div>
             </div>
             <div class="bg-dark-800 rounded-lg p-4 border border-dark-600 text-center">
-              <div class="text-2xl font-bold text-primary">~8h</div>
+              <div class="text-2xl font-bold text-primary">~16h</div>
               <div class="text-xs text-neutral-400 mt-1">Conteúdo</div>
             </div>
           </div>
@@ -259,7 +295,7 @@
   <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
     <div class="text-center mb-12">
       <h2 class="text-3xl font-bold mb-4">Escolha sua Trilha</h2>
-      <p class="text-neutral-400 max-w-2xl mx-auto">Três caminhos progressivos para dominar o sistema de Segundo Cérebro com LLM e Obsidian.</p>
+      <p class="text-neutral-400 max-w-2xl mx-auto">Seis caminhos progressivos para dominar o sistema de Segundo Cérebro com LLM, Obsidian e agentes de IA.</p>
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -299,6 +335,45 @@
           <span>4 módulos</span>
           <span>~3h</span>
           <span class="text-purple-400 font-semibold">Avançado →</span>
+        </div>
+      </a>
+
+      <!-- TRILHA 4 -->
+      <a href="curso/trilha4/index.html" class="group block bg-dark-800 rounded-xl border border-dark-600 hover:border-amber-500/30 transition-all duration-200 hover:bg-amber-500/5 p-6">
+        <div class="text-4xl mb-4">🤖</div>
+        <div class="inline-block px-2 py-0.5 bg-amber-500/20 text-amber-400 text-xs font-semibold rounded-full mb-3">TRILHA 4</div>
+        <h3 class="text-xl font-bold mb-2 group-hover:text-amber-400 transition-colors">OpenClaw</h3>
+        <p class="text-neutral-400 text-sm mb-4 leading-relaxed">Integre seu vault com o OpenClaw — agente de IA self-hosted com suporte a WhatsApp, Telegram, Slack e mais de 20 canais de comunicação.</p>
+        <div class="flex items-center justify-between text-xs text-neutral-500">
+          <span>4 módulos</span>
+          <span>~3h</span>
+          <span class="text-amber-400 font-semibold">Integrações →</span>
+        </div>
+      </a>
+
+      <!-- TRILHA 5 -->
+      <a href="curso/trilha5/index.html" class="group block bg-dark-800 rounded-xl border border-dark-600 hover:border-teal-500/30 transition-all duration-200 hover:bg-teal-500/5 p-6">
+        <div class="text-4xl mb-4">💬</div>
+        <div class="inline-block px-2 py-0.5 bg-teal-500/20 text-teal-400 text-xs font-semibold rounded-full mb-3">TRILHA 5</div>
+        <h3 class="text-xl font-bold mb-2 group-hover:text-teal-400 transition-colors">Intelecto</h3>
+        <p class="text-neutral-400 text-sm mb-4 leading-relaxed">Use o Intelecto — assistente Python leve via Telegram — para consultar e atualizar seu vault com busca BM25, memória SQLite e backends Ollama/OpenRouter.</p>
+        <div class="flex items-center justify-between text-xs text-neutral-500">
+          <span>4 módulos</span>
+          <span>~3h</span>
+          <span class="text-teal-400 font-semibold">Telegram →</span>
+        </div>
+      </a>
+
+      <!-- TRILHA 6 -->
+      <a href="curso/trilha6/index.html" class="group block bg-dark-800 rounded-xl border border-dark-600 hover:border-rose-500/30 transition-all duration-200 hover:bg-rose-500/5 p-6">
+        <div class="text-4xl mb-4">🔮</div>
+        <div class="inline-block px-2 py-0.5 bg-rose-500/20 text-rose-400 text-xs font-semibold rounded-full mb-3">TRILHA 6</div>
+        <h3 class="text-xl font-bold mb-2 group-hover:text-rose-400 transition-colors">Visão Karpathy</h3>
+        <p class="text-neutral-400 text-sm mb-4 leading-relaxed">A visão de Andrej Karpathy para wikis auto-mantidos com LLM, o futuro da memória humana aumentada e os sistemas de conhecimento coletivo.</p>
+        <div class="flex items-center justify-between text-xs text-neutral-500">
+          <span>4 módulos</span>
+          <span>~3h</span>
+          <span class="text-rose-400 font-semibold">Futuro →</span>
         </div>
       </a>
     </div>

@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Módulo 6.4 — O Futuro da Memória Humana | 2Cérebro</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config={darkMode:'class',theme:{extend:{colors:{primary:'#FACC15',dark:{900:'#111827',800:'#1f2937',700:'#374151',600:'#4b5563'}}}}}</script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body{font-family:'Inter',sans-serif;}
+    html:not(.dark) body{background-color:#f8fafc;}
+    html:not(.dark) .bg-dark-900{background-color:#ffffff;}
+    html:not(.dark) .bg-dark-800{background-color:#f9fafb;}
+    html:not(.dark) .bg-dark-700{background-color:#f3f4f6;}
+    html:not(.dark) .bg-dark-600{background-color:#e5e7eb;}
+    html:not(.dark) .text-neutral-100{color:#111827;}
+    html:not(.dark) .text-neutral-300{color:#4b5563;}
+    html:not(.dark) .text-neutral-400{color:#6b7280;}
+    html:not(.dark) .text-neutral-500{color:#9ca3af;}
+    html:not(.dark) .border-dark-600{border-color:#d1d5db;}
+    html:not(.dark) .border-dark-700{border-color:#e5e7eb;}
+    html:not(.dark) .text-rose-400{color:#9f1239;}
+    html:not(.dark) .bg-rose-500\/20{background-color:rgba(225,29,72,0.12);}
+    html:not(.dark) .border-rose-500\/30{border-color:rgba(225,29,72,0.25);}
+    html:not(.dark) [class*="bg-gradient-to"]{background-image:none!important;}
+    html:not(.dark) .text-primary{color:#a16207;}
+    html:not(.dark) .bg-primary\/10{background-color:rgba(161,98,7,0.08);}
+    html:not(.dark) .border-primary\/40{border-color:rgba(161,98,7,0.25);}
+    html:not(.dark) .text-sky-400{color:#0369a1;}
+    html:not(.dark) .text-yellow-400{color:#a16207;}
+    html:not(.dark) .hover\:text-sky-300:hover{color:#0284c7;}
+    html:not(.dark) .hover\:text-yellow-300:hover{color:#854d0e;}
+    html:not(.dark) .bg-dark-900\/95{background-color:rgba(255,255,255,0.95);}
+  </style>
+</head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen">
+
+  <nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-14">
+        <div class="flex items-center space-x-4">
+          <a href="../../index.html" class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300"><span class="text-2xl">🧠</span><span class="font-bold text-lg hidden sm:inline">2Cérebro</span></a>
+          <span class="text-neutral-600">|</span>
+          <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300 text-sm font-medium">INEMA.CLUB</a>
+        </div>
+        <div class="flex items-center space-x-1 sm:space-x-2">
+          <a href="../trilha1/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors"><span class="sm:hidden">T1</span><span class="hidden sm:inline">Fundamentos</span></a>
+          <a href="../trilha2/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors"><span class="sm:hidden">T2</span><span class="hidden sm:inline">Implementação</span></a>
+          <a href="../trilha3/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors"><span class="sm:hidden">T3</span><span class="hidden sm:inline">Avançado</span></a>
+          <a href="index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-rose-400 bg-rose-500/10"><span class="sm:hidden">T6</span><span class="hidden sm:inline">Karpathy</span></a>
+          <button id="theme-toggle" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2">
+            <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+            <svg id="theme-toggle-light-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+    <div class="flex items-center space-x-2 text-sm text-neutral-400">
+      <a href="../../index.html" class="hover:text-rose-400">Início</a>
+      <span>/</span>
+      <a href="index.html" class="hover:text-rose-400">Trilha 6 — Karpathy Vision</a>
+      <span>/</span>
+      <span class="text-rose-400">Módulo 6.4</span>
+    </div>
+  </nav>
+
+  <header class="bg-gradient-to-br from-rose-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <span class="inline-block px-3 py-1 bg-rose-500/20 text-rose-400 text-xs font-semibold rounded-full mb-4">MÓDULO 6.4</span>
+      <h1 class="text-3xl sm:text-4xl font-bold mb-4">🚀 O Futuro da Memória Humana</h1>
+      <p class="text-lg text-neutral-400 max-w-3xl">Memória aumentada, grafos coletivos de conhecimento, LLM native memory e como posicionar-se hoje para o futuro onde LLMs serão a infraestrutura de memória da civilização.</p>
+      <div class="grid grid-cols-4 gap-4 mt-8 max-w-lg">
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-rose-400">6</div><div class="text-xs text-neutral-400">Tópicos</div></div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-rose-400">50</div><div class="text-xs text-neutral-400">Minutos</div></div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-rose-400">Visão</div><div class="text-xs text-neutral-400">Nível</div></div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-rose-400">Futuro</div><div class="text-xs text-neutral-400">Tipo</div></div>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+    <!-- TÓPICO 1 -->
+    <section id="topico-1" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-rose-500/20 text-rose-400 font-bold text-xl">1</span>
+        <h2 class="text-2xl font-bold">🧠 Memória Aumentada</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        O ser humano é biologicamente limitado em memória. Não por deficiência — por design evolutivo que priorizou processamento criativo sobre armazenamento. O LLM wiki não tenta competir com a criatividade humana: ele <strong class="text-rose-400">complementa o que falta</strong>.
+      </p>
+
+      <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+        <h3 class="text-base font-semibold text-rose-400 mb-4">🧠 Limitações Biológicas vs. Capacidade do LLM Wiki</h3>
+        <svg viewBox="0 0 680 220" class="w-full" xmlns="http://www.w3.org/2000/svg">
+          <!-- Human Brain side -->
+          <text x="170" y="20" text-anchor="middle" fill="#9ca3af" font-size="11" font-weight="bold">MEMÓRIA HUMANA</text>
+
+          <ellipse cx="170" cy="95" rx="130" ry="65" fill="#1f2937" stroke="#374151" stroke-width="1.5"/>
+          <text x="170" y="65" text-anchor="middle" fill="#fb7185" font-size="14">🧠</text>
+          <text x="100" y="85" fill="#ef4444" font-size="8">Working memory: ~7 itens</text>
+          <text x="100" y="98" fill="#ef4444" font-size="8">Esquecimento: exponencial</text>
+          <text x="100" y="111" fill="#ef4444" font-size="8">Viés de disponibilidade</text>
+          <text x="100" y="124" fill="#ef4444" font-size="8">Memória emocional > factual</text>
+          <text x="100" y="137" fill="#ef4444" font-size="8">Confabulação involuntária</text>
+
+          <!-- Plus sign -->
+          <text x="340" y="100" text-anchor="middle" fill="#FACC15" font-size="28" font-weight="bold">+</text>
+
+          <!-- LLM Wiki side -->
+          <text x="510" y="20" text-anchor="middle" fill="#fb7185" font-size="11" font-weight="bold">LLM WIKI</text>
+
+          <rect x="380" y="35" width="260" height="120" rx="10" fill="#1f2937" stroke="#fb7185" stroke-width="1.5"/>
+          <text x="510" y="60" text-anchor="middle" fill="#fb7185" font-size="14">📖</text>
+          <text x="395" y="78" fill="#4ade80" font-size="8">Armazenamento: ilimitado</text>
+          <text x="395" y="91" fill="#4ade80" font-size="8">Esquecimento: zero</text>
+          <text x="395" y="104" fill="#4ade80" font-size="8">Sem viés de recuperação</text>
+          <text x="395" y="117" fill="#4ade80" font-size="8">Rastreabilidade de fontes</text>
+          <text x="395" y="130" fill="#4ade80" font-size="8">Consistência entre consultas</text>
+          <text x="395" y="143" fill="#4ade80" font-size="8">Cross-referencing automático</text>
+
+          <!-- Result -->
+          <rect x="10" y="180" width="660" height="35" rx="8" fill="#450a0a" stroke="#fb7185" stroke-width="1.5"/>
+          <text x="340" y="198" text-anchor="middle" fill="#fb7185" font-size="10" font-weight="bold">= Cognição Aumentada — Criatividade Humana + Precisão de Máquina</text>
+          <text x="340" y="210" text-anchor="middle" fill="#9ca3af" font-size="8">O humano decide o que importa; o wiki nunca esquece o que foi decidido</text>
+        </svg>
+      </div>
+
+      <div class="bg-gradient-to-br from-rose-900/30 to-dark-800 rounded-xl border border-rose-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-rose-400 mb-4 flex items-center"><span class="mr-2">⚖️</span> A Divisão Cognitiva Ideal</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <p class="text-sm font-semibold text-rose-400 mb-3">O Humano foca em:</p>
+            <ul class="space-y-2 text-neutral-300 text-sm">
+              <li class="flex items-start space-x-2"><span class="text-rose-400">•</span><span>Julgamento estratégico e priorização</span></li>
+              <li class="flex items-start space-x-2"><span class="text-rose-400">•</span><span>Síntese criativa e conexões inesperadas</span></li>
+              <li class="flex items-start space-x-2"><span class="text-rose-400">•</span><span>Avaliação de qualidade e relevância</span></li>
+              <li class="flex items-start space-x-2"><span class="text-rose-400">•</span><span>Tomada de decisão em contexto social</span></li>
+            </ul>
+          </div>
+          <div>
+            <p class="text-sm font-semibold text-emerald-400 mb-3">O Wiki foca em:</p>
+            <ul class="space-y-2 text-neutral-300 text-sm">
+              <li class="flex items-start space-x-2"><span class="text-emerald-400">•</span><span>Armazenar todos os fatos sem seleção</span></li>
+              <li class="flex items-start space-x-2"><span class="text-emerald-400">•</span><span>Recuperar com precisão sob demanda</span></li>
+              <li class="flex items-start space-x-2"><span class="text-emerald-400">•</span><span>Rastrear contradições e inconsistências</span></li>
+              <li class="flex items-start space-x-2"><span class="text-emerald-400">•</span><span>Manter links cruzados atualizados</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TÓPICO 2 -->
+    <section id="topico-2" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-rose-500/20 text-rose-400 font-bold text-xl">2</span>
+        <h2 class="text-2xl font-bold">🌐 Grafos de Conhecimento Coletivos</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        O próximo passo natural após o vault pessoal: vaults de equipe, vaults organizacionais, e redes de vaults que compartilham conhecimento mantendo autoria. <strong class="text-rose-400">O mesmo modelo, em escala coletiva.</strong>
+      </p>
+
+      <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+        <h3 class="text-base font-semibold text-rose-400 mb-4">🌐 Arquitetura de Vault Federado</h3>
+        <svg viewBox="0 0 680 240" class="w-full" xmlns="http://www.w3.org/2000/svg">
+          <!-- Central team vault -->
+          <rect x="255" y="85" width="170" height="70" rx="10" fill="#1f2937" stroke="#fb7185" stroke-width="2"/>
+          <text x="340" y="108" text-anchor="middle" fill="#fb7185" font-size="11" font-weight="bold">🏢 Vault Equipe</text>
+          <text x="340" y="124" text-anchor="middle" fill="#9ca3af" font-size="8">Conhecimento agregado</text>
+          <text x="340" y="137" text-anchor="middle" fill="#9ca3af" font-size="8">Decisões + Contexto coletivo</text>
+          <text x="340" y="150" text-anchor="middle" fill="#6b7280" font-size="7">Sync: semanal</text>
+
+          <!-- Individual vaults -->
+          <rect x="20" y="10" width="120" height="55" rx="8" fill="#1f2937" stroke="#374151" stroke-width="1.5"/>
+          <text x="80" y="30" text-anchor="middle" fill="#9ca3af" font-size="10">👤 Ana</text>
+          <text x="80" y="44" text-anchor="middle" fill="#6b7280" font-size="8">Vault pessoal</text>
+          <text x="80" y="57" text-anchor="middle" fill="#6b7280" font-size="7">ML + Produto</text>
+
+          <rect x="160" y="10" width="120" height="55" rx="8" fill="#1f2937" stroke="#374151" stroke-width="1.5"/>
+          <text x="220" y="30" text-anchor="middle" fill="#9ca3af" font-size="10">👤 Bruno</text>
+          <text x="220" y="44" text-anchor="middle" fill="#6b7280" font-size="8">Vault pessoal</text>
+          <text x="220" y="57" text-anchor="middle" fill="#6b7280" font-size="7">Engenharia</text>
+
+          <rect x="400" y="10" width="120" height="55" rx="8" fill="#1f2937" stroke="#374151" stroke-width="1.5"/>
+          <text x="460" y="30" text-anchor="middle" fill="#9ca3af" font-size="10">👤 Clara</text>
+          <text x="460" y="44" text-anchor="middle" fill="#6b7280" font-size="8">Vault pessoal</text>
+          <text x="460" y="57" text-anchor="middle" fill="#6b7280" font-size="7">Design + UX</text>
+
+          <rect x="540" y="10" width="130" height="55" rx="8" fill="#1f2937" stroke="#374151" stroke-width="1.5"/>
+          <text x="605" y="30" text-anchor="middle" fill="#9ca3af" font-size="10">👤 Diego</text>
+          <text x="605" y="44" text-anchor="middle" fill="#6b7280" font-size="8">Vault pessoal</text>
+          <text x="605" y="57" text-anchor="middle" fill="#6b7280" font-size="7">Growth</text>
+
+          <!-- Connections to team vault -->
+          <line x1="80" y1="65" x2="280" y2="100" stroke="#fb7185" stroke-width="1" stroke-opacity="0.6" stroke-dasharray="4,3"/>
+          <line x1="220" y1="65" x2="280" y2="100" stroke="#fb7185" stroke-width="1" stroke-opacity="0.6" stroke-dasharray="4,3"/>
+          <line x1="460" y1="65" x2="400" y2="100" stroke="#fb7185" stroke-width="1" stroke-opacity="0.6" stroke-dasharray="4,3"/>
+          <line x1="605" y1="65" x2="400" y2="100" stroke="#fb7185" stroke-width="1" stroke-opacity="0.6" stroke-dasharray="4,3"/>
+
+          <!-- Org vault below -->
+          <rect x="215" y="180" width="250" height="55" rx="10" fill="#111827" stroke="#6b7280" stroke-width="1"/>
+          <text x="340" y="200" text-anchor="middle" fill="#9ca3af" font-size="11">🏛️ Vault Organizacional</text>
+          <text x="340" y="215" text-anchor="middle" fill="#6b7280" font-size="8">Múltiplos times · Memória institucional</text>
+          <text x="340" y="228" text-anchor="middle" fill="#6b7280" font-size="7">Acesso controlado por papel</text>
+
+          <line x1="340" y1="155" x2="340" y2="180" stroke="#FACC15" stroke-width="1.5" stroke-dasharray="3,3"/>
+        </svg>
+      </div>
+
+      <div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center"><span class="mr-2">📊</span> O Problema que Grafos Coletivos Resolvem</h3>
+        <p class="text-neutral-300 mb-3">O maior problema de gestão de conhecimento em organizações não é criar documentação — é a <strong>saída de pessoas</strong>. Quando um engenheiro sênior deixa a empresa, leva consigo anos de contexto, decisões arquiteturais e raciocínio tácito.</p>
+        <p class="text-neutral-300">Com um vault organizacional ativo, o contexto fica — mesmo que a pessoa saia. O novo engenheiro pode perguntar "por que escolhemos PostgreSQL em vez de MongoDB em 2023?" e receber uma resposta detalhada, com raciocínio e alternativas consideradas.</p>
+      </div>
+    </section>
+
+    <!-- TÓPICO 3 -->
+    <section id="topico-3" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-rose-500/20 text-rose-400 font-bold text-xl">3</span>
+        <h2 class="text-2xl font-bold">🔮 LLM Native Memory</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        A fronteira que ainda não chegou — mas está chegando: modelos de linguagem com <strong class="text-rose-400">memória nativa persistente</strong>. Não contexto de janela, não RAG — mas aprendizado contínuo de interações passadas.
+      </p>
+
+      <div class="bg-gradient-to-br from-rose-900/30 to-dark-800 rounded-xl border border-rose-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-rose-400 mb-4 flex items-center"><span class="mr-2">🔮</span> A Evolução da Memória de LLMs</h3>
+        <div class="space-y-4">
+          <div class="flex items-start space-x-4">
+            <span class="w-16 text-neutral-500 text-sm font-mono flex-shrink-0">2023-24</span>
+            <div class="flex-1 bg-dark-700/50 rounded-lg p-3">
+              <p class="text-neutral-300 text-sm"><strong class="text-neutral-100">Context window:</strong> 8k-128k tokens. Memória dura apenas a conversa. Cada sessão começa do zero.</p>
+            </div>
+          </div>
+          <div class="flex items-start space-x-4">
+            <span class="text-neutral-400 text-sm font-mono flex-shrink-0">2025</span>
+            <div class="flex-1 bg-dark-700/50 rounded-lg p-3">
+              <p class="text-neutral-300 text-sm"><strong class="text-neutral-100">Long context + RAG:</strong> 1M+ tokens e embeddings para busca. Melhor — mas ainda fragmentado e caro.</p>
+            </div>
+          </div>
+          <div class="flex items-start space-x-4">
+            <span class="text-rose-400 text-sm font-mono flex-shrink-0 font-bold">2026</span>
+            <div class="flex-1 bg-dark-800 rounded-lg p-3 border border-rose-500/20">
+              <p class="text-neutral-300 text-sm"><strong class="text-rose-400">LLM Wiki Compilado (agora):</strong> compilação offline, wiki Markdown legível. Custo baixo, alta consistência. O 2Cérebro.</p>
+            </div>
+          </div>
+          <div class="flex items-start space-x-4">
+            <span class="text-neutral-500 text-sm font-mono flex-shrink-0">2027+</span>
+            <div class="flex-1 bg-dark-700/30 rounded-lg p-3 border border-dashed border-dark-600">
+              <p class="text-neutral-400 text-sm"><strong class="text-neutral-300">LLM Native Memory (futuro):</strong> modelos com memória persistente integrada. O vault Markdown pode ser o input de fine-tuning — tornando o conhecimento parte do modelo.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">💡</span> Por que Markdown é o Formato Perene</h3>
+        <p class="text-neutral-300 mb-3">Quando memória nativa chegar, seu vault Markdown de anos de ingestão pode ser o dataset de fine-tuning do seu modelo personalizado. Markdown é:</p>
+        <ul class="space-y-2 text-neutral-300">
+          <li class="flex items-start space-x-2"><span class="text-primary mt-1">•</span><span><strong>Universal:</strong> lido por qualquer ferramenta, hoje e no futuro</span></li>
+          <li class="flex items-start space-x-2"><span class="text-primary mt-1">•</span><span><strong>Structured:</strong> cabeçalhos, listas e links são semântica que LLMs entendem</span></li>
+          <li class="flex items-start space-x-2"><span class="text-primary mt-1">•</span><span><strong>Portable:</strong> não depende de nenhuma plataforma específica — é só texto</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- TÓPICO 4 -->
+    <section id="topico-4" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-rose-500/20 text-rose-400 font-bold text-xl">4</span>
+        <h2 class="text-2xl font-bold">🏛️ O Segundo Cérebro como Infraestrutura Social</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Quando organizações, universidades e comunidades adotam LLM wikis em escala, o conhecimento coletivo deixa de ser perdido na rotatividade de pessoas. <strong class="text-rose-400">A memória torna-se infraestrutura — como a internet tornou a comunicação.</strong>
+      </p>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+        <div class="bg-dark-800 rounded-xl border border-dark-600 p-5">
+          <div class="text-2xl mb-3">🎓</div>
+          <h4 class="font-semibold text-white mb-2">Universidades</h4>
+          <p class="text-neutral-400 text-sm">Cada tese, paper e debate de laboratório compilado. Pesquisadores acessam 50 anos de raciocínio científico do departamento — não apenas papers publicados.</p>
+        </div>
+        <div class="bg-dark-800 rounded-xl border border-dark-600 p-5">
+          <div class="text-2xl mb-3">⚖️</div>
+          <h4 class="font-semibold text-white mb-2">Institutos de Direito</h4>
+          <p class="text-neutral-400 text-sm">Jurisprudência, decisões e raciocínio jurídico compilados por caso. Advogados consultam precedentes com contexto completo — não apenas ementas.</p>
+        </div>
+        <div class="bg-dark-800 rounded-xl border border-dark-600 p-5">
+          <div class="text-2xl mb-3">🏥</div>
+          <h4 class="font-semibold text-white mb-2">Sistemas de Saúde</h4>
+          <p class="text-neutral-400 text-sm">Histórico clínico compilado por paciente, com cross-referencing entre diagnósticos. Médicos tomam decisões com contexto completo da trajetória do paciente.</p>
+        </div>
+      </div>
+
+      <div class="bg-gradient-to-br from-rose-900/30 to-dark-800 rounded-xl border border-rose-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-rose-400 mb-4 flex items-center"><span class="mr-2">🏛️</span> O Arquiteto de Memória — Nova Função Estratégica</h3>
+        <p class="text-neutral-300 mb-4">Quando LLM wikis se tornam infraestrutura organizacional, surge uma nova função: o <strong class="text-rose-400">Arquiteto de Memória</strong>. Responsável por:</p>
+        <ul class="space-y-2 text-neutral-300">
+          <li class="flex items-start space-x-2"><span class="text-rose-400 mt-1">•</span><span>Projetar a taxonomia e arquitetura de informação do vault organizacional</span></li>
+          <li class="flex items-start space-x-2"><span class="text-rose-400 mt-1">•</span><span>Escrever e manter o CLAUDE.md que define como o conhecimento é compilado</span></li>
+          <li class="flex items-start space-x-2"><span class="text-rose-400 mt-1">•</span><span>Definir políticas de acesso e privacidade por camada de conhecimento</span></li>
+          <li class="flex items-start space-x-2"><span class="text-rose-400 mt-1">•</span><span>Garantir qualidade e auditabilidade das ingestões críticas</span></li>
+        </ul>
+        <p class="text-neutral-300 mt-4 text-sm">Saber construir LLM wikis hoje é o equivalente a saber construir sites em 1995 — quem aprendeu cedo construiu carreiras inteiras.</p>
+      </div>
+    </section>
+
+    <!-- TÓPICO 5 -->
+    <section id="topico-5" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-rose-500/20 text-rose-400 font-bold text-xl">5</span>
+        <h2 class="text-2xl font-bold">⚠️ Riscos e Cuidados</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Todo sistema poderoso tem falhas proporcionais ao poder. O LLM wiki não é exceção. <strong class="text-rose-400">Conhecer os riscos antes de escalar é o que separa usuários responsáveis de entusiastas imprudentes.</strong>
+      </p>
+
+      <div class="space-y-6 mb-6">
+        <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+          <h4 class="font-bold text-red-400 mb-3 flex items-center"><span class="mr-2">⚠️</span> Risco 1: Dependência Cognitiva</h4>
+          <p class="text-neutral-300 text-sm mb-3">Delegar toda a memória ao wiki pode atrofiar a capacidade de memória e síntese próprias. Se o sistema falha, você fica sem acesso ao conhecimento que "terceirizou".</p>
+          <p class="text-neutral-400 text-sm"><strong>Mitigação:</strong> Use o wiki como amplificador, não como substituto. Reserve espaço para memorização deliberada de conceitos fundamentais. Pratique síntese sem consultar o wiki periodicamente.</p>
+        </div>
+
+        <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+          <h4 class="font-bold text-red-400 mb-3 flex items-center"><span class="mr-2">⚠️</span> Risco 2: Privacidade e Dados Sensíveis</h4>
+          <p class="text-neutral-300 text-sm mb-3">Dados pessoais, estratégicos ou confidenciais em um vault cloud são vetores de risco. Uma violação pode expor anos de conhecimento acumulado.</p>
+          <p class="text-neutral-400 text-sm"><strong>Mitigação:</strong> Vault local para dados sensíveis (Claude Code local, Ollama). Vault cloud apenas para conhecimento público ou sanitizado. Nunca ingira credenciais, dados de clientes ou informações reguladas sem anonimização.</p>
+        </div>
+
+        <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+          <h4 class="font-bold text-red-400 mb-3 flex items-center"><span class="mr-2">⚠️</span> Risco 3: Alucinações Compiladas</h4>
+          <p class="text-neutral-300 text-sm mb-3">O LLM pode compilar informação incorreta com a mesma confiança que fatos verdadeiros. Erros de interpretação na ingestão se tornam "verdades" no wiki e se propagam para consultas futuras.</p>
+          <p class="text-neutral-400 text-sm"><strong>Mitigação:</strong> Revisão humana de ingestões críticas. Lint periódico detecta inconsistências. Manter raw/ imutável permite recompilação quando erro é identificado. Nunca use o wiki como única fonte para decisões de alto risco.</p>
+        </div>
+      </div>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">💡</span> O Princípio da Responsabilidade Proporcional</h3>
+        <p class="text-neutral-300">O nível de verificação humana deve ser proporcional ao custo de estar errado. Conhecimento para curiosidade pessoal: verificação mínima. Conhecimento para decisões de negócio: revisão moderada. Conhecimento para saúde, segurança ou legal: sempre com fonte primária verificada.</p>
+      </div>
+    </section>
+
+    <!-- TÓPICO 6 -->
+    <section id="topico-6" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-rose-500/20 text-rose-400 font-bold text-xl">6</span>
+        <h2 class="text-2xl font-bold">🎯 Como se Posicionar Agora</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        A janela de vantagem para early adopters é real — e finita. O 2Cérebro existe para que você passe pela curva de aprendizado agora, acumulando fluência e experiência antes que a categoria exploda.
+      </p>
+
+      <div class="bg-gradient-to-br from-rose-900/30 to-dark-800 rounded-xl border border-rose-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-rose-400 mb-6 flex items-center"><span class="mr-2">🎯</span> Os Três Movimentos</h3>
+        <div class="space-y-6">
+          <div class="flex items-start space-x-4">
+            <div class="flex-shrink-0 w-10 h-10 rounded-full bg-rose-500/20 flex items-center justify-center">
+              <span class="text-rose-400 font-bold">1</span>
+            </div>
+            <div>
+              <h4 class="font-semibold text-white mb-2">Construir um vault pessoal agora</h4>
+              <p class="text-neutral-300 text-sm">Comece com 10 documentos do seu domínio principal. Use os prompts do 2Cérebro. Errar cedo e aprender na prática é mais valioso que qualquer teoria. O vault de 1 ano começa no primeiro ingest de hoje.</p>
+            </div>
+          </div>
+          <div class="flex items-start space-x-4">
+            <div class="flex-shrink-0 w-10 h-10 rounded-full bg-rose-500/20 flex items-center justify-center">
+              <span class="text-rose-400 font-bold">2</span>
+            </div>
+            <div>
+              <h4 class="font-semibold text-white mb-2">Desenvolver fluência em prompt engineering para PKM</h4>
+              <p class="text-neutral-300 text-sm">Escrever um bom CLAUDE.md, projetar operações de Ingest/Query/Lint e diagnosticar problemas de qualidade são habilidades raras. Cada iteração do seu vault é prática deliberada dessas habilidades.</p>
+            </div>
+          </div>
+          <div class="flex items-start space-x-4">
+            <div class="flex-shrink-0 w-10 h-10 rounded-full bg-rose-500/20 flex items-center justify-center">
+              <span class="text-rose-400 font-bold">3</span>
+            </div>
+            <div>
+              <h4 class="font-semibold text-white mb-2">Documentar e compartilhar aprendizados</h4>
+              <p class="text-neutral-300 text-sm">Escreva sobre o que funciona e o que não funciona no seu vault. Contribua para fóruns, publique templates, compartilhe seu CLAUDE.md. Reputação em LLM Knowledge Bases se constrói agora, quando a comunidade ainda é pequena.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+        <h3 class="text-base font-semibold text-rose-400 mb-4">🗓️ Sua Próxima Hora — Plano de Ação</h3>
+        <div class="space-y-3">
+          <div class="flex items-center space-x-3">
+            <span class="w-6 h-6 rounded-full bg-dark-600 text-neutral-300 text-xs font-bold flex items-center justify-center flex-shrink-0">1</span>
+            <p class="text-neutral-300 text-sm">Abra o Obsidian e crie a estrutura básica: raw/, wiki/, CLAUDE.md, index.md, log.md</p>
+          </div>
+          <div class="flex items-center space-x-3">
+            <span class="w-6 h-6 rounded-full bg-dark-600 text-neutral-300 text-xs font-bold flex items-center justify-center flex-shrink-0">2</span>
+            <p class="text-neutral-300 text-sm">Copie o prompt de Ingest do 2Cérebro (Trilha 1, Módulo 1.2) para o CLAUDE.md</p>
+          </div>
+          <div class="flex items-center space-x-3">
+            <span class="w-6 h-6 rounded-full bg-dark-600 text-neutral-300 text-xs font-bold flex items-center justify-center flex-shrink-0">3</span>
+            <p class="text-neutral-300 text-sm">Escolha 3 documentos do seu domínio principal e coloque em raw/</p>
+          </div>
+          <div class="flex items-center space-x-3">
+            <span class="w-6 h-6 rounded-full bg-dark-600 text-neutral-300 text-xs font-bold flex items-center justify-center flex-shrink-0">4</span>
+            <p class="text-neutral-300 text-sm">Execute a primeira ingestão com Claude Code. Observe o que funciona e o que não funciona</p>
+          </div>
+          <div class="flex items-center space-x-3">
+            <span class="w-6 h-6 rounded-full bg-rose-500/20 text-rose-400 text-xs font-bold flex items-center justify-center flex-shrink-0">✓</span>
+            <p class="text-neutral-300 text-sm">Seu vault está criado. Daqui pra frente, cada ingest acumula.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- RESUMO FINAL DA TRILHA -->
+    <section class="mb-12">
+      <div class="bg-gradient-to-br from-rose-900/40 via-dark-800 to-dark-800 rounded-xl border border-rose-500/30 p-8">
+        <h2 class="text-2xl font-bold mb-6 flex items-center"><span class="mr-3">🔭</span> Conclusão da Trilha 6 — A Visão Karpathy</h2>
+
+        <p class="text-neutral-300 mb-6 leading-relaxed">
+          Karpathy não inventou o conceito de PKM. Ele identificou o momento exato em que LLMs tornaram viável o que sempre foi teoricamente desejável: um sistema de conhecimento pessoal que se mantém sozinho, cresce com o uso e nunca esquece.
+        </p>
+
+        <div class="space-y-4 mb-8">
+          <div class="flex items-start space-x-3">
+            <span class="text-rose-400 mt-1">✓</span>
+            <div><strong class="text-white">Memória aumentada</strong><span class="text-neutral-400"> — complementa limitações biológicas sem substituir o julgamento humano</span></div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-rose-400 mt-1">✓</span>
+            <div><strong class="text-white">Grafos coletivos</strong><span class="text-neutral-400"> — o mesmo modelo escala para equipes, organizações e comunidades</span></div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-rose-400 mt-1">✓</span>
+            <div><strong class="text-white">LLM native memory</strong><span class="text-neutral-400"> — Markdown hoje é o formato de input do fine-tuning de amanhã</span></div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-rose-400 mt-1">✓</span>
+            <div><strong class="text-white">Infraestrutura social</strong><span class="text-neutral-400"> — memória institucional que sobrevive à rotatividade de pessoas</span></div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-rose-400 mt-1">✓</span>
+            <div><strong class="text-white">Riscos conhecidos</strong><span class="text-neutral-400"> — dependência, privacidade e alucinações têm mitigações concretas</span></div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-rose-400 mt-1">✓</span>
+            <div><strong class="text-white">Posicionamento agora</strong><span class="text-neutral-400"> — construir fluência hoje vale mais que qualquer teoria futura</span></div>
+          </div>
+        </div>
+
+        <div class="bg-dark-800/50 rounded-lg p-6 mb-8 border border-rose-500/20">
+          <p class="text-rose-400 font-semibold mb-2">Uma última frase de Karpathy:</p>
+          <p class="text-neutral-300 italic">"Wikis tornam-se auto-mantidos de formas que humanos nunca conseguiram sustentar. Esse é o presente mais estranho e mais valioso que os LLMs deram à cognição humana."</p>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-4">
+          <a href="modulo-6-3.html" class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors">← 6.3 Wikis Auto-Mantidos</a>
+          <a href="index.html" class="flex-1 text-center px-6 py-3 bg-rose-600 text-white rounded-lg font-semibold hover:bg-rose-500 transition-colors">Voltar à Trilha 6 →</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="border-t border-dark-600 py-8 mt-16">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+      <p>2Cérebro — Módulo 6.4 · Trilha 6 Concluída · <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300">INEMA.CLUB</a></p>
+    </div>
+  </footer>
+
+  <script>
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+    const html = document.documentElement;
+    if (localStorage.getItem('theme') === 'light' || (!localStorage.getItem('theme') && !html.classList.contains('dark'))) {
+      themeToggleDarkIcon.classList.remove('hidden');
+      html.classList.remove('dark');
+    } else {
+      themeToggleLightIcon.classList.remove('hidden');
+    }
+    themeToggle.addEventListener('click', () => {
+      themeToggleDarkIcon.classList.toggle('hidden');
+      themeToggleLightIcon.classList.toggle('hidden');
+      html.classList.toggle('dark');
+      localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+    });
+  </script>
+</body>
+</html>

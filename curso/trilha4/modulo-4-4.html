@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Módulo 4.4 — Automações e Workflows com OpenClaw | 2Cérebro</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config={darkMode:'class',theme:{extend:{colors:{primary:'#FACC15',dark:{900:'#111827',800:'#1f2937',700:'#374151',600:'#4b5563'}}}}}</script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body{font-family:'Inter',sans-serif;}
+    html:not(.dark) body{background-color:#f8fafc;}
+    html:not(.dark) .bg-dark-900{background-color:#ffffff;}
+    html:not(.dark) .bg-dark-800{background-color:#f9fafb;}
+    html:not(.dark) .bg-dark-700{background-color:#f3f4f6;}
+    html:not(.dark) .bg-dark-600{background-color:#e5e7eb;}
+    html:not(.dark) .text-neutral-100{color:#111827;}
+    html:not(.dark) .text-neutral-300{color:#4b5563;}
+    html:not(.dark) .text-neutral-400{color:#6b7280;}
+    html:not(.dark) .text-neutral-500{color:#9ca3af;}
+    html:not(.dark) .border-dark-600{border-color:#d1d5db;}
+    html:not(.dark) .border-dark-700{border-color:#e5e7eb;}
+    html:not(.dark) .text-amber-400{color:#92400e;}
+    html:not(.dark) .bg-amber-500\/20{background-color:rgba(217,119,6,0.12);}
+    html:not(.dark) .border-amber-500\/30{border-color:rgba(217,119,6,0.25);}
+    html:not(.dark) [class*="bg-gradient-to"]{background-image:none!important;}
+    html:not(.dark) .text-primary{color:#a16207;}
+    html:not(.dark) .bg-primary\/10{background-color:rgba(161,98,7,0.08);}
+    html:not(.dark) .border-primary\/40{border-color:rgba(161,98,7,0.25);}
+    html:not(.dark) .text-sky-400{color:#0369a1;}
+    html:not(.dark) .text-yellow-400{color:#a16207;}
+    html:not(.dark) .hover\:text-sky-300:hover{color:#0284c7;}
+    html:not(.dark) .hover\:text-yellow-300:hover{color:#854d0e;}
+    html:not(.dark) .bg-dark-900\/95{background-color:rgba(255,255,255,0.95);}
+  </style>
+</head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen">
+
+  <nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-14">
+        <div class="flex items-center space-x-4">
+          <a href="../../index.html" class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300"><span class="text-2xl">🧠</span><span class="font-bold text-lg hidden sm:inline">2Cérebro</span></a>
+          <span class="text-neutral-600">|</span>
+          <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300 text-sm font-medium">INEMA.CLUB</a>
+        </div>
+        <div class="flex items-center space-x-1 sm:space-x-2">
+          <a href="../trilha1/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors"><span class="sm:hidden">T1</span><span class="hidden sm:inline">Fundamentos</span></a>
+          <a href="../trilha2/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors"><span class="sm:hidden">T2</span><span class="hidden sm:inline">Implementação</span></a>
+          <a href="../trilha3/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors"><span class="sm:hidden">T3</span><span class="hidden sm:inline">Avançado</span></a>
+          <a href="index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-amber-400 bg-amber-500/10"><span class="sm:hidden">T4</span><span class="hidden sm:inline">OpenClaw</span></a>
+          <button id="theme-toggle" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2">
+            <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+            <svg id="theme-toggle-light-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+    <div class="flex items-center space-x-2 text-sm text-neutral-400">
+      <a href="../../index.html" class="hover:text-amber-400">Início</a>
+      <span>/</span>
+      <a href="index.html" class="hover:text-amber-400">Trilha 4 — OpenClaw</a>
+      <span>/</span>
+      <span class="text-amber-400">Módulo 4.4</span>
+    </div>
+  </nav>
+
+  <header class="bg-gradient-to-br from-amber-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <span class="inline-block px-3 py-1 bg-amber-500/20 text-amber-400 text-xs font-semibold rounded-full mb-4">MÓDULO 4.4</span>
+      <h1 class="text-3xl sm:text-4xl font-bold mb-4">⚡ Automações e Workflows com OpenClaw</h1>
+      <p class="text-lg text-neutral-400 max-w-3xl">Construa o pipeline completo: cron jobs de ingestão, integração com GitHub, daily briefings, revisão semanal automática e alertas proativos de degradação do wiki.</p>
+      <div class="grid grid-cols-4 gap-4 mt-8 max-w-lg">
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-amber-400">6</div><div class="text-xs text-neutral-400">Tópicos</div></div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-amber-400">45</div><div class="text-xs text-neutral-400">Minutos</div></div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-amber-400">Expert</div><div class="text-xs text-neutral-400">Nível</div></div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-amber-400">Prático</div><div class="text-xs text-neutral-400">Tipo</div></div>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+    <!-- TÓPICO 1 -->
+    <section id="topico-1" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">1</span>
+        <h2 class="text-2xl font-bold">⏰ Cron Jobs de Ingestão</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">Automação elimina a dependência de memória humana. Configure <strong class="text-amber-400">cron jobs no SOUL.md</strong> para que o vault se mantenha atualizado em segundo plano — sem precisar lembrar de ingerir manualmente.</p>
+
+      <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+        <h3 class="text-base font-semibold text-amber-400 mb-4">⏰ Schedule completo de automações</h3>
+        <svg viewBox="0 0 680 220" class="w-full" xmlns="http://www.w3.org/2000/svg">
+          <!-- Timeline horizontal -->
+          <line x1="30" y1="110" x2="650" y2="110" stroke="#374151" stroke-width="2"/>
+
+          <!-- Hour marks -->
+          <text x="30" y="130" text-anchor="middle" fill="#6b7280" font-size="8">00h</text>
+          <text x="113" y="130" text-anchor="middle" fill="#6b7280" font-size="8">06h</text>
+          <text x="196" y="130" text-anchor="middle" fill="#6b7280" font-size="8">08h</text>
+          <text x="322" y="130" text-anchor="middle" fill="#6b7280" font-size="8">12h</text>
+          <text x="448" y="130" text-anchor="middle" fill="#6b7280" font-size="8">18h</text>
+          <text x="530" y="130" text-anchor="middle" fill="#6b7280" font-size="8">22h</text>
+          <text x="650" y="130" text-anchor="middle" fill="#6b7280" font-size="8">24h</text>
+
+          <!-- Tick marks -->
+          <line x1="113" y1="106" x2="113" y2="114" stroke="#374151" stroke-width="1"/>
+          <line x1="196" y1="106" x2="196" y2="114" stroke="#374151" stroke-width="1"/>
+          <line x1="322" y1="106" x2="322" y2="114" stroke="#374151" stroke-width="1"/>
+          <line x1="448" y1="106" x2="448" y2="114" stroke="#374151" stroke-width="1"/>
+          <line x1="530" y1="106" x2="530" y2="114" stroke="#374151" stroke-width="1"/>
+
+          <!-- Cron events -->
+          <!-- check_inbox: a cada hora (0 * * * *) — muitos pontinhos -->
+          <circle cx="30" cy="110" r="4" fill="#fbbf24"/>
+          <circle cx="113" cy="110" r="4" fill="#fbbf24"/>
+          <circle cx="196" cy="110" r="4" fill="#fbbf24"/>
+          <circle cx="280" cy="110" r="4" fill="#fbbf24"/>
+          <circle cx="322" cy="110" r="4" fill="#fbbf24"/>
+          <circle cx="363" cy="110" r="4" fill="#fbbf24"/>
+          <circle cx="406" cy="110" r="4" fill="#fbbf24"/>
+          <circle cx="448" cy="110" r="4" fill="#fbbf24"/>
+          <circle cx="489" cy="110" r="4" fill="#fbbf24"/>
+          <circle cx="530" cy="110" r="4" fill="#fbbf24"/>
+          <circle cx="572" cy="110" r="4" fill="#fbbf24"/>
+          <circle cx="614" cy="110" r="4" fill="#fbbf24"/>
+          <circle cx="650" cy="110" r="4" fill="#fbbf24"/>
+          <text x="340" y="95" text-anchor="middle" fill="#fbbf24" font-size="7">check_inbox (toda hora)</text>
+
+          <!-- Daily briefing: 8h -->
+          <rect x="186" y="50" width="20" height="50" rx="3" fill="#3b82f6" opacity="0.8"/>
+          <text x="196" y="45" text-anchor="middle" fill="#60a5fa" font-size="7">📋</text>
+          <text x="196" y="38" text-anchor="middle" fill="#60a5fa" font-size="7">briefing</text>
+          <text x="196" y="30" text-anchor="middle" fill="#60a5fa" font-size="7">08:00</text>
+
+          <!-- Weekly lint: domingo 9h (representado como ponto especial) -->
+          <rect x="207" y="65" width="15" height="35" rx="3" fill="#c084fc" opacity="0.8"/>
+          <text x="215" y="60" text-anchor="middle" fill="#c084fc" font-size="7">🔧</text>
+          <text x="215" y="52" text-anchor="middle" fill="#c084fc" font-size="7">lint</text>
+          <text x="215" y="44" text-anchor="middle" fill="#c084fc" font-size="7">dom</text>
+
+          <!-- Chat export: 23h -->
+          <rect x="520" y="60" width="20" height="40" rx="3" fill="#10b981" opacity="0.8"/>
+          <text x="530" y="55" text-anchor="middle" fill="#10b981" font-size="7">📜</text>
+          <text x="530" y="47" text-anchor="middle" fill="#10b981" font-size="7">export</text>
+          <text x="530" y="39" text-anchor="middle" fill="#10b981" font-size="7">23:00</text>
+
+          <!-- Legend -->
+          <rect x="30" y="165" width="12" height="8" rx="2" fill="#fbbf24"/>
+          <text x="48" y="173" fill="#9ca3af" font-size="8">check_inbox (horário)</text>
+          <rect x="180" y="165" width="12" height="8" rx="2" fill="#3b82f6"/>
+          <text x="198" y="173" fill="#9ca3af" font-size="8">daily_briefing (08h)</text>
+          <rect x="360" y="165" width="12" height="8" rx="2" fill="#c084fc"/>
+          <text x="378" y="173" fill="#9ca3af" font-size="8">lint_wiki (dom 09h)</text>
+          <rect x="510" y="165" width="12" height="8" rx="2" fill="#10b981"/>
+          <text x="528" y="173" fill="#9ca3af" font-size="8">export_chats (23h)</text>
+        </svg>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="bg-dark-800 rounded-xl border border-dark-600 p-5">
+          <div class="text-amber-400 font-semibold mb-3">Cron jobs no SOUL.md</div>
+          <pre class="text-xs text-neutral-400 overflow-x-auto leading-relaxed"><code>## Cron Jobs
+
+cron:
+  # Verificar inbox toda hora
+  - schedule: "0 * * * *"
+    name: check_inbox
+    action: |
+      count = filesystem.count("raw/inbox/*.md")
+      if count > 0:
+        exec("claude ingest raw/inbox/")
+        notify(f"✓ {count} docs ingeridos")
+
+  # Briefing diário às 8h
+  - schedule: "0 8 * * *"
+    name: daily_briefing
+    action: send_daily_briefing
+    channel: telegram
+
+  # Lint semanal domingo 9h
+  - schedule: "0 9 * * 0"
+    name: weekly_lint
+    action: run_lint_report
+    channel: telegram
+
+  # Export de conversas às 23h
+  - schedule: "0 23 * * *"
+    name: export_chats
+    action: export_to_raw_inbox</code></pre>
+        </div>
+        <div class="bg-dark-800 rounded-xl border border-dark-600 p-5">
+          <div class="text-amber-400 font-semibold mb-3">Implementando check_inbox em Python</div>
+          <pre class="text-xs text-neutral-400 overflow-x-auto leading-relaxed"><code>#!/usr/bin/env python3
+# scripts/check_inbox.py
+
+import os
+import subprocess
+from pathlib import Path
+
+VAULT = Path("/home/user/vault")
+INBOX = VAULT / "raw" / "inbox"
+
+def check_and_ingest():
+    pending = list(INBOX.glob("*.md"))
+
+    if not pending:
+        return  # nada a fazer
+
+    print(f"📥 {len(pending)} docs pendentes")
+
+    result = subprocess.run(
+        ["claude", "ingest", str(INBOX)],
+        cwd=VAULT,
+        capture_output=True,
+        text=True
+    )
+
+    if result.returncode == 0:
+        print("✓ Ingestão concluída")
+        # Move docs processados para raw/processed/
+        for doc in pending:
+            doc.rename(VAULT / "raw" / "processed" / doc.name)
+    else:
+        print(f"✗ Erro: {result.stderr}")
+
+if __name__ == "__main__":
+    check_and_ingest()</code></pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- TÓPICO 2 -->
+    <section id="topico-2" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">2</span>
+        <h2 class="text-2xl font-bold">🐙 Integração GitHub → Wiki via OpenClaw</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">Cada PR mergeado carrega <strong class="text-amber-400">decisões técnicas e contexto</strong> que devem estar no segundo cérebro. Com um webhook do GitHub para o OpenClaw, isso acontece automaticamente — sem esforço adicional.</p>
+
+      <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+        <h3 class="text-base font-semibold text-amber-400 mb-4">🐙 Fluxo GitHub → raw/ → wiki/</h3>
+        <svg viewBox="0 0 680 180" class="w-full" xmlns="http://www.w3.org/2000/svg">
+          <defs><marker id="arw" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0,0 L0,6 L6,3 z" fill="#fbbf24"/></marker></defs>
+
+          <rect x="10" y="60" width="110" height="60" rx="8" fill="#1f2937" stroke="#6b7280" stroke-width="1.5"/>
+          <text x="65" y="83" text-anchor="middle" fill="#9ca3af" font-size="10">🐙</text>
+          <text x="65" y="98" text-anchor="middle" fill="#d1d5db" font-size="8" font-weight="bold">GitHub</text>
+          <text x="65" y="110" text-anchor="middle" fill="#6b7280" font-size="7">PR mergeado</text>
+
+          <rect x="155" y="60" width="120" height="60" rx="8" fill="#1f2937" stroke="#fbbf24" stroke-width="1.5"/>
+          <text x="215" y="83" text-anchor="middle" fill="#fbbf24" font-size="10">🤖</text>
+          <text x="215" y="98" text-anchor="middle" fill="#d1d5db" font-size="8" font-weight="bold">OpenClaw</text>
+          <text x="215" y="110" text-anchor="middle" fill="#6b7280" font-size="7">recebe webhook</text>
+
+          <rect x="310" y="40" width="120" height="45" rx="8" fill="#1f2937" stroke="#FACC15" stroke-width="1.5"/>
+          <text x="370" y="60" text-anchor="middle" fill="#FACC15" font-size="8" font-weight="bold">raw/inbox/</text>
+          <text x="370" y="73" text-anchor="middle" fill="#6b7280" font-size="7">github-pr-NNN.md</text>
+
+          <rect x="310" y="110" width="120" height="45" rx="8" fill="#1f2937" stroke="#6b7280" stroke-width="1.5"/>
+          <text x="370" y="130" text-anchor="middle" fill="#9ca3af" font-size="8" font-weight="bold">skill exec</text>
+          <text x="370" y="143" text-anchor="middle" fill="#6b7280" font-size="7">claude ingest</text>
+
+          <rect x="470" y="60" width="110" height="60" rx="8" fill="#1f2937" stroke="#10b981" stroke-width="1.5"/>
+          <text x="525" y="83" text-anchor="middle" fill="#10b981" font-size="10">📖</text>
+          <text x="525" y="98" text-anchor="middle" fill="#d1d5db" font-size="8" font-weight="bold">wiki/</text>
+          <text x="525" y="110" text-anchor="middle" fill="#6b7280" font-size="7">projeto atualizado</text>
+
+          <rect x="615" y="60" width="55" height="60" rx="8" fill="#1f2937" stroke="#fbbf24" stroke-width="1"/>
+          <text x="642" y="83" text-anchor="middle" fill="#fbbf24" font-size="9">📱</text>
+          <text x="642" y="98" text-anchor="middle" fill="#d1d5db" font-size="7">notifica</text>
+          <text x="642" y="110" text-anchor="middle" fill="#6b7280" font-size="6">Telegram</text>
+
+          <line x1="120" y1="90" x2="153" y2="90" stroke="#fbbf24" stroke-width="1.5" marker-end="url(#arw)"/>
+          <line x1="275" y1="80" x2="308" y2="62" stroke="#FACC15" stroke-width="1.5" marker-end="url(#arw)"/>
+          <line x1="275" y1="100" x2="308" y2="132" stroke="#9ca3af" stroke-width="1.5" marker-end="url(#arw)"/>
+          <line x1="430" y1="62" x2="468" y2="75" stroke="#10b981" stroke-width="1.5" marker-end="url(#arw)"/>
+          <line x1="430" y1="132" x2="468" y2="105" stroke="#10b981" stroke-width="1.5" marker-end="url(#arw)"/>
+          <line x1="580" y1="90" x2="613" y2="90" stroke="#fbbf24" stroke-width="1.5" marker-end="url(#arw)"/>
+
+          <text x="65" y="145" text-anchor="middle" fill="#6b7280" font-size="7">1. evento</text>
+          <text x="215" y="145" text-anchor="middle" fill="#6b7280" font-size="7">2. processa</text>
+          <text x="370" y="170" text-anchor="middle" fill="#6b7280" font-size="7">3. salva + ingere</text>
+          <text x="525" y="145" text-anchor="middle" fill="#6b7280" font-size="7">4. wiki atualizado</text>
+          <text x="642" y="145" text-anchor="middle" fill="#6b7280" font-size="7">5. avisa</text>
+        </svg>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="bg-dark-800 rounded-xl border border-dark-600 p-5">
+          <div class="text-amber-400 font-semibold mb-3">Webhook handler no SOUL.md</div>
+          <pre class="text-xs text-neutral-400 overflow-x-auto leading-relaxed"><code>## Webhooks
+
+webhooks:
+  github_pr:
+    path: /webhook/github
+    secret: "${GITHUB_WEBHOOK_SECRET}"
+    events: ["pull_request"]
+    filter:
+      action: "closed"
+      merged: true
+    handler: |
+      pr = payload.pull_request
+      title = pr.title
+      body = pr.body or ""
+      diff_url = pr.diff_url
+      number = pr.number
+      repo = pr.base.repo.name
+
+      # Cria arquivo raw
+      content = f"""
+      # PR #{number}: {title}
+      Repositório: {repo}
+      Merge: {pr.merged_at}
+
+      ## Descrição
+      {body}
+
+      ## Diff
+      {fetch(diff_url)[:3000]}
+      """
+
+      path = f"raw/inbox/github-pr-{number}.md"
+      filesystem.write(path, content)
+      exec(f"claude ingest {path}")
+      notify(f"🐙 PR #{number} do {repo} adicionado ao wiki")</code></pre>
+        </div>
+        <div class="bg-dark-800 rounded-xl border border-dark-600 p-5">
+          <div class="text-amber-400 font-semibold mb-3">Configurando o webhook no GitHub</div>
+          <div class="space-y-3">
+            <div class="flex items-start space-x-3">
+              <span class="text-amber-400 font-bold text-sm mt-0.5">1.</span>
+              <div>
+                <div class="text-sm font-medium text-neutral-300">Expor o OpenClaw na internet</div>
+                <pre class="text-xs text-neutral-500 mt-1"><code># Via ngrok (dev)
+ngrok http 3000
+
+# Via domínio próprio (prod)
+# Configure seu DNS e nginx</code></pre>
+              </div>
+            </div>
+            <div class="flex items-start space-x-3">
+              <span class="text-amber-400 font-bold text-sm mt-0.5">2.</span>
+              <div>
+                <div class="text-sm font-medium text-neutral-300">Registrar webhook no GitHub</div>
+                <p class="text-xs text-neutral-400 mt-1">Settings → Webhooks → Add webhook</p>
+                <p class="text-xs text-neutral-400">URL: https://seu-dominio.com/webhook/github</p>
+                <p class="text-xs text-neutral-400">Content type: application/json</p>
+                <p class="text-xs text-neutral-400">Events: Pull requests</p>
+              </div>
+            </div>
+            <div class="flex items-start space-x-3">
+              <span class="text-amber-400 font-bold text-sm mt-0.5">3.</span>
+              <div>
+                <div class="text-sm font-medium text-neutral-300">Testar com PR de exemplo</div>
+                <p class="text-xs text-neutral-400 mt-1">Crie e mergeie um PR de teste. Verifique raw/inbox/ e a notificação no Telegram.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TÓPICO 3 -->
+    <section id="topico-3" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">3</span>
+        <h2 class="text-2xl font-bold">🌅 Daily Briefing</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">O daily briefing transforma o segundo cérebro de <strong class="text-amber-400">passivo para ativo</strong>. Em vez de você consultar o wiki, ele vem até você toda manhã com o que é relevante para o dia.</p>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div>
+          <h3 class="text-amber-400 font-semibold mb-3">Conteúdo do briefing diário</h3>
+          <div class="space-y-3">
+            <div class="bg-dark-800 rounded-lg p-4 border border-amber-500/30">
+              <div class="flex items-center space-x-2 mb-1">
+                <span>📊</span>
+                <span class="text-sm font-semibold text-neutral-300">Stats do vault</span>
+              </div>
+              <p class="text-xs text-neutral-400">Total de páginas wiki, últimas adições, tamanho do raw/inbox/ pendente</p>
+            </div>
+            <div class="bg-dark-800 rounded-lg p-4 border border-amber-500/30">
+              <div class="flex items-center space-x-2 mb-1">
+                <span>🔄</span>
+                <span class="text-sm font-semibold text-neutral-300">Modificações recentes</span>
+              </div>
+              <p class="text-xs text-neutral-400">Páginas wiki atualizadas nas últimas 24h, via leitura do log.md</p>
+            </div>
+            <div class="bg-dark-800 rounded-lg p-4 border border-amber-500/30">
+              <div class="flex items-center space-x-2 mb-1">
+                <span>⚠️</span>
+                <span class="text-sm font-semibold text-neutral-300">Atenção necessária</span>
+              </div>
+              <p class="text-xs text-neutral-400">Páginas não atualizadas há mais de X dias, inbox com muitos pendentes</p>
+            </div>
+            <div class="bg-dark-800 rounded-lg p-4 border border-amber-500/30">
+              <div class="flex items-center space-x-2 mb-1">
+                <span>💡</span>
+                <span class="text-sm font-semibold text-neutral-300">Sugestão do dia</span>
+              </div>
+              <p class="text-xs text-neutral-400">Uma página wiki aleatória para revisão — mantém o conhecimento vivo</p>
+            </div>
+          </div>
+        </div>
+        <div>
+          <h3 class="text-amber-400 font-semibold mb-3">Exemplo de briefing real</h3>
+          <div class="bg-dark-800 rounded-xl border border-dark-600 p-4">
+            <div class="flex items-center space-x-2 mb-3">
+              <span class="text-amber-400 font-bold text-sm">🤖 Cleo</span>
+              <span class="text-neutral-500 text-xs">08:00</span>
+            </div>
+            <div class="text-sm text-neutral-300 space-y-2">
+              <p><strong class="text-amber-400">☀️ Bom dia! Briefing de 09/04/2026</strong></p>
+              <p class="text-neutral-400">📊 <strong>Vault:</strong> 342 páginas wiki · 3 pendentes em inbox</p>
+              <p class="text-neutral-400">🔄 <strong>Ontem:</strong> github-pr-147.md, python-async.md atualizados</p>
+              <p class="text-neutral-400">⚠️ <strong>Atenção:</strong> 3 docs em raw/inbox/ aguardam ingestão</p>
+              <p class="text-neutral-400">💡 <strong>Revise hoje:</strong> <em>strangler-fig-pattern.md</em> (adicionado há 14 dias, ainda não revisado)</p>
+              <p class="text-neutral-500 text-xs mt-3">Responda "ingerir" para processar o inbox agora.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-dark-800 rounded-xl border border-dark-600 p-5">
+        <div class="text-amber-400 font-semibold mb-3">Implementação do daily briefing</div>
+        <pre class="text-xs text-neutral-400 overflow-x-auto leading-relaxed"><code>## Ação: send_daily_briefing
+
+actions:
+  send_daily_briefing:
+    steps:
+      # 1. Coletar métricas do vault
+      - name: stats
+        exec: |
+          wiki_count = filesystem.count("wiki/*.md")
+          inbox_count = filesystem.count("raw/inbox/*.md")
+
+      # 2. Páginas modificadas nas últimas 24h
+      - name: recent
+        exec: |
+          log_content = filesystem.read("log.md")
+          recent = extract_last_24h(log_content)
+
+      # 3. Páginas desatualizadas (>30 dias)
+      - name: stale
+        exec: |
+          stale = filesystem.find_older_than("wiki/", days=30)
+
+      # 4. Sugestão aleatória para revisão
+      - name: suggestion
+        exec: |
+          pages = filesystem.list("wiki/*.md")
+          suggestion = random.choice(pages)
+
+      # 5. Montar e enviar briefing
+      - name: send
+        message: |
+          ☀️ *Briefing {date}*
+
+          📊 *Vault:* {wiki_count} páginas · {inbox_count} pendentes
+          🔄 *Recentes:* {recent}
+          ⚠️ *Desatualizadas:* {stale}
+          💡 *Revise:* {suggestion}
+        channel: telegram</code></pre>
+      </div>
+    </section>
+
+    <!-- TÓPICO 4 -->
+    <section id="topico-4" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">4</span>
+        <h2 class="text-2xl font-bold">📅 Workflow de Revisão Semanal</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">O lint semanal é a operação de <strong class="text-amber-400">manutenção preventiva do wiki</strong>. O OpenClaw executa a auditoria automaticamente e entrega o relatório via Telegram para revisão humana — sem você precisar iniciar nada.</p>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div class="bg-dark-800 rounded-xl border border-dark-600 p-5">
+          <div class="text-amber-400 font-semibold mb-3">O que o lint verifica</div>
+          <div class="space-y-2">
+            <div class="flex items-start space-x-2">
+              <span class="text-purple-400">→</span>
+              <div>
+                <span class="text-sm font-medium text-neutral-300">Contradições entre páginas</span>
+                <p class="text-xs text-neutral-500">A diz X, B diz não-X sobre o mesmo conceito</p>
+              </div>
+            </div>
+            <div class="flex items-start space-x-2">
+              <span class="text-purple-400">→</span>
+              <div>
+                <span class="text-sm font-medium text-neutral-300">Páginas órfãs</span>
+                <p class="text-xs text-neutral-500">Existe em wiki/ mas não referenciada em index.md</p>
+              </div>
+            </div>
+            <div class="flex items-start space-x-2">
+              <span class="text-purple-400">→</span>
+              <div>
+                <span class="text-sm font-medium text-neutral-300">Links quebrados</span>
+                <p class="text-xs text-neutral-500">[[link]] que aponta para página inexistente</p>
+              </div>
+            </div>
+            <div class="flex items-start space-x-2">
+              <span class="text-purple-400">→</span>
+              <div>
+                <span class="text-sm font-medium text-neutral-300">Páginas muito longas</span>
+                <p class="text-xs text-neutral-500">Acima de 3000 tokens — candidatas a divisão</p>
+              </div>
+            </div>
+            <div class="flex items-start space-x-2">
+              <span class="text-purple-400">→</span>
+              <div>
+                <span class="text-sm font-medium text-neutral-300">Tópicos sem página</span>
+                <p class="text-xs text-neutral-500">Referenciados em múltiplas páginas mas sem entrada própria no wiki</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="text-amber-400 font-semibold mb-3">Relatório de lint via Telegram</div>
+          <div class="bg-dark-800 rounded-xl border border-dark-600 p-4">
+            <div class="flex items-center space-x-2 mb-3">
+              <span class="text-amber-400 font-bold text-sm">🤖 Cleo</span>
+              <span class="text-neutral-500 text-xs">Dom 09:00</span>
+            </div>
+            <div class="text-sm text-neutral-300 space-y-2">
+              <p><strong class="text-amber-400">🔧 Relatório Semanal de Wiki — 06/04/2026</strong></p>
+              <p class="text-neutral-400">✅ <strong>342 páginas</strong> auditadas</p>
+              <p class="text-red-400">⚠️ <strong>2 contradições</strong> detectadas:</p>
+              <p class="text-neutral-500 text-xs ml-3">• python-async.md diz "use asyncio.run()" mas event-loop.md diz "evite asyncio.run() em libs"</p>
+              <p class="text-neutral-500 text-xs ml-3">• sql-patterns.md contradiz orm-patterns.md sobre lazy loading</p>
+              <p class="text-yellow-400">🔗 <strong>3 links quebrados</strong> em wiki/</p>
+              <p class="text-blue-400">📄 <strong>1 página órfã:</strong> strangler-fig-advanced.md</p>
+              <p class="text-neutral-500 text-xs mt-2">Responda com o número de um problema para ver detalhes e opções de correção.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/40 p-5">
+        <div class="text-primary font-semibold mb-2">💡 Resolução assistida via chat</div>
+        <p class="text-sm text-neutral-300">Após receber o relatório, você responde "1" para ver a contradição em detalhes. O agente mostra os dois trechos conflitantes e oferece opções: "corrigir A", "corrigir B", "marcar como ambos válidos (contexto diferente)". Você decide; o agente executa.</p>
+      </div>
+    </section>
+
+    <!-- TÓPICO 5 -->
+    <section id="topico-5" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">5</span>
+        <h2 class="text-2xl font-bold">🚨 Notificações de Degradação</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed"><strong class="text-amber-400">Degradação silenciosa</strong> é o maior inimigo do segundo cérebro. Sem alertas proativos, o wiki acumula problemas que só aparecem quando você mais precisa de uma informação — e ela está desatualizada ou errada.</p>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div class="bg-dark-800 rounded-xl border border-dark-600 p-5">
+          <div class="text-amber-400 font-semibold mb-3">Thresholds de alerta configuráveis</div>
+          <pre class="text-xs text-neutral-400 overflow-x-auto leading-relaxed"><code>## Alertas de Degradação
+
+health_checks:
+  # Inbox acumulando
+  inbox_overload:
+    condition: "count(raw/inbox/) > 10"
+    severity: warning
+    message: "⚠️ {count} docs no inbox há mais de 24h"
+    cooldown: 4h
+
+  # Página crítica desatualizada
+  stale_critical_page:
+    condition: |
+      any(page.days_since_update > 30
+          for page in wiki/ if page.tag == "critical")
+    severity: error
+    message: "🔴 Página crítica desatualizada: {page}"
+    immediate: true
+
+  # Muitas páginas órfãs
+  orphan_explosion:
+    condition: "count(orphan_pages) > 5"
+    severity: warning
+    message: "📄 {count} páginas órfãs detectadas"
+    cooldown: 7d  # máximo 1 alerta por semana
+
+  # Falha na ingestão
+  ingestion_failure:
+    condition: "last_ingestion.status == 'failed'"
+    severity: critical
+    message: "🔴 Falha na ingestão: {error}"
+    immediate: true</code></pre>
+        </div>
+        <div class="bg-dark-800 rounded-xl border border-dark-600 p-5">
+          <div class="text-amber-400 font-semibold mb-3">Sistema de severidades</div>
+          <div class="space-y-3">
+            <div class="flex items-start space-x-3">
+              <span class="w-3 h-3 rounded-full bg-red-500 mt-1 flex-shrink-0"></span>
+              <div>
+                <div class="text-sm font-semibold text-red-400">Critical</div>
+                <p class="text-xs text-neutral-400">Notificação imediata + som. Falhas de ingestão, dados corrompidos.</p>
+              </div>
+            </div>
+            <div class="flex items-start space-x-3">
+              <span class="w-3 h-3 rounded-full bg-yellow-500 mt-1 flex-shrink-0"></span>
+              <div>
+                <div class="text-sm font-semibold text-yellow-400">Warning</div>
+                <p class="text-xs text-neutral-400">Notificação com cooldown. Inbox cheio, páginas antigas.</p>
+              </div>
+            </div>
+            <div class="flex items-start space-x-3">
+              <span class="w-3 h-3 rounded-full bg-blue-500 mt-1 flex-shrink-0"></span>
+              <div>
+                <div class="text-sm font-semibold text-blue-400">Info</div>
+                <p class="text-xs text-neutral-400">Incluído no digest matinal. Sugestões de melhoria, estatísticas.</p>
+              </div>
+            </div>
+            <div class="mt-4 p-3 bg-dark-700 rounded-lg">
+              <div class="text-amber-400 text-xs font-semibold mb-1">Comando de snooze</div>
+              <p class="text-xs text-neutral-400">Responda "/snooze inbox 2h" para silenciar o alerta de inbox por 2 horas. Útil quando você está consciente do acúmulo e vai resolver depois.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TÓPICO 6 -->
+    <section id="topico-6" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">6</span>
+        <h2 class="text-2xl font-bold">🔄 Construindo seu Pipeline Completo</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">O pipeline completo conecta todos os módulos da trilha em um <strong class="text-amber-400">sistema coeso e autônomo</strong>. Do raw/ ao celular, do celular ao wiki, do wiki ao briefing matinal — o segundo cérebro que funciona enquanto você dorme.</p>
+
+      <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+        <h3 class="text-base font-semibold text-amber-400 mb-4">🔄 Pipeline end-to-end</h3>
+        <svg viewBox="0 0 680 280" class="w-full" xmlns="http://www.w3.org/2000/svg">
+          <defs><marker id="pa" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0,0 L0,6 L6,3 z" fill="#fbbf24"/></marker></defs>
+
+          <!-- Input sources -->
+          <text x="10" y="20" fill="#9ca3af" font-size="9" font-weight="bold">ENTRADAS</text>
+          <rect x="10" y="28" width="80" height="28" rx="5" fill="#1f2937" stroke="#fbbf24" stroke-width="1"/>
+          <text x="50" y="47" text-anchor="middle" fill="#fbbf24" font-size="8">📱 Telegram</text>
+          <rect x="10" y="63" width="80" height="28" rx="5" fill="#1f2937" stroke="#fbbf24" stroke-width="1"/>
+          <text x="50" y="82" text-anchor="middle" fill="#fbbf24" font-size="8">🐙 GitHub PR</text>
+          <rect x="10" y="98" width="80" height="28" rx="5" fill="#1f2937" stroke="#fbbf24" stroke-width="1"/>
+          <text x="50" y="117" text-anchor="middle" fill="#fbbf24" font-size="8">🔗 URL scrape</text>
+          <rect x="10" y="133" width="80" height="28" rx="5" fill="#1f2937" stroke="#fbbf24" stroke-width="1"/>
+          <text x="50" y="152" text-anchor="middle" fill="#fbbf24" font-size="8">📧 Email</text>
+
+          <!-- raw/inbox -->
+          <rect x="135" y="55" width="90" height="80" rx="8" fill="#451a03" stroke="#fbbf24" stroke-width="2"/>
+          <text x="180" y="85" text-anchor="middle" fill="#fbbf24" font-size="9" font-weight="bold">raw/inbox/</text>
+          <text x="180" y="100" text-anchor="middle" fill="#9ca3af" font-size="7">landing zone</text>
+          <text x="180" y="115" text-anchor="middle" fill="#9ca3af" font-size="7">todos os docs</text>
+          <text x="180" y="128" text-anchor="middle" fill="#9ca3af" font-size="7">aguardando</text>
+
+          <line x1="90" y1="42" x2="133" y2="75" stroke="#fbbf24" stroke-width="1" marker-end="url(#pa)"/>
+          <line x1="90" y1="77" x2="133" y2="88" stroke="#fbbf24" stroke-width="1" marker-end="url(#pa)"/>
+          <line x1="90" y1="112" x2="133" y2="100" stroke="#fbbf24" stroke-width="1" marker-end="url(#pa)"/>
+          <line x1="90" y1="147" x2="133" y2="118" stroke="#fbbf24" stroke-width="1" marker-end="url(#pa)"/>
+
+          <!-- Ingestão (cron/manual) -->
+          <rect x="270" y="55" width="100" height="80" rx="8" fill="#1f2937" stroke="#FACC15" stroke-width="2"/>
+          <text x="320" y="83" text-anchor="middle" fill="#FACC15" font-size="8" font-weight="bold">Ingestão</text>
+          <text x="320" y="97" text-anchor="middle" fill="#9ca3af" font-size="7">Claude Code CLI</text>
+          <text x="320" y="110" text-anchor="middle" fill="#9ca3af" font-size="7">cron/manual</text>
+          <text x="320" y="123" text-anchor="middle" fill="#FACC15" font-size="7">LLM compiler</text>
+          <line x1="225" y1="95" x2="268" y2="95" stroke="#FACC15" stroke-width="1.5" marker-end="url(#pa)"/>
+
+          <!-- wiki/ -->
+          <rect x="415" y="30" width="100" height="130" rx="8" fill="#064e3b" stroke="#10b981" stroke-width="2"/>
+          <text x="465" y="60" text-anchor="middle" fill="#10b981" font-size="9" font-weight="bold">wiki/</text>
+          <text x="465" y="75" text-anchor="middle" fill="#6b7280" font-size="7">páginas compiladas</text>
+          <text x="465" y="92" text-anchor="middle" fill="#9ca3af" font-size="7">📄 index.md</text>
+          <text x="465" y="107" text-anchor="middle" fill="#9ca3af" font-size="7">📄 conceitos/</text>
+          <text x="465" y="122" text-anchor="middle" fill="#9ca3af" font-size="7">📄 projetos/</text>
+          <text x="465" y="137" text-anchor="middle" fill="#9ca3af" font-size="7">📄 decisoes/</text>
+          <text x="465" y="152" text-anchor="middle" fill="#9ca3af" font-size="7">📄 log.md</text>
+          <line x1="370" y1="95" x2="413" y2="95" stroke="#10b981" stroke-width="1.5" marker-end="url(#pa)"/>
+
+          <!-- Outputs -->
+          <text x="565" y="20" fill="#9ca3af" font-size="9" font-weight="bold">SAÍDAS</text>
+          <rect x="560" y="28" width="110" height="28" rx="5" fill="#1f2937" stroke="#60a5fa" stroke-width="1"/>
+          <text x="615" y="47" text-anchor="middle" fill="#60a5fa" font-size="8">💬 Consultas naturais</text>
+          <rect x="560" y="63" width="110" height="28" rx="5" fill="#1f2937" stroke="#10b981" stroke-width="1"/>
+          <text x="615" y="82" text-anchor="middle" fill="#10b981" font-size="8">☀️ Daily briefing</text>
+          <rect x="560" y="98" width="110" height="28" rx="5" fill="#1f2937" stroke="#c084fc" stroke-width="1"/>
+          <text x="615" y="117" text-anchor="middle" fill="#c084fc" font-size="8">🔧 Lint semanal</text>
+          <rect x="560" y="133" width="110" height="28" rx="5" fill="#1f2937" stroke="#f87171" stroke-width="1"/>
+          <text x="615" y="152" text-anchor="middle" fill="#f87171" font-size="8">🚨 Alertas proativos</text>
+
+          <line x1="515" y1="75" x2="558" y2="42" stroke="#60a5fa" stroke-width="1" marker-end="url(#pa)"/>
+          <line x1="515" y1="90" x2="558" y2="77" stroke="#10b981" stroke-width="1" marker-end="url(#pa)"/>
+          <line x1="515" y1="110" x2="558" y2="112" stroke="#c084fc" stroke-width="1" marker-end="url(#pa)"/>
+          <line x1="515" y1="130" x2="558" y2="147" stroke="#f87171" stroke-width="1" marker-end="url(#pa)"/>
+
+          <!-- OpenClaw central label -->
+          <rect x="200" y="195" width="280" height="35" rx="8" fill="#1f2937" stroke="#fbbf24" stroke-width="1.5"/>
+          <text x="340" y="210" text-anchor="middle" fill="#fbbf24" font-size="9" font-weight="bold">🤖 OpenClaw</text>
+          <text x="340" y="224" text-anchor="middle" fill="#9ca3af" font-size="7">orquestra todo o pipeline via SOUL.md</text>
+
+          <!-- Connection to OpenClaw -->
+          <line x1="320" y1="195" x2="320" y2="135" stroke="#fbbf24" stroke-width="1" stroke-dasharray="3,2" opacity="0.5"/>
+          <line x1="465" y1="195" x2="465" y2="160" stroke="#fbbf24" stroke-width="1" stroke-dasharray="3,2" opacity="0.5"/>
+          <line x1="180" y1="195" x2="180" y2="135" stroke="#fbbf24" stroke-width="1" stroke-dasharray="3,2" opacity="0.5"/>
+        </svg>
+      </div>
+
+      <div class="bg-dark-800 rounded-xl border border-dark-600 p-5 mb-6">
+        <div class="text-amber-400 font-semibold mb-3">SOUL.md final consolidado (template de produção)</div>
+        <pre class="text-xs text-neutral-400 overflow-x-auto leading-relaxed"><code># SOUL.md — Segundo Cérebro (Produção)
+
+## Identidade
+name: Cleo
+personality: "direto, conciso, cita fontes, nunca inventa"
+language: pt-BR
+
+## Knowledge Base
+knowledge_base:
+  vault_root: /home/user/vault/
+  index_file: /home/user/vault/index.md
+  wiki_path: /home/user/vault/wiki/
+  inbox_path: /home/user/vault/raw/inbox/
+  max_context_tokens: 8000
+  cite_format: "↗ wiki/{filename}"
+  not_found: "Não tenho isso registrado. Criar tarefa?"
+
+## Skills
+skills:
+  - name: filesystem
+    read: ["/vault/wiki/", "/vault/index.md"]
+    write: ["/vault/raw/inbox/"]
+    audit_log: true
+  - name: cron
+  - name: http
+    allowed_hosts: ["api.github.com"]
+  - name: exec
+    allowed_commands: ["claude"]
+
+## Channels
+channels:
+  telegram: { token: "${TELEGRAM_TOKEN}", role: owner }
+  slack:    { token: "${SLACK_TOKEN}", channel: "#wiki" }
+
+## Cron
+cron:
+  - "0 * * * *"   → check_inbox
+  - "0 8 * * *"   → daily_briefing (telegram)
+  - "0 9 * * 0"   → weekly_lint (telegram + slack)
+  - "0 23 * * *"  → export_chat_logs
+
+## Webhooks
+webhooks:
+  - path: /webhook/github
+    event: pull_request[merged]
+    action: save_to_inbox + ingest
+
+## Alertas
+health_checks:
+  inbox_overload:  count > 10   → warning (cooldown 4h)
+  ingestion_fail:  status=fail  → critical (imediato)</code></pre>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-5">
+          <h4 class="font-bold text-emerald-400 mb-3">✓ Checklist de produção</h4>
+          <ul class="space-y-2 text-sm text-neutral-300">
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">□</span><span>OpenClaw rodando como serviço (pm2/systemd)</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">□</span><span>Backup do vault configurado (rclone/rsync diário)</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">□</span><span>Webhook GitHub registrado e testado</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">□</span><span>Primeiro daily briefing recebido</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">□</span><span>Primeiro lint semanal executado</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">□</span><span>Alertas de degradação configurados</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">□</span><span>Documentar o SOUL.md no próprio wiki</span></li>
+          </ul>
+        </div>
+        <div class="bg-dark-800 rounded-xl border border-dark-600 p-5">
+          <h4 class="font-bold text-neutral-300 mb-3">📈 Evolução incremental</h4>
+          <div class="space-y-3 text-sm">
+            <div class="flex items-start space-x-3">
+              <span class="text-amber-400 font-bold text-xs mt-0.5">Semana 1</span>
+              <p class="text-neutral-400">Instalar, conectar Telegram, primeira consulta ao wiki</p>
+            </div>
+            <div class="flex items-start space-x-3">
+              <span class="text-amber-400 font-bold text-xs mt-0.5">Semana 2</span>
+              <p class="text-neutral-400">Ativar captura mobile + cron de ingestão horária</p>
+            </div>
+            <div class="flex items-start space-x-3">
+              <span class="text-amber-400 font-bold text-xs mt-0.5">Semana 3</span>
+              <p class="text-neutral-400">Daily briefing + alertas de degradação</p>
+            </div>
+            <div class="flex items-start space-x-3">
+              <span class="text-amber-400 font-bold text-xs mt-0.5">Semana 4</span>
+              <p class="text-neutral-400">Webhook GitHub + lint semanal + multi-canal</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-amber-500/10 rounded-xl border border-amber-500/30 p-5">
+        <div class="text-amber-400 font-semibold mb-3">✅ Conceitos-chave do módulo</div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div class="flex items-start space-x-2"><span class="text-amber-400">✓</span><span class="text-sm text-neutral-300">Cron jobs eliminam dependência de memória humana</span></div>
+          <div class="flex items-start space-x-2"><span class="text-amber-400">✓</span><span class="text-sm text-neutral-300">GitHub webhook → PR mergeado → wiki atualizado automaticamente</span></div>
+          <div class="flex items-start space-x-2"><span class="text-amber-400">✓</span><span class="text-sm text-neutral-300">Daily briefing torna o wiki proativo — ele vem até você</span></div>
+          <div class="flex items-start space-x-2"><span class="text-amber-400">✓</span><span class="text-sm text-neutral-300">Lint semanal mantém a qualidade do conhecimento</span></div>
+          <div class="flex items-start space-x-2"><span class="text-amber-400">✓</span><span class="text-sm text-neutral-300">Alertas de degradação previnem acúmulo silencioso de problemas</span></div>
+          <div class="flex items-start space-x-2"><span class="text-amber-400">✓</span><span class="text-sm text-neutral-300">SOUL.md consolidado é o único ponto de configuração de todo o pipeline</span></div>
+        </div>
+      </div>
+    </section>
+
+    <div class="flex justify-between items-center mt-8 pt-8 border-t border-dark-600">
+      <a href="modulo-4-3.html" class="flex items-center space-x-2 px-4 py-2 rounded-lg bg-dark-800 border border-dark-600 hover:border-amber-500/50 transition-colors text-neutral-300 hover:text-amber-400">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+        <span>4.3 — Interface Conversacional</span>
+      </a>
+      <a href="index.html" class="flex items-center space-x-2 px-4 py-2 rounded-lg bg-amber-500/20 border border-amber-500/30 hover:bg-amber-500/30 transition-colors text-amber-400">
+        <span>Trilha 4 — Índice</span>
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+  </main>
+
+  <footer class="border-t border-dark-600 mt-16 py-8">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <p class="text-neutral-500 text-sm">2Cérebro · <a href="https://inema.club" class="text-sky-400 hover:text-sky-300">INEMA.CLUB</a></p>
+    </div>
+  </footer>
+
+  <script>
+    const toggle = document.getElementById('theme-toggle');
+    const darkIcon = document.getElementById('theme-toggle-dark-icon');
+    const lightIcon = document.getElementById('theme-toggle-light-icon');
+    const html = document.documentElement;
+    function applyTheme(isDark) {
+      html.classList.toggle('dark', isDark);
+      darkIcon.classList.toggle('hidden', isDark);
+      lightIcon.classList.toggle('hidden', !isDark);
+    }
+    applyTheme(localStorage.getItem('theme') !== 'light');
+    toggle.addEventListener('click', () => {
+      const isDark = html.classList.contains('dark');
+      localStorage.setItem('theme', isDark ? 'light' : 'dark');
+      applyTheme(!isDark);
+    });
+  </script>
+</body>
+</html>

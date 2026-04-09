@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trilha 5 — Intelecto | 2Cérebro</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: { extend: { colors: { primary: '#FACC15', dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' } } } }
+    }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+    .topic-explanation { display: none; }
+    .topic-explanation.active { display: block; }
+    html:not(.dark) body { background-color: #f8fafc; }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #9ca3af; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+    html:not(.dark) .text-teal-400 { color: #0f766e; }
+    html:not(.dark) .bg-teal-500\/20 { background-color: rgba(13,148,136,0.12); }
+    html:not(.dark) .bg-teal-500\/10 { background-color: rgba(13,148,136,0.08); }
+    html:not(.dark) .border-teal-500\/30 { border-color: rgba(13,148,136,0.25); }
+    html:not(.dark) .hover\:bg-teal-500\/30:hover { background-color: rgba(13,148,136,0.18); }
+    html:not(.dark) [class*="bg-gradient-to"] { background-image: none !important; }
+    html:not(.dark) .text-primary { color: #a16207; }
+    html:not(.dark) .bg-primary\/10 { background-color: rgba(161,98,7,0.08); }
+    html:not(.dark) .text-sky-400 { color: #0369a1; }
+    html:not(.dark) .text-yellow-400 { color: #a16207; }
+    html:not(.dark) .hover\:text-sky-300:hover { color: #0284c7; }
+    html:not(.dark) .hover\:text-yellow-300:hover { color: #854d0e; }
+    html:not(.dark) .bg-dark-900\/95 { background-color: rgba(255,255,255,0.95); }
+    .modal { display: none; }
+    .modal:not(.hidden) { display: flex; }
+  </style>
+</head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen">
+
+  <nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-14">
+        <div class="flex items-center space-x-4">
+          <a href="../../index.html" class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300">
+            <span class="text-2xl">🧠</span><span class="font-bold text-lg hidden sm:inline">2Cérebro</span>
+          </a>
+          <span class="text-neutral-600">|</span>
+          <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300 text-sm font-medium">INEMA.CLUB</a>
+        </div>
+        <div class="flex items-center space-x-1 sm:space-x-2">
+          <a href="../trilha1/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors">
+            <span class="sm:hidden">T1</span><span class="hidden sm:inline">Fundamentos</span>
+          </a>
+          <a href="../trilha2/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors">
+            <span class="sm:hidden">T2</span><span class="hidden sm:inline">Implementação</span>
+          </a>
+          <a href="../trilha3/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors">
+            <span class="sm:hidden">T3</span><span class="hidden sm:inline">Avançado</span>
+          </a>
+          <a href="../trilha4/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-amber-400 hover:bg-amber-500/10 transition-colors">
+            <span class="sm:hidden">T4</span><span class="hidden sm:inline">Automação</span>
+          </a>
+          <a href="index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-teal-400 bg-teal-500/10">
+            <span class="sm:hidden">T5</span><span class="hidden sm:inline">Intelecto</span>
+          </a>
+          <button id="theme-toggle" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2">
+            <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+            <svg id="theme-toggle-light-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <header class="bg-gradient-to-br from-teal-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+        <div>
+          <span class="inline-block px-3 py-1 bg-teal-500/20 text-teal-400 text-xs font-semibold rounded-full mb-4">TRILHA 5</span>
+          <h1 class="text-3xl sm:text-4xl font-bold mb-4">🧬 Intelecto: Segundo Cérebro via Telegram</h1>
+          <p class="text-lg text-neutral-400 max-w-xl mb-6">Integre o vault Obsidian com o Intelecto — assistente pessoal de IA via Telegram. Combine a memória SQLite do Intelecto com o poder do LLM wiki para um sistema de conhecimento completo.</p>
+          <div class="grid grid-cols-4 gap-4 max-w-lg">
+            <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-teal-400">4</div><div class="text-xs text-neutral-400">Módulos</div></div>
+            <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-teal-400">24</div><div class="text-xs text-neutral-400">Tópicos</div></div>
+            <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-teal-400">~3h</div><div class="text-xs text-neutral-400">Duração</div></div>
+            <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-teal-400">Prático</div><div class="text-xs text-neutral-400">Nível</div></div>
+          </div>
+        </div>
+        <!-- Intelecto + Telegram architecture SVG -->
+        <div class="flex justify-center">
+          <svg viewBox="0 0 320 260" class="w-full max-w-xs" xmlns="http://www.w3.org/2000/svg">
+            <!-- Telegram icon -->
+            <circle cx="60" cy="130" r="36" fill="#1f2937" stroke="#2dd4bf" stroke-width="2"/>
+            <text x="60" y="126" text-anchor="middle" fill="#2dd4bf" font-size="20">📱</text>
+            <text x="60" y="144" text-anchor="middle" fill="#9ca3af" font-size="8">Telegram</text>
+            <!-- Arrow -->
+            <line x1="96" y1="130" x2="128" y2="130" stroke="#2dd4bf" stroke-width="1.5" stroke-dasharray="4,3"/>
+            <polygon points="128,126 136,130 128,134" fill="#2dd4bf"/>
+            <!-- Intelecto core -->
+            <rect x="140" y="95" width="90" height="70" rx="10" fill="#1f2937" stroke="#2dd4bf" stroke-width="2"/>
+            <text x="185" y="122" text-anchor="middle" fill="#2dd4bf" font-size="13">🧬</text>
+            <text x="185" y="137" text-anchor="middle" fill="#2dd4bf" font-size="9" font-weight="bold">Intelecto</text>
+            <text x="185" y="150" text-anchor="middle" fill="#9ca3af" font-size="7">Python + SQLite</text>
+            <!-- Arrow to wiki -->
+            <line x1="230" y1="130" x2="262" y2="130" stroke="#2dd4bf" stroke-width="1.5" stroke-dasharray="4,3"/>
+            <polygon points="262,126 270,130 262,134" fill="#2dd4bf"/>
+            <!-- Wiki vault -->
+            <rect x="272" y="95" width="40" height="35" rx="6" fill="#0f3460" stroke="#2dd4bf" stroke-width="1"/>
+            <text x="292" y="116" text-anchor="middle" fill="#2dd4bf" font-size="9">📖</text>
+            <text x="292" y="128" text-anchor="middle" fill="#9ca3af" font-size="7">Wiki</text>
+            <!-- SQLite memory -->
+            <rect x="152" y="185" width="66" height="30" rx="6" fill="#1f2937" stroke="#0d9488" stroke-width="1"/>
+            <text x="185" y="203" text-anchor="middle" fill="#0d9488" font-size="8">🗄️ SQLite FTS5</text>
+            <!-- SOUL.md -->
+            <rect x="140" y="48" width="90" height="28" rx="6" fill="#1f2937" stroke="#0d9488" stroke-width="1"/>
+            <text x="185" y="62" text-anchor="middle" fill="#0d9488" font-size="8">📄 SOUL.md</text>
+            <text x="185" y="72" text-anchor="middle" fill="#9ca3af" font-size="7">Identidade</text>
+            <!-- connections vertical -->
+            <line x1="185" y1="76" x2="185" y2="95" stroke="#0d9488" stroke-width="1" stroke-dasharray="3,3"/>
+            <line x1="185" y1="165" x2="185" y2="185" stroke="#0d9488" stroke-width="1" stroke-dasharray="3,3"/>
+            <!-- OpenRouter -->
+            <rect x="272" y="148" width="40" height="30" rx="6" fill="#1f2937" stroke="#FACC15" stroke-width="1"/>
+            <text x="292" y="163" text-anchor="middle" fill="#FACC15" font-size="8">☁️ LLM</text>
+            <text x="292" y="173" text-anchor="middle" fill="#9ca3af" font-size="7">OpenRouter</text>
+            <line x1="185" y1="148" x2="280" y2="155" stroke="#FACC15" stroke-width="1" stroke-dasharray="3,3"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+    <!-- CARDS SIMPLES -->
+    <div class="mb-12">
+      <h2 class="text-xl font-bold mb-4 text-neutral-300">Módulos desta Trilha</h2>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <a href="modulo-5-1.html" class="group bg-dark-800 rounded-xl border border-dark-600 hover:border-teal-500/30 p-4 transition-all hover:bg-teal-500/5">
+          <div class="text-teal-400 font-bold text-sm mb-1">5.1</div>
+          <div class="font-semibold text-sm group-hover:text-teal-400 transition-colors">🧬 O que é o Intelecto</div>
+          <div class="text-xs text-neutral-500 mt-1">~40 min</div>
+        </a>
+        <a href="modulo-5-2.html" class="group bg-dark-800 rounded-xl border border-dark-600 hover:border-teal-500/30 p-4 transition-all hover:bg-teal-500/5">
+          <div class="text-teal-400 font-bold text-sm mb-1">5.2</div>
+          <div class="font-semibold text-sm group-hover:text-teal-400 transition-colors">🗄️ Memória SQLite vs Wiki Markdown</div>
+          <div class="text-xs text-neutral-500 mt-1">~45 min</div>
+        </a>
+        <a href="modulo-5-3.html" class="group bg-dark-800 rounded-xl border border-dark-600 hover:border-teal-500/30 p-4 transition-all hover:bg-teal-500/5">
+          <div class="text-teal-400 font-bold text-sm mb-1">5.3</div>
+          <div class="font-semibold text-sm group-hover:text-teal-400 transition-colors">🔗 Integrando Vault Obsidian com Intelecto</div>
+          <div class="text-xs text-neutral-500 mt-1">~50 min</div>
+        </a>
+        <a href="modulo-5-4.html" class="group bg-dark-800 rounded-xl border border-dark-600 hover:border-teal-500/30 p-4 transition-all hover:bg-teal-500/5">
+          <div class="text-teal-400 font-bold text-sm mb-1">5.4</div>
+          <div class="font-semibold text-sm group-hover:text-teal-400 transition-colors">📱 Telegram como Interface do Segundo Cérebro</div>
+          <div class="text-xs text-neutral-500 mt-1">~45 min</div>
+        </a>
+      </div>
+    </div>
+
+    <div class="border-t border-dark-600 pt-8 mb-6">
+      <h2 class="text-lg font-bold text-neutral-300">Conteúdo Detalhado</h2>
+    </div>
+
+    <!-- MÓDULO 5.1 -->
+    <div class="bg-dark-800 rounded-xl border border-dark-600 mb-6">
+      <div class="p-6 border-b border-dark-600">
+        <div class="flex items-center justify-between mb-2"><span class="text-teal-400 font-bold">5.1</span><span class="text-xs text-neutral-500">~40 min</span></div>
+        <h3 class="text-2xl font-bold mb-2">🧬 O que é o Intelecto</h3>
+        <p class="text-neutral-400 text-sm">Arquitetura Python leve (~3000 linhas, 7 dependências), memória BM25, identidade em Markdown e modelos via OpenRouter/Ollama.</p>
+      </div>
+      <div class="divide-y divide-dark-600">
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+            <span class="text-lg">🏗️</span>
+            <div><span class="font-medium">Arquitetura do Intelecto</span><span class="text-neutral-500 text-sm ml-2">- Python, SQLite, Telegram, OpenRouter</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-teal-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">O Intelecto é um assistente pessoal de IA criado por @inematds, escrito em Python (~3000 linhas) com apenas 7 dependências pip. Roda localmente, conecta ao Telegram como interface e usa SQLite para armazenar memórias com busca FTS5 e ranking BM25.</p></div>
+              <div><span class="text-teal-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Entender a arquitetura permite customizar o Intelecto para integrar com o vault Obsidian. O design minimalista (sem frameworks pesados) facilita modificações e extensões específicas para o segundo cérebro.</p></div>
+              <div><span class="text-teal-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Python, SQLite FTS5, Telegram Bot API, OpenRouter, Ollama, arquitetura minimalista, 7 dependências pip.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+            <span class="text-lg">📄</span>
+            <div><span class="font-medium">SOUL.md, AGENTS.md e USER.md</span><span class="text-neutral-500 text-sm ml-2">- Identidade em Markdown</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-teal-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">O Intelecto define identidade via três arquivos Markdown: SOUL.md (personalidade e valores), AGENTS.md (capacidades e comportamentos dos agentes) e USER.md (contexto do usuário). Esses arquivos são injetados como system prompt em cada conversa.</p></div>
+              <div><span class="text-teal-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Customizar esses arquivos é a principal forma de adaptar o Intelecto para o segundo cérebro. O USER.md pode incluir referências ao vault Obsidian, permitindo que o assistente conheça o contexto do seu conhecimento compilado.</p></div>
+              <div><span class="text-teal-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">SOUL.md, AGENTS.md, USER.md, system prompt, identidade declarativa, personalidade em Markdown, injeção de contexto.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+            <span class="text-lg">🔍</span>
+            <div><span class="font-medium">Memória com BM25</span><span class="text-neutral-500 text-sm ml-2">- SQLite FTS5 e ranqueamento</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-teal-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">O Intelecto usa SQLite com extensão FTS5 (Full-Text Search) e algoritmo BM25 para ranquear memórias por relevância. Cada conversa é sumarizada automaticamente e armazenada. Deduplication remove memórias semelhantes para evitar redundância.</p></div>
+              <div><span class="text-teal-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">BM25 é o mesmo algoritmo do Elasticsearch — eficiente, comprovado e sem necessidade de embeddings vetoriais. Entender como ele funciona permite otimizar as memórias armazenadas e a forma como o Intelecto recupera contexto relevante.</p></div>
+              <div><span class="text-teal-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">BM25, FTS5, TF-IDF, ranking por relevância, sumarização automática, deduplication, memória episódica.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+            <span class="text-lg">⚡</span>
+            <div><span class="font-medium">Instalação e Configuração</span><span class="text-neutral-500 text-sm ml-2">- 7 dependências, setup rápido</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-teal-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Setup do Intelecto em 5 passos: clone do repositório, pip install das 7 dependências (python-telegram-bot, openai, anthropic, tiktoken, sqlite-utils, python-dotenv, httpx), configuração do .env com tokens e execução do script principal.</p></div>
+              <div><span class="text-teal-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">A instalação simples é uma das maiores vantagens do Intelecto frente a soluções mais pesadas. Em minutos você tem um assistente pessoal funcional rodando no Telegram, pronto para ser integrado ao vault.</p></div>
+              <div><span class="text-teal-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">python-telegram-bot, .env, TELEGRAM_TOKEN, OPENROUTER_API_KEY, SQLite automático, configuração declarativa.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+            <span class="text-lg">☁️</span>
+            <div><span class="font-medium">OpenRouter e Ollama</span><span class="text-neutral-500 text-sm ml-2">- Modelos cloud e locais</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-teal-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">O Intelecto suporta dois backends de modelos: OpenRouter (acesso a Claude, GPT-4, Gemini, DeepSeek via API) e Ollama (modelos locais como Llama, Mistral, Qwen). A troca é feita via variável de ambiente sem alterar código.</p></div>
+              <div><span class="text-teal-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">A flexibilidade de backend permite usar modelos potentes na nuvem para tarefas complexas e modelos locais para operações repetitivas de ingestão, balanceando custo e qualidade no segundo cérebro.</p></div>
+              <div><span class="text-teal-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">OpenRouter, Ollama, backend agnóstico, variável MODEL no .env, troca de modelo sem code change, custo vs. qualidade.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+            <span class="text-lg">⚖️</span>
+            <div><span class="font-medium">Intelecto vs OpenClaw</span><span class="text-neutral-500 text-sm ml-2">- Comparação de arquiteturas</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-teal-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Comparação entre Intelecto (SQLite + Telegram, ~3000 linhas, 7 deps) e alternativas mais complexas. O Intelecto prioriza simplicidade e hackabilidade — ideal para integração com vault wiki. Alternativas como MemGPT ou custom RAG têm mais features mas são mais difíceis de customizar.</p></div>
+              <div><span class="text-teal-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Entender os trade-offs justifica a escolha do Intelecto para o segundo cérebro. Simplicidade significa menor surface de bugs, fácil auditoria do código e integração direta com o vault sem wrappers complexos.</p></div>
+              <div><span class="text-teal-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Trade-offs de complexidade, hackabilidade, linhas de código como métrica, dependências mínimas, filosofia Unix de ferramentas simples.</p></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+        <button onclick="openModal('modal-5-1')" class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors">Ver em Modal</button>
+        <a href="modulo-5-1.html" class="px-4 py-2 text-sm bg-teal-600 hover:bg-teal-500 text-white rounded-lg transition-colors">Ver Completo</a>
+      </div>
+    </div>
+
+    <!-- MÓDULO 5.2 -->
+    <div class="bg-dark-800 rounded-xl border border-dark-600 mb-6">
+      <div class="p-6 border-b border-dark-600">
+        <div class="flex items-center justify-between mb-2"><span class="text-teal-400 font-bold">5.2</span><span class="text-xs text-neutral-500">~45 min</span></div>
+        <h3 class="text-2xl font-bold mb-2">🗄️ Memória SQLite vs Wiki Markdown</h3>
+        <p class="text-neutral-400 text-sm">Como as duas memórias se complementam: SQLite para curto prazo e conversas, Wiki Markdown para conhecimento permanente e auditável.</p>
+      </div>
+      <div class="divide-y divide-dark-600">
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+            <span class="text-lg">🗄️</span>
+            <div><span class="font-medium">Como o Intelecto Usa SQLite</span><span class="text-neutral-500 text-sm ml-2">- FTS5, BM25, deduplication</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-teal-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">O Intelecto cria automaticamente uma tabela SQLite com FTS5 para cada memória. Ao receber uma query, usa BM25 para ranquear as memórias mais relevantes e injeta as top-N no contexto. Deduplication compara similaridade e remove memórias redundantes periodicamente.</p></div>
+              <div><span class="text-teal-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Entender o mecanismo de recuperação SQLite permite otimizar como as memórias são gravadas — palavras-chave estratégicas melhoram o recall do BM25 tanto para memórias de conversa quanto para conhecimento do vault.</p></div>
+              <div><span class="text-teal-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">FTS5 virtual table, BM25 score, top-N retrieval, deduplication threshold, memória episódica, sumarização de conversa.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+            <span class="text-lg">⚠️</span>
+            <div><span class="font-medium">Limitações da Memória SQLite</span><span class="text-neutral-500 text-sm ml-2">- Não auditável, não versionado</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-teal-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">A memória SQLite do Intelecto tem limitações críticas para conhecimento de longo prazo: não é versionada com Git, não é legível diretamente por humanos, não tem links entre conceitos, e memórias degradam com sumarizações sucessivas perdendo detalhes originais.</p></div>
+              <div><span class="text-teal-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Reconhecer as limitações justifica a arquitetura híbrida. SQLite é excelente para memória de curto prazo e contexto de conversa — mas não substitui um wiki Markdown versionado para conhecimento estruturado permanente.</p></div>
+              <div><span class="text-teal-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Memória de curto prazo, degradação por sumarização, ausência de versionamento, não auditável, sem hiperlinks, formato binário.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+            <span class="text-lg">✅</span>
+            <div><span class="font-medium">Vantagens do Wiki Markdown</span><span class="text-neutral-500 text-sm ml-2">- Git, legível, linkado, auditável</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-teal-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">O wiki Markdown tem vantagens fundamentais: versionado com Git (histórico completo), legível por humanos sem ferramentas especiais, links bidirecionais entre conceitos, auditável via diff, e compilável pelo LLM em respostas estruturadas de alta qualidade.</p></div>
+              <div><span class="text-teal-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">As vantagens do wiki justificam o investimento em compilação manual ou assistida por LLM. Conhecimento no wiki não degrada, pode ser revisado, corrigido e evoluído — propriedades essenciais para um segundo cérebro confiável.</p></div>
+              <div><span class="text-teal-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Git, diff, legibilidade humana, links bidirecionais, auditabilidade, permanência, compilação LLM, estrutura explícita.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+            <span class="text-lg">🏗️</span>
+            <div><span class="font-medium">Arquitetura Híbrida</span><span class="text-neutral-500 text-sm ml-2">- SQLite para curto prazo, Wiki para longo prazo</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-teal-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">A arquitetura híbrida ideal usa as duas memórias em camadas: SQLite como cache de contexto recente (últimas conversas, notas rápidas, itens temporários) e Wiki Markdown como repositório permanente de conhecimento estruturado. A transição entre as duas é gerida por regras explícitas.</p></div>
+              <div><span class="text-teal-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">A arquitetura híbrida resolve os trade-offs de cada sistema: SQLite dá velocidade e contexto imediato; wiki dá permanência e estrutura. Juntos, cobrem desde o pensamento efêmero até o conhecimento consolidado.</p></div>
+              <div><span class="text-teal-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Memória em camadas, cache vs. persistência, critérios de promoção, short-term vs. long-term memory, regras de transição.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+            <span class="text-lg">🔄</span>
+            <div><span class="font-medium">Sincronização das Duas Memórias</span><span class="text-neutral-500 text-sm ml-2">- Bridge entre Intelecto e vault</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-teal-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Um script bridge Python lê o index.md do vault e injeta páginas relevantes como memórias estruturadas no SQLite do Intelecto. Na direção inversa, memórias SQL marcadas para promoção são exportadas como notas raw/ para ingestão pelo LLM wiki. O fluxo é unidirecional com ponto de controle humano.</p></div>
+              <div><span class="text-teal-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">A sincronização é o componente central da integração. Entendê-la permite implementar o bridge de forma incremental, começando com sincronização manual e evoluindo para automática conforme a confiança no sistema aumenta.</p></div>
+              <div><span class="text-teal-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Bridge script, sincronização unidirecional, ponto de controle, promoção de memória, ingestão via raw/, sincronização incremental.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+            <span class="text-lg">🧠</span>
+            <div><span class="font-medium">Escolhendo o Modelo Mental Correto</span><span class="text-neutral-500 text-sm ml-2">- Quando usar cada memória</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-teal-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Regras práticas: use SQLite para contexto de conversa, tarefas em andamento, lembretes efêmeros e notas rápidas. Use o wiki para conceitos definidos, projetos com múltiplas entidades, comparações, decisões com justificativa e qualquer coisa que você queira consultar em 6 meses.</p></div>
+              <div><span class="text-teal-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">O modelo mental correto evita o erro de colocar tudo em um lugar só — sobrecarregar o wiki com efêmeros ou confiar o importante apenas ao SQLite. A separação clara torna o sistema mais sustentável e confiável.</p></div>
+              <div><span class="text-teal-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Regras de roteamento, efêmero vs. permanente, critérios de valor, life expectancy da informação, custo de compilação vs. benefício.</p></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+        <button onclick="openModal('modal-5-2')" class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors">Ver em Modal</button>
+        <a href="modulo-5-2.html" class="px-4 py-2 text-sm bg-teal-600 hover:bg-teal-500 text-white rounded-lg transition-colors">Ver Completo</a>
+      </div>
+    </div>
+
+    <!-- MÓDULO 5.3 -->
+    <div class="bg-dark-800 rounded-xl border border-dark-600 mb-6">
+      <div class="p-6 border-b border-dark-600">
+        <div class="flex items-center justify-between mb-2"><span class="text-teal-400 font-bold">5.3</span><span class="text-xs text-neutral-500">~50 min</span></div>
+        <h3 class="text-2xl font-bold mb-2">🔗 Integrando Vault Obsidian com Intelecto</h3>
+        <p class="text-neutral-400 text-sm">Scripts de bridge, ingestão pelo Telegram, consulta híbrida e sincronização automática entre o vault e a memória do Intelecto.</p>
+      </div>
+      <div class="divide-y divide-dark-600">
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+            <span class="text-lg">📄</span>
+            <div><span class="font-medium">Configurando USER.md com o Contexto do Vault</span><span class="text-neutral-500 text-sm ml-2">- Contexto persistente do segundo cérebro</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-teal-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">O USER.md é injetado em toda conversa do Intelecto como contexto fixo sobre o usuário. Ao incluir o catálogo do vault (domínios, projetos ativos, conceitos principais) no USER.md, o Intelecto sabe que existe um segundo cérebro e pode referenciar e sugerir páginas do wiki nas respostas.</p></div>
+              <div><span class="text-teal-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Esta é a integração mais simples e imediata: sem código, apenas editando um arquivo Markdown. O Intelecto passa a ter consciência do vault, mencionando páginas relevantes e sugerindo ingestões quando o usuário compartilha novas informações.</p></div>
+              <div><span class="text-teal-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">USER.md, contexto persistente, catálogo de domínios, consciência do vault, integração zero-code, injeção estática de contexto.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+            <span class="text-lg">🔧</span>
+            <div><span class="font-medium">Script de Bridge</span><span class="text-neutral-500 text-sm ml-2">- Intelecto lê o wiki via index.md</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-teal-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Um script Python (bridge.py) lê o index.md do vault, extrai entradas relevantes e as insere como memórias estruturadas no SQLite do Intelecto. O script é executado manualmente ou via cron e usa palavras-chave do index para maximizar o recall BM25.</p></div>
+              <div><span class="text-teal-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">O bridge permite que o Intelecto recupere conhecimento do wiki durante conversas sem precisar ler arquivos Markdown diretamente. A memória BM25 passa a incluir o conhecimento compilado, tornando as respostas muito mais ricas e contextualizadas.</p></div>
+              <div><span class="text-teal-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">bridge.py, parsing de Markdown, insert SQL, cron job, palavras-chave estratégicas, memória estruturada, sincronização incremental.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+            <span class="text-lg">📥</span>
+            <div><span class="font-medium">Ingestão pelo Telegram</span><span class="text-neutral-500 text-sm ml-2">- Mensagem → raw/ → wiki/</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-teal-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Fluxo de ingestão via Telegram: usuário envia texto/link/arquivo → Intelecto salva como arquivo em raw/ (via Dropbox sync, API ou SSH) → comando /ingere dispara o LLM para compilar a nova página wiki/ → index.md e log.md são atualizados.</p></div>
+              <div><span class="text-teal-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">O Telegram como interface de ingestão transforma qualquer momento (reunião, leitura, insight) em uma entrada para o segundo cérebro. O celular já está sempre na mão — o Intelecto torna a captura tão natural quanto enviar uma mensagem.</p></div>
+              <div><span class="text-teal-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">raw/, wiki/, /ingere, Dropbox sync, SSH, Telegram como front-end de ingestão, captura assíncrona, compilação LLM.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+            <span class="text-lg">🔀</span>
+            <div><span class="font-medium">Consulta Híbrida</span><span class="text-neutral-500 text-sm ml-2">- SQLite + Wiki para respostas mais ricas</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-teal-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Na consulta híbrida, o Intelecto primeiro recupera memórias relevantes via BM25 (incluindo entradas do wiki sincronizadas pelo bridge) e, quando a query é identificada como de conhecimento estruturado, também lê diretamente a página wiki correspondente antes de gerar a resposta.</p></div>
+              <div><span class="text-teal-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">A consulta híbrida produz respostas muito mais completas: o contexto de conversa recente (SQLite) é combinado com o conhecimento estruturado e permanente (wiki). O resultado supera qualquer um dos dois sistemas isolados.</p></div>
+              <div><span class="text-teal-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Recuperação em dois estágios, classificação de query, leitura direta de wiki, fusion de contextos, resposta aumentada por wiki.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+            <span class="text-lg">🔄</span>
+            <div><span class="font-medium">Sincronização Automática</span><span class="text-neutral-500 text-sm ml-2">- Vault → memória Intelecto</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-teal-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Sincronização automática via watcher Python que monitora mudanças no vault (inotify ou polling) e dispara o bridge.py quando páginas wiki são atualizadas. O Intelecto recebe as novas memórias dentro de minutos, sem intervenção manual.</p></div>
+              <div><span class="text-teal-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">A sincronização automática fecha o loop do segundo cérebro: compilar uma nova página wiki atualiza automaticamente o Intelecto. O conhecimento vive nos dois sistemas simultaneamente sem esforço extra do usuário.</p></div>
+              <div><span class="text-teal-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">inotify, polling, watcher, sincronização incremental, debounce, vault como source of truth, latência de sincronização.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+            <span class="text-lg">🎯</span>
+            <div><span class="font-medium">Exemplo Completo</span><span class="text-neutral-500 text-sm ml-2">- Fluxo de ponta a ponta</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-teal-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Demonstração completa: usuário lê um artigo → envia link pelo Telegram → Intelecto salva em raw/ → /ingere compila para wiki/ → bridge sincroniza para SQLite → usuário consulta "o que aprendi sobre X?" → Intelecto retorna síntese com dados da memória SQLite e da página wiki compilada.</p></div>
+              <div><span class="text-teal-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">O exemplo de ponta a ponta torna concreto o valor do sistema integrado. Ver o fluxo completo ajuda a identificar onde customizar, otimizar e onde adicionar automações para o próprio workflow.</p></div>
+              <div><span class="text-teal-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Fluxo end-to-end, captura → compilação → sincronização → consulta, ciclo de vida da informação, ROI do segundo cérebro.</p></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+        <button onclick="openModal('modal-5-3')" class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors">Ver em Modal</button>
+        <a href="modulo-5-3.html" class="px-4 py-2 text-sm bg-teal-600 hover:bg-teal-500 text-white rounded-lg transition-colors">Ver Completo</a>
+      </div>
+    </div>
+
+    <!-- MÓDULO 5.4 -->
+    <div class="bg-dark-800 rounded-xl border border-dark-600 mb-6">
+      <div class="p-6 border-b border-dark-600">
+        <div class="flex items-center justify-between mb-2"><span class="text-teal-400 font-bold">5.4</span><span class="text-xs text-neutral-500">~45 min</span></div>
+        <h3 class="text-2xl font-bold mb-2">📱 Telegram como Interface do Segundo Cérebro</h3>
+        <p class="text-neutral-400 text-sm">Design de interface de captura, comandos customizados, envio de arquivos, notificações proativas e segundo cérebro colaborativo em grupos.</p>
+      </div>
+      <div class="divide-y divide-dark-600">
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+            <span class="text-lg">🎨</span>
+            <div><span class="font-medium">Design da Interface de Captura no Telegram</span><span class="text-neutral-500 text-sm ml-2">- UX para o segundo cérebro</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-teal-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Princípios de UX para o Intelecto como interface de captura: latência zero (resposta imediata de confirmação), feedback contextual (Intelecto comenta brevemente sobre o que foi capturado), e sugestões inteligentes (sugere tag ou domínio do vault baseado no conteúdo enviado).</p></div>
+              <div><span class="text-teal-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">A qualidade da interface de captura determina se o sistema será usado consistentemente. Uma interface com fricção alta é abandonada em dias. Design correto torna a captura tão fluida quanto pensar em voz alta.</p></div>
+              <div><span class="text-teal-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Latência zero, feedback imediato, sugestão contextual, fricção zero, captura assíncrona, confirmação de recebimento.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+            <span class="text-lg">⌨️</span>
+            <div><span class="font-medium">Comandos Customizados</span><span class="text-neutral-500 text-sm ml-2">- /ingere, /consulta, /audit</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-teal-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Comandos Telegram customizados adicionados ao Intelecto: /ingere [texto ou URL] aciona a pipeline de ingestão do wiki, /consulta [query] faz busca híbrida SQLite+wiki, /audit executa o lint do vault e reporta páginas órfãs e contradições, /status mostra estatísticas do vault.</p></div>
+              <div><span class="text-teal-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Comandos explícitos criam intenções claras — o usuário sabe exatamente o que o sistema vai fazer. Isso é melhor que depender de detecção automática de intenção para operações críticas como ingestão e auditoria.</p></div>
+              <div><span class="text-teal-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">/ingere, /consulta, /audit, /status, CommandHandler, BotCommand, menu de comandos Telegram, intenção explícita.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+            <span class="text-lg">📎</span>
+            <div><span class="font-medium">Envio de Arquivos</span><span class="text-neutral-500 text-sm ml-2">- PDF, imagens, áudios → raw/</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-teal-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Handler para arquivos enviados pelo Telegram: PDFs são convertidos para texto via pypdf, imagens são descritas pelo vision model do LLM, áudios são transcritos via Whisper. Todos os resultados são salvos em raw/ com metadados (origem, data, tipo) para ingestão pelo wiki.</p></div>
+              <div><span class="text-teal-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">O envio de arquivos expande o segundo cérebro para além de texto: artigos em PDF, fotos de whiteboard, gravações de reunião — tudo se torna conhecimento estruturado após passar pelo pipeline de ingestão multi-modal.</p></div>
+              <div><span class="text-teal-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">pypdf, vision model, Whisper, multi-modal, MessageHandler, document handler, metadados de origem, raw/ como drop zone.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+            <span class="text-lg">🔔</span>
+            <div><span class="font-medium">Notificações Inteligentes</span><span class="text-neutral-500 text-sm ml-2">- Intelecto avisa proativamente</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-teal-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">O Intelecto pode enviar mensagens proativas via job queue do python-telegram-bot: lembrete diário de itens pendentes no vault, alerta quando uma página wiki tem mais de 90 dias sem revisão, sugestão de conexões entre novas capturas e páginas existentes.</p></div>
+              <div><span class="text-teal-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Notificações proativas transformam o segundo cérebro de repositório passivo em parceiro ativo. O sistema lembra de itens que você esqueceu, sugere conexões não óbvias e mantém o vault vivo e em uso contínuo.</p></div>
+              <div><span class="text-teal-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">JobQueue, send_message, notificação proativa, spaced repetition, vault health check, conexões sugeridas, assistente ativo.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+            <span class="text-lg">👥</span>
+            <div><span class="font-medium">Grupos e Canais</span><span class="text-neutral-500 text-sm ml-2">- Segundo cérebro colaborativo</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-teal-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">O Intelecto em um grupo Telegram permite que uma equipe contribua para o mesmo vault: cada membro envia capturas que são atribuídas com metadados de autoria, o vault cresce colaborativamente e o Intelecto responde a todos com contexto do conhecimento compartilhado.</p></div>
+              <div><span class="text-teal-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Um segundo cérebro de equipe é um multiplicador de produtividade. O conhecimento de cada membro enriquece o vault compartilhado, e o Intelecto serve como interface única para consulta e captura — sem email, sem Notion compartilhado, sem fricção.</p></div>
+              <div><span class="text-teal-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Grupo Telegram, multi-user, metadados de autoria, vault compartilhado, permissões, conhecimento coletivo, segundo cérebro de equipe.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+            <span class="text-lg">🏗️</span>
+            <div><span class="font-medium">Construindo Seu Pipeline Completo</span><span class="text-neutral-500 text-sm ml-2">- Do zero ao segundo cérebro funcional</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-teal-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Roteiro de implementação em 4 semanas: Semana 1 — Intelecto básico funcionando no Telegram. Semana 2 — USER.md configurado com contexto do vault. Semana 3 — bridge.py sincronizando wiki → SQLite. Semana 4 — comandos customizados e automações finais.</p></div>
+              <div><span class="text-teal-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Um roteiro faseado reduz a sobrecarga de implementar tudo de uma vez. Cada fase entrega valor imediato, e você pode parar em qualquer etapa com um sistema já funcional e útil.</p></div>
+              <div><span class="text-teal-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Implementação faseada, MVP, entrega incremental, 4 semanas, value at each stage, roteiro de adoção, segundo cérebro progressivo.</p></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+        <button onclick="openModal('modal-5-4')" class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors">Ver em Modal</button>
+        <a href="modulo-5-4.html" class="px-4 py-2 text-sm bg-teal-600 hover:bg-teal-500 text-white rounded-lg transition-colors">Ver Completo</a>
+      </div>
+    </div>
+
+    <!-- NAVEGAÇÃO -->
+    <div class="flex flex-col sm:flex-row gap-4 mt-12">
+      <a href="../trilha4/index.html" class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors">← Trilha 4: Automação</a>
+      <a href="../../index.html" class="flex-1 text-center px-6 py-3 bg-teal-600 text-white rounded-lg font-semibold hover:bg-teal-500 transition-colors">Início do Curso →</a>
+    </div>
+  </main>
+
+  <!-- MODAIS -->
+  <div id="modal-5-1" class="modal hidden fixed inset-0 z-50 items-center justify-center p-2 sm:p-4 bg-black/80" onclick="if(event.target===this)closeModal()">
+    <div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600">
+      <div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0">
+        <div class="flex items-center space-x-3"><span class="text-teal-400 font-bold">5.1</span><span class="font-semibold">O que é o Intelecto</span></div>
+        <button onclick="closeModal()" class="text-neutral-400 hover:text-white text-2xl leading-none">&times;</button>
+      </div>
+      <iframe src="modulo-5-1.html" class="flex-1 w-full rounded-b-xl"></iframe>
+    </div>
+  </div>
+  <div id="modal-5-2" class="modal hidden fixed inset-0 z-50 items-center justify-center p-2 sm:p-4 bg-black/80" onclick="if(event.target===this)closeModal()">
+    <div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600">
+      <div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0">
+        <div class="flex items-center space-x-3"><span class="text-teal-400 font-bold">5.2</span><span class="font-semibold">Memória SQLite vs Wiki Markdown</span></div>
+        <button onclick="closeModal()" class="text-neutral-400 hover:text-white text-2xl leading-none">&times;</button>
+      </div>
+      <iframe src="modulo-5-2.html" class="flex-1 w-full rounded-b-xl"></iframe>
+    </div>
+  </div>
+  <div id="modal-5-3" class="modal hidden fixed inset-0 z-50 items-center justify-center p-2 sm:p-4 bg-black/80" onclick="if(event.target===this)closeModal()">
+    <div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600">
+      <div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0">
+        <div class="flex items-center space-x-3"><span class="text-teal-400 font-bold">5.3</span><span class="font-semibold">Integrando Vault Obsidian com Intelecto</span></div>
+        <button onclick="closeModal()" class="text-neutral-400 hover:text-white text-2xl leading-none">&times;</button>
+      </div>
+      <iframe src="modulo-5-3.html" class="flex-1 w-full rounded-b-xl"></iframe>
+    </div>
+  </div>
+  <div id="modal-5-4" class="modal hidden fixed inset-0 z-50 items-center justify-center p-2 sm:p-4 bg-black/80" onclick="if(event.target===this)closeModal()">
+    <div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600">
+      <div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0">
+        <div class="flex items-center space-x-3"><span class="text-teal-400 font-bold">5.4</span><span class="font-semibold">Telegram como Interface do Segundo Cérebro</span></div>
+        <button onclick="closeModal()" class="text-neutral-400 hover:text-white text-2xl leading-none">&times;</button>
+      </div>
+      <iframe src="modulo-5-4.html" class="flex-1 w-full rounded-b-xl"></iframe>
+    </div>
+  </div>
+
+  <footer class="border-t border-dark-600 py-8 mt-16">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+      <p>2Cérebro — INEMA.CLUB 2026</p>
+    </div>
+  </footer>
+
+  <script>
+    function toggleTopic(button) {
+      const topicItem = button.closest('.topic-item');
+      const explanation = topicItem.querySelector('.topic-explanation');
+      const moduleCard = button.closest('.bg-dark-800');
+      moduleCard.querySelectorAll('.topic-explanation.active').forEach(exp => {
+        if (exp !== explanation) exp.classList.remove('active');
+      });
+      explanation.classList.toggle('active');
+    }
+
+    function openModal(modalId) {
+      const modal = document.getElementById(modalId);
+      if (modal) { modal.classList.remove('hidden'); document.body.style.overflow = 'hidden'; }
+    }
+
+    function closeModal() {
+      document.querySelectorAll('.modal').forEach(m => m.classList.add('hidden'));
+      document.body.style.overflow = 'auto';
+    }
+
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+    const themeToggle = document.getElementById('theme-toggle');
+    const darkIcon = document.getElementById('theme-toggle-dark-icon');
+    const lightIcon = document.getElementById('theme-toggle-light-icon');
+    const html = document.documentElement;
+    if (localStorage.getItem('theme') === 'light') {
+      darkIcon.classList.remove('hidden'); html.classList.remove('dark');
+    } else { lightIcon.classList.remove('hidden'); }
+    themeToggle.addEventListener('click', () => {
+      darkIcon.classList.toggle('hidden'); lightIcon.classList.toggle('hidden');
+      html.classList.toggle('dark');
+      localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+    });
+  </script>
+</body>
+</html>
