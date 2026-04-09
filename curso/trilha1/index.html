@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trilha 1 — Fundamentos | 2Cérebro</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: { extend: { colors: { primary: '#FACC15', dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' } } } }
+    }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+    .topic-explanation { display: none; }
+    .topic-explanation.active { display: block; }
+    .modal { display: none; }
+    .modal.active { display: flex; }
+
+    html:not(.dark) body { background-color: #f8fafc; }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #9ca3af; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+    html:not(.dark) .text-emerald-400 { color: #059669; }
+    html:not(.dark) .bg-emerald-500\/20 { background-color: rgba(5,150,105,0.12); }
+    html:not(.dark) .bg-emerald-500\/10 { background-color: rgba(5,150,105,0.08); }
+    html:not(.dark) .border-emerald-500\/30 { border-color: rgba(5,150,105,0.25); }
+    html:not(.dark) .hover\:bg-emerald-500\/30:hover { background-color: rgba(5,150,105,0.18); }
+    html:not(.dark) [class*="bg-gradient-to"] { background-image: none !important; }
+    html:not(.dark) .text-primary { color: #a16207; }
+    html:not(.dark) .bg-primary\/10 { background-color: rgba(161,98,7,0.08); }
+    html:not(.dark) .border-primary\/40 { border-color: rgba(161,98,7,0.25); }
+    html:not(.dark) .text-sky-400 { color: #0369a1; }
+    html:not(.dark) .text-yellow-400 { color: #a16207; }
+    html:not(.dark) .hover\:text-sky-300:hover { color: #0284c7; }
+    html:not(.dark) .hover\:text-yellow-300:hover { color: #854d0e; }
+    html:not(.dark) .bg-dark-900\/95 { background-color: rgba(255,255,255,0.95); }
+  </style>
+</head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen">
+
+  <nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-14">
+        <div class="flex items-center space-x-4">
+          <a href="../../index.html" class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300">
+            <span class="text-2xl">🧠</span>
+            <span class="font-bold text-lg hidden sm:inline">2Cérebro</span>
+          </a>
+          <span class="text-neutral-600">|</span>
+          <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300 text-sm font-medium">INEMA.CLUB</a>
+        </div>
+        <div class="flex items-center space-x-1 sm:space-x-2">
+          <a href="index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-emerald-400 bg-emerald-500/10">
+            <span class="sm:hidden">T1</span><span class="hidden sm:inline">Fundamentos</span>
+          </a>
+          <a href="../trilha2/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors">
+            <span class="sm:hidden">T2</span><span class="hidden sm:inline">Implementação</span>
+          </a>
+          <a href="../trilha3/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors">
+            <span class="sm:hidden">T3</span><span class="hidden sm:inline">Avançado</span>
+          </a>
+          <button id="theme-toggle" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2">
+            <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+            <svg id="theme-toggle-light-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <header class="bg-gradient-to-br from-emerald-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+        <div>
+          <span class="inline-block px-3 py-1 bg-emerald-500/20 text-emerald-400 text-xs font-semibold rounded-full mb-4">TRILHA 1</span>
+          <h1 class="text-3xl sm:text-4xl font-bold mb-4">🌱 Fundamentos do Segundo Cérebro</h1>
+          <p class="text-lg text-neutral-400 max-w-xl mb-6">Entenda o conceito, as relações de conhecimento, por que o LLM Wiki supera RAG e bancos de dados, e como a arquitetura de 3 camadas funciona.</p>
+          <div class="grid grid-cols-4 gap-4 max-w-lg">
+            <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+              <div class="text-xl font-bold text-emerald-400">4</div>
+              <div class="text-xs text-neutral-400">Módulos</div>
+            </div>
+            <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+              <div class="text-xl font-bold text-emerald-400">24</div>
+              <div class="text-xs text-neutral-400">Tópicos</div>
+            </div>
+            <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+              <div class="text-xl font-bold text-emerald-400">~2h</div>
+              <div class="text-xs text-neutral-400">Duração</div>
+            </div>
+            <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+              <div class="text-xl font-bold text-emerald-400">Base</div>
+              <div class="text-xs text-neutral-400">Nível</div>
+            </div>
+          </div>
+        </div>
+        <!-- Mini knowledge graph SVG -->
+        <div class="flex justify-center">
+          <svg viewBox="0 0 300 220" class="w-full max-w-xs" xmlns="http://www.w3.org/2000/svg">
+            <!-- Connections -->
+            <line x1="150" y1="110" x2="80" y2="60" stroke="#10b981" stroke-width="1.5" stroke-opacity="0.6"/>
+            <line x1="150" y1="110" x2="220" y2="60" stroke="#10b981" stroke-width="1.5" stroke-opacity="0.6"/>
+            <line x1="150" y1="110" x2="60" y2="160" stroke="#10b981" stroke-width="1.5" stroke-opacity="0.6"/>
+            <line x1="150" y1="110" x2="240" y2="160" stroke="#10b981" stroke-width="1.5" stroke-opacity="0.6"/>
+            <line x1="80" y1="60" x2="220" y2="60" stroke="#10b981" stroke-width="1" stroke-opacity="0.3" stroke-dasharray="3,3"/>
+            <line x1="60" y1="160" x2="240" y2="160" stroke="#10b981" stroke-width="1" stroke-opacity="0.3" stroke-dasharray="3,3"/>
+            <line x1="80" y1="60" x2="60" y2="160" stroke="#10b981" stroke-width="1" stroke-opacity="0.3" stroke-dasharray="3,3"/>
+            <line x1="220" y1="60" x2="240" y2="160" stroke="#10b981" stroke-width="1" stroke-opacity="0.3" stroke-dasharray="3,3"/>
+            <!-- Side nodes -->
+            <line x1="80" y1="60" x2="30" y2="30" stroke="#10b981" stroke-width="1" stroke-opacity="0.4"/>
+            <line x1="220" y1="60" x2="270" y2="30" stroke="#10b981" stroke-width="1" stroke-opacity="0.4"/>
+
+            <!-- Center node -->
+            <circle cx="150" cy="110" r="28" fill="#1f2937" stroke="#10b981" stroke-width="2"/>
+            <text x="150" y="106" text-anchor="middle" fill="#10b981" font-size="12" font-weight="bold">LLM</text>
+            <text x="150" y="120" text-anchor="middle" fill="#10b981" font-size="9">Wiki</text>
+
+            <!-- Main nodes -->
+            <circle cx="80" cy="60" r="20" fill="#1f2937" stroke="#10b981" stroke-width="1.5"/>
+            <text x="80" y="56" text-anchor="middle" fill="#d1d5db" font-size="8">raw/</text>
+            <text x="80" y="68" text-anchor="middle" fill="#d1d5db" font-size="8">artigos</text>
+
+            <circle cx="220" cy="60" r="20" fill="#1f2937" stroke="#10b981" stroke-width="1.5"/>
+            <text x="220" y="56" text-anchor="middle" fill="#d1d5db" font-size="8">wiki/</text>
+            <text x="220" y="68" text-anchor="middle" fill="#d1d5db" font-size="8">ML.md</text>
+
+            <circle cx="60" cy="160" r="20" fill="#1f2937" stroke="#10b981" stroke-width="1.5"/>
+            <text x="60" y="156" text-anchor="middle" fill="#d1d5db" font-size="8">index</text>
+            <text x="60" y="168" text-anchor="middle" fill="#d1d5db" font-size="8">.md</text>
+
+            <circle cx="240" cy="160" r="20" fill="#1f2937" stroke="#10b981" stroke-width="1.5"/>
+            <text x="240" y="156" text-anchor="middle" fill="#d1d5db" font-size="8">log</text>
+            <text x="240" y="168" text-anchor="middle" fill="#d1d5db" font-size="8">.md</text>
+
+            <!-- Small nodes -->
+            <circle cx="30" cy="30" r="12" fill="#374151" stroke="#10b981" stroke-width="1" stroke-opacity="0.6"/>
+            <text x="30" y="34" text-anchor="middle" fill="#9ca3af" font-size="7">RAG.md</text>
+
+            <circle cx="270" cy="30" r="12" fill="#374151" stroke="#10b981" stroke-width="1" stroke-opacity="0.6"/>
+            <text x="270" y="34" text-anchor="middle" fill="#9ca3af" font-size="7">GPT.md</text>
+
+            <text x="150" y="210" text-anchor="middle" fill="#6b7280" font-size="9">Grafo de Conhecimento Obsidian</text>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+    <!-- CARDS SIMPLES (navegação rápida) -->
+    <div class="mb-12">
+      <h2 class="text-xl font-bold mb-4 text-neutral-300">Módulos desta Trilha</h2>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <a href="modulo-1-1.html" class="group bg-dark-800 rounded-xl border border-dark-600 hover:border-emerald-500/30 p-4 transition-all hover:bg-emerald-500/5">
+          <div class="text-emerald-400 font-bold text-sm mb-1">1.1</div>
+          <div class="font-semibold text-sm group-hover:text-emerald-400 transition-colors">🧠 O que é o Segundo Cérebro?</div>
+          <div class="text-xs text-neutral-500 mt-1">~30 min</div>
+        </a>
+        <a href="modulo-1-2.html" class="group bg-dark-800 rounded-xl border border-dark-600 hover:border-emerald-500/30 p-4 transition-all hover:bg-emerald-500/5">
+          <div class="text-emerald-400 font-bold text-sm mb-1">1.2</div>
+          <div class="font-semibold text-sm group-hover:text-emerald-400 transition-colors">🕸️ Como o Conhecimento se Relaciona</div>
+          <div class="text-xs text-neutral-500 mt-1">~30 min</div>
+        </a>
+        <a href="modulo-1-3.html" class="group bg-dark-800 rounded-xl border border-dark-600 hover:border-emerald-500/30 p-4 transition-all hover:bg-emerald-500/5">
+          <div class="text-emerald-400 font-bold text-sm mb-1">1.3</div>
+          <div class="font-semibold text-sm group-hover:text-emerald-400 transition-colors">🆚 Wiki vs RAG vs Banco de Dados</div>
+          <div class="text-xs text-neutral-500 mt-1">~30 min</div>
+        </a>
+        <a href="modulo-1-4.html" class="group bg-dark-800 rounded-xl border border-dark-600 hover:border-emerald-500/30 p-4 transition-all hover:bg-emerald-500/5">
+          <div class="text-emerald-400 font-bold text-sm mb-1">1.4</div>
+          <div class="font-semibold text-sm group-hover:text-emerald-400 transition-colors">🏗️ Arquitetura de 3 Camadas</div>
+          <div class="text-xs text-neutral-500 mt-1">~30 min</div>
+        </a>
+      </div>
+    </div>
+
+    <div class="border-t border-dark-600 pt-8 mb-6">
+      <h2 class="text-lg font-bold text-neutral-300">Conteúdo Detalhado</h2>
+    </div>
+
+    <!-- MÓDULO 1.1 -->
+    <div class="bg-dark-800 rounded-xl border border-dark-600 mb-6">
+      <div class="p-6 border-b border-dark-600">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-emerald-400 font-bold">1.1</span>
+          <span class="text-xs text-neutral-500">~30 min</span>
+        </div>
+        <h3 class="text-2xl font-bold mb-2">🧠 O que é o Segundo Cérebro?</h3>
+        <p class="text-neutral-400 text-sm">A filosofia da memória aumentada e como o LLM transforma fontes brutas em conhecimento estruturado.</p>
+      </div>
+      <div class="divide-y divide-dark-600">
+        <!-- Tópico 1 -->
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+            <span class="text-lg">🐘</span>
+            <div><span class="font-medium">Por que nossa memória falha</span><span class="text-neutral-500 text-sm ml-2">- O limite cognitivo humano</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-emerald-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">O cérebro humano tem capacidade limitada de retenção de longo prazo e conexão de ideias distantes. Esquecemos ~70% do que aprendemos em 24h (curva de Ebbinghaus).</p></div>
+              <div><span class="text-emerald-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Entender os limites da memória natural nos motiva a criar sistemas externos — não como fraqueza, mas como extensão inteligente da cognição.</p></div>
+              <div><span class="text-emerald-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Curva de Ebbinghaus, carga cognitiva, memória de trabalho vs. longo prazo, externalização do conhecimento.</p></div>
+            </div>
+          </div>
+        </div>
+        <!-- Tópico 2 -->
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+            <span class="text-lg">📚</span>
+            <div><span class="font-medium">A metáfora do segundo cérebro</span><span class="text-neutral-500 text-sm ml-2">- Externalizar para pensar melhor</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-emerald-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Um sistema externo que captura, organiza e conecta conhecimento — liberando o cérebro biológico para criar e raciocinar, não para memorizar.</p></div>
+              <div><span class="text-emerald-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Com um segundo cérebro bem calibrado, você multiplica sua capacidade de aprendizado e recuperação de insights sem esforço cognitivo.</p></div>
+              <div><span class="text-emerald-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">PKM (Personal Knowledge Management), Tiago Forte, "building a second brain", sistemas zettelkasten.</p></div>
+            </div>
+          </div>
+        </div>
+        <!-- Tópico 3 -->
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+            <span class="text-lg">🤖</span>
+            <div><span class="font-medium">O LLM como compilador</span><span class="text-neutral-500 text-sm ml-2">- Da entrada bruta ao conhecimento estruturado</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-emerald-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">O LLM não é apenas um chatbot — é um compilador que lê fontes brutas e as transforma em páginas wiki estruturadas, com links e sínteses.</p></div>
+              <div><span class="text-emerald-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Entender esse papel muda como você interage com o modelo — você passa de "perguntador" para "curador de conhecimento".</p></div>
+              <div><span class="text-emerald-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">LLM como compilador, ingestão, síntese, geração de links, atualização incremental.</p></div>
+            </div>
+          </div>
+        </div>
+        <!-- Tópico 4 -->
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+            <span class="text-lg">🔗</span>
+            <div><span class="font-medium">Persistência entre sessões</span><span class="text-neutral-500 text-sm ml-2">- Memória que dura além da janela de contexto</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-emerald-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">O maior problema dos LLMs é que perdem contexto entre sessões. O wiki resolve isso: o conhecimento vive nos arquivos Markdown, não na memória do modelo.</p></div>
+              <div><span class="text-emerald-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Com persistência real, seu sistema cresce com o tempo em vez de começar do zero a cada conversa.</p></div>
+              <div><span class="text-emerald-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Janela de contexto, memória de longo prazo, persistência em arquivo, Markdown como banco de dados.</p></div>
+            </div>
+          </div>
+        </div>
+        <!-- Tópico 5 -->
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+            <span class="text-lg">📈</span>
+            <div><span class="font-medium">Sistema que melhora com o tempo</span><span class="text-neutral-500 text-sm ml-2">- Crescimento incremental e compounding</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-emerald-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Cada nova ingestão enriquece o wiki — novas conexões emergem, contradições são resolvidas, e o conhecimento acumulado cria valor composto.</p></div>
+              <div><span class="text-emerald-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">O sistema funciona como juros compostos do conhecimento: quanto mais você ingere, mais valioso ele se torna proporcionalmente.</p></div>
+              <div><span class="text-emerald-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Compounding knowledge, incremental learning, emergência de padrões, valor acumulado.</p></div>
+            </div>
+          </div>
+        </div>
+        <!-- Tópico 6 -->
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+            <span class="text-lg">🎯</span>
+            <div><span class="font-medium">Casos de uso práticos</span><span class="text-neutral-500 text-sm ml-2">- Quem se beneficia e como</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-emerald-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Pesquisadores, desenvolvedores, consultores, estudantes — qualquer pessoa que consuma muito conteúdo e precise fazer conexões rápidas.</p></div>
+              <div><span class="text-emerald-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Identificar seu caso de uso específico ajuda a calibrar como estruturar o vault e quais fontes priorizar na ingestão.</p></div>
+              <div><span class="text-emerald-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">PKM para pesquisa, wiki técnico para devs, base de conhecimento empresarial, segundo cérebro pessoal.</p></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+        <button onclick="openModal('modal-1-1')" class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors">Ver em Modal</button>
+        <a href="modulo-1-1.html" class="px-4 py-2 text-sm bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg transition-colors">Ver Completo</a>
+      </div>
+    </div>
+
+    <!-- MÓDULO 1.2 -->
+    <div class="bg-dark-800 rounded-xl border border-dark-600 mb-6">
+      <div class="p-6 border-b border-dark-600">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-emerald-400 font-bold">1.2</span>
+          <span class="text-xs text-neutral-500">~30 min</span>
+        </div>
+        <h3 class="text-2xl font-bold mb-2">🕸️ Como o Conhecimento se Relaciona</h3>
+        <p class="text-neutral-400 text-sm">Grafos, backlinks, atomicidade e como o Obsidian visualiza seu mapa mental em tempo real.</p>
+      </div>
+      <div class="divide-y divide-dark-600">
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+            <span class="text-lg">🕸️</span>
+            <div><span class="font-medium">Grafos de conhecimento</span><span class="text-neutral-500 text-sm ml-2">- Nós, arestas e conexões emergentes</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-emerald-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Um grafo de conhecimento representa cada nota como um nó e cada link como uma aresta — criando uma rede navegável de ideias interconectadas.</p></div>
+              <div><span class="text-emerald-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">A topologia do grafo revela clusters de conhecimento, pontes entre domínios e lacunas — informações impossíveis de ver em uma lista plana.</p></div>
+              <div><span class="text-emerald-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Nós, arestas, hubs, pontes, clusters, densidade do grafo, centralidade.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+            <span class="text-lg">🔗</span>
+            <div><span class="font-medium">Backlinks bidirecionais</span><span class="text-neutral-500 text-sm ml-2">- [[links]] que criam relações automáticas</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-emerald-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Quando você cria [[link]] em uma nota, o Obsidian automaticamente registra que a nota de destino é referenciada por esta — criando conexões bidirecionais sem esforço.</p></div>
+              <div><span class="text-emerald-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Backlinks revelam contexto inesperado — você descobre que uma nota sobre "atenção" também é citada por notas sobre "produtividade", "meditação" e "UX".</p></div>
+              <div><span class="text-emerald-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Backlinks, wikilinks, referências reversas, painel de backlinks do Obsidian.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+            <span class="text-lg">📊</span>
+            <div><span class="font-medium">Graph View do Obsidian</span><span class="text-neutral-500 text-sm ml-2">- Visualizando seu mapa mental</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-emerald-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">O Graph View é uma visualização interativa do vault — mostra todas as notas como nós gravitacionais, com tamanhos proporcionais ao número de links.</p></div>
+              <div><span class="text-emerald-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">É uma ferramenta diagnóstica poderosa: notas isoladas (sem links) aparecem como ilhas, sinalizando que precisam ser conectadas ao grafo principal.</p></div>
+              <div><span class="text-emerald-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Graph View, Local Graph, filtros de tag, nós orfãos, força gravitacional.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+            <span class="text-lg">🏷️</span>
+            <div><span class="font-medium">Tags e metadata YAML</span><span class="text-neutral-500 text-sm ml-2">- Organização sem hierarquia rígida</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-emerald-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">YAML frontmatter adiciona metadados estruturados às notas: tipo, status, data, domínio, relacionamentos — sem forçar hierarquia de pastas.</p></div>
+              <div><span class="text-emerald-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Tags permitem organização multidimensional — uma nota pode pertencer a "ML", "Produção" e "Revisão" simultaneamente, sem duplicação.</p></div>
+              <div><span class="text-emerald-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">YAML frontmatter, tags, propriedades do Obsidian, filtros do Dataview plugin.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+            <span class="text-lg">⚛️</span>
+            <div><span class="font-medium">Atomicidade das notas</span><span class="text-neutral-500 text-sm ml-2">- Uma ideia por nota</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-emerald-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Cada nota wiki deve capturar um único conceito ou entidade — não capítulos inteiros. Isso maximiza a reutilização e a capacidade de linkagem.</p></div>
+              <div><span class="text-emerald-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Notas atômicas são linkáveis de múltiplos contextos. Uma nota "atenção" pode ser citada por dezenas de outros tópicos, criando valor exponencial.</p></div>
+              <div><span class="text-emerald-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Atomicidade, granularidade, Zettelkasten, ever-green notes, notas vs. documentos.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+            <span class="text-lg">💡</span>
+            <div><span class="font-medium">Emergência e serendipidade</span><span class="text-neutral-500 text-sm ml-2">- Insights que surgem das conexões</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-emerald-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Em um wiki bem linkado, padrões emergem espontaneamente — conexões entre notas que você não planejou revelam insights que seriam impossíveis de descobrir linearmente.</p></div>
+              <div><span class="text-emerald-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">A emergência é o maior benefício invisível do sistema: ele gera valor além do que você explicitamente armazenou.</p></div>
+              <div><span class="text-emerald-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Serendipidade, emergência, padrões latentes, síntese cross-domínio, grafo como oráculo.</p></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+        <button onclick="openModal('modal-1-2')" class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors">Ver em Modal</button>
+        <a href="modulo-1-2.html" class="px-4 py-2 text-sm bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg transition-colors">Ver Completo</a>
+      </div>
+    </div>
+
+    <!-- MÓDULO 1.3 -->
+    <div class="bg-dark-800 rounded-xl border border-dark-600 mb-6">
+      <div class="p-6 border-b border-dark-600">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-emerald-400 font-bold">1.3</span>
+          <span class="text-xs text-neutral-500">~30 min</span>
+        </div>
+        <h3 class="text-2xl font-bold mb-2">🆚 LLM Wiki vs RAG vs Banco de Dados</h3>
+        <p class="text-neutral-400 text-sm">A grande comparação: performance, custo de tokens, semântica e casos de uso de cada abordagem.</p>
+      </div>
+      <div class="divide-y divide-dark-600">
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+            <span class="text-lg">🗄️</span>
+            <div><span class="font-medium">Banco de dados tradicional</span><span class="text-neutral-500 text-sm ml-2">- Estrutura sem semântica</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-emerald-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">SQL, PostgreSQL, MongoDB — armazenam dados estruturados com eficiência, mas não entendem semântica. Uma query "qual nota se parece com essa ideia?" é impossível.</p></div>
+              <div><span class="text-emerald-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Entender as limitações do DB tradicional ajuda a justificar a mudança para sistemas semânticos e mostra onde cada ferramenta tem seu lugar.</p></div>
+              <div><span class="text-emerald-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">SQL, schema rígido, busca por palavra-chave, sem contexto, alto custo de query semântica.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+            <span class="text-lg">🔍</span>
+            <div><span class="font-medium">RAG — Retrieval Augmented Generation</span><span class="text-neutral-500 text-sm ml-2">- Busca semântica mas token-intensiva</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-emerald-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">RAG vetoriza documentos, armazena embeddings, e na hora da query recupera os chunks mais similares para enriquecer o prompt. É semântico mas gasta muitos tokens por consulta.</p></div>
+              <div><span class="text-emerald-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">RAG é útil para buscas ad-hoc em grandes corpora não estruturados, mas é ineficiente quando o conhecimento é estável e consultado repetidamente.</p></div>
+              <div><span class="text-emerald-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Embeddings, vector store, cosine similarity, chunking, context window pollution.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+            <span class="text-lg">📚</span>
+            <div><span class="font-medium">LLM Wiki — conhecimento pré-compilado</span><span class="text-neutral-500 text-sm ml-2">- A abordagem do segundo cérebro</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-emerald-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Em vez de processar fontes brutas na hora da query, o LLM Wiki pré-compila o conhecimento em páginas Markdown linkadas. Consulta = ler index + 2-3 páginas.</p></div>
+              <div><span class="text-emerald-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">A economia de tokens é de ~95% por consulta. O conhecimento está em linguagem natural, auditável, e melhora com o tempo sem re-indexação.</p></div>
+              <div><span class="text-emerald-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Pré-compilação, Markdown como DB, navegação por index, custo marginal zero, auditabilidade.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+            <span class="text-lg">📊</span>
+            <div><span class="font-medium">Comparação de performance e custo</span><span class="text-neutral-500 text-sm ml-2">- Tokens, latência e manutenção</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-emerald-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">RAG consome 5-10x mais tokens por query que o Wiki (porque inclui documentos brutos no contexto). DB tradicional é rápido mas cego semanticamente.</p></div>
+              <div><span class="text-emerald-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Para sistemas de alto volume de consultas, a diferença de custo é substancial — o wiki pode economizar centenas de dólares/mês em APIs de LLM.</p></div>
+              <div><span class="text-emerald-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Token budget, cost per query, latência, throughput, total cost of ownership (TCO).</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+            <span class="text-lg">🎯</span>
+            <div><span class="font-medium">Quando usar cada abordagem</span><span class="text-neutral-500 text-sm ml-2">- Não existe bala de prata</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-emerald-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">DB para dados transacionais estruturados, RAG para corpora imprevisíveis e grandes, Wiki para conhecimento pessoal/institucional estável e reutilizado.</p></div>
+              <div><span class="text-emerald-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Arquitetos de sistemas precisam combinar os três — saber quando aplicar cada um é a competência-chave do engenheiro de IA moderno.</p></div>
+              <div><span class="text-emerald-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Fit técnico, trade-offs, sistemas híbridos, RAG + Wiki, DB + Wiki.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+            <span class="text-lg">🏆</span>
+            <div><span class="font-medium">Por que o Wiki vence para PKM</span><span class="text-neutral-500 text-sm ml-2">- O argumento definitivo</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-emerald-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Para conhecimento pessoal: é legível por humanos, vive em Git, não requer infraestrutura, melhora incrementalmente e custa quase zero por consulta.</p></div>
+              <div><span class="text-emerald-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">A combinação de baixo custo, alta legibilidade e crescimento incremental faz do Wiki o único sistema que cresce com você sem overhead crescente.</p></div>
+              <div><span class="text-emerald-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Zero infrastructure, Git-native, human-readable, incremental, audit trail, zero marginal cost.</p></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+        <button onclick="openModal('modal-1-3')" class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors">Ver em Modal</button>
+        <a href="modulo-1-3.html" class="px-4 py-2 text-sm bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg transition-colors">Ver Completo</a>
+      </div>
+    </div>
+
+    <!-- MÓDULO 1.4 -->
+    <div class="bg-dark-800 rounded-xl border border-dark-600 mb-6">
+      <div class="p-6 border-b border-dark-600">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-emerald-400 font-bold">1.4</span>
+          <span class="text-xs text-neutral-500">~30 min</span>
+        </div>
+        <h3 class="text-2xl font-bold mb-2">🏗️ A Arquitetura de 3 Camadas</h3>
+        <p class="text-neutral-400 text-sm">raw/, wiki/, e os arquivos de schema: CLAUDE.md, index.md e log.md — e como eles interagem.</p>
+      </div>
+      <div class="divide-y divide-dark-600">
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+            <span class="text-lg">📂</span>
+            <div><span class="font-medium">Camada raw/ — fontes imutáveis</span><span class="text-neutral-500 text-sm ml-2">- A origem sagrada do conhecimento</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-emerald-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">A pasta raw/ guarda as fontes originais intocadas: PDFs transcritos, artigos copiados, notas de reunião, transcrições de vídeo. Nunca são editadas pelo LLM.</p></div>
+              <div><span class="text-emerald-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">A imutabilidade do raw/ é sua auditoria — você sempre pode rever o que o LLM leu e verificar se a síntese está correta.</p></div>
+              <div><span class="text-emerald-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Imutabilidade, fonte da verdade, auditabilidade, raw data vs. processed data.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+            <span class="text-lg">📖</span>
+            <div><span class="font-medium">Camada wiki/ — conhecimento compilado</span><span class="text-neutral-500 text-sm ml-2">- Onde o valor é criado</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-emerald-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">A pasta wiki/ contém as páginas geradas pelo LLM: conceitos, entidades, comparações, sínteses, timelines. Cada arquivo é um nó do grafo de conhecimento.</p></div>
+              <div><span class="text-emerald-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">O wiki/ é o produto final — é daqui que você lê, consulta e onde o LLM busca contexto para responder perguntas complexas.</p></div>
+              <div><span class="text-emerald-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Páginas de conceito, páginas de entidade, páginas de comparação, sínteses cross-domínio, links internos.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+            <span class="text-lg">📋</span>
+            <div><span class="font-medium">CLAUDE.md — as regras do sistema</span><span class="text-neutral-500 text-sm ml-2">- O contrato operacional do LLM</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-emerald-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">O arquivo CLAUDE.md define as regras de operação: convenções de nomenclatura, formato das páginas wiki, como linkar, como atualizar o index, quando criar páginas novas vs. editar existentes.</p></div>
+              <div><span class="text-emerald-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Sem regras claras, o LLM cria estruturas inconsistentes que degradam o sistema ao longo do tempo. O CLAUDE.md é a constituição do seu wiki.</p></div>
+              <div><span class="text-emerald-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Convenções, contrato, consistência, regras de nomenclatura, formato de página, política de atualização.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+            <span class="text-lg">📑</span>
+            <div><span class="font-medium">index.md — o catálogo de navegação</span><span class="text-neutral-500 text-sm ml-2">- O mapa que o LLM usa para consultas</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-emerald-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">O index.md é um catálogo de todas as páginas wiki, organizadas por domínio e tópico — com links e uma linha de descrição. É o ponto de entrada de toda consulta.</p></div>
+              <div><span class="text-emerald-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">O index resolve o problema de "onde olhar" — em vez de o LLM varrer todos os arquivos, ele lê o index e vai diretamente às páginas relevantes.</p></div>
+              <div><span class="text-emerald-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Catálogo, índice navegável, ponto de entrada, eficiência de consulta, organização por domínio.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+            <span class="text-lg">📜</span>
+            <div><span class="font-medium">log.md — a história de ingestões</span><span class="text-neutral-500 text-sm ml-2">- Rastreabilidade e auditoria</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-emerald-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">O log.md registra cronologicamente cada operação: o que foi ingerido, quais páginas foram criadas/atualizadas, queries respondidas, auditorias realizadas.</p></div>
+              <div><span class="text-emerald-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">O log é sua linha do tempo do conhecimento — você pode ver exatamente quando aprendeu algo, de qual fonte, e o que o sistema fez com esse conhecimento.</p></div>
+              <div><span class="text-emerald-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Rastreabilidade, audit trail, histórico de ingestões, cronologia, proveniência do conhecimento.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+            <span class="text-lg">🔄</span>
+            <div><span class="font-medium">Como as camadas interagem</span><span class="text-neutral-500 text-sm ml-2">- O fluxo completo do sistema</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-emerald-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">raw/ alimenta o LLM → LLM gera/atualiza wiki/ → wiki/ é catalogado em index.md → todas as operações são registradas em log.md → CLAUDE.md governa tudo.</p></div>
+              <div><span class="text-emerald-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Entender o fluxo completo é essencial para depurar problemas, otimizar o sistema e implementar melhorias sem quebrar a consistência.</p></div>
+              <div><span class="text-emerald-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Pipeline de ingestão, fluxo de dados, feedback loop, consistência sistêmica, orquestração.</p></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+        <button onclick="openModal('modal-1-4')" class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors">Ver em Modal</button>
+        <a href="modulo-1-4.html" class="px-4 py-2 text-sm bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg transition-colors">Ver Completo</a>
+      </div>
+    </div>
+
+    <!-- Navegação -->
+    <div class="flex justify-between items-center mt-8 pt-6 border-t border-dark-600">
+      <a href="../../index.html" class="px-4 py-2 bg-dark-700 text-neutral-300 rounded-lg hover:bg-dark-600 transition-colors text-sm">← Início</a>
+      <a href="../trilha2/index.html" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-500 transition-colors text-sm">Trilha 2: Implementação →</a>
+    </div>
+  </main>
+
+  <!-- MODAIS -->
+  <div id="modal-1-1" class="modal hidden fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80" onclick="if(event.target===this)closeModal()">
+    <div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600">
+      <div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0">
+        <div class="flex items-center space-x-3"><span class="text-emerald-400 font-bold">1.1</span><span class="font-semibold">O que é o Segundo Cérebro?</span></div>
+        <button onclick="closeModal()" class="text-neutral-400 hover:text-white text-2xl leading-none">&times;</button>
+      </div>
+      <iframe src="modulo-1-1.html" class="flex-1 w-full rounded-b-xl"></iframe>
+    </div>
+  </div>
+  <div id="modal-1-2" class="modal hidden fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80" onclick="if(event.target===this)closeModal()">
+    <div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600">
+      <div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0">
+        <div class="flex items-center space-x-3"><span class="text-emerald-400 font-bold">1.2</span><span class="font-semibold">Como o Conhecimento se Relaciona</span></div>
+        <button onclick="closeModal()" class="text-neutral-400 hover:text-white text-2xl leading-none">&times;</button>
+      </div>
+      <iframe src="modulo-1-2.html" class="flex-1 w-full rounded-b-xl"></iframe>
+    </div>
+  </div>
+  <div id="modal-1-3" class="modal hidden fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80" onclick="if(event.target===this)closeModal()">
+    <div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600">
+      <div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0">
+        <div class="flex items-center space-x-3"><span class="text-emerald-400 font-bold">1.3</span><span class="font-semibold">LLM Wiki vs RAG vs Banco de Dados</span></div>
+        <button onclick="closeModal()" class="text-neutral-400 hover:text-white text-2xl leading-none">&times;</button>
+      </div>
+      <iframe src="modulo-1-3.html" class="flex-1 w-full rounded-b-xl"></iframe>
+    </div>
+  </div>
+  <div id="modal-1-4" class="modal hidden fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80" onclick="if(event.target===this)closeModal()">
+    <div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600">
+      <div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0">
+        <div class="flex items-center space-x-3"><span class="text-emerald-400 font-bold">1.4</span><span class="font-semibold">Arquitetura de 3 Camadas</span></div>
+        <button onclick="closeModal()" class="text-neutral-400 hover:text-white text-2xl leading-none">&times;</button>
+      </div>
+      <iframe src="modulo-1-4.html" class="flex-1 w-full rounded-b-xl"></iframe>
+    </div>
+  </div>
+
+  <footer class="border-t border-dark-600 py-8 mt-8">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+      <p>2Cérebro — Trilha 1: Fundamentos — 2026</p>
+    </div>
+  </footer>
+
+  <script>
+    function toggleTopic(button) {
+      const topicItem = button.closest('.topic-item');
+      const explanation = topicItem.querySelector('.topic-explanation');
+      const moduleCard = button.closest('.bg-dark-800');
+      moduleCard.querySelectorAll('.topic-explanation.active').forEach(exp => { if (exp !== explanation) exp.classList.remove('active'); });
+      explanation.classList.toggle('active');
+    }
+    function openModal(modalId) {
+      const modal = document.getElementById(modalId);
+      if (modal) { modal.classList.remove('hidden'); document.body.style.overflow = 'hidden'; }
+    }
+    function closeModal() {
+      document.querySelectorAll('.modal').forEach(m => m.classList.add('hidden'));
+      document.body.style.overflow = 'auto';
+    }
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+    const themeToggle = document.getElementById('theme-toggle');
+    const darkIcon = document.getElementById('theme-toggle-dark-icon');
+    const lightIcon = document.getElementById('theme-toggle-light-icon');
+    const html = document.documentElement;
+    if (localStorage.getItem('theme') === 'light') { darkIcon.classList.remove('hidden'); html.classList.remove('dark'); } else { lightIcon.classList.remove('hidden'); }
+    themeToggle.addEventListener('click', () => {
+      darkIcon.classList.toggle('hidden'); lightIcon.classList.toggle('hidden');
+      html.classList.toggle('dark');
+      localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+    });
+  </script>
+</body>
+</html>
