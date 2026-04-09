@@ -179,84 +179,84 @@
         <div class="topic-item">
           <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
             <span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
-            <span class="text-lg">🕸️</span>
-            <div><span class="font-medium">Entidades e relacionamentos avançados</span><span class="text-neutral-500 text-sm ml-2">- Além de simples links</span></div>
+            <span class="text-lg">🏷️</span>
+            <div><span class="font-medium">Taxonomias vs. Ontologias</span><span class="text-neutral-500 text-sm ml-2">- Hierarquias simples vs. redes semânticas ricas</span></div>
           </button>
           <div class="topic-explanation px-6 pb-4">
             <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
-              <div><span class="text-purple-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Links tipados definem o tipo de relação: [[conceito]] é diferente de [[é-instância-de::conceito]] ou [[contradiz::conceito]]. Relações semânticas ricas permitem raciocínio mais preciso.</p></div>
-              <div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Relações tipadas transformam o wiki de um grafo simples em um knowledge graph semântico — capaz de responder perguntas como "quais conceitos contradizem X?"</p></div>
-              <div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Links tipados, semântica de relações, knowledge graph, triplas (sujeito-relação-objeto), Dataview queries.</p></div>
+              <div><span class="text-purple-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Taxonomias organizam em hierarquias (Animal > Mamífero > Cão). Ontologias definem relações ricas e tipadas (cão PERTENCE-A mamífero, cão É-USADO-PARA caça). Wikis avançados usam ambas.</p></div>
+              <div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Entender a diferença permite projetar grafos que capturam semântica real — não apenas categorias, mas as relações que tornam o conhecimento acionável e navegável.</p></div>
+              <div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Taxonomia, ontologia, relações tipadas, hierarquia vs. rede, knowledge graph semântico.</p></div>
             </div>
           </div>
         </div>
         <div class="topic-item">
           <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
             <span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
-            <span class="text-lg">🔄</span>
-            <div><span class="font-medium">Referências cruzadas entre domínios</span><span class="text-neutral-500 text-sm ml-2">- Pontes que geram valor</span></div>
+            <span class="text-lg">📐</span>
+            <div><span class="font-medium">Relações Tipadas no Obsidian</span><span class="text-neutral-500 text-sm ml-2">- YAML semântico e seções nomeadas</span></div>
           </button>
           <div class="topic-explanation px-6 pb-4">
             <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
-              <div><span class="text-purple-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Páginas "ponte" conectam domínios distintos: uma página sobre "sistemas de feedback" pode linkar tanto para páginas de engenharia quanto para psicologia e biologia.</p></div>
-              <div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">As pontes inter-domínio são onde emergem os insights mais valiosos — padrões que só aparecem quando você conecta conhecimento de áreas diferentes.</p></div>
-              <div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Páginas ponte, meta-padrões, analogias inter-domínio, pensamento sistêmico, conexões inesperadas.</p></div>
+              <div><span class="text-purple-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Implementação prática de relações tipadas: YAML com campos semânticos (precede:, contradiz:, instância-de:) e seções nomeadas na nota. Dataview consulta essas relações como um banco de dados.</p></div>
+              <div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Relações tipadas transformam o wiki de grafo simples em knowledge graph semântico — capaz de responder "quais conceitos contradizem X?" com uma query Dataview.</p></div>
+              <div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">YAML tipado, campos semânticos, seções nomeadas, Dataview como query engine, triplas no Obsidian.</p></div>
             </div>
           </div>
         </div>
         <div class="topic-item">
           <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
             <span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
-            <span class="text-lg">🏷️</span>
-            <div><span class="font-medium">Taxonomias dinâmicas</span><span class="text-neutral-500 text-sm ml-2">- Classificação que emerge do conteúdo</span></div>
+            <span class="text-lg">🗺️</span>
+            <div><span class="font-medium">Grafos de Múltiplas Camadas</span><span class="text-neutral-500 text-sm ml-2">- Conceptual, operacional, temporal, relacional</span></div>
           </button>
           <div class="topic-explanation px-6 pb-4">
             <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
-              <div><span class="text-purple-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Em vez de categorias predefinidas, o LLM identifica clusters temáticos emergentes e sugere taxonomias baseadas no conteúdo real — que evoluem com o wiki.</p></div>
-              <div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Taxonomias rígidas quebram quando o domínio evolui. Taxonomias dinâmicas se adaptam automaticamente à medida que novos conhecimentos são ingeridos.</p></div>
-              <div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Clustering temático, taxonomia emergente, reorganização dinâmica, categorias fluidas, tag evolution.</p></div>
+              <div><span class="text-purple-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Um wiki avançado tem 4 camadas sobrepostas: conceptual (o que é), operacional (como fazer), temporal (quando aconteceu) e relacional (quem está envolvido). Cada camada responde a um tipo de pergunta diferente.</p></div>
+              <div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Grafos multi-camada capturam a complexidade real do conhecimento — uma decisão pode ser entendida como conceito, operação, evento histórico e relação entre pessoas simultaneamente.</p></div>
+              <div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Camadas conceitual, operacional, temporal, relacional, grafo multi-layer, navegação por camada.</p></div>
             </div>
           </div>
         </div>
         <div class="topic-item">
           <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
             <span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
-            <span class="text-lg">📊</span>
-            <div><span class="font-medium">Análise de densidade do grafo</span><span class="text-neutral-500 text-sm ml-2">- Encontrando pontos cegos</span></div>
+            <span class="text-lg">🔍</span>
+            <div><span class="font-medium">Raciocínio por Caminho no Grafo</span><span class="text-neutral-500 text-sm ml-2">- Inferências através de múltiplas arestas</span></div>
           </button>
           <div class="topic-explanation px-6 pb-4">
             <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
-              <div><span class="text-purple-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Métricas de grafo revelam: nós com baixa conectividade (gaps de conhecimento), hubs super-densos (conceitos centrais), e subgrafos isolados (domínios desconectados).</p></div>
-              <div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">A análise de densidade transforma o wiki de "repositório" em "sistema diagnóstico" — você vê exatamente onde o conhecimento está fragmentado ou superconcentrado.</p></div>
-              <div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Centralidade, betweenness, clustering coefficient, gap analysis, hub detection.</p></div>
+              <div><span class="text-purple-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">O LLM traversa caminhos no grafo para raciocinar: A → B → C → D. "Dado que X precede Y e Y causou Z, quais são as implicações de mudar X?" — inferências impossíveis com busca direta.</p></div>
+              <div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">O raciocínio por caminho é o que transforma o wiki de repositório em motor de inferência — produz insights que não estão explicitamente armazenados em nenhuma nota.</p></div>
+              <div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Graph traversal, raciocínio inferencial, caminhos multi-hop, propagação de restrições, insight por caminho.</p></div>
             </div>
           </div>
         </div>
         <div class="topic-item">
           <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
             <span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
-            <span class="text-lg">💡</span>
-            <div><span class="font-medium">Síntese criativa</span><span class="text-neutral-500 text-sm ml-2">- Descobrindo padrões ocultos no grafo</span></div>
+            <span class="text-lg">⚡</span>
+            <div><span class="font-medium">Grafos Dinâmicos e Evolução</span><span class="text-neutral-500 text-sm ml-2">- Wikis que se adaptam com o tempo</span></div>
           </button>
           <div class="topic-explanation px-6 pb-4">
             <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
-              <div><span class="text-purple-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">O LLM atravessa o grafo em busca de padrões não óbvios: princípios que se repetem em múltiplos domínios, contradições que revelam tensões produtivas, e análogos estruturais.</p></div>
-              <div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">A síntese criativa é o maior multiplicador intelectual do sistema — gera ideias genuinamente novas a partir de conhecimento já existente.</p></div>
-              <div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Síntese emergente, padrões latentes, analogia estrutural, insight generation, creative traversal.</p></div>
+              <div><span class="text-purple-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Grafos que evoluem: notas são atualizadas, relações mudam, nós obsoletos são arquivados. O LLM detecta evolução temporal — "o que mudou neste conceito desde janeiro?" — a partir do histórico de notas.</p></div>
+              <div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Conhecimento não é estático. Um grafo que captura evolução permite rastrear como sua compreensão de um domínio mudou ao longo do tempo — insight metacognitivo valioso.</p></div>
+              <div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Evolução temporal, versioning de notas, grafos dinâmicos, detecção de mudança, timeline de conhecimento.</p></div>
             </div>
           </div>
         </div>
         <div class="topic-item">
           <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
             <span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
-            <span class="text-lg">🧩</span>
-            <div><span class="font-medium">Páginas de comparação e contraste</span><span class="text-neutral-500 text-sm ml-2">- Comparações estruturadas entre conceitos</span></div>
+            <span class="text-lg">🧮</span>
+            <div><span class="font-medium">Métricas de Grafo Avançadas</span><span class="text-neutral-500 text-sm ml-2">- Centralidade, betweenness e clusters</span></div>
           </button>
           <div class="topic-explanation px-6 pb-4">
             <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
-              <div><span class="text-purple-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Páginas dedicadas que comparam 2+ conceitos em múltiplas dimensões: RAG-vs-Wiki.md, Obsidian-vs-Notion.md — com tabelas estruturadas e análise de trade-offs.</p></div>
-              <div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Páginas de comparação economizam tempo enorme em decisões recorrentes — em vez de refazer a análise toda vez, o wiki já tem o raciocínio estruturado.</p></div>
-              <div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Páginas de comparação, trade-off analysis, decisões recorrentes, reutilização de raciocínio.</p></div>
+              <div><span class="text-purple-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Métricas avançadas com networkx: centralidade (nós mais conectados), betweenness (pontes críticas), clustering coefficient (densidade local), e identificação de comunidades temáticas emergentes.</p></div>
+              <div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">As métricas revelam a arquitetura real do seu conhecimento — quais conceitos são hubs, quais são pontes entre domínios, onde há gaps e onde há redundâncias.</p></div>
+              <div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Centralidade, betweenness centrality, clustering coefficient, networkx, community detection, gap analysis.</p></div>
             </div>
           </div>
         </div>
@@ -278,14 +278,14 @@
         <div class="topic-item">
           <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
             <span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
-            <span class="text-lg">📈</span>
-            <div><span class="font-medium">Gerenciando wikis grandes</span><span class="text-neutral-500 text-sm ml-2">- Estratégias quando o index.md cresce demais</span></div>
+            <span class="text-lg">📏</span>
+            <div><span class="font-medium">O Problema de Escala</span><span class="text-neutral-500 text-sm ml-2">- Quando o wiki cresce além do contexto</span></div>
           </button>
           <div class="topic-explanation px-6 pb-4">
             <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
-              <div><span class="text-purple-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Quando o index.md ultrapassa ~500 entradas, ele mesmo começa a consumir muitos tokens. A solução: hierarquia de índices — index.md aponta para sub-índices por domínio.</p></div>
-              <div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Sistemas que escalam mal são abandonados. Implementar a hierarquia de índices no momento certo garante que o sistema continue eficiente com 1.000+ páginas.</p></div>
-              <div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Hierarquia de índices, sub-índices por domínio, sharding, lazy loading de contexto.</p></div>
+              <div><span class="text-purple-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Com 100+ notas, o index.md começa a consumir tokens demais. Com 500+, o vault inteiro excede a context window. O problema de escala é real e previsível — e tem soluções.</p></div>
+              <div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Sistemas que escalam mal são abandonados. Entender quando e como o problema aparece permite planejar a migração para arquiteturas escaláveis antes que o sistema se torne inutilizável.</p></div>
+              <div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Context window limit, tokens por nota, index crescimento linear, ponto de ruptura, estratégias de escala.</p></div>
             </div>
           </div>
         </div>
@@ -293,13 +293,13 @@
           <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
             <span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
             <span class="text-lg">🗂️</span>
-            <div><span class="font-medium">Hierarquia de índices</span><span class="text-neutral-500 text-sm ml-2">- Index de índices para wikis grandes</span></div>
+            <div><span class="font-medium">Indexação Hierárquica</span><span class="text-neutral-500 text-sm ml-2">- Sub-índices por domínio para wikis grandes</span></div>
           </button>
           <div class="topic-explanation px-6 pb-4">
             <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
-              <div><span class="text-purple-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">index.md aponta para ml-index.md, finance-index.md, philosophy-index.md — cada sub-índice tem as páginas de seu domínio. O LLM carrega apenas o(s) sub-índice(s) relevante(s).</p></div>
-              <div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">A hierarquia de índices mantém a eficiência de tokens constante independente do tamanho do wiki — é o segredo para wikis de anos de ingestão.</p></div>
-              <div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Index de índices, sub-domínios, lazy loading, token constant, hierarchical navigation.</p></div>
+              <div><span class="text-purple-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">index.md aponta para ml-index.md, finance-index.md, philosophy-index.md — cada sub-índice contém apenas as páginas do seu domínio. O LLM carrega somente o(s) sub-índice(s) relevante(s) por consulta.</p></div>
+              <div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">A indexação hierárquica mantém o custo de tokens constante independente do tamanho do wiki — é o que permite wikis de anos de ingestão continuarem eficientes.</p></div>
+              <div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Index hierárquico, sub-índices por domínio, lazy loading de contexto, custo constante de tokens, hierarchical navigation.</p></div>
             </div>
           </div>
         </div>
@@ -307,55 +307,55 @@
           <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
             <span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
             <span class="text-lg">🗜️</span>
-            <div><span class="font-medium">Compressão de conhecimento</span><span class="text-neutral-500 text-sm ml-2">- Sínteses densas que substituem páginas extensas</span></div>
+            <div><span class="font-medium">Compressão de Contexto</span><span class="text-neutral-500 text-sm ml-2">- Abstracts densos para leitura rápida</span></div>
           </button>
           <div class="topic-explanation px-6 pb-4">
             <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
-              <div><span class="text-purple-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Páginas que acumulam muitas atualizações podem ser "comprimidas" pelo LLM — que sintetiza o conteúdo em uma versão mais densa e informativa, reduzindo tokens sem perder valor.</p></div>
-              <div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Compressão periódica previne o crescimento descontrolado de páginas individuais e melhora a qualidade do conhecimento — removendo repetições e contradições acumuladas.</p></div>
-              <div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Compressão de conteúdo, síntese densa, redução de tokens, quality improvement, page consolidation.</p></div>
+              <div><span class="text-purple-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">O padrão abstract: cada nota tem uma seção "## Abstract" de 2-3 frases — o LLM lê os abstracts primeiro e só expande as notas completas quando necessário. Reduz tokens em 80%.</p></div>
+              <div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Compressão de contexto é a diferença entre consultar 50 notas viável e impossível. Abstracts bem escritos capturam o essencial para decisão de relevância sem o custo da nota completa.</p></div>
+              <div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Abstract pattern, leitura em dois estágios, redução de 80% de tokens, relevance filtering, lazy loading de notas.</p></div>
             </div>
           </div>
         </div>
         <div class="topic-item">
           <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
             <span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
-            <span class="text-lg">🔍</span>
-            <div><span class="font-medium">Busca eficiente</span><span class="text-neutral-500 text-sm ml-2">- Encontrando agulhas no palheiro</span></div>
+            <span class="text-lg">🔀</span>
+            <div><span class="font-medium">Sharding: Múltiplos Vaults</span><span class="text-neutral-500 text-sm ml-2">- Separação por domínio quando um vault não basta</span></div>
           </button>
           <div class="topic-explanation px-6 pb-4">
             <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
-              <div><span class="text-purple-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Estratégias de busca para wikis grandes: busca por tag YAML, Dataview queries, busca full-text do Obsidian, e navegação pelo grafo visual — cada uma otimizada para tipos diferentes de query.</p></div>
-              <div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Em wikis grandes, a forma como você busca determina se o sistema é útil ou frustrante. Cada estratégia de busca tem seu caso de uso ideal.</p></div>
-              <div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Full-text search, Dataview queries, YAML filtering, graph navigation, hybrid search.</p></div>
+              <div><span class="text-purple-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Quando um único vault fica grande demais, divide-se em vaults separados por domínio (trabalho/, pessoal/, projetos/) com CLAUDE.md e índices próprios — interligados por referências externas.</p></div>
+              <div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Sharding é a solução definitiva para escala — cada vault permanece pequeno e ágil, enquanto os links externos preservam a conectividade cross-domínio quando necessário.</p></div>
+              <div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Sharding por domínio, múltiplos vaults, referências externas, vaults independentes, cross-vault queries.</p></div>
             </div>
           </div>
         </div>
         <div class="topic-item">
           <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
             <span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
-            <span class="text-lg">💰</span>
-            <div><span class="font-medium">Token budgeting</span><span class="text-neutral-500 text-sm ml-2">- Economizando contexto nas consultas</span></div>
+            <span class="text-lg">🚀</span>
+            <div><span class="font-medium">Caching de Consultas Frequentes</span><span class="text-neutral-500 text-sm ml-2">- Respostas pré-computadas para queries recorrentes</span></div>
           </button>
           <div class="topic-explanation px-6 pb-4">
             <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
-              <div><span class="text-purple-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Técnicas para minimizar tokens: carregar apenas páginas relevantes (não todas), usar resumos em vez de páginas completas, cachear respostas frequentes, lazy-load o CLAUDE.md.</p></div>
-              <div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Em uso intenso (muitas consultas/dia), o token budget define o custo mensal do sistema — otimizar é a diferença entre centavos e dezenas de dólares por dia.</p></div>
-              <div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Token budget, lazy loading, caching, context window management, cost optimization.</p></div>
+              <div><span class="text-purple-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Salvar respostas de consultas frequentes como notas wiki próprias (cache/status-projeto-alpha.md) — atualizadas periodicamente. O LLM lê o cache em vez de reprocessar o wiki completo.</p></div>
+              <div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Para perguntas que você faz toda semana ("qual o status de X?"), o cache reduz tokens de 5.000 para 200 por consulta — ROI imediato em uso intenso.</p></div>
+              <div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Cache de respostas, notas cache/, invalidação periódica, consultas recorrentes, custo marginal mínimo.</p></div>
             </div>
           </div>
         </div>
         <div class="topic-item">
           <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
             <span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
-            <span class="text-lg">🔧</span>
-            <div><span class="font-medium">Ferramentas de diagnóstico avançado</span><span class="text-neutral-500 text-sm ml-2">- Scripts para análise de saúde</span></div>
+            <span class="text-lg">📊</span>
+            <div><span class="font-medium">Benchmarks e Metas de Performance</span><span class="text-neutral-500 text-sm ml-2">- Medindo e otimizando o sistema</span></div>
           </button>
           <div class="topic-explanation px-6 pb-4">
             <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
-              <div><span class="text-purple-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Scripts Python que analisam o vault: contagem de links por página, páginas sem backlinks, páginas não atualizadas há N dias, crescimento do grafo ao longo do tempo, e relatório de saúde automático.</p></div>
-              <div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Diagnósticos automatizados transformam manutenção de arte em ciência — você recebe alertas precisos em vez de descobrir problemas por acaso.</p></div>
-              <div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Análise de grafo com Python, networkx, métricas automáticas, alertas de degradação, dashboard de saúde.</p></div>
+              <div><span class="text-purple-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Metas concretas: consulta típica abaixo de 2.000 tokens, ingestão de nota simples abaixo de 1.500 tokens, index.md abaixo de 500 linhas. Scripts de benchmark automatizados para monitorar regressões.</p></div>
+              <div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Sem benchmarks, a degradação de performance é invisível até virar um problema grave. Metas numéricas transformam otimização em disciplina mensurável, não em sensação subjetiva.</p></div>
+              <div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Token benchmarks, metas de performance, scripts de medição, detecção de regressão, otimização contínua.</p></div>
             </div>
           </div>
         </div>
@@ -378,83 +378,83 @@
           <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
             <span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
             <span class="text-lg">🌐</span>
-            <div><span class="font-medium">Obsidian Web Clipper</span><span class="text-neutral-500 text-sm ml-2">- Capturando conhecimento da web</span></div>
+            <div><span class="font-medium">Arquitetura de Integração</span><span class="text-neutral-500 text-sm ml-2">- Coletores, processadores e orquestrador</span></div>
           </button>
           <div class="topic-explanation px-6 pb-4">
             <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
-              <div><span class="text-purple-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">O Web Clipper do Obsidian (extensão de browser) salva páginas web diretamente em raw/ — pronto para o agente de ingestão processar automaticamente.</p></div>
-              <div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">O Web Clipper transforma a navegação diária em alimentação automática do segundo cérebro — qualquer artigo interessante vai direto para o pipeline de ingestão.</p></div>
-              <div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Web Clipper, extensão de browser, markdown extraction, metadados de URL, pipeline automático.</p></div>
+              <div><span class="text-purple-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">A arquitetura tem três camadas: coletores (scripts que puxam dados de cada fonte), processadores (convertem para Markdown em raw/) e o orquestrador (agenda e coordena os coletores).</p></div>
+              <div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Entender a arquitetura modular permite adicionar novas fontes sem reescrever o sistema — cada coletor é independente e conectado ao pipeline via interface comum.</p></div>
+              <div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Coletores, processadores, orquestrador, arquitetura modular, interface de integração, raw/ como buffer.</p></div>
             </div>
           </div>
         </div>
         <div class="topic-item">
           <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
             <span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
-            <span class="text-lg">🔌</span>
-            <div><span class="font-medium">Integração com APIs externas</span><span class="text-neutral-500 text-sm ml-2">- Conectando o wiki a sistemas externos</span></div>
+            <span class="text-lg">🐙</span>
+            <div><span class="font-medium">Integração com GitHub</span><span class="text-neutral-500 text-sm ml-2">- PRs, issues e commits no wiki automaticamente</span></div>
           </button>
           <div class="topic-explanation px-6 pb-4">
             <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
-              <div><span class="text-purple-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">O wiki pode ser consultado via API: outros sistemas enviam perguntas, o agente lê o wiki e retorna respostas estruturadas. O wiki vira um microserviço de conhecimento.</p></div>
-              <div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Expor o wiki como API permite que outros sistemas (apps, bots, dashboards) se beneficiem do conhecimento compilado sem precisar do Obsidian.</p></div>
-              <div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Wiki como API, microserviço de conhecimento, REST endpoint, knowledge-as-a-service.</p></div>
+              <div><span class="text-purple-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">github_collector.py usa a GitHub API para coletar PRs, issues e commits relevantes — salva como Markdown em raw/github/ para ingestão automática pelo agente do vault.</p></div>
+              <div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">PRs e issues contêm decisões técnicas críticas que geralmente se perdem. Com a integração GitHub, o vault captura automaticamente o histórico técnico do projeto.</p></div>
+              <div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">GitHub API, github_collector.py, raw/github/, filtros por label/milestone, ingestão de decisões técnicas.</p></div>
             </div>
           </div>
         </div>
         <div class="topic-item">
           <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
             <span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
-            <span class="text-lg">📱</span>
-            <div><span class="font-medium">Sincronização multi-dispositivo</span><span class="text-neutral-500 text-sm ml-2">- Wiki acessível em qualquer lugar</span></div>
+            <span class="text-lg">💬</span>
+            <div><span class="font-medium">Integração com Slack</span><span class="text-neutral-500 text-sm ml-2">- Capturando decisões e discussões</span></div>
           </button>
           <div class="topic-explanation px-6 pb-4">
             <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
-              <div><span class="text-purple-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Estratégias de sync: Obsidian Sync (oficial), Git + GitHub (gratuito), iCloud/Dropbox para Mac/iPhone. Cada opção tem trade-offs de custo, privacidade e conflito de arquivos.</p></div>
-              <div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Um segundo cérebro inacessível no celular tem utilidade limitada. A sincronização correta é o que torna o sistema verdadeiramente ubíquo.</p></div>
-              <div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Git sync, Obsidian Sync, conflict resolution, mobile access, privacy trade-offs.</p></div>
+              <div><span class="text-purple-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">slack_collector.py monitora canais configurados e exporta threads com reações ⭐ ou palavras-chave como decisão/aprovado/definido — capturando o conhecimento tácito das conversas.</p></div>
+              <div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">A maior parte das decisões de equipe acontece no Slack e desaparece no histórico. A integração Slack salva o conhecimento crítico antes que seja esquecido.</p></div>
+              <div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Slack API, slack_collector.py, filtros por reação/keyword, raw/slack/, captura de decisões tácitas.</p></div>
             </div>
           </div>
         </div>
         <div class="topic-item">
           <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
             <span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
-            <span class="text-lg">⚡</span>
-            <div><span class="font-medium">n8n e automação de workflows</span><span class="text-neutral-500 text-sm ml-2">- Pipelines de ingestão automática</span></div>
+            <span class="text-lg">📅</span>
+            <div><span class="font-medium">Integração com Calendário</span><span class="text-neutral-500 text-sm ml-2">- Reuniões transformadas em notas wiki</span></div>
           </button>
           <div class="topic-explanation px-6 pb-4">
             <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
-              <div><span class="text-purple-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">n8n pode monitorar RSS feeds, newsletters, Slack/email e disparar automaticamente o agente de ingestão — sem nenhuma interação manual. O conhecimento flui para o wiki automaticamente.</p></div>
-              <div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Com n8n, o segundo cérebro aprende sozinho — fontes confiáveis são ingeridas automaticamente enquanto você foca em trabalho de alto nível.</p></div>
-              <div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">n8n workflows, RSS monitoring, email parsing, webhook triggers, fully automated pipeline.</p></div>
+              <div><span class="text-purple-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">calendar_collector.py usa a Google Calendar API para criar automaticamente templates de reunião em raw/meetings/ antes de cada evento — prontos para anotação e ingestão pós-reunião.</p></div>
+              <div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Templates pré-gerados eliminam a fricção de captura — você encontra a nota pronta antes da reunião começar e só precisa preencher o que aconteceu.</p></div>
+              <div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Google Calendar API, calendar_collector.py, templates de reunião, raw/meetings/, ingestão pós-reunião.</p></div>
             </div>
           </div>
         </div>
         <div class="topic-item">
           <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
             <span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
-            <span class="text-lg">📧</span>
-            <div><span class="font-medium">Ingestão multi-canal</span><span class="text-neutral-500 text-sm ml-2">- Email, podcast, vídeo e reuniões</span></div>
+            <span class="text-lg">🔒</span>
+            <div><span class="font-medium">Segurança e Dados Sensíveis</span><span class="text-neutral-500 text-sm ml-2">- PII, credenciais e dados confidenciais</span></div>
           </button>
           <div class="topic-explanation px-6 pb-4">
             <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
-              <div><span class="text-purple-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Pipelines específicos para cada tipo de fonte: emails importantes → raw/emails/, transcrições de vídeo/podcast → raw/media/, notas de reunião → raw/meetings/.</p></div>
-              <div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">A maior parte do conhecimento valioso não vem de artigos — vem de conversas, reuniões e vídeos. Ingestão multi-canal captura o espectro completo.</p></div>
-              <div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Transcrição de vídeo, email parsing, meeting notes, Whisper ASR, canal-specific pipelines.</p></div>
+              <div><span class="text-purple-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Estratégias de segurança: PII anonymizer antes de ingerir dados de usuários, cofre separado para credenciais (nunca em raw/), filtros de conteúdo confidencial, .gitignore para dados sensíveis.</p></div>
+              <div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Integrar com sistemas externos aumenta o risco de vazar dados sensíveis acidentalmente. Definir as proteções antes de conectar os coletores previne incidentes de segurança.</p></div>
+              <div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">PII anonymization, credenciais em .env, .gitignore, vault seguro, filtros de conteúdo confidencial.</p></div>
             </div>
           </div>
         </div>
         <div class="topic-item">
           <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
             <span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
-            <span class="text-lg">🔄</span>
-            <div><span class="font-medium">CI/CD para o knowledge base</span><span class="text-neutral-500 text-sm ml-2">- Deploy automático de atualizações</span></div>
+            <span class="text-lg">🎛️</span>
+            <div><span class="font-medium">Orquestração: Integration Hub</span><span class="text-neutral-500 text-sm ml-2">- Agendamento e coordenação de todos os coletores</span></div>
           </button>
           <div class="topic-explanation px-6 pb-4">
             <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
-              <div><span class="text-purple-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Git Actions que rodam lint automático a cada commit, verificam links quebrados, executam o agente de ingestão e publicam o wiki como site estático — com pipeline completo de qualidade.</p></div>
-              <div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">CI/CD para o wiki garante que nenhum commit degrada a qualidade — é a diferença entre um wiki que melhora continuamente e um que deteriora silenciosamente.</p></div>
-              <div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">GitHub Actions, lint pipeline, link checker, auto-publish, quality gates, wiki-as-code.</p></div>
+              <div><span class="text-purple-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">orchestrator.py agenda todos os coletores (GitHub hourly, Slack daily, Calendar pre-meeting) e coordena as ingestões — um único processo que mantém o vault sempre atualizado de todas as fontes.</p></div>
+              <div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Sem orquestração, você gerencia N processos manualmente. O hub centraliza o agendamento, logging e tratamento de erros de todas as integrações em um único ponto de controle.</p></div>
+              <div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">orchestrator.py, schedule(), múltiplos coletores, logging centralizado, single point of control.</p></div>
             </div>
           </div>
         </div>
@@ -476,84 +476,84 @@
         <div class="topic-item">
           <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
             <span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
-            <span class="text-lg">🎯</span>
-            <div><span class="font-medium">Arquitetura multi-agente</span><span class="text-neutral-500 text-sm ml-2">- Dividindo responsabilidades entre agentes</span></div>
+            <span class="text-lg">🧠</span>
+            <div><span class="font-medium">Por que Multi-Agentes?</span><span class="text-neutral-500 text-sm ml-2">- As limitações do agente único</span></div>
           </button>
           <div class="topic-explanation px-6 pb-4">
             <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
-              <div><span class="text-purple-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Em vez de um agente que faz tudo, sistemas avançados têm agentes especializados: Ingestão Agent, Synthesis Agent, Audit Agent, Query Agent — coordenados por um orquestrador.</p></div>
-              <div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Especialização permite que cada agente seja otimizado para sua tarefa — prompts específicos, context window calibrada, e lógica de retry dedicada.</p></div>
-              <div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Agentes especializados, orquestrador, divisão de trabalho, Agentic AI, sistema multi-agente.</p></div>
+              <div><span class="text-purple-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Um único agente que faz tudo (ingestão + síntese + auditoria + consulta) fica sobrecarregado e inconsistente. Arquitetura multi-agente divide responsabilidades para máxima especialização.</p></div>
+              <div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Entender os limites do agente único motiva a transição para multi-agentes — cada agente tem prompts otimizados, context window calibrada e lógica de erro dedicada.</p></div>
+              <div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Limitações do agente único, especialização, divisão de responsabilidades, Agentic AI, sistema multi-agente.</p></div>
             </div>
           </div>
         </div>
         <div class="topic-item">
           <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
             <span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
-            <span class="text-lg">🤝</span>
-            <div><span class="font-medium">Agente de ingestão + agente de síntese</span><span class="text-neutral-500 text-sm ml-2">- Pipeline de dois estágios</span></div>
+            <span class="text-lg">🎯</span>
+            <div><span class="font-medium">Agentes Especializados</span><span class="text-neutral-500 text-sm ml-2">- CLAUDE-ingester.md e CLAUDE-auditor.md</span></div>
           </button>
           <div class="topic-explanation px-6 pb-4">
             <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
-              <div><span class="text-purple-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Estágio 1 — Ingestion Agent: cria páginas brutas a partir de raw/. Estágio 2 — Synthesis Agent: lê as páginas novas e identifica conexões com páginas existentes, criando links e sínteses.</p></div>
-              <div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">A separação em dois estágios melhora a qualidade — o agente de síntese tem contexto completo do wiki existente, criando conexões mais ricas do que um agente único faria.</p></div>
-              <div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Pipeline de dois estágios, separação de ingestão e síntese, enrichment pipeline, quality layering.</p></div>
+              <div><span class="text-purple-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Cada agente tem seu próprio arquivo de instruções: CLAUDE-ingester.md (regras de ingestão e atomização), CLAUDE-auditor.md (critérios de qualidade e lint). Prompts hiper-focados na tarefa específica.</p></div>
+              <div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Agentes com responsabilidades claras produzem resultados consistentemente melhores que agentes genéricos — a especialização é o mesmo princípio que torna equipes humanas mais produtivas.</p></div>
+              <div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">CLAUDE-ingester.md, CLAUDE-auditor.md, responsabilidade única, prompts especializados, agentes independentes.</p></div>
             </div>
           </div>
         </div>
         <div class="topic-item">
           <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
             <span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
-            <span class="text-lg">🔍</span>
-            <div><span class="font-medium">Agente de auditoria contínua</span><span class="text-neutral-500 text-sm ml-2">- Guardian do wiki rodando 24/7</span></div>
+            <span class="text-lg">🎭</span>
+            <div><span class="font-medium">O Orquestrador</span><span class="text-neutral-500 text-sm ml-2">- orchestrator.py coordenando agentes em paralelo</span></div>
           </button>
           <div class="topic-explanation px-6 pb-4">
             <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
-              <div><span class="text-purple-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Um agente dedicado que roda continuamente (ou agendado), detecta degradações de qualidade, alerta sobre contradições emergentes e sugere manutenções específicas.</p></div>
-              <div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">A auditoria contínua é a diferença entre um wiki que melhora com o tempo e um que lentamente degrada — o audit agent é o sistema imunológico do segundo cérebro.</p></div>
-              <div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Continuous audit, anomaly detection, quality regression, automated alerts, self-healing wiki.</p></div>
+              <div><span class="text-purple-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">orchestrator.py usa threads para rodar agentes em paralelo: o ingester processa raw/ enquanto o auditor verifica o wiki existente. Fila de trabalho, timeout handling e relatório de resultados.</p></div>
+              <div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">O orquestrador é o coração do sistema — sem ele, os agentes especializados são apenas scripts independentes. Com ele, formam um pipeline coordenado e resiliente.</p></div>
+              <div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">orchestrator.py, threading, fila de trabalho, paralelismo, timeout, relatório centralizado.</p></div>
             </div>
           </div>
         </div>
         <div class="topic-item">
           <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
             <span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
-            <span class="text-lg">🌍</span>
-            <div><span class="font-medium">Wikis distribuídos</span><span class="text-neutral-500 text-sm ml-2">- Múltiplos vaults para múltiplos domínios</span></div>
+            <span class="text-lg">⚔️</span>
+            <div><span class="font-medium">Resolução de Conflitos</span><span class="text-neutral-500 text-sm ml-2">- Domínios exclusivos e sem sobreposição</span></div>
           </button>
           <div class="topic-explanation px-6 pb-4">
             <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
-              <div><span class="text-purple-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Para equipes ou indivíduos com múltiplos projetos: vaults separados por domínio (trabalho, pessoal, projetos) que se referenciam mutuamente via links externos.</p></div>
-              <div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Wikis distribuídos permitem trabalho em equipe — múltiplas pessoas mantêm seus vaults que convergem em um wiki compartilhado via merge automático.</p></div>
-              <div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Vaults separados, links externos, shared wiki, git merge, equipe de curadoria.</p></div>
+              <div><span class="text-purple-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">A solução mais simples: cada agente opera em domínios exclusivos e não sobrepostos. O ingester só escreve em wiki/new/, o auditor só lê wiki/. Arquivos de lock para operações críticas.</p></div>
+              <div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Conflitos de escrita corrompem silenciosamente o wiki. A separação de domínios é a prevenção mais elegante — evita o problema em vez de resolver depois que acontece.</p></div>
+              <div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Domínios exclusivos, separação de responsabilidades, lock files, prevenção de conflitos, write isolation.</p></div>
             </div>
           </div>
         </div>
         <div class="topic-item">
           <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
             <span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
-            <span class="text-lg">⚖️</span>
-            <div><span class="font-medium">Consenso entre agentes</span><span class="text-neutral-500 text-sm ml-2">- Resolvendo conflitos de informação</span></div>
+            <span class="text-lg">📡</span>
+            <div><span class="font-medium">Comunicação entre Agentes</span><span class="text-neutral-500 text-sm ml-2">- Filas de mensagens e estado compartilhado</span></div>
           </button>
           <div class="topic-explanation px-6 pb-4">
             <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
-              <div><span class="text-purple-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Quando múltiplos agentes atualizam o mesmo wiki, podem surgir conflitos. Mecanismos de consenso: versioning, lock files, reconciliation agent que resolve divergências automaticamente.</p></div>
-              <div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Conflitos não resolvidos degradam a confiabilidade do wiki — quem tem a informação correta quando dois agentes discordam? O mecanismo de consenso responde isso.</p></div>
-              <div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Consensus protocol, conflict resolution, versioning, reconciliation, distributed consistency.</p></div>
+              <div><span class="text-purple-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Agentes comunicam-se via fila de mensagens (arquivos JSON em queue/) e estado compartilhado (status.json). O ingester publica "nova nota criada" e o auditor consome para verificar imediatamente.</p></div>
+              <div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Comunicação estruturada entre agentes permite sistemas reativos — o auditor age imediatamente em cada nova ingestão, sem polling periódico desnecessário.</p></div>
+              <div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Message queue, event-driven, queue/ JSON files, status.json, pub/sub pattern, sistema reativo.</p></div>
             </div>
           </div>
         </div>
         <div class="topic-item">
           <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
             <span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
-            <span class="text-lg">🔭</span>
-            <div><span class="font-medium">O futuro dos sistemas de conhecimento</span><span class="text-neutral-500 text-sm ml-2">- Para onde esta tecnologia está indo</span></div>
+            <span class="text-lg">🔮</span>
+            <div><span class="font-medium">O Segundo Cérebro do Futuro</span><span class="text-neutral-500 text-sm ml-2">- Memória nativa, grafos globais e meta-learning</span></div>
           </button>
           <div class="topic-explanation px-6 pb-4">
             <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
-              <div><span class="text-purple-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Tendências emergentes: wikis com memória de longo prazo nativa nos LLMs, grafos de conhecimento compartilhados globalmente, e sistemas que aprendem sobre si mesmos (meta-learning).</p></div>
-              <div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Entender a direção da tecnologia permite posicionar seu sistema hoje de forma que ele seja fácil de evoluir amanhã — arquitetura à prova de futuro.</p></div>
-              <div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">LLM native memory, shared knowledge graphs, meta-learning, AGI-ready PKM, future-proof architecture.</p></div>
+              <div><span class="text-purple-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Tendências emergentes: memória de longo prazo nativa nos LLMs, grafos de conhecimento compartilhados entre equipes globalmente, e sistemas que aprendem sobre seus próprios padrões de uso.</p></div>
+              <div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Entender a direção da tecnologia permite arquitetar seu sistema hoje de forma evolutiva — o que você constrói agora deve ser fácil de migrar para as capacidades emergentes.</p></div>
+              <div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">LLM native memory, shared knowledge graphs, meta-learning, AGI-ready PKM, arquitetura evolutiva.</p></div>
             </div>
           </div>
         </div>
